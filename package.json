@@ -1,10 +1,10 @@
 {
-  "name": "bottles",
+  "name": "losing my dimension",
   "version": "1.0.0",
   "engines": {
     "node": "12.x"
-  }
-  "description": "send a message in a bottle to the quarantine void",
+  },
+  "description": "visual musings on quarantine, space, and the internet",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
