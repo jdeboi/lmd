@@ -1,0 +1,14 @@
+.DesktopIcon {
+
+  position: absolute;
+
+  .content {
+    pointer-events: none;
+  }
+  
+  .desktop-text {
+    text-align: center;
+    color: white;
+    font-weight: bold;
+  }
+}

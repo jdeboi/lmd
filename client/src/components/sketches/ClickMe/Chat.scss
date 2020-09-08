@@ -1,0 +1,116 @@
+
+.Chat {
+  padding: 15px;
+  margin: auto;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .8);
+  /* background-color: black;
+  background-repeat: repeat; */
+  /* background-image: url("https://media.giphy.com/media/3pZjE2Z0HNVMk/giphy.gif"); */
+  cursor: url("/images/cursor/pointer.png"), auto;
+  /* background-color: black; */
+
+  .Chat-header {
+    text-align: center;
+    font-size: 34px;
+  }
+
+  .Chat-input {
+    height: 60px;
+    padding-top:10px;
+
+    .emojiBar {
+      width: 100%;
+      height: 60px;
+      border-radius: 4px;
+      border: 1px solid black;
+      font-size:34px;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      padding: 10px;
+      background-color: rgba(255, 255, 255, 0);
+    }
+    button {
+      width: 100%;
+      height: 100%;
+      cursor: url("/images/cursor/pointer.png"), auto;
+      color: white;
+      border: 1px solid black;
+      background-color: rgba(255, 255, 255, .2);
+    }
+
+  }
+
+  .Chat-message-box {
+    flex-direction: column;
+    height: 300px;
+    width: 100%;
+    display: flex;
+    overflow:hidden;
+    background-color: white;
+    position: relative;
+    border-radius: 4px;
+    border: 1px solid black;
+    background-color: rgba(255, 255, 255, .1);
+    /* background-color: white; */
+    /* background-image: url("/videos/face.gif"); */
+    /* background-image: url("https://media.giphy.com/media/3pZjE2Z0HNVMk/giphy.gif"); */
+  }
+
+  .Chat-messages {
+    bottom: 0px;
+    position: absolute;
+    width: 100%;
+    min-height: 100%;
+
+  }
+
+  .Chat-messages-bounding {
+    padding: 10px;
+    width: 500px;
+  }
+
+  .Chat-buttons {
+    padding-top:10px;
+
+    button {
+      height:60px;
+      width: 40px;
+      cursor: url("/images/cursor/pointer.png"), auto;
+      border: 1px solid black;
+      background-color: rgba(255, 255, 255, .1);
+    }
+  }
+
+
+  .bubbleContainer {
+    display:flex;
+    width: 100%;
+  }
+
+  .me  {
+    justify-content: flex-start !important;
+  }
+
+  .you {
+    justify-content: flex-end !important;
+  }
+
+  .bubble {
+    border-radius: 12px;
+    padding:  10px 15px 10px 15px;
+  }
+
+  .me .bubble {
+    background-color: #e0e0e0;
+  }
+
+  .you .bubble {
+    background-color: #ffc800;
+  }
+
+  .emoji-button {
+    font-size:34px;
+  }
+}

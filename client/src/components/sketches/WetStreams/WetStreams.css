@@ -1,0 +1,66 @@
+.WetStreams {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-image: url("./assets/blk2000.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center; }
+  .WetStreams #defaultCanvas0 {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    pointer-events: none; }
+  .WetStreams .blueTile {
+    background-image: url("/textures/bluetile.jpg");
+    background-repeat: repeat;
+    width: 100%;
+    height: 100%; }
+  .WetStreams .animal {
+    max-width: 100%;
+    height: auto; }
+  .WetStreams .bird {
+    width: 100%;
+    height: 100%;
+    background-image: url("https://media.giphy.com/media/l3Uchq9s6Hx0aK8F2/giphy.gif");
+    /* background-image: url("/images/tub/ducky.jpeg"); */
+    background-size: cover;
+    /* <------ */
+    background-repeat: no-repeat;
+    background-position: center center; }
+  .WetStreams img {
+    width: 400px;
+    height: 400px; }
+  .WetStreams .controller-bar {
+    height: 100%; }
+    .WetStreams .controller-bar button {
+      font-size: 40px;
+      height: 100%;
+      width: 100%;
+      /* text-align: center;
+      height: 56px;
+      width: 50px; */ }
+  .WetStreams input {
+    width: 465px; }
+  .WetStreams .playBack {
+    background-color: #223230;
+    background-image: url(/textures/bluetile.jpg);
+    width: 100%; }
+  .WetStreams .blueTileDiv {
+    background-image: url(/textures/bluetile.jpg);
+    height: 100%;
+    width: 100%;
+    background-repeat: repeat; }
+  .WetStreams .showerhead {
+    position: relative; }
+    .WetStreams .showerhead:hover .Playbar {
+      visibility: visible; }
+    .WetStreams .showerhead .Playbar {
+      position: absolute;
+      bottom: 0px;
+      visibility: hidden; }

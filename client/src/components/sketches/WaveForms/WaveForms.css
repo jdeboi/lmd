@@ -1,0 +1,178 @@
+.WaveForms {
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  background-image: url(./assets/sky4.jpg);
+  background-size: cover; }
+  .WaveForms .Frame .window {
+    background: transparent;
+    box-shadow: -40px -40px 40px #ffffff;
+    /* #6c6c6c; */
+    border: 2px solid #ffffff; }
+  .WaveForms .Frame .circleButton {
+    background: #afafaf;
+    color: #afafaf; }
+    .WaveForms .Frame .circleButton:hover {
+      background: #afafaf; }
+  .WaveForms .Frame .innerC {
+    background: white; }
+    .WaveForms .Frame .innerC:hover {
+      background: #afafaf; }
+  .WaveForms .Frame .titlebar {
+    color: white;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #1e03fc42));
+    border-bottom: 2px solid #ffffff; }
+  .WaveForms .react-player {
+    position: absolute;
+    top: 0;
+    margin: auto;
+    z-index: -100;
+    overflow: hidden; }
+  .WaveForms .mainContent {
+    /* made titlebar position relative to fit this under without padding */
+    /* padding-top: 22px; */
+    z-index: 10;
+    pointer-events: none; }
+  .WaveForms .waveCover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(45, 25, 255, 0.1); }
+  .WaveForms .emojis {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%; }
+    .WaveForms .emojis img {
+      position: absolute;
+      height: 50px;
+      width: 50px; }
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%; }
+  50% {
+    background-position: 100% 50%; }
+  100% {
+    background-position: 0% 50%; } }
+  .WaveForms #defaultCanvas0 {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    pointer-events: none; }
+  .WaveForms button {
+    height: 100px;
+    font-size: 50px; }
+  .WaveForms .ears .ear {
+    background: transparent; }
+  .WaveForms .moon {
+    height: 100%;
+    width: 100%;
+    background-size: 120% 100%;
+    background-position: -10px -15px;
+    background-repeat: no-repeat; }
+  .WaveForms .prayer {
+    color: white;
+    padding: 20px; }
+  .WaveForms .liveStream {
+    position: relative;
+    z-index: 10;
+    top: 420px;
+    left: 20px;
+    width: 190px; }
+    .WaveForms .liveStream span {
+      padding: 8px; }
+    .WaveForms .liveStream .live {
+      color: white;
+      background-color: red;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px; }
+    .WaveForms .liveStream .time {
+      color: white;
+      background-color: rgba(255, 255, 255, 0.3);
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px; }
+    .WaveForms .liveStream .eye {
+      color: white; }
+  .WaveForms .bottomBar {
+    width: 100%;
+    height: 60px;
+    position: fixed;
+    bottom: 0px;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #1e03fc42));
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center; }
+    .WaveForms .bottomBar button {
+      margin-top: 5px;
+      width: 50px;
+      height: 50px;
+      background: transparent;
+      flex: 0 0 auto; }
+      .WaveForms .bottomBar button img {
+        width: 35px;
+        height: 35px; }
+  .WaveForms .tweet {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    font-family: "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 16px;
+    background-color: rgba(255, 255, 255, 0.6); }
+    .WaveForms .tweet .tweet-top {
+      display: flex;
+      flex-direction: row;
+      color: white;
+      height: 30px; }
+      .WaveForms .tweet .tweet-top .tweeter-icon {
+        width: 50px;
+        height: 40px;
+        flex: 0 0 auto;
+        background-image: url(https://img.icons8.com/material/4ac144/256/user-male.png);
+        background-size: 40px 40px;
+        background-repeat: no-repeat; }
+      .WaveForms .tweet .tweet-top .tweeter {
+        flex: 1 1 auto; }
+        .WaveForms .tweet .tweet-top .tweeter span:hover {
+          text-decoration: underline; }
+        .WaveForms .tweet .tweet-top .tweeter .person {
+          color: #6666cc;
+          width: 100px;
+          font-size: 18px; }
+        .WaveForms .tweet .tweet-top .tweeter .tweet-handle, .WaveForms .tweet .tweet-top .tweeter .tweet-time {
+          color: #aaaadd;
+          width: 100px;
+          font-size: 14px; }
+        .WaveForms .tweet .tweet-top .tweeter .tweet-handle {
+          padding-left: 10px; }
+        .WaveForms .tweet .tweet-top .tweeter .tweet-time {
+          padding-left: 5px; }
+      .WaveForms .tweet .tweet-top .twitter-icon {
+        width: 30px;
+        flex: 0 0 auto;
+        font-size: 24px;
+        color: white; }
+        .WaveForms .tweet .tweet-top .twitter-icon:hover {
+          color: #aaaaff; }
+    .WaveForms .tweet .tweet-content {
+      color: #6666cc;
+      font-size: 16px;
+      font-weight: normal;
+      line-height: 20px; }
+      .WaveForms .tweet .tweet-content a {
+        color: inherit;
+        font-weight: normal;
+        text-decoration: none;
+        outline: 0 none; }
+        .WaveForms .tweet .tweet-content a:hover {
+          text-decoration: underline; }

@@ -1,0 +1,312 @@
+@import "../../../styles/constants.scss";
+
+
+
+.expandable:hover {
+  // cursor: pointer;
+  background: $headerGradient;
+  border-bottom: 0.1em solid $headerGradientEndC;
+  height: 30px;
+  // border-top-right-radius: $borderRad;
+  // border-top-left-radius: $borderRad;
+  // border-bottom: 0.1em solid #5978F5;
+}
+
+.clickable:hover {
+  background: $headerGradient;
+  border-bottom: 0.1em solid $headerGradientEndC;
+  height: 30px;
+}
+
+
+/*--Header--*/
+/* a3a3a3 */
+.Header {
+  /* background: linear-gradient(to bottom, #e6e6e6 0%, #c3c3c3 100%); */
+  /* background: white; */
+  display: block;
+  font-family: consoleFont;
+  border: $borderH solid black;
+  border-top-right-radius: $borderRad;
+  border-top-left-radius: $borderRad;
+  flex: 0 1 auto;
+  /* The above is shorthand for:
+  flex-grow: 0,
+  flex-shrink: 1,
+  flex-basis: auto
+  */
+
+  font-size: $fontSize-desktop-1;
+  height: $headerH;
+  color: white;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  box-shadow: 0px 0px 20px #000000;
+
+  z-index: 1000;
+
+  // position: absolute;
+  // top:0;
+
+  // width: 100%;
+  flex: 1 1 100%;
+
+
+  .selected {
+    // background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #5978f5), color-stop(100%, #335ef6));
+    background: $headerGradient;
+    color: #fff;
+    border-bottom: 0.1em solid $headerGradientEndC;
+    // border-top-left-radius: $borderRad;
+    // border-top-right-radius: $borderRad;
+    height: 30px;
+  }
+
+  ul {
+    margin: 0 5px;
+    padding: 0 3px;
+
+    li {
+      display: inline-block;
+      line-height: $headerH;
+      padding: 0 0.5em;
+      position: relative;
+    }
+
+    a {
+      color: #000;
+      text-decoration: none;
+    }
+
+    &.left {
+      float: left;
+      white-space: nowrap;
+    }
+
+    &.right {
+      float: right;
+    }
+  }
+
+
+
+
+  .fa {
+    color: white;
+  }
+
+  .submenu {
+    display: none;
+
+    input[type="text"] {
+      border-radius: 2em;
+      border: 1px solid #333;
+      height: 2em;
+      padding: 0 10px;
+    }
+
+    input[type="range"] {
+      transform: rotate(-90deg);
+      margin-left: -50px;
+      margin-top: 65px;
+    }
+
+    ul {
+      background: black;
+      white-space: normal;
+      border: white solid 2px;
+      border-radius: 0 $borderRad $borderRad $borderRad;
+      color: white;
+      font-size: $fontSize-desktop-2;
+      left: 0px;
+      margin: 0 !important;
+      overflow: hidden;
+      padding: 0px 8px 0px 0px;
+      position: absolute;
+      top: 32px;
+      width: auto;
+      white-space: nowrap;
+      z-index: 200;
+
+
+
+      &.mobile {
+        max-height: 250px;
+
+        li {
+          border-bottom: 1px solid white;
+          padding: 8px 8px 8px 15px;
+          white-space: normal;
+          // background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #000000), color-stop(100%, #333333));
+
+
+
+        }
+
+
+      }
+
+      // .white {
+      //   background: #fff;
+      //   color: #333;
+      // }
+
+      a:last-child li {
+        border-bottom: 0px;
+      }
+
+      // .leftBar {
+      //   right: 0px;
+      //   left: auto;
+      //   border-radius: $borderRad 0 $borderRad $borderRad;
+      // }
+
+      // .volume {
+      //   height: 10em;
+      //   width: 2.2em;
+      //   margin: 0;
+      //   padding: 0;
+      //   position: absolute;
+      //   overflow: visible;
+      //
+      //   li {
+      //     margin: 0;
+      //     padding: 0;
+      //   }
+      // }
+
+      li {
+        display: block !important;
+        vertical-align: middle;
+        float: none;
+        margin-right: 75px;
+        font-weight: 400;
+        padding: 3px 3px 3px 15px;
+        width: 100%;
+        color: white;
+        line-height: 1.8em;
+
+        // we have to add & here because hover isn't nested
+        &:hover:not(.volume) {
+          background: $headerGradient;
+          color: #fff;
+        }
+
+        // this is basically mobile
+        // we have to add & here because lined isn't nested, it's a part of li
+        // &.lined {
+        //   border-bottom: 1px solid white;
+        //   padding: 8px 8px 8px 15px;
+        //   white-space: normal;
+        // }
+
+        &.shortcut:after {
+          content: attr(shortcut);
+          float: right;
+          padding-right: 20px;
+        }
+
+        &.noShortcut {
+          margin-right: 0px;
+        }
+      }
+
+
+    }
+
+
+    .hasSubMenu:after {
+      content: "\f04b";
+      font-family: FontAwesome;
+      font-size: 0.8em;
+      display: inline-block;
+      position: absolute;
+      right: 25px;
+    }
+  }
+
+
+
+
+  @media screen and (max-width: 830px) {
+    font-size: $fontSize-tablet-1;
+    .submenu ul {
+      font-size: $fontSize-tablet-2;
+      overflow-y: scroll;
+      overflow-x: hidden;
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    font-size: $fontSize-mobile-1;
+    .submenu ul {
+      font-size: $fontSize-mobile-2;
+    }
+  }
+
+  @media screen and (max-width: 300px) {
+    font-size: $fontSize-mobile-2;
+    .submenu ul {
+      font-size: $fontSize-mobile-3;
+    }
+  }
+
+}
+
+.BackHeader {
+  position: absolute;
+  top: 0;
+  left:0;
+  background: black;
+  z-index: 499;
+  width: 100%;
+  height: 10px;
+}
+
+
+
+
+
+/*--Menus--*/
+.visible {
+  display: block !important;
+}
+
+
+.search {
+  padding: 5px 10px !important;
+}
+
+.noChoice {
+  color: #adadad;
+}
+.noChoice:hover {
+  background: #fff !important;
+  color: #adadad !important;
+}
+
+#volume-icon-li {
+  width: 1em;
+}
+
+
+.focus img {
+  border: 2px solid rgba(225, 225, 225, 0.5) !important;
+  border-radius: 6px;
+}
+
+span.focus:after {
+  background: #146ece;
+  border-radius: 15px;
+  text-shadow: none !important;
+}
+
+span#pageTitle {
+  font-weight: bold;
+  white-space: nowrap;
+}

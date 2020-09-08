@@ -1,0 +1,355 @@
+@import "../../../styles/constants.scss";
+
+$pearlyGradientStartC: #ffffff;
+$pearlyGradientEndC: #1e03fc42;
+$pearlyGradient: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $pearlyGradientStartC), color-stop(100%, $pearlyGradientEndC));
+$buttonCol: #afafaf;
+
+$tweetColPrimary: #6666cc;
+$tweetColSecondary: #aaaadd; //#000011;
+$tweetColTertiary: #111199;
+$tweetColHover: #aaaaff;
+
+.WaveForms {
+  top:0;
+  left:0;
+  overflow: hidden;
+  background-image: url(./assets/sky4.jpg);
+  background-size: cover;
+  // background-size: 250px 180px;
+
+
+  .Frame {
+
+    .window {
+      background: transparent;
+      box-shadow: -40px -40px 40px #ffffff; /* #6c6c6c; */
+      border: $borderH solid #ffffff;
+    }
+
+    .circleButton {
+      background: $buttonCol;
+      color: $buttonCol;
+
+      &:hover {
+        background: $buttonCol;
+      }
+    }
+
+    .innerC {
+      background: white;
+
+      &:hover {
+        background: $buttonCol;
+      }
+    }
+
+    .titlebar {
+      color: white;
+      background: $pearlyGradient;
+      border-bottom: $borderH solid #ffffff;
+    }
+  }
+
+
+
+  .react-player {
+    position: absolute;
+    top: 0;
+    margin: auto;
+    z-index:-100;
+    overflow: hidden;
+  }
+
+  .mainContent {
+    /* made titlebar position relative to fit this under without padding */
+    /* padding-top: 22px; */
+    z-index:10;
+    pointer-events: none;
+  }
+
+
+
+  .waveCover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(45, 25, 255, .1);
+    // background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    // background-size: 400% 400%;
+    // animation: gradient 15s ease infinite;
+  }
+
+  .emojis {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+
+    img {
+      position: absolute;
+      height: 50px;
+      width: 50px;
+    }
+  }
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  #defaultCanvas0 {
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    pointer-events: none;
+  }
+
+  button {
+    height: 100px;
+    font-size: 50px;
+  }
+
+  .ears {
+    // background-image: transparent;
+
+    .ear {
+      background: transparent;
+    }
+  }
+
+  .moon {
+    height: 100%;
+    width: 100%;
+    // background-image: url(./assets/shell.jpg);
+    // background-size: 100% 85%;
+    background-size: 120% 100%;
+    background-position: -10px -15px;
+    background-repeat:   no-repeat;
+  }
+
+
+  .prayer {
+    color: white;
+    padding: 20px;
+    // background: white;
+    // border: 4px solid limegreen;
+    // box-sizing: border-box;
+    // box-shadow: -40px -40px 40px #ffffff; /* #6c6c6c; */
+
+  }
+
+  // .doveFrame {
+  //   position: relative;
+  //   z-index: 10;
+  //   top: 200px;
+  //   left: 190px;
+  //
+  //   .Frame {
+  //     box-shadow: none;
+  //
+  //     .window {
+  //       box-shadow: none;
+  //     }
+  //   }
+  // }
+
+  .liveStream {
+
+    // font-weight: bold;
+
+    position: relative;
+    z-index: 10;
+
+    top: 420px;
+    left: 20px;
+    width: 190px;
+    // box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+
+
+    span {
+      padding: 8px;
+    }
+
+    .live {
+      color: white;
+      background-color: red;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+
+    .time {
+      color: white;
+      background-color: rgba(255, 255, 255, .3);
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+      // margin-left: 10px;
+    }
+
+    .eye {
+      color: white;
+    }
+  }
+
+
+  .bottomBar {
+    width: 100%;
+    height: 60px;
+    position: fixed;
+    bottom: 0px;
+    background: $pearlyGradient;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+
+    button {
+      margin-top: 5px;
+      width: 50px;
+      height: 50px;
+      background: transparent;
+
+      img {
+        width: 35px;
+        height: 35px;
+      }
+
+      flex: 0 0 auto;
+    }
+  }
+
+  .tweet {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    // font-family: consoleFont, sans-serif;
+    font-family: "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 16px;
+    background-color: rgba(255, 255, 255, .6);
+
+    .tweet-top {
+      display: flex;
+      flex-direction: row;
+      color: white;
+      height: 30px;
+
+      .tweeter-icon {
+        width: 50px;
+        height: 40px;
+        // background-color: blue;
+        flex: 0 0 auto;
+        background-image: url(https://img.icons8.com/material/4ac144/256/user-male.png);
+        background-size: 40px 40px;
+        background-repeat: no-repeat;
+      }
+
+      .tweeter {
+        // width: 200px;
+        flex: 1 1 auto;
+
+
+        span {
+          &:hover {
+            // color: $tweetColHover;
+            text-decoration: underline;
+          }
+        }
+        .person {
+          color: $tweetColPrimary;
+          width: 100px;
+          font-size: 18px;
+
+        }
+
+        .tweet-handle, .tweet-time {
+          color: $tweetColSecondary;
+          width: 100px;
+          font-size: 14px;
+
+        }
+
+        .tweet-handle {
+            padding-left: 10px;
+        }
+
+        .tweet-time {
+          padding-left: 5px;
+        }
+
+
+      }
+
+      .twitter-icon {
+        width: 30px;
+        flex: 0 0 auto;
+        font-size: 24px;
+        color: white;
+
+        &:hover {
+          color: $tweetColHover;
+        }
+      }
+
+    }
+
+    // .tweet-time {
+    //   color: $tweetColSecondary;
+    // }
+
+    .tweet-content {
+      color: $tweetColPrimary;
+      font-size: 16px;
+      font-weight: normal;
+      line-height: 20px;
+      // padding-bottom: 10px;
+
+      a {
+        color: inherit;
+        font-weight: normal;
+        text-decoration: none;
+        outline: 0 none;
+
+        &:hover {
+          // color: $tweetColHover;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  // .earCursor-0 {
+  //   cursor:url(./assets/cursors/0.png), auto !important;
+  // }
+  // .earCursor-1 {
+  //   cursor:url(./assets/cursors/1.png), auto !important;
+  // }
+  // .earCursor-2 {
+  //   cursor:url(./assets/cursors/2.png), auto !important;
+  // }
+  // .earCursor-3 {
+  //   cursor:url(./assets/cursors/3.png), auto !important;
+  // }
+  // .earCursor-4 {
+  //   cursor:url(./assets/cursors/4.png), auto !important;
+  // }
+  // .earCursor-5 {
+  //   cursor:url(./assets/cursors/0.png), auto !important;
+  // }
+}

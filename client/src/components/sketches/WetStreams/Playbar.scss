@@ -1,0 +1,38 @@
+.Playbar {
+  background-color: black;
+  width: 100%;
+  height: 40px;
+  padding-top: 10px;
+  color: white;
+
+  .track {
+    width: 300px;
+  }
+
+  .playIcon {
+    font-size: 20px;
+    color: white;
+  }
+
+  .track {
+    position: relative;
+  }
+
+  .playback {
+    position: absolute;
+    top: 0px;
+  }
+
+  .progress {
+    top: 12px;
+  }
+
+  .MuiSlider-root {
+    color: white;
+
+  }
+
+  .MuiProgress-root {
+    color: white;
+  }
+}

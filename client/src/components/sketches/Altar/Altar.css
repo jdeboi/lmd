@@ -1,0 +1,51 @@
+.Altar {
+  background-color: black;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+  justify-content: space-between; }
+  .Altar footer {
+    flex: 0 0 auto;
+    width: 100%;
+    border: 2px solid black;
+    background: linear-gradient(to bottom, #000000 0%, #222222 100%);
+    color: white;
+    height: 70px; }
+    .Altar footer img {
+      position: absolute;
+      width: auto;
+      max-height: 65px; }
+  .Altar .zoom-left {
+    bottom: 2px;
+    left: 20px; }
+  .Altar .zoom-mid {
+    bottom: 2px;
+    left: 40%; }
+  .Altar .topVids {
+    flex: 0 0 auto;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    width: 740px;
+    height: 180px; }
+    .Altar .topVids .member {
+      flex: 0 0 auto;
+      margin-top: 20px;
+      background-color: blue;
+      width: 230px;
+      height: 160px;
+      box-shadow: 0px 0px 20px #000000;
+      /* #6c6c6c; */ }
+  .Altar .mainVid {
+    flex: 0 0 auto;
+    height: 400px;
+    width: 600px;
+    background-color: red;
+    box-shadow: 0px 0px 20px #000000;
+    /* #6c6c6c; */
+    position: relative; }
+  .Altar .dove {
+    position: absolute;
+    left: 275px;
+    top: 175px; }

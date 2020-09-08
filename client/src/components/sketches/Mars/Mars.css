@@ -1,0 +1,70 @@
+.Mars.Sketch {
+  overflow: scroll; }
+
+.Mars {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: blue;
+  position: relative;
+  background-image: url(./assets/grid.jpg);
+  background-repeat: repeat;
+  background-size: 350px 350px;
+  border: 35px solid transparent;
+  padding: 0px;
+  box-sizing: border-box;
+  border-image: url(./assets/tile.png) 150 round; }
+  .Mars .fullContent {
+    width: 100%;
+    height: 100%; }
+  .Mars .bigCrater {
+    background-image: url(./assets/pool.png);
+    width: 100%;
+    background-repeat: no-repeat; }
+  .Mars .diving {
+    background-image: url(./assets/diving2.gif);
+    height: 152px;
+    width: 500px;
+    background-size: 100% 100%; }
+  .Mars .smallCrater {
+    background-image: url(./assets/crater.png);
+    height: 100%;
+    width: 100%;
+    background-position: cover;
+    background-size: 300px 300px; }
+  .Mars .marsCover {
+    background-color: rgba(0, 0, 0, 0.3); }
+  .Mars .blueTileDiv {
+    height: 100%;
+    width: 100%;
+    background-repeat: repeat; }
+  .Mars .blueChair {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url(./assets/pool/yellowchair.png);
+    background-size: 200px 200px; }
+  .Mars .umbrellas {
+    width: 90%;
+    height: 90%;
+    color: white; }
+  .Mars .MuiTypography-body1 {
+    height: 100px;
+    color: white;
+    background: transparent; }
+  .Mars .swimSign {
+    font-size: 55pt;
+    padding-top: 40px;
+    font-weight: bold; }
+  .Mars .tank {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-repeat: repeat;
+    background-size: 39px 40px; }
+    .Mars .tank button {
+      height: 100%;
+      width: 74px;
+      padding-top: 30px; }

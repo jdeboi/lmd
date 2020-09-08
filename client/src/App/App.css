@@ -1,0 +1,89 @@
+.App {
+  background-color: black;
+  height: 100%;
+  width: 100%;
+  font-family: consoleFont;
+  overflow: hidden;
+  padding: 0;
+  perspective-origin: 0 0;
+  display: flex;
+  flex-flow: column; }
+  .App .App-Header {
+    flex: 0 0 auto;
+    height: 34px;
+    /* The above is shorthand for:
+    flex-grow: 0,
+    flex-shrink: 1,
+    flex-basis: auto
+    */
+    display: flex;
+    flex-flow: column;
+    align-items: stretch; }
+  .App .App-Content {
+    flex: 1 1 auto;
+    display: flex;
+    flex-flow: column;
+    align-items: stretch;
+    overflow: hidden; }
+  .App .inner-outline {
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    /* border-bottom: 3px solid black; */
+    -webkit-box-sizing: border-box;
+    /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;
+    /* Firefox, other Gecko */
+    box-sizing: border-box;
+    /* Opera/IE 8+ */ }
+  .App .Sketch {
+    flex: 1 1 100%;
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    position: relative; }
+  .App #babylon-canvas {
+    flex: 1;
+    display: block;
+    /* needs absolute so that frames don't appear below page. dunno why */
+    /* making 0 for hard drives */
+    z-index: 0; }
+  .App .noSelect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; }
+  .App #fps {
+    position: absolute;
+    background-color: black;
+    border: 2px solid red;
+    text-align: center;
+    font-size: 16px;
+    color: white;
+    top: 45px;
+    right: 10px;
+    width: 60px;
+    height: 20px; }
+  .App .bold {
+    font-weight: bold; }
+  .App header.menuTheme, .App .menuTheme {
+    color: white;
+    background: black; }
+  .App .dottedBG1 {
+    background-image: radial-gradient(ellipse farthest-corner, transparent 0%, transparent 35%, #fff 30%, #fff 40%, transparent 90%), radial-gradient(ellipse farthest-corner at 0px 0px, transparent 0%, transparent 20%, #fff 15%, #fff 20%, transparent 50%), radial-gradient(ellipse farthest-corner at 8px 8px, transparent 0%, transparent 20%, #fff 15%, #fff 20%, transparent 50%), radial-gradient(ellipse farthest-corner at 0px 8px, transparent 0%, transparent 20%, #fff 15%, #fff 20%, transparent 40%), radial-gradient(ellipse farthest-corner at 8px 0px, transparent 0%, transparent 20%, #fff 15%, #fff 20%, transparent 50%), linear-gradient(120deg, #11ffff 0, #ff11ff 100%);
+    background-size: 8px 8px, 8px 8px, 8px 8px, 8px 8px, 8px 8px, 100% 100%; }
+  .App .backgroundCover {
+    /*  made 0, was -200, because clouds were behind app-frame-box thing */
+    z-index: 0;
+    position: fixed;
+    min-width: 100%;
+    min-height: 100%; }
+  .App .flippedX {
+    transform: scaleX(-1); }
+  .App .flippedY {
+    transform: scaleY(-1); }
+
+@font-face {
+  font-family: consoleFont;
+  src: url(./assets/fonts/dogica.ttf); }

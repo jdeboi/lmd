@@ -1,0 +1,76 @@
+.Spacetimes {
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+
+  background: rgb(34,193,195);
+  background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+
+  /* background-color: black; */
+  /* background-image: url("/images/space/2000.png");
+  background-size:     cover;
+  background-repeat:   no-repeat;
+  background-position: center center;
+  background-repeat: repeat; */
+
+  .bird {
+    // width: 100%;
+    // height: 100%;
+    background-image: url("https://media.giphy.com/media/l3Uchq9s6Hx0aK8F2/giphy.gif");
+    background-size:     cover;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center;
+  }
+
+  .flipped {
+    transform: scaleX(-1);
+  }
+
+  .palindrome {
+    font-size: 150px;
+    font-family: spacetimeFont, Arial, Helvetica, sans-serif;
+    text-align: center;
+    // display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding-top: 30px;
+    top: 0px;
+    pointer-events: none;
+    z-index: 500;
+    // position: absolute;
+    width: 100%;
+
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+
+
+  }
+
+  .vertical-center {
+
+  }
+
+  .window {
+    background-color: transparent;
+  }
+
+  .content {
+    margin: auto;
+    padding: 2px;
+    background-color: transparent;
+  }
+}
+
+@font-face {
+  font-family: spacetimeFont;
+  /* src: url("/fonts/VENTA___.ttf"); */
+  /* src: url("/fonts/Modeseven.ttf"); */
+  src: url("./assets/dogica.ttf");
+}

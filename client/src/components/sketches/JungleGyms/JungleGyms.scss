@@ -1,0 +1,43 @@
+.JungleGyms {
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  // background-image: url("/images/galaxy.jpg");
+  background-size:     cover;                      /* <------ */
+  background-repeat:   no-repeat;
+  background-position: center center;
+
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: black;
+
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  video.gym {
+    position: absolute;
+    visibility: hidden;
+  }
+
+  .react-player {
+    /* position: fixed; */
+
+    margin: auto;
+
+    overflow: hidden;
+  }
+}
+//
+// .JungleGyms .Frame {
+//   z-index: 400;
+// }

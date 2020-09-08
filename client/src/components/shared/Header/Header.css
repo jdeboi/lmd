@@ -1,0 +1,178 @@
+.expandable:hover {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fc03ad), color-stop(100%, #335ef6));
+  border-bottom: 0.1em solid #335ef6;
+  height: 30px; }
+
+.clickable:hover {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fc03ad), color-stop(100%, #335ef6));
+  border-bottom: 0.1em solid #335ef6;
+  height: 30px; }
+
+/*--Header--*/
+/* a3a3a3 */
+.Header {
+  /* background: linear-gradient(to bottom, #e6e6e6 0%, #c3c3c3 100%); */
+  /* background: white; */
+  display: block;
+  font-family: consoleFont;
+  border: 2px solid black;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+  flex: 0 1 auto;
+  /* The above is shorthand for:
+  flex-grow: 0,
+  flex-shrink: 1,
+  flex-basis: auto
+  */
+  font-size: 16px;
+  height: 30px;
+  color: white;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  box-shadow: 0px 0px 20px #000000;
+  z-index: 1000;
+  flex: 1 1 100%; }
+  .Header .selected {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fc03ad), color-stop(100%, #335ef6));
+    color: #fff;
+    border-bottom: 0.1em solid #335ef6;
+    height: 30px; }
+  .Header ul {
+    margin: 0 5px;
+    padding: 0 3px; }
+    .Header ul li {
+      display: inline-block;
+      line-height: 30px;
+      padding: 0 0.5em;
+      position: relative; }
+    .Header ul a {
+      color: #000;
+      text-decoration: none; }
+    .Header ul.left {
+      float: left;
+      white-space: nowrap; }
+    .Header ul.right {
+      float: right; }
+  .Header .fa {
+    color: white; }
+  .Header .submenu {
+    display: none; }
+    .Header .submenu input[type="text"] {
+      border-radius: 2em;
+      border: 1px solid #333;
+      height: 2em;
+      padding: 0 10px; }
+    .Header .submenu input[type="range"] {
+      transform: rotate(-90deg);
+      margin-left: -50px;
+      margin-top: 65px; }
+    .Header .submenu ul {
+      background: black;
+      white-space: normal;
+      border: white solid 2px;
+      border-radius: 0 8px 8px 8px;
+      color: white;
+      font-size: 14px;
+      left: 0px;
+      margin: 0 !important;
+      overflow: hidden;
+      padding: 0px 8px 0px 0px;
+      position: absolute;
+      top: 32px;
+      width: auto;
+      white-space: nowrap;
+      z-index: 200; }
+      .Header .submenu ul.mobile {
+        max-height: 250px; }
+        .Header .submenu ul.mobile li {
+          border-bottom: 1px solid white;
+          padding: 8px 8px 8px 15px;
+          white-space: normal; }
+      .Header .submenu ul a:last-child li {
+        border-bottom: 0px; }
+      .Header .submenu ul li {
+        display: block !important;
+        vertical-align: middle;
+        float: none;
+        margin-right: 75px;
+        font-weight: 400;
+        padding: 3px 3px 3px 15px;
+        width: 100%;
+        color: white;
+        line-height: 1.8em; }
+        .Header .submenu ul li:hover:not(.volume) {
+          background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fc03ad), color-stop(100%, #335ef6));
+          color: #fff; }
+        .Header .submenu ul li.shortcut:after {
+          content: attr(shortcut);
+          float: right;
+          padding-right: 20px; }
+        .Header .submenu ul li.noShortcut {
+          margin-right: 0px; }
+    .Header .submenu .hasSubMenu:after {
+      content: "\f04b";
+      font-family: FontAwesome;
+      font-size: 0.8em;
+      display: inline-block;
+      position: absolute;
+      right: 25px; }
+  @media screen and (max-width: 830px) {
+    .Header {
+      font-size: 14px; }
+      .Header .submenu ul {
+        font-size: 12px;
+        overflow-y: scroll;
+        overflow-x: hidden; } }
+  @media screen and (max-width: 400px) {
+    .Header {
+      font-size: 12px; }
+      .Header .submenu ul {
+        font-size: 10px; } }
+  @media screen and (max-width: 300px) {
+    .Header {
+      font-size: 10px; }
+      .Header .submenu ul {
+        font-size: 8px; } }
+
+.BackHeader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: black;
+  z-index: 499;
+  width: 100%;
+  height: 10px; }
+
+/*--Menus--*/
+.visible {
+  display: block !important; }
+
+.search {
+  padding: 5px 10px !important; }
+
+.noChoice {
+  color: #adadad; }
+
+.noChoice:hover {
+  background: #fff !important;
+  color: #adadad !important; }
+
+#volume-icon-li {
+  width: 1em; }
+
+.focus img {
+  border: 2px solid rgba(225, 225, 225, 0.5) !important;
+  border-radius: 6px; }
+
+span.focus:after {
+  background: #146ece;
+  border-radius: 15px;
+  text-shadow: none !important; }
+
+span#pageTitle {
+  font-weight: bold;
+  white-space: nowrap; }
