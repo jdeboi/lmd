@@ -1,6 +1,9 @@
 {
   "name": "bottles",
   "version": "1.0.0",
+  "engines": {
+    "node": "12.x"
+  }
   "description": "send a message in a bottle to the quarantine void",
   "main": "index.js",
   "scripts": {
