@@ -7,3 +7,10 @@ heroku config:set GITHUB_USERNAME=joesmith
 
 env variable
 https://devcenter.heroku.com/articles/heroku-local
+
+
+basically have to reinstall node if ec2 restarts unless you create AMI
+https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-up-node-on-ec2-instance.html
+
+cross origin on videos
+https://github.com/ml5js/ml5-library/issues/217

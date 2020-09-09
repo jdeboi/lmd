@@ -55,7 +55,7 @@ class MoonLight extends React.Component {
     waterMesh.position.y = -9;
     water = new WaterMaterial("water", scene, new Vector2(1024, 1024));
     water.backFaceCulling = true;
-    water.bumpTexture = new Texture(process.env.PUBLIC_URL+"/assets/shared/waterbump.png", scene);
+    water.bumpTexture = new Texture(window.AWS+"/shared/waterbump.png", scene);
     water.windForce = -5;
     water.waveHeight = 0.8;
     water.bumpHeight = 0.3;
@@ -68,7 +68,7 @@ class MoonLight extends React.Component {
     var skybox = Mesh.CreateBox("skyBox", skyW, scene);
     var skyboxMaterial = new StandardMaterial("skyBox", scene);
     skyboxMaterial.backFaceCulling = false;
-    skyboxMaterial.reflectionTexture = new CubeTexture(process.env.PUBLIC_URL+"/assets/shared/sky/moon/moon", scene);
+    skyboxMaterial.reflectionTexture = new CubeTexture(window.AWS+"/shared/sky/moon/moon", scene);
     skyboxMaterial.reflectionTexture.coordinatesMode = Texture.SKYBOX_MODE;
     skyboxMaterial.diffuseColor = new Color3(0, 0, 0);
     skyboxMaterial.specularColor = new Color3(0, 0, 0);
@@ -78,7 +78,7 @@ class MoonLight extends React.Component {
 
 
     // Ground
-    var groundTexture = new Texture(process.env.PUBLIC_URL+"/assets/shared/black_sand.jpg", scene);
+    var groundTexture = new Texture(window.AWS+"/shared/black_sand.jpg", scene);
     groundTexture.vScale = groundTexture.uScale = 10;
     var groundMaterial = new StandardMaterial("groundMaterial", scene);
     groundMaterial.diffuseTexture = groundTexture;
@@ -90,7 +90,7 @@ class MoonLight extends React.Component {
 
 
     // drain
-    // var drainTex = new BABYLON.Texture(process.env.PUBLIC_URL+"/assets/mars/drain1.png", scene);
+    // var drainTex = new BABYLON.Texture(window.AWS+"/mars/drain1.png", scene);
     // addDrain(scene);
     // loadWhale(scene);
     // addInnerTubes(4, scene, water);

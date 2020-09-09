@@ -14,10 +14,12 @@ import Frame from '../../shared/Frame/Frame';
 import ReactPlayer from 'react-player';
 import Glasses from '../../shared/Glasses/Glasses';
 
-import gym from './assets/gym.mp4';
-import swings from './assets/swings.mp4';
-import wallpaper from './assets/wallpaper3.jpg';
+// import gym from './assets/gym.mp4';
+// import swings from './assets/swings.mp4';
+// import wallpaper from './assets/wallpaper3.jpg';
 // import tree from './assets/tree.png';
+
+
 
 class JungleGyms extends React.Component {
 
@@ -45,8 +47,8 @@ class JungleGyms extends React.Component {
       nodes = {};
     }
 
-
-    var pipeTexture = THREE.ImageUtils.loadTexture(process.env.PUBLIC_URL + "/assets/jungleGyms/caution.jpg");
+    const texUrl = window.AWS + "/jungleGyms/caution.jpg";
+    var pipeTexture = new THREE.TextureLoader().load(  texUrl );//THREE.ImageUtils.loadTexture(texUrl);
     pipeTexture.wrapS = pipeTexture.wrapT = THREE.RepeatWrapping;
     pipeTexture.repeat.set(.2, .2);
 
@@ -121,16 +123,7 @@ class JungleGyms extends React.Component {
       //   self.object3d.add(teapot);
       // };
       var makeElbowJoint = function(fromPosition, toPosition, tangentVector) {
-        // elbow
-        // var r = 0.2;
-        // elbow = new THREE.Mesh(
-        //   new THREE.TorusGeometry(r, pipeRadius, 8, 8, Math.PI / 2),
-        //   self.material
-        // );
-        // elbow.position.copy(fromPosition);
-        // self.object3d.add(elbow);
 
-        // "elball" (not a proper elbow)
         var elball = new THREE.Mesh(
           new THREE.SphereGeometry(pipeRadius, 8, 8),
           self.material
@@ -138,48 +131,6 @@ class JungleGyms extends React.Component {
         elball.position.copy(fromPosition);
         self.object3d.add(elball);
 
-        // extrude an elbow joint
-
-        // there's THREE.EllipseCurve... but that's 2D
-
-        // function ArcCurve(scale) {
-        //   THREE.Curve.call(this);
-        //   this.scale = scale === undefined ? 1 : scale; // TODO: remove me probably
-        // }
-
-        // ArcCurve.prototype = Object.create(THREE.Curve.prototype);
-        // ArcCurve.prototype.constructor = ArcCurve;
-
-        // ArcCurve.prototype.getPoint = function(t) {
-        //   function circ(t) {
-        //     return Math.sqrt(1 - t * t);
-        //   }
-
-        //   var tx = t;
-        //   var ty = circ(t);
-        //   var tz = 0;
-
-        //   return new THREE.Vector3(tx, ty, tz).multiplyScalar(this.scale);
-        // };
-
-        // var extrudePath = new ArcCurve(0.1);
-
-        // var extrudePath = new THREE.CatmullRomCurve3([fromPosition, toPosition], false); // not enough to define the curve
-
-        // var extrusionSegments = 100;
-        // var radiusSegments = 10;
-        // var radius = pipeRadius;
-        // var tubeGeometry = new THREE.TubeBufferGeometry(
-        //   extrudePath,
-        //   extrusionSegments,
-        //   radius,
-        //   radiusSegments,
-        //   false
-        // );
-
-        // var elbow = new THREE.Mesh(tubeGeometry, self.material);
-        // elbow.position.copy(toPosition);
-        // self.object3d.add(elbow);
       };
 
       // if (getAt(self.currentPosition)) {
@@ -437,17 +388,9 @@ class JungleGyms extends React.Component {
     // groundMesh.position.set(-500, -1000, -4000);
     // scene.add( groundMesh );
 
-    /////////////////////wallpaper
-    // const loader = new THREE.CubeTextureLoader();
-    // const texture = loader.load([
-    //   wallpaper,
-    //   wallpaper,
-    //   wallpaper,
-    //   wallpaper,
-    //   wallpaper,
-    //   wallpaper
-    // ]);
-    var wall = new THREE.TextureLoader().load( wallpaper );
+
+    const url = window.AWS+"/jungleGyms/wallpaper3.jpg";
+    var wall = new THREE.TextureLoader().load(  url );
     wall.wrapS = THREE.RepeatWrapping;
     wall.wrapT = THREE.RepeatWrapping;
     wall.repeat.set( 4, 4 );
@@ -461,7 +404,7 @@ class JungleGyms extends React.Component {
     addVines();
     // addCubeParts();
     function addVines() {
-      var modelPath = process.env.PUBLIC_URL + "/assets/jungleGyms/vines/";
+      var modelPath = window.AWS + "/jungleGyms/vines/";
       var model = "Vines";
       var onProgress = function ( xhr ) {
         if ( xhr.lengthComputable ) {
@@ -506,23 +449,24 @@ class JungleGyms extends React.Component {
       //
     }
 
-    function addCubeParts() {
-      var outlineTex = THREE.ImageUtils.loadTexture(process.env.PUBLIC_URL + "/assets/jungleGyms/outline.png");
-      outlineTex.wrapS = outlineTex.wrapT = THREE.RepeatWrapping;
-      outlineTex.repeat.set(1, 1);
+    // function addCubeParts() {
+    //   var outlineTex = THREE.ImageUtils.loadTexture(window.AWS + "/jungleGyms/outline.png");
+    //   outlineTex.wrapS = outlineTex.wrapT = THREE.RepeatWrapping;
+    //   outlineTex.repeat.set(1, 1);
+    //
+    //   var geometry = new THREE.BoxGeometry( 1920*.01 , 1080*.01, 40 );
+    //   var material = new THREE.MeshPhongMaterial( {color: 0x00aa00,  opacity: .3, transparent: true, side:THREE.DoubleSide} ); //
+    //   var cube = new THREE.Mesh( geometry, material );
+    //   cube.position.set(0, 0, 0);
+    //   scene.add( cube );
+    //
+    //   var geometry = new THREE.BoxBufferGeometry( 1920*.01 , 1080*.01, 40 );
+    //   var edges = new THREE.EdgesGeometry( geometry );
+    //   var line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0x00ff00, linewidth: 24 } ) );
+    //
+    //   scene.add( line );
+    // }
 
-      var geometry = new THREE.BoxGeometry( 1920*.01 , 1080*.01, 40 );
-      var material = new THREE.MeshPhongMaterial( {color: 0x00aa00,  opacity: .3, transparent: true, side:THREE.DoubleSide} ); //
-      var cube = new THREE.Mesh( geometry, material );
-      cube.position.set(0, 0, 0);
-      scene.add( cube );
-
-      var geometry = new THREE.BoxBufferGeometry( 1920*.01 , 1080*.01, 40 );
-      var edges = new THREE.EdgesGeometry( geometry );
-      var line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0x00ff00, linewidth: 24 } ) );
-
-      scene.add( line );
-    }
     function look() {
       // TODO: never don't change the view (except maybe while clearing)
       if (firstLoad || chance(1 / 2)) {
@@ -621,16 +565,16 @@ class JungleGyms extends React.Component {
     // const dimX3 = (window.innerWidth - dimW3)/2;
     // const dimY3 = (windowHeight - dimH3)/2;
 
+    const gymUrl = window.AWS+"/jungleGyms/gym.mp4"
     return (
-      <div className="JungleGyms">
-        <div className="Frame-box">
+      <div className="JungleGyms Sketch">
           <div className="threeCanvas" ref={ref => (this.mount = ref)} />
-          <video ref={ref => (this.videoGym = ref)} autoPlay muted loop className="gym" >
-            <source src={gym} type="video/mp4" ></source>
+          <video crossOrigin="anonymous" ref={ref => (this.videoGym = ref)} autoPlay muted loop className="gym" >
+            <source src={gymUrl} type="video/mp4" ></source>
             Your browser does not support HTML5 video.
           </video>
-          <video ref={ref => (this.videoSwings = ref)} autoPlay muted loop className="gym" >
-            <source src={swings} type="video/mp4" ></source>
+          <video crossOrigin="anonymous" ref={ref => (this.videoSwings = ref)} autoPlay muted loop className="gym" >
+            <source src={window.AWS+"/jungleGyms/swings.mp4"} type="video/mp4" ></source>
             Your browser does not support HTML5 video.
           </video>
 
@@ -650,7 +594,6 @@ class JungleGyms extends React.Component {
             /> */}
             {/*getFrame(dimW*.5, dimH*.5, dimX, dimY, "jungle gyms", swings)*/}
             <Glasses />
-          </div>
         </div>
       )
     }

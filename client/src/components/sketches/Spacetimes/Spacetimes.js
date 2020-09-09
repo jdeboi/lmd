@@ -3,7 +3,6 @@ import Frame from '../../shared/Frame/Frame';
 // import FrameSimple from '../../shared/Frame/FrameSimple';
 import './Spacetimes.css';
 
-import parrot from './assets/parrot.png';
 
 class Spacetimes extends React.Component {
   // https://codepen.io/JohJakob/pen/YPxgwo
@@ -113,7 +112,7 @@ class Spacetimes extends React.Component {
             if (val < 150) title = "...";
 
             return (<GridFrame title={title} isMinimized={false} isHidden={this.state.currentFrame < i ? true : false}
-              dimW={val} dimH={val} key={i} src={parrot} dimX={x} dimY={y} />);
+              dimW={val} dimH={val} key={i} src={ window.AWS+"/spacetimes/parrot.png"} dimX={x} dimY={y} />);
 
             }
 

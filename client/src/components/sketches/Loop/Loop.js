@@ -5,8 +5,8 @@ import DesktopIcon from '../../shared/DesktopIcon/DesktopIcon';
 import './Loop.css';
 // import ReactScrollWheelHandler from "react-scroll-wheel-handler";
 // import Balloon from './assets/balloonsprite.png';
-import cloudsVid from  "../MacbookAir/assets/clouds3d.mp4";
-import folder from  "./assets/folder.png";
+// import cloudsVid from  "../MacbookAir/assets/clouds3d.mp4";
+// import folder from  "./assets/folder.png";
 
 // Babylon
 import { Scene, AnaglyphUniversalCamera, UniversalCamera,PostProcess, Effect, HemisphericLight, Vector3, Vector2, SceneLoader,AssetContainer, MeshBuilder, StandardMaterial,  VideoTexture, CubeTexture, Color3,Color4, Mesh, Texture } from 'babylonjs';
@@ -103,7 +103,7 @@ class Loop extends React.Component {
     waterMesh.position.y = -9;
     water = new WaterMaterial("water", scene, new Vector2(1024, 1024));
     water.backFaceCulling = true;
-    water.bumpTexture = new Texture(process.env.PUBLIC_URL+"/assets/shared/waterbump.png", scene);
+    water.bumpTexture = new Texture(window.AWS+"/shared/waterbump.png", scene);
     water.windForce = -5;
     water.waveHeight = 0.8;
     water.bumpHeight = 0.3;
@@ -116,7 +116,7 @@ class Loop extends React.Component {
     // var skybox = Mesh.CreateBox("skyBox", skyW, scene);
     // var skyboxMaterial = new StandardMaterial("skyBox", scene);
     // skyboxMaterial.backFaceCulling = false;
-    // skyboxMaterial.reflectionTexture = new CubeTexture(process.env.PUBLIC_URL+"/assets/shared/sky/moon/moon", scene);
+    // skyboxMaterial.reflectionTexture = new CubeTexture(window.AWS+"/shared/sky/moon/moon", scene);
     // skyboxMaterial.reflectionTexture.coordinatesMode = Texture.SKYBOX_MODE;
     // skyboxMaterial.diffuseColor = new Color3(0, 0, 0);
     // skyboxMaterial.specularColor = new Color3(0, 0, 0);
@@ -126,7 +126,7 @@ class Loop extends React.Component {
 
 
     // Ground
-    var groundTexture = new Texture(process.env.PUBLIC_URL+"/assets/shared/sand2.jpg", scene);
+    var groundTexture = new Texture(window.AWS+"/shared/sand2.jpg", scene);
     groundTexture.vScale = groundTexture.uScale = 10;
     var groundMaterial = new StandardMaterial("groundMaterial", scene);
     groundMaterial.diffuseTexture = groundTexture;
@@ -138,7 +138,7 @@ class Loop extends React.Component {
 
 
     // drain
-    // var drainTex = new BABYLON.Texture(process.env.PUBLIC_URL+"/assets/mars/drain1.png", scene);
+    // var drainTex = new BABYLON.Texture(window.AWS+"/mars/drain1.png", scene);
     // addDrain(scene);
     // loadWhale(scene);
     // addInnerTubes(4, scene, water);

@@ -9,27 +9,27 @@
   overflow: hidden;
   background-color: blue;
   position: relative;
-  background-image: url(./assets/grid.jpg);
+  background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/mars/grid.jpg);
   background-repeat: repeat;
   background-size: 350px 350px;
   border: 35px solid transparent;
   padding: 0px;
   box-sizing: border-box;
-  border-image: url(./assets/tile.png) 150 round; }
+  border-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/mars/tile.png) 150 round; }
   .Mars .fullContent {
     width: 100%;
     height: 100%; }
   .Mars .bigCrater {
-    background-image: url(./assets/pool.png);
+    background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/mars/pool.png);
     width: 100%;
     background-repeat: no-repeat; }
   .Mars .diving {
-    background-image: url(./assets/diving2.gif);
+    background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/mars/diving2.gif);
     height: 152px;
     width: 500px;
     background-size: 100% 100%; }
   .Mars .smallCrater {
-    background-image: url(./assets/crater.png);
+    background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/mars/crater.png);
     height: 100%;
     width: 100%;
     background-position: cover;
@@ -44,7 +44,7 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: url(./assets/pool/yellowchair.png);
+    background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/mars/pool/yellowchair.png);
     background-size: 200px 200px; }
   .Mars .umbrellas {
     width: 90%;

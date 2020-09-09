@@ -90,7 +90,7 @@ class Mars extends React.Component {
     var skybox = Mesh.CreateBox("skyBox", skyW, scene);
     var skyboxMaterial = new StandardMaterial("skyBox", scene);
     skyboxMaterial.backFaceCulling = false;
-    skyboxMaterial.reflectionTexture = new CubeTexture(process.env.PUBLIC_URL+"/assets/mars/skybox/grid", scene);
+    skyboxMaterial.reflectionTexture = new CubeTexture(window.AWS+"/mars/skybox/grid", scene);
     skyboxMaterial.reflectionTexture.coordinatesMode = Texture.SKYBOX_MODE;
     skyboxMaterial.diffuseColor = new Color3(0, 0, 0);
     skyboxMaterial.specularColor = new Color3(0, 0, 0);
@@ -102,14 +102,14 @@ class Mars extends React.Component {
     waterMesh.position.y = -9;
     water = new WaterMaterial("water", scene, new Vector2(1024, 1024));
     water.backFaceCulling = true;
-    water.bumpTexture = new Texture(process.env.PUBLIC_URL+"/assets/shared/waterbump.png", scene);
+    water.bumpTexture = new Texture(window.AWS+"/shared/waterbump.png", scene);
     waterGo();
     water.colorBlendFactor = 0;
     water.addToRenderList(skybox);
     waterMesh.material = water;
 
     // drain
-    // var drainTex = new BABYLON.Texture(process.env.PUBLIC_URL+"/assets/mars/drain1.png", scene);
+    // var drainTex = new BABYLON.Texture(window.AWS+"/mars/drain1.png", scene);
     // addDrain(scene);
     // loadWhale(scene);
     // addInnerTubes(4, scene, water);
@@ -281,7 +281,7 @@ class Mars extends React.Component {
       swimmer.position.y = -14;
       swimmer.position.z = -4+i*4;
       swimmer.rotation.x = Math.PI/2;
-      var tex = new Texture(process.env.PUBLIC_URL+"/assets/mars/swimmers/swimmer" + (i+1) + ".png", scene);
+      var tex = new Texture(window.AWS+"/mars/swimmers/swimmer" + (i+1) + ".png", scene);
       swimmer.material  = new StandardMaterial("myMaterial", scene);
       // swimmer.material.diffuseColor = new Color3(1,1,1);
       swimmer.material.diffuseTexture = tex;
@@ -378,7 +378,7 @@ class Mars extends React.Component {
       tubeMat.alpha = 0.8;
 
       // texture
-      // var tubeTex = new Texture(process.env.PUBLIC_URL+"/assets/shared/black_sand.jpg", scene);
+      // var tubeTex = new Texture(window.AWS+"/shared/black_sand.jpg", scene);
       // tubeTex.vScale = groundTexture.uScale = 20.0;
       // tubeMat.diffuseTexture = groundTexture;
 

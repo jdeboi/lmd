@@ -143,7 +143,7 @@ class HardDrives extends React.Component {
 
 
     // Ground
-    var groundTexture = new Texture(process.env.PUBLIC_URL+"/assets/shared/black_sand.jpg", scene);
+    var groundTexture = new Texture(window.AWS+"/shared/black_sand.jpg", scene);
     groundTexture.vScale = groundTexture.uScale = 20.0;
 
     var groundMaterial = new StandardMaterial("groundMaterial", scene);
@@ -158,7 +158,7 @@ class HardDrives extends React.Component {
     var waterMesh = Mesh.CreateGround("waterMesh", 512*scaler, 512*scaler, 32, scene, false);
     water = new WaterMaterial("water", scene, new Vector2(1024, 1024));
     water.backFaceCulling = true;
-    water.bumpTexture = new Texture(process.env.PUBLIC_URL+"/assets/shared/waterbump.png", scene);
+    water.bumpTexture = new Texture(window.AWS+"/shared/waterbump.png", scene);
     water.windForce = -5;
     water.waveHeight = 0.8;
     water.bumpHeight = 0.3;
@@ -178,7 +178,7 @@ class HardDrives extends React.Component {
     // var skybox = Mesh.CreateBox("skyBox", skyW, scene);
     // var skyboxMaterial = new StandardMaterial("skyBox", scene);
     // skyboxMaterial.backFaceCulling = false;
-    // skyboxMaterial.reflectionTexture = new CubeTexture(process.env.PUBLIC_URL+"/assets/shared/sky/moon/moon", scene);
+    // skyboxMaterial.reflectionTexture = new CubeTexture(window.AWS+"/shared/sky/moon/moon", scene);
     // skyboxMaterial.reflectionTexture.coordinatesMode = Texture.SKYBOX_MODE;
     // skyboxMaterial.diffuseColor = new Color3(0, 0, 0);
     // skyboxMaterial.specularColor = new Color3(0, 0, 0);
@@ -376,7 +376,7 @@ function addSkybox(scene) {
   var skyboxMaterial = new StandardMaterial("skyBox", scene);
   skyboxMaterial.backFaceCulling = false;
   // skyboxMaterial.reflectionTexture = new CubeTexture(process.env.PUBLIC_URL+"/textures/skybox/TropicalSunnyDay", scene);
-  skyboxMaterial.reflectionTexture = new CubeTexture(process.env.PUBLIC_URL+"/assets/hardDrives/skybox/skybox", scene);
+  skyboxMaterial.reflectionTexture = new CubeTexture(window.AWS+"/hardDrives/skybox/skybox", scene);
   skyboxMaterial.reflectionTexture.coordinatesMode = Texture.SKYBOX_MODE;
   skyboxMaterial.diffuseColor = new Color3(0, 0, 0);
   skyboxMaterial.specularColor = new Color3(0, 0, 0);
@@ -641,7 +641,7 @@ function addInnerTubes(num, scene, water) {
     tubeMat.alpha = 0.8;
 
     // texture
-    // var tubeTex = new Texture(process.env.PUBLIC_URL+"/assets/shared/black_sand.jpg", scene);
+    // var tubeTex = new Texture(window.AWS+"/shared/black_sand.jpg", scene);
     // tubeTex.vScale = groundTexture.uScale = 20.0;
     // tubeMat.diffuseTexture = groundTexture;
 

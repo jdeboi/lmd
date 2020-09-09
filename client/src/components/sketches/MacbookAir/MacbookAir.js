@@ -7,8 +7,8 @@ import Slider from '@material-ui/core/Slider';
 // import indigo from '@material-ui/core/colors/indigo';
 
 import ReactPlayer from 'react-player'
-import mainVid from  "./assets/noframe.mp4";
-import cloudsVid from  "./assets/clouds3d.mp4";
+// import mainVid from  "./assets/noframe.mp4";
+// import cloudsVid from  "./assets/clouds3d.mp4";
 
 import Glasses from '../../shared/Glasses/Glasses';
 
@@ -36,6 +36,8 @@ class MacbookAir extends React.Component {
 
   componentDidMount() {
     this.interval = setInterval(this.resetPlayer, 22000);
+
+    console.log(window.AWS + "/macbookAir/noframe.mp4")
   }
   // componentDidMount() {
   //   this.updateDimensions();
@@ -160,7 +162,7 @@ class MacbookAir extends React.Component {
               loop
               width={windowDim.w}
               height={windowDim.h}
-              url={mainVid}
+              url={window.AWS + "/macbookAir/noframe.mp4"}
               playbackRate={this.state.videoSpeed}
               />
           }
@@ -210,7 +212,7 @@ class MacbookAir extends React.Component {
             playbackRate={this.state.videoSpeed}
             />*/}
             <video ref={this.cloudsRef} autoPlay muted loop className="backgroundCover">
-              <source src={cloudsVid} type="video/mp4" ></source>
+              <source src={window.AWS + "/macbookAir/clouds3d.mp4"} type="video/mp4" ></source>
               Your browser does not support HTML5 video.
             </video>
             {this.getMainWindow(windowDim)}

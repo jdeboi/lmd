@@ -16,8 +16,8 @@ import Frame from '../../shared/Frame/Frame';
 import { Scene, AnaglyphUniversalCamera, UniversalCamera,PostProcess, Effect, HemisphericLight, Vector3, Vector2, SceneLoader,AssetContainer, MeshBuilder, StandardMaterial,  VideoTexture, CubeTexture, Color3,Color4, Mesh, Texture } from 'babylonjs';
 import BabylonScene from '../../shared/Babylon.jsx';
 
-import candles0 from './assets/candles0.gif';
-import candles1 from './assets/candles1.gif';
+// import candles0 from './assets/candles0.gif';
+// import candles1 from './assets/candles1.gif';
 
 var camera;
 var seed = 1;
@@ -64,7 +64,7 @@ class Dinner extends React.Component {
     var skybox = Mesh.CreateBox("skyBox", skyW, scene);
     var skyboxMaterial = new StandardMaterial("skyBox", scene);
     skyboxMaterial.backFaceCulling = false;
-    skyboxMaterial.reflectionTexture = new CubeTexture(process.env.PUBLIC_URL+"/assets/dinner/skybox/dinner", scene);
+    skyboxMaterial.reflectionTexture = new CubeTexture(window.AWS+"/dinner/skybox/dinner", scene);
     skyboxMaterial.reflectionTexture.coordinatesMode = Texture.SKYBOX_MODE;
     skyboxMaterial.diffuseColor = new Color3(0, 0, 0);
     skyboxMaterial.specularColor = new Color3(0, 0, 0);
@@ -73,7 +73,7 @@ class Dinner extends React.Component {
 
 
     // Ground
-    var groundTexture = new Texture(process.env.PUBLIC_URL+"/assets/dinner/table.jpg", scene);
+    var groundTexture = new Texture(window.AWS+"/dinner/table.jpg", scene);
     groundTexture.vScale = groundTexture.uScale = 1;
     var groundMaterial = new StandardMaterial("groundMaterial", scene);
     groundMaterial.diffuseTexture = groundTexture;
@@ -144,7 +144,7 @@ class Dinner extends React.Component {
 
       { <BabylonScene  className="noSelect backgroundCover" antialias onSceneReady={this.onSceneReady} onRender={this.onRender} id='babylon-canvas' />}
       <Frame title="" x={400} y={400} width={400} content={
-        <img src={candles0} width={"100%"} height={"100%"} />
+        <img src={window.AWS+"/dinner/candles0.gif"} width={"100%"} height={"100%"} />
       }
 
       />
@@ -154,8 +154,8 @@ class Dinner extends React.Component {
         console.log(i, y);
         let w = 100 + 80*Math.sin(i*Math.PI/5);
         return (
-          <Frame title="" x={500+i*80} y={y} width={100} content={
-            <img src={candles1} width={"100%"} height={"100%"} />
+          <Frame key={i} title="" x={500+i*80} y={y} width={100} content={
+            <img src={window.AWS+"/dinner/candles0.gif"} width={"100%"} height={"100%"} />
           }
 
           />

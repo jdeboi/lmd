@@ -38,7 +38,7 @@ class Three extends Component {
       mount.appendChild( renderer.domElement );
 
 
-      const path = process.env.PUBLIC_URL+"/assets/three/3D/hole.jpg";
+      const path = window.AWS+"/three/3D/hole.jpg";
       effect = new AnaglyphPhoto( renderer, video.current, width, height);
       effect.setSize( width, height );
       // effect.setSize( 512, 512 );

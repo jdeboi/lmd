@@ -168,7 +168,7 @@ function addSkybox(scene) {
   var skyboxMaterial = new StandardMaterial("skyBox", scene);
   skyboxMaterial.backFaceCulling = false;
   // skyboxMaterial.reflectionTexture = new CubeTexture(process.env.PUBLIC_URL+"/textures/skybox/TropicalSunnyDay", scene);
-  skyboxMaterial.reflectionTexture = new CubeTexture(process.env.PUBLIC_URL+"/assets/hardDrives/skybox/skybox", scene);
+  skyboxMaterial.reflectionTexture = new CubeTexture(window.AWS+"/hardDrives/skybox/skybox", scene);
   skyboxMaterial.reflectionTexture.coordinatesMode = Texture.SKYBOX_MODE;
   skyboxMaterial.diffuseColor = new Color3(0, 0, 0);
   skyboxMaterial.specularColor = new Color3(0, 0, 0);
@@ -394,7 +394,7 @@ function addInnerTubes(num, scene, water) {
     tubeMat.alpha = 0.8;
 
     // texture
-    // var tubeTex = new Texture(process.env.PUBLIC_URL+"/assets/shared/black_sand.jpg", scene);
+    // var tubeTex = new Texture(window.AWS+"/shared/black_sand.jpg", scene);
     // tubeTex.vScale = groundTexture.uScale = 20.0;
     // tubeMat.diffuseTexture = groundTexture;
 

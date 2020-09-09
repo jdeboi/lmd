@@ -14,19 +14,9 @@ import ReactPlayer from 'react-player'
 import Button from '@material-ui/core/Button';
 import ReactAudioPlayer from 'react-audio-player';
 
-import mainVid from  "./assets/waves2_lines.mp4";
-// import mainVid from  "./assets/unused/waves_nobright.mp4";
-// import wavesVid from  "./assets/sand.mp4";
-// import mainVid from  "./assets/wave_darkgreen.mp4";
-// import wavesVid from  "./assets/waveforms_green.mp4";
-import wavesVid from  "../MacbookAir/assets/clouds3d.mp4";
-import dove from  "./assets/dove_t.gif";
-
-import shellSound from "./assets/shell_sound.wav";
-
-// import txtFile from './assets/txt.png';
-// import P5Wrapper from 'react-p5-wrapper';
-// import sketch from './waveSketch';
+// import mainVid from  "./assets/waves2_lines.mp4";
+// import dove from  "./assets/dove_t.gif";
+// import shellSound from "./assets/shell_sound.wav";
 
 import Glasses from '../../shared/Glasses/Glasses';
 
@@ -34,11 +24,11 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import communion from './assets/emojis/communion.png';
-import praise from './assets/emojis/praise.png';
-import prayer from './assets/emojis/prayer.png';
-import open from './assets/emojis/open.png';
-import halo from './assets/emojis/halo.png';
+// import communion from './assets/emojis/communion.png';
+// import praise from './assets/emojis/praise.png';
+// import prayer from './assets/emojis/prayer.png';
+// import open from './assets/emojis/open.png';
+// import halo from './assets/emojis/halo.png';
 
 import { TwitterTimelineEmbed, TwitterShareButton, TwitterFollowButton, TwitterHashtagButton, TwitterMentionButton, TwitterTweetEmbed, TwitterMomentShare, TwitterDMButton, TwitterVideoEmbed, TwitterOnAirButton } from 'react-twitter-embed';
 
@@ -269,7 +259,7 @@ class WaveForms extends React.Component {
                 width={this.dimW}
                 height={this.dimH}
                 >
-                <source src={mainVid} type="video/mp4" ></source>
+                <source src={window.AWS + "/waveforms/waves2_lines.mp4"} type="video/mp4" ></source>
               </video>
               <div className="liveStream"><span className="live">LIVE</span><span className="time">{time}</span><span className="eye"><FontAwesomeIcon icon={faEye} /> {watchers}</span></div>
             </div>
@@ -278,7 +268,7 @@ class WaveForms extends React.Component {
           />
 
         <Frame className="doveFrame" title="" windowStyle={{background: "transparent"}} content={
-            <img src={dove} width={90} height={90} />
+            <img src={window.AWS + "/waveforms/dove_t.gif"} width={90} height={90} />
           }
           width={90} height={90} x={this.state.windowX+this.dimW/2-45} y={this.state.windowY+this.dimH/2-45}
           />
@@ -286,7 +276,7 @@ class WaveForms extends React.Component {
 
         {/*this.getEarMenu()*/}
         <ReactAudioPlayer
-          src={shellSound}
+          src={window.AWS + "/waveforms/shell_sound.wav"}
           autoPlay={true}
           volume={this.state.volume}
           controls={false}
@@ -299,9 +289,10 @@ class WaveForms extends React.Component {
         <div className="emojis">
           {this.state.emojis.map((emoji, i) => {
             const id = emoji.id;
-            const imgs = [prayer, communion, praise, open, halo];
+            const imgs = ["prayer", "communion", "praise", "open", "halo"];
+            const url = window.AWS + "/waveforms/emojis/" + imgs[id] + ".png" ;
             return (
-              <img key={i} src={imgs[id]} style={{top:`${emoji.y}px`, left:`${emoji.x}px`, opacity: emoji.opacity}} />
+              <img key={i} src={url} style={{top:`${emoji.y}px`, left:`${emoji.x}px`, opacity: emoji.opacity}} />
             )
           })}
         </div>
@@ -312,12 +303,12 @@ class WaveForms extends React.Component {
           width={400}  x={800} y={400}
           />
         <div className="bottomBar">
-          <Button variant="contained" onClick={() => this.addEmoji(0)}><img src={prayer} /></Button>
-          <Button variant="contained" onClick={() => this.addEmoji(1)}><img src={communion} /></Button>
-          <Button variant="contained" onClick={() => this.addEmoji(2)}><img src={praise} /></Button>
+          <Button variant="contained" onClick={() => this.addEmoji(0)}><img src={window.AWS + "/waveforms/emojis/prayer.png"} /></Button>
+          <Button variant="contained" onClick={() => this.addEmoji(1)}><img src={window.AWS + "/waveforms/emojis/communion.png"} /></Button>
+          <Button variant="contained" onClick={() => this.addEmoji(2)}><img src={window.AWS + "/waveforms/emojis/praise.png"} /></Button>
 
-          <Button variant="contained" onClick={() => this.addEmoji(3)}><img src={open} /></Button>
-          <Button variant="contained" onClick={() => this.addEmoji(4)}><img src={halo} /></Button>
+          <Button variant="contained" onClick={() => this.addEmoji(3)}><img src={window.AWS + "/waveforms/emojis/open.png"} /></Button>
+          <Button variant="contained" onClick={() => this.addEmoji(4)}><img src={window.AWS + "/waveforms/emojis/halo.png"} /></Button>
         </div>
         <Glasses y={30} />
       </div>

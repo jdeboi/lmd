@@ -131,7 +131,7 @@ const onSceneReady = scene => {
   myPlaneB.position.y = -vh/2;
   myPlaneB.position.z = -vh/2;
   myPlaneB.material = new StandardMaterial("material",scene);
-  myPlaneB.material.diffuseTexture = new Texture(process.env.PUBLIC_URL+"/assets/jungleGyms/yogamat_gr.png", scene);
+  myPlaneB.material.diffuseTexture = new Texture(window.AWS+"/jungleGyms/yogamat_gr.png", scene);
   myPlaneB.material.diffuseTexture.uScale = 5;
   myPlaneB.material.diffuseTexture.vScale = 5;
   myPlaneB.material.alpha = 0.6;
@@ -207,7 +207,7 @@ function addSkybox(scene) {
 
   var skyboxMaterial = new StandardMaterial("skyBox", scene);
   skyboxMaterial.backFaceCulling = false;
-  skyboxMaterial.reflectionTexture = new CubeTexture(process.env.PUBLIC_URL+"/assets/jungleGyms/galaxy", scene);
+  skyboxMaterial.reflectionTexture = new CubeTexture(window.AWS+"/jungleGyms/galaxy", scene);
   skyboxMaterial.reflectionTexture.coordinatesMode = Texture.SKYBOX_MODE;
   skyboxMaterial.diffuseColor = new Color3(0, 0, 0);
   skyboxMaterial.specularColor = new Color3(0, 0, 0);
@@ -219,7 +219,7 @@ function addSkybox(scene) {
 function addVideoDome(scene) {
   let videoDome = new VideoDome(
     "videoDome",
-    [process.env.PUBLIC_URL+"/assets/jungleGyms/gym.mp4"], {
+    [window.AWS+"/jungleGyms/gym.mp4"], {
         resolution: 64,
         clickToPlay: true,
         halfDomeMode: false,

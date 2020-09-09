@@ -113,7 +113,7 @@ function addWater(scene) {
   var waterMesh = Mesh.CreateGround("waterMesh", 512, 512, 32, scene, false);
   water = new WaterMaterial("water", scene, new Vector2(1024, 1024));
   water.backFaceCulling = true;
-  water.bumpTexture = new Texture(process.env.PUBLIC_URL+"/assets/shared/waterbump.png", scene);
+  water.bumpTexture = new Texture(window.AWS+"/shared/waterbump.png", scene);
   water.windForce = -5;
   water.waveHeight = 0.8;
   water.bumpHeight = 0.3;
@@ -130,18 +130,18 @@ function addSkybox(scene) {
   var skyboxMaterial = new StandardMaterial("skyBox", scene);
   skyboxMaterial.backFaceCulling = false;
   // skyboxMaterial.reflectionTexture = new CubeTexture(process.env.PUBLIC_URL+"/textures/skybox/TropicalSunnyDay", scene);
-  skyboxMaterial.reflectionTexture = new CubeTexture(process.env.PUBLIC_URL+"/assets/shared/sky/galaxy/galaxy", scene);
+  skyboxMaterial.reflectionTexture = new CubeTexture(window.AWS+"/shared/sky/galaxy/galaxy", scene);
   skyboxMaterial.reflectionTexture.coordinatesMode = Texture.SKYBOX_MODE;
   skyboxMaterial.diffuseColor = new Color3(0, 0, 0);
   skyboxMaterial.specularColor = new Color3(0, 0, 0);
   skyboxMaterial.disableLighting = true;
   skybox.material = skyboxMaterial;
 
-  // var dome = new PhotoDome("textureName", process.env.PUBLIC_URL+"/assets/shared/sky/dome/hubble2.png", {resolution: 32, size: 1000}, scene);
+  // var dome = new PhotoDome("textureName", window.AWS+"/shared/sky/dome/hubble2.png", {resolution: 32, size: 1000}, scene);
 }
 
 function addGround(scene) {
-  var groundTexture = new Texture(process.env.PUBLIC_URL+"/assets/shared/grid.jpg", scene);
+  var groundTexture = new Texture(window.AWS+"/shared/grid.jpg", scene);
   groundTexture.vScale = groundTexture.uScale = 2.0;
 
   var groundMaterial = new StandardMaterial("groundMaterial", scene);

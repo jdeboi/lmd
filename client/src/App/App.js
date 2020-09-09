@@ -38,7 +38,7 @@ import indigo from '@material-ui/core/colors/indigo';
 import pink from '@material-ui/core/colors/pink';
 import red from '@material-ui/core/colors/red';
 
-
+window.AWS = "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches";
 
 // All the following keys are optional.
 // We try our best to provide a great default value.
@@ -74,6 +74,8 @@ class App extends React.Component {
     this.setHands = this.setHands.bind(this);
     this.updateDimensions = this.updateDimensions.bind(this);
     this.getDeviceDimensions = this.getDeviceDimensions.bind(this);
+
+
   }
 
 

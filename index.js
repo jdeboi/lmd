@@ -69,6 +69,8 @@ io.on("connection", (socket) => {
   });
 });
 
+process.env.AWS = "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches";
+
 // Choose the port and start the server
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log(`Listening on port ${PORT}`));

@@ -140,7 +140,7 @@ module.exports = function( THREE, path ) {
 		_scene.add( _mesh );
 
 		// background
-    var _texBG = new new THREE.TextureLoader().load(path);
+    var _texBG = new THREE.TextureLoader().load(path);
 		var _materialBG = new THREE.MeshBasicMaterial( { color: 0xffffff, map: _texBG } );
 		var _meshBG = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ), _materialBG );
 		_sceneBG.add( _meshBG );
