@@ -14,3 +14,6 @@ https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-up-nod
 
 cross origin on videos
 https://github.com/ml5js/ml5-library/issues/217
+
+heroku local with nodemon
+nodemon --exec "heroku local" --signal SIGTERM

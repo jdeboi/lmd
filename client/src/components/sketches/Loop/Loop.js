@@ -13,9 +13,12 @@ import { Scene, AnaglyphUniversalCamera, UniversalCamera,PostProcess, Effect, He
 import BabylonScene from '../../shared/Babylon.jsx';
 import { WaterMaterial } from 'babylonjs-materials';
 
+
 var camera, water, waterMesh;
 var tubes = [];
 var seed = 1;
+
+
 
 class Loop extends React.Component {
   // https://codepen.io/JohJakob/pen/YPxgwo
@@ -35,12 +38,10 @@ class Loop extends React.Component {
       mapDivs: []
     }
 
-
     this.divRef = React.createRef();
     this.preventDefault = e => e.preventDefault()
 
     this.numImages = 51;
-
 
     this.wheel = this.wheel.bind(this);
     this.setImages = this.setImages.bind(this);
@@ -55,6 +56,7 @@ class Loop extends React.Component {
   componentWillUnmount() {
     this.divRef.current.removeEventListener('wheel', this.preventDefault);
   }
+
 
   setImages() {
     const {imageIndex} = this.state;

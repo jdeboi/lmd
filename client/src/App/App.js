@@ -155,7 +155,7 @@ class App extends React.Component {
               <Route  path="/dinner" component={Dinner} />
               <Route  path="/altars" component={Altar} />
               <Route  path="/xfinity-depths" render={() => (<Loop dimensions={dimensions} />)}/>
-              <Route  path="/glory-in-the-cloud" render={() => (<WaveForms cursor={this.state.cursorID} />)} />
+              <Route  path="/cloud-confessional" render={() => (<WaveForms cursor={this.state.cursorID} />)} />
               <Route  path="/moon-light" component={MoonLight} />
               <Route  path="/three" component={Three} />
 

@@ -16,10 +16,11 @@ const server = http.createServer(app);
 
 const io = socketIo(server);
 
-// const TweetStream = require('./TweetStream');
-// const myStream = new TweetStream(io);
+const TweetStream = require('./TweetStream');
+const myStream = new TweetStream(io);
+
 const TweetFinder = require('./TweetFinder');
-const tweetFinder = new TweetFinder();
+
 
 // Serve our api route /cow that returns a custom talking text cow
 app.get('/api/cow/:say', cors(), async (req, res, next) => {
@@ -43,9 +44,12 @@ app.get('/api/cow/', cors(), async (req, res, next) => {
 })
 
 
-app.get('/api/get10/', cors(), async (req, res, next) => {
+app.get('/api/get/:query', cors(), async (req, res, next) => {
+  const tf = new TweetFinder();
   try {
-    const tweets = await tweetFinder.getRequest("quarantine");
+    const query = decodeURI(req.params.query);
+    // console.log("QUERY", query);
+    const tweets = await tf.findTweets(query);
     res.json({ tweets });
   } catch (err) {
     next(err);
@@ -69,7 +73,7 @@ io.on("connection", (socket) => {
   });
 });
 
-process.env.AWS = "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches";
+
 
 // Choose the port and start the server
 const PORT = process.env.PORT || 5000;

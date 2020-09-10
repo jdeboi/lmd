@@ -4,41 +4,57 @@ const needle = require('needle');
 // To set environment variables on Mac OS X, run the export command below from the terminal:
 // export BEARER_TOKEN='YOUR-TOKEN'
 
-var TweetFinder = function() {}
+var TweetFinder = function() {
 
-TweetFinder.prototype.getRequest = async function(query) {
   const token = process.env.TWITTER_V2_BEARER;
   const endpointUrl = 'https://api.twitter.com/2/tweets/search/recent'
 
-  // Edit query parameters below
-  const params = {
-    'query': query
-    // 'tweet.fields': 'author_id'
+  this.getRequest = async function(query) {
+
+    // Edit query parameters below
+
+    // advanced queries https://github.com/igorbrigadir/twitter-advanced-search
+    const params = {
+      'query': query + " -RT lang:en",
+      'tweet.fields': 'attachments,author_id,created_at,public_metrics',
+      'expansions': 'author_id',
+      'user.fields': 'profile_image_url,url'
+    }
+
+    const callback = function(err, res) {
+      console.log("calling callback in needle... dunno why");
+    };
+
+    const res = await needle('get', endpointUrl, params,
+    { headers: {
+      "authorization": `Bearer ${token}`
+    }},
+    callback
+  )
+
+
+
+    if(res.body) {
+      return res.body;
+    } else {
+      throw new Error ('Unsuccessful request')
+    }
   }
 
-  const res = await needle('get', endpointUrl, params, { headers: {
-    "authorization": `Bearer ${token}`
-  }})
-
-  if(res.body) {
-    return res.body;
-  } else {
-    throw new Error ('Unsuccessful request')
+  this.findTweets = async function(query) {
+    try {
+      // Make request
+      const response = await this.getRequest(query);
+      // console.log(response)
+      return response;
+    } catch(e) {
+      console.log(e);
+      return null;
+    }
+    return null;
   }
 }
 
-module.exports = TweetFinder;
+// TweetFinder.prototype
 
-// (async () => {
-//
-//     try {
-//         // Make request
-//         const response = await getRequest();
-//         console.log(response)
-//
-//     } catch(e) {
-//         console.log(e);
-//         process.exit(-1);
-//     }
-//     process.exit();
-//   })();
+module.exports = TweetFinder;

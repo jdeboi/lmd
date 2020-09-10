@@ -67,9 +67,6 @@
     overflow: hidden;
     position: absolute;
     pointer-events: none; }
-  .WaveForms button {
-    height: 100px;
-    font-size: 50px; }
   .WaveForms .ears .ear {
     background: transparent; }
   .WaveForms .moon {
@@ -123,40 +120,46 @@
   .WaveForms .tweet {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 10px 15px 10px 15px;
     font-family: "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
     font-size: 10px;
     font-weight: bold;
     line-height: 16px;
     background-color: rgba(255, 255, 255, 0.6); }
+    .WaveForms .tweet hr {
+      border: 1px solid #aaaadd88; }
     .WaveForms .tweet .tweet-top {
       display: flex;
       flex-direction: row;
       color: white;
-      height: 30px; }
+      height: 50px;
+      padding-bottom: 5px; }
       .WaveForms .tweet .tweet-top .tweeter-icon {
-        width: 50px;
-        height: 40px;
         flex: 0 0 auto;
-        background-image: url(https://img.icons8.com/material/4ac144/256/user-male.png);
-        background-size: 40px 40px;
-        background-repeat: no-repeat; }
+        width: 50px;
+        height: 50px;
+        border-radius: 50%; }
+        .WaveForms .tweet .tweet-top .tweeter-icon div {
+          margin: 0 auto;
+          height: 100%;
+          width: auto; }
       .WaveForms .tweet .tweet-top .tweeter {
-        flex: 1 1 auto; }
-        .WaveForms .tweet .tweet-top .tweeter span:hover {
-          text-decoration: underline; }
-        .WaveForms .tweet .tweet-top .tweeter .person {
+        flex: 1 1 auto;
+        padding-top: 10px;
+        padding-left: 10px;
+        align-items: center; }
+        .WaveForms .tweet .tweet-top .tweeter div a {
+          text-decoration: none; }
+          .WaveForms .tweet .tweet-top .tweeter div a:hover {
+            text-decoration: underline; }
+        .WaveForms .tweet .tweet-top .tweeter .person a {
           color: #6666cc;
-          width: 100px;
           font-size: 18px; }
-        .WaveForms .tweet .tweet-top .tweeter .tweet-handle, .WaveForms .tweet .tweet-top .tweeter .tweet-time {
+        .WaveForms .tweet .tweet-top .tweeter .tweet-handle a {
           color: #aaaadd;
-          width: 100px;
           font-size: 14px; }
-        .WaveForms .tweet .tweet-top .tweeter .tweet-handle {
-          padding-left: 10px; }
-        .WaveForms .tweet .tweet-top .tweeter .tweet-time {
-          padding-left: 5px; }
+      .WaveForms .tweet .tweet-top .tweet-time {
+        font-size: 20px; }
       .WaveForms .tweet .tweet-top .twitter-icon {
         width: 30px;
         flex: 0 0 auto;
@@ -168,11 +171,63 @@
       color: #6666cc;
       font-size: 16px;
       font-weight: normal;
-      line-height: 20px; }
+      line-height: 20px;
+      padding-bottom: 5px; }
+      .WaveForms .tweet .tweet-content span {
+        vertical-align: baseline; }
       .WaveForms .tweet .tweet-content a {
-        color: inherit;
+        color: #111199;
         font-weight: normal;
         text-decoration: none;
         outline: 0 none; }
         .WaveForms .tweet .tweet-content a:hover {
           text-decoration: underline; }
+    .WaveForms .tweet .tweet-metrics {
+      font-size: 14px;
+      color: #6666cc;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: stretch; }
+      .WaveForms .tweet .tweet-metrics div {
+        flex: 1 1 auto;
+        text-align: center;
+        line-height: 20px; }
+        .WaveForms .tweet .tweet-metrics div span {
+          padding-left: 5px;
+          text-align: center;
+          vertical-align: middle; }
+  .WaveForms .confessional {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    background-color: rgba(0, 0, 50, 0.1); }
+    .WaveForms .confessional .text-line0 {
+      padding: 0px 0 20px 0; }
+    .WaveForms .confessional .text-line1 {
+      padding: 10px 0 20px 0; }
+    .WaveForms .confessional .text-line2 {
+      padding-bottom: 5px; }
+    .WaveForms .confessional .MuiSelect-selectMenu {
+      min-height: 14px; }
+    .WaveForms .confessional .MuiOutlinedInput-multiline, .WaveForms .confessional .MuiOutlinedInput-inputMarginDense {
+      background-color: rgba(0, 0, 50, 0.1);
+      color: white;
+      border-color: white;
+      max-height: 80px; }
+    .WaveForms .confessional .confessional-time {
+      display: flex;
+      flex-direction: row; }
+      .WaveForms .confessional .confessional-time .MuiSelect-selectMenu {
+        height: 14px; }
+      .WaveForms .confessional .confessional-time .field {
+        flex: 1 1 auto;
+        padding: 0px 5px 0px 5px;
+        min-width: 150px; }
+    .WaveForms .confessional button {
+      height: 30px;
+      width: 100%;
+      color: white;
+      border-color: white;
+      background-color: rgba(0, 0, 50, 0.2); }

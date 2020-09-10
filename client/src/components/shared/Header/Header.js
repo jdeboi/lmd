@@ -55,7 +55,7 @@ class Header extends React.Component {
     const inProgressMenu = [
       {title: "chrome altars", link:"/altars", shortcut: "&#x2318;7"},
       {title: "pothole city esc", link:"/pothole-city-esc", shortcut: "&#x2318;6"},
-      {title: "glory in the cloud", link:"/glory-in-the-cloud", shortcut: "&#x2318;7"},
+      {title: "cloud confessional", link:"/cloud-confessional", shortcut: "&#x2318;7"},
       {title: "moon light", link:"/moon-light", shortcut: "&#x2318;7"},
       {title: "three", link:"/three", shortcut: "&#x2318;7"},
       {title: "table for 2", link:"/dinner", shortcut: "&#x2318;7"},

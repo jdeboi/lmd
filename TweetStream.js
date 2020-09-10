@@ -3,24 +3,33 @@ const socketIo = require("socket.io");
 
 var TweetStream = function(io){
 
+  // The code below sets the bearer token from your environment variables
+  // To set environment variables on Mac OS X, run the export command below from the terminal:
+  // export BEARER_TOKEN='YOUR-TOKEN'
   const token = process.env.TWITTER_V2_BEARER;
-  const rulesURL = 'https://api.twitter.com/2/tweets/search/stream/rules'
+  const rulesURL = 'https://api.twitter.com/2/tweets/search/stream/rules';
   const streamURL = 'https://api.twitter.com/2/tweets/search/stream';
+
   // Edit rules as desired here below
   const rules = [
-    { 'value': 'dog has:images -is:retweet', 'tag': 'dog pictures' },
+    // { 'value': 'dog has:images -is:retweet', 'tag': 'dog pictures' },
     // { 'value': 'cat has:images -grumpy', 'tag': 'cat pictures' },
-    // { 'value': '#quarantine has:images', 'tag': 'quarantine' },
-
+    { 'value': 'dog', 'tag': 'psalm' }
   ];
 
   async function getAllRules() {
 
+    const callback = function(response, err) {
+      console.log("Called back 1");
+      if (err) console.log(err);
+      // else console.log(resp);
+    };
     const response = await needle('get', rulesURL, { headers: {
       "authorization": `Bearer ${token}`
-    }})
+    }}, callback)
 
     if (response.statusCode !== 200) {
+      console.log("NO BODY");
       throw new Error(response.body);
       return null;
     }
@@ -29,7 +38,7 @@ var TweetStream = function(io){
   }
 
   async function deleteAllRules(rules) {
-
+    console.log("DELETING RULES");
     if (!Array.isArray(rules.data)) {
       return null;
     }
@@ -42,10 +51,14 @@ var TweetStream = function(io){
       }
     }
 
+    const callback = function(resp, err) {
+      console.log("Called back 2");
+    };
+
     const response = await needle('post', rulesURL, data, {headers: {
       "content-type": "application/json",
       "authorization": `Bearer ${token}`
-    }})
+    }}, callback)
 
     if (response.statusCode !== 200) {
       throw new Error(response.body);
@@ -62,10 +75,13 @@ var TweetStream = function(io){
       "add": rules
     }
 
+    const callback = function(resp, err) {
+      console.log("Called back 3");
+    };
     const response = await needle('post', rulesURL, data, {headers: {
       "content-type": "application/json",
       "authorization": `Bearer ${token}`
-    }})
+    }}, callback)
 
     if (response.statusCode !== 201) {
       throw new Error(response.body);
@@ -91,15 +107,14 @@ var TweetStream = function(io){
     stream.on('data', data => {
       try {
         const json = JSON.parse(data);
-        // console.log(json);
-        console.log("tweeted");
-        io.sockets.emit('tweet', json);
+        io.emit("tweet", data);
+        console.log("TWEETED", json);
       } catch (e) {
+        console.log("nope")
         // Keep alive signal received. Do nothing.
       }
     }).on('error', error => {
       if (error.code === 'ETIMEDOUT') {
-        io.sockets.emit('error');
         stream.emit('timeout');
       }
     });
@@ -108,7 +123,8 @@ var TweetStream = function(io){
 
   }
 
-  async function init() {
+
+  (async () => {
     let currentRules;
 
     try {
@@ -122,8 +138,8 @@ var TweetStream = function(io){
       await setRules();
 
     } catch (e) {
-      console.error(e);
-      process.exit(-1);
+      console.error("KILLING", JSON.stringify(e));
+      // process.exit(-1);
     }
 
     // Listen to the stream.
@@ -143,10 +159,7 @@ var TweetStream = function(io){
       streamConnect(token);
     })
 
-  }
-
-  init();
-};
-
+  })();
+}
 
 module.exports = TweetStream;

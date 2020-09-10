@@ -410,7 +410,7 @@ function getRandomNum(val) {
 
 function addBottles(scene, water) {
   // var container = new AssetContainer(scene);
-  var url = process.env.PUBLIC_URL + "/assets/hardDrives/Corona/"
+  var url = window.AWS + "/hardDrives/Corona/"
   SceneLoader.LoadAssetContainer(url, "Corona2.obj", scene, function (container) {
     var meshes = container.meshes;
     // var materials = container.materials;
@@ -499,7 +499,7 @@ function addBottles(scene, water) {
 
 function addPalms(scene) {
   var container = new AssetContainer(scene);
-  var url = process.env.PUBLIC_URL + "/assets/hardDrives/palm/";
+  var url = window.AWS + "/hardDrives/palm/";
   SceneLoader.LoadAssetContainer(url, "QueenPalmTree.obj", scene, function (container) {
     var meshes = container.meshes;
 
@@ -531,7 +531,7 @@ function addPalms(scene) {
 
 function addLimes(scene) {
   var container = new AssetContainer(scene);
-  var url = process.env.PUBLIC_URL + "/assets/hardDrives/lime/";
+  var url = window.AWS + "/hardDrives/lime/";
   SceneLoader.LoadAssetContainer(url, "lime.obj", scene, function (container) {
     var meshes = container.meshes;
     console.log("mmm", meshes)
@@ -582,7 +582,7 @@ function addLimes(scene) {
 
 function addDuckies(scene) {
   var container = new AssetContainer(scene);
-  var url = process.env.PUBLIC_URL + "/assets/hardDrives/duck/";
+  var url = window.AWS + "/hardDrives/duck/";
   SceneLoader.LoadAssetContainer(url, "duck.obj", scene, function (container) {
     var meshes = container.meshes;
     console.log("mmm", meshes)

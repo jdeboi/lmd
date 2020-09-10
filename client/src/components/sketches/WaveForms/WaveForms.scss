@@ -9,6 +9,7 @@ $tweetColPrimary: #6666cc;
 $tweetColSecondary: #aaaadd; //#000011;
 $tweetColTertiary: #111199;
 $tweetColHover: #aaaaff;
+$tweetColHr: #aaaadd88;
 
 .WaveForms {
   top:0;
@@ -118,11 +119,11 @@ $tweetColHover: #aaaaff;
     position: absolute;
     pointer-events: none;
   }
-
-  button {
-    height: 100px;
-    font-size: 50px;
-  }
+  //
+  // button {
+  //   height: 100px;
+  //   font-size: 50px;
+  // }
 
   .ears {
     // background-image: transparent;
@@ -236,7 +237,7 @@ $tweetColHover: #aaaaff;
   .tweet {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 10px 15px 10px 15px;
     // font-family: consoleFont, sans-serif;
     font-family: "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
     font-size: 10px;
@@ -244,56 +245,76 @@ $tweetColHover: #aaaaff;
     line-height: 16px;
     background-color: rgba(255, 255, 255, .6);
 
+    hr {
+      border: 1px solid $tweetColHr;
+    }
+
     .tweet-top {
       display: flex;
       flex-direction: row;
       color: white;
-      height: 30px;
+      height: 50px;
+      padding-bottom: 5px;
 
       .tweeter-icon {
-        width: 50px;
-        height: 40px;
-        // background-color: blue;
         flex: 0 0 auto;
-        background-image: url(https://img.icons8.com/material/4ac144/256/user-male.png);
-        background-size: 40px 40px;
-        background-repeat: no-repeat;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+
+        div {
+          margin: 0 auto;
+          height: 100%;
+          width: auto;
+          // background-image: url(https://img.icons8.com/material/4ac144/256/user-male.png);
+          // background-repeat: no-repeat;
+        }
+
+
       }
 
       .tweeter {
         // width: 200px;
         flex: 1 1 auto;
+        padding-top: 10px;
+        padding-left: 10px;
+        align-items: center;
 
+        div a {
+          text-decoration: none;
 
-        span {
           &:hover {
             // color: $tweetColHover;
             text-decoration: underline;
           }
         }
-        .person {
+
+        .person a {
+
           color: $tweetColPrimary;
-          width: 100px;
+          // width: 100px;
           font-size: 18px;
 
         }
 
-        .tweet-handle, .tweet-time {
+        .tweet-handle a {
           color: $tweetColSecondary;
-          width: 100px;
+          // width: 100px;
           font-size: 14px;
 
         }
 
         .tweet-handle {
-            padding-left: 10px;
-        }
-
-        .tweet-time {
-          padding-left: 5px;
+          // padding-left: 10px;
         }
 
 
+
+      }
+
+      .tweet-time {
+        // padding-left: 5px;
+        font-size: 20px;
       }
 
       .twitter-icon {
@@ -318,10 +339,14 @@ $tweetColHover: #aaaaff;
       font-size: 16px;
       font-weight: normal;
       line-height: 20px;
-      // padding-bottom: 10px;
+      padding-bottom: 5px;
+
+      span {
+        vertical-align: baseline;
+      }
 
       a {
-        color: inherit;
+        color: $tweetColTertiary;
         font-weight: normal;
         text-decoration: none;
         outline: 0 none;
@@ -332,8 +357,89 @@ $tweetColHover: #aaaaff;
         }
       }
     }
+
+    .tweet-metrics {
+      font-size: 14px;
+      color: $tweetColPrimary;
+      display: flex;
+      flex-direction: row;
+      // align-items: center;
+      justify-content: center;
+      align-items: stretch;
+
+      div {
+        flex: 1 1 auto;
+        text-align: center;
+        line-height: 20px;
+        // vertical-align: middle;
+
+        span {
+          padding-left: 5px;
+          text-align: center;
+          vertical-align: middle;
+        }
+      }
+    }
   }
 
+  .confessional {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    background-color: rgba(0, 0, 50, .1);
+
+    .item {
+      // padding-bottom: 15px;
+    }
+
+    .text-line0 {
+      padding: 0px 0 20px 0;
+    }
+    .text-line1 {
+      padding: 10px 0 20px 0;
+    }
+    .text-line2{
+      padding-bottom: 5px;
+    }
+    .box {
+      // background-color: rgba(0, 0, 0, .2);
+    }
+    .MuiSelect-selectMenu {
+      min-height:14px;
+    }
+
+    .MuiOutlinedInput-multiline, .MuiOutlinedInput-inputMarginDense {
+      background-color: rgba(0, 0, 50, .1);
+      color: white;
+      border-color: white;
+      max-height: 80px;
+    }
+    .confessional-time {
+      display: flex;
+      flex-direction: row;
+
+      .MuiSelect-selectMenu {
+        height: 14px;
+      }
+
+      .field {
+        flex: 1 1 auto;
+        // width: 150px;
+        padding: 0px 5px 0px 5px;
+        min-width: 150px;
+      }
+    }
+
+
+    button {
+      height: 30px;
+      width: 100%;
+      color: white;
+      border-color: white;
+      background-color: rgba(0, 0, 50, .2);
+    }
+  }
   // .earCursor-0 {
   //   cursor:url(./assets/cursors/0.png), auto !important;
   // }
