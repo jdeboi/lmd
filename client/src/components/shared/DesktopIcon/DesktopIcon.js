@@ -72,10 +72,20 @@ class DesktopIcon extends React.Component {
             <div className="desktop-text">{this.props.title}</div>
           </div>
         </Draggable>
-        <Frame title="test" isHidden={isHidden} onHide={this.onHide.bind(this)} x={this.props.box.x} y={this.props.box.y} width={this.props.box.w} height={this.props.box.h} content={this.props.frameContent}
-          />
+        {!this.props.disableWindow?this.getFrame():<div></div>}
       </div>
     );
+
+
+  }
+
+  getFrame() {
+    const {isHidden} = this.state;
+
+    return(
+      <Frame title={this.props.title} isHidden={isHidden} onHide={this.onHide.bind(this)} x={this.props.box.x} y={this.props.box.y} width={this.props.box.w} height={this.props.box.h} content={this.props.frameContent} />
+
+    )
   }
 }
 

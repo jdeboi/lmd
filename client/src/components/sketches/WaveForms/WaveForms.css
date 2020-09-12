@@ -106,15 +106,35 @@
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #1e03fc42));
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center; }
+    flex-wrap: nowrap; }
     .WaveForms .bottomBar button {
       margin-top: 5px;
       width: 50px;
       height: 50px;
-      background: transparent;
+      font-size: 24px;
+      background: transparent; }
+    .WaveForms .bottomBar .bar-vid {
+      flex: 1 1 auto;
+      color: white; }
+      .WaveForms .bottomBar .bar-vid button {
+        color: #6666cc; }
+    .WaveForms .bottomBar .bar-emojis {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: row;
+      justify-content: center; }
+      .WaveForms .bottomBar .bar-emojis button {
+        flex: 0 0 auto; }
+        .WaveForms .bottomBar .bar-emojis button img {
+          width: 35px;
+          height: 35px; }
+    .WaveForms .bottomBar .bar-good-bad {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
       flex: 0 0 auto; }
-      .WaveForms .bottomBar button img {
+      .WaveForms .bottomBar .bar-good-bad img {
         width: 35px;
         height: 35px; }
   .WaveForms .tweet {
@@ -211,10 +231,11 @@
       padding-bottom: 5px; }
     .WaveForms .confessional .MuiSelect-selectMenu {
       min-height: 14px; }
+    .WaveForms .confessional .MuiInputLabel-outlined.MuiInputLabel-shrink {
+      color: #00000066; }
     .WaveForms .confessional .MuiOutlinedInput-multiline, .WaveForms .confessional .MuiOutlinedInput-inputMarginDense {
       background-color: rgba(0, 0, 50, 0.1);
-      color: white;
-      border-color: white;
+      color: #00000066;
       max-height: 80px; }
     .WaveForms .confessional .confessional-time {
       display: flex;
@@ -228,6 +249,12 @@
     .WaveForms .confessional button {
       height: 30px;
       width: 100%;
-      color: white;
-      border-color: white;
       background-color: rgba(0, 0, 50, 0.2); }
+  .WaveForms .confession-txt {
+    padding: 20px;
+    color: #6666cc;
+    background: rgba(255, 255, 255, 0.3); }
+  .WaveForms .DesktopIcon .desktop-text {
+    box-shadow: -40px -40px 40px #ffffff;
+    font-size: 18px;
+    font-family: monospace; }

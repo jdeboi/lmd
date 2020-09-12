@@ -1,3 +1,9 @@
+images to deal with
+* waveforms divine gif
+* waveforms devil png (added to s3)
+* confessions txt png
+* mars bubbles1 (added to s3/mars)
+
 created using:
 
 https://medium.com/@chloechong.us/how-to-deploy-a-create-react-app-with-an-express-backend-to-heroku-32decfee6d18

@@ -1,6 +1,28 @@
 
 @import "../styles/constants.scss";
 
+.App.overflow-all{
+  overflow: scroll;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display:block;
+
+  .App-Content {
+    overflow: scroll;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display:block;
+  }
+
+}
+
+
 .App {
   background-color: black;
   height: 100%;
@@ -43,7 +65,10 @@
     align-items: stretch;
 
     overflow: hidden;
+
   }
+
+
 
   // .Frame-box {
   //   /* padding-top: 36px; */

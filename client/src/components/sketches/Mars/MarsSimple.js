@@ -13,21 +13,17 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import poolVid0 from './assets/pool/mars_0.mp4';
-import poolVid1 from './assets/pool/mars_1.mp4';
-import poolVid2 from './assets/pool/mars_2.mp4';
-import poolVid3 from './assets/pool/mars_3.mp4';
-// Other components
-// import Frame from '../../Universal/Frame/Frame';
-// import FrameSimple from '../../Universal/Frame/FrameSimple';
 
-// Material UI
-// import { makeStyles } from '@material-ui/core/styles';
-// import Grid from '@material-ui/core/Grid';
-// import TextField from '@material-ui/core/TextField';
-// import Button from '@material-ui/core/Button';
+
+
+// import poolVid0 from './assets/pool/mars_0.mp4';
+// import poolVid1 from './assets/pool/mars_1.mp4';
+// import poolVid2 from './assets/pool/mars_2.mp4';
+// import poolVid3 from './assets/pool/mars_3.mp4';
+
 
 import Glasses from '../../shared/Glasses/Glasses';
+
 
 var camera, water, waterMesh;
 var tubes = [];
@@ -37,17 +33,27 @@ class Mars extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.poolVid0 = window.AWS+"/mars/pool/mars_0.mp4"
+    this.poolVid1 = window.AWS+"/mars/pool/mars_1.mp4"
+    this.poolVid2 = window.AWS+"/mars/pool/mars_2.mp4"
+    this.poolVid3 = window.AWS+"/mars/pool/mars_3.mp4"
+
+
     this.state = {
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
       chairY: 0,
       radioValue: "5ft",
-      poolVid: poolVid1
+      poolVid: this.poolVid1
     }
 
     this.buttonClick = this.buttonClick.bind(this);
     this.chairUpdate = this.chairUpdate.bind(this);
     this.handleRadioChange = this.handleRadioChange.bind(this);
+
+    this.changeWater = this.changeWater.bind(this);
+
   }
 
 
@@ -55,11 +61,13 @@ class Mars extends React.Component {
     this.updateDimensions();
     window.addEventListener("resize", this.updateDimensions.bind(this));
     this.inverval = setInterval(this.chairUpdate, 50);
+    this.intervalWater = setInterval(this.changeWater, 2300);
   }
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions.bind(this));
     clearInterval(this.interval);
+    clearInterval(this.intervalWater);
   }
 
   updateDimensions() {
@@ -72,6 +80,10 @@ class Mars extends React.Component {
     this.setState({chairY});
   }
 
+  changeWater() {
+    const num = Math.floor(Math.random()*4);
+    this.buttonClick(num);
+  }
 
   onSceneReady(scene) {
     // const camera = new UniversalCamera("UniversalCamera", new Vector3(0, 1, -25), scene);
@@ -118,7 +130,7 @@ class Mars extends React.Component {
 
 
   buttonClick(num) {
-    let vids = [poolVid0, poolVid1, poolVid2, poolVid3];
+    let vids = [this.poolVid0, this.poolVid1, this.poolVid2, this.poolVid3];
     this.setState({poolVid: vids[num]});
   }
 
@@ -141,59 +153,28 @@ class Mars extends React.Component {
     pool.w =  548/1080 * pool.h;
 
     const chairs = {
-      w: 600,
-      h: 200,
+      w: 200,
+      h: 600,
       x: pool.x + pool.w + spacing,
       y: pool.y
-    };
-    const smallCrater = {
-      w: 300,
-      h: 300,
-      x: chairs.x + chairs.w + spacing,
-      y: pool.y
-    };
-    const bab = {
-      w: 500,
-      h: pool.h - chairs.h - spacing - toolbarH,
-      y: chairs.y + chairs.h + toolbarH + spacing,
-      x: chairs.x + chairs.w - 500
-    };
-    const board = {
-      w: 500,
-      h: 152,
-      x: smallCrater.x + smallCrater.w - 500,
-      y: pool.y + pool.h - 152
-    };
-    const umbrellas = {
-      w: 80,
-      h: bab.h,
-      x: pool.x + pool.w + spacing,
-      y: chairs.y + chairs.h + toolbarH + spacing
-    };
-
-    const umbrellas2 = {
-      w: umbrellas.w,
-      h: bab.h - umbrellas.h - spacing - toolbarH,
-      x: umbrellas.x,
-      y: umbrellas.y + umbrellas.h + toolbarH + spacing
     };
 
     const tank ={
-      w: smallCrater.w,
-      h: pool.h-smallCrater.h - board.h-2*toolbarH-2*spacing,
-      x: smallCrater.x,
-      y: smallCrater.h + smallCrater.y + toolbarH + spacing
+      w: 300,
+      h: pool.h - chairs.h - toolbarH - spacing,
+      x: chairs.x,
+      y: chairs.y + chairs.h + toolbarH + spacing
     }
 
 
     // const xStart = window.innerWidth-wPool-spacing*2;
     // <div className="smallCrater"></div>
     let {chairY} = this.state;
-    // const chairStyle = {color: "red", backgroundPosition: `0px ${chairY}px`};
-    const chairStyle = {color: "red", backgroundPosition: `${chairY}px 0`};
+    const chairStyle = {color: "red", backgroundPosition: `0px ${chairY}px`};
+    // const chairStyle = {color: "red", backgroundPosition: `${chairY}px 0`};
     return (
       <div className="Mars Sketch">
-        <Frame title="beam me up, betty" content={
+        <Frame title="mars esc" content={
             <div className="bigCrater" style={{height: `${pool.h}px`, backgroundSize: `${pool.w}px ${pool.h}px`}}>
               <video key={this.state.poolVid} style={{height: `${pool.h}px`, width: `${pool.w}px`}} autoPlay muted loop>
                 <source src={this.state.poolVid} type="video/mp4" ></source>
@@ -203,11 +184,7 @@ class Mars extends React.Component {
           }
           width={pool.w} height={pool.h} x={pool.x} y={pool.y}
           />
-        <Frame title="" content={
-            <div className="smallCrater"></div>
-          }
-          width={smallCrater.w} height={smallCrater.h} x={smallCrater.x} y={smallCrater.y}
-          />
+
         <Frame title="" content={
             <div className="tank">
               <button onClick={() => {this.buttonClick(3)}}><span className="swimSign">0</span>ft</button>
@@ -219,29 +196,7 @@ class Mars extends React.Component {
           width={tank.w} height={tank.h} x={tank.x} y={tank.y}
           />
         <Frame title="" content={<div className="blueChair" style={chairStyle}></div>} width={chairs.w} height={chairs.h} x={chairs.x} y={chairs.y}  />
-        <Frame title="" content={
-            <BabylonScene  className="noSelect fullContent" antialias onSceneReady={this.onSceneReady} onRender={this.onRender} id='babylon-canvas' />
-          }
-          width={bab.w} height={bab.h} x={bab.x} y={bab.y}
-          />
-        <Frame title="" content={
-            <div className="diving"></div>
-          }
-          width={board.w} height={board.h} x={board.x} y={board.y}
-          />
-        <Frame title="" content={
-            <div className="umbrellas">
 
-
-            </div>
-          }
-          width={umbrellas.w} height={umbrellas.h} windowStyle={{background: "black"}} x={umbrellas.x} y={umbrellas.y}
-          />
-        {/*<Frame title="" content={
-            <div className="umbrellas2"></div>
-          }
-          width={umbrellas2.w} height={umbrellas2.h} windowStyle={{background: "white"}} x={umbrellas2.x} y={umbrellas2.y}
-          />*/}
         <Glasses />
       </div>
     )

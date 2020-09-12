@@ -2,7 +2,7 @@
   overflow: scroll; }
 
 .Mars {
-  top: 0;
+  top: 30px;
   left: 0;
   width: 100%;
   height: 100%;
@@ -11,11 +11,7 @@
   position: relative;
   background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/mars/grid.jpg);
   background-repeat: repeat;
-  background-size: 350px 350px;
-  border: 35px solid transparent;
-  padding: 0px;
-  box-sizing: border-box;
-  border-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/mars/tile.png) 150 round; }
+  background-size: 350px 350px; }
   .Mars .fullContent {
     width: 100%;
     height: 100%; }
@@ -34,6 +30,18 @@
     width: 100%;
     background-position: cover;
     background-size: 300px 300px; }
+    .Mars .smallCrater div {
+      border-radius: 50%;
+      opacity: .3;
+      height: 50%;
+      width: 54%;
+      position: relative;
+      top: 75px;
+      left: 75px;
+      overflow: hidden;
+      color: red;
+      -webkit-filter: grayscale(100%);
+      filter: grayscale(100%); }
   .Mars .marsCover {
     background-color: rgba(0, 0, 0, 0.3); }
   .Mars .blueTileDiv {
@@ -47,9 +55,44 @@
     background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/mars/pool/yellowchair.png);
     background-size: 200px 200px; }
   .Mars .umbrellas {
-    width: 90%;
-    height: 90%;
-    color: white; }
+    position: absolute;
+    width: 100%;
+    color: white;
+    font-size: 36px;
+    text-align: center;
+    overflow: hidden;
+    background-color: black;
+    background-size: 300% 100%;
+    background-image: url(./assets/Canned/waves.gif); }
+    .Mars .umbrellas .waterCover {
+      position: absolute;
+      top: -10;
+      opacity: 0.2;
+      height: 100%;
+      width: 100%; }
+    .Mars .umbrellas div {
+      width: 100%;
+      margin-top: 10px;
+      margin-left: 1px; }
+      .Mars .umbrellas div span {
+        transform-origin: 0 0;
+        float: left;
+        height: 36px; }
+        .Mars .umbrellas div span .rot90 {
+          transform: rotate(90deg);
+          -webkit-transform: rotate(90deg);
+          -moz-transform: rotate(90deg);
+          -ms-transform: rotate(90deg);
+          -o-transform: rotate(90deg); }
+        .Mars .umbrellas div span .rotNeg90 {
+          transform: rotate(-90deg);
+          -webkit-transform: rotate(-90deg);
+          -moz-transform: rotate(-90deg);
+          -ms-transform: rotate(-90deg);
+          -o-transform: rotate(-90deg); }
+      .Mars .umbrellas div span.water {
+        width: 36px;
+        height: 36px; }
   .Mars .MuiTypography-body1 {
     height: 100px;
     color: white;

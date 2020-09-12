@@ -217,13 +217,48 @@ $tweetColHr: #aaaadd88;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: center;
+
 
     button {
       margin-top: 5px;
       width: 50px;
       height: 50px;
+      font-size: 24px;
       background: transparent;
+    }
+
+    .bar-vid {
+      flex: 1 1 auto;
+      color: white;
+
+
+      button {
+        color: $tweetColPrimary;
+
+      }
+    }
+
+    .bar-emojis {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+
+      button {
+        img {
+          width: 35px;
+          height: 35px;
+        }
+
+        flex: 0 0 auto;
+      }
+    }
+
+    .bar-good-bad {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
 
       img {
         width: 35px;
@@ -231,6 +266,7 @@ $tweetColHr: #aaaadd88;
       }
 
       flex: 0 0 auto;
+
     }
   }
 
@@ -409,10 +445,16 @@ $tweetColHr: #aaaadd88;
       min-height:14px;
     }
 
+    .MuiInputLabel-outlined.MuiInputLabel-shrink  {
+      // color: $tweetColPrimary;
+      color: #00000066;
+    }
+
     .MuiOutlinedInput-multiline, .MuiOutlinedInput-inputMarginDense {
       background-color: rgba(0, 0, 50, .1);
-      color: white;
-      border-color: white;
+      // color: $tweetColPrimary;
+      color: #00000066;
+      // border-color: white;
       max-height: 80px;
     }
     .confessional-time {
@@ -435,8 +477,9 @@ $tweetColHr: #aaaadd88;
     button {
       height: 30px;
       width: 100%;
-      color: white;
-      border-color: white;
+      // color: white;
+      // color: #00000066;
+      // border-color: white;
       background-color: rgba(0, 0, 50, .2);
     }
   }
@@ -458,4 +501,16 @@ $tweetColHr: #aaaadd88;
   // .earCursor-5 {
   //   cursor:url(./assets/cursors/0.png), auto !important;
   // }
+
+  .confession-txt {
+    padding: 20px;
+    color: $tweetColPrimary;
+    background: rgba(255,255,255, .3);
+  }
+
+  .DesktopIcon .desktop-text {
+    box-shadow: -40px -40px 40px #ffffff;
+    font-size: 18px;
+    font-family: monospace;
+  }
 }

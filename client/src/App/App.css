@@ -1,3 +1,20 @@
+.App.overflow-all {
+  overflow: scroll;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block; }
+  .App.overflow-all .App-Content {
+    overflow: scroll;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block; }
+
 .App {
   background-color: black;
   height: 100%;

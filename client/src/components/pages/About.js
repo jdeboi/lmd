@@ -4,10 +4,9 @@ import './Pages.css';
 
 function About() {
   return (
-    <div className="Frame-box">
       <div className="Page">
 
-        <div className="About">
+        <div className="About Sketch">
           <div className="container">
             <h1>Artist Statement</h1>
             <p>Thinking about the simultaneous collapse / expansion of space during quarantine.</p>
@@ -25,7 +24,6 @@ function About() {
             </ul>
           </div>
         </div>
-      </div>
     </div>
   );
 }

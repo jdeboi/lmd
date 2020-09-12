@@ -47,15 +47,18 @@ class Header extends React.Component {
       {title: "hard drives on seashores", link:"/hard-drives-on-seashores", shortcut: "&#x2318;3"},
       {title: "jungle gyms", link:"/jungle-gyms", shortcut: "&#x2318;4"},
       {title: "wasted days are days wasted", link:"/wasted-days-are-days-wasted", shortcut: "&#x2318;5"},
+      {title: "mars esc", link:"/mars-esc", shortcut: "&#x2318;6"},
       {title: "xfinity depths", link:"/xfinity-depths", shortcut: "&#x2318;7"},
+      {title: "cloud confessional", link:"/cloud-confessional", shortcut: "&#x2318;8"},
       // {title: "i got the feels", link:"/i-got-the-feels", shortcut: "&#x2318;8"},
       // {title: "losing my dimension", link:"/losing-my-dimension", shortcut: "&#x2318;9"},
     ];
 
     const inProgressMenu = [
-      {title: "chrome altars", link:"/altars", shortcut: "&#x2318;7"},
-      {title: "pothole city esc", link:"/pothole-city-esc", shortcut: "&#x2318;6"},
-      {title: "cloud confessional", link:"/cloud-confessional", shortcut: "&#x2318;7"},
+      // {title: "chrome altars", link:"/altars", shortcut: "&#x2318;7"},
+
+
+      {title: "confessions", link:"/confessions", shortcut: "&#x2318;7"},
       {title: "moon light", link:"/moon-light", shortcut: "&#x2318;7"},
       {title: "three", link:"/three", shortcut: "&#x2318;7"},
       {title: "table for 2", link:"/dinner", shortcut: "&#x2318;7"},

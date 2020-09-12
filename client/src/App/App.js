@@ -18,6 +18,7 @@ import Spacetimes from '../components/sketches/Spacetimes/Spacetimes';
 import Mars from '../components/sketches/Mars/Mars';
 import WetStreams from '../components/sketches/WetStreams/WetStreams';
 import WaveForms from '../components/sketches/WaveForms/WaveForms';
+import Confessions from '../components/sketches/WaveForms/Confessions';
 
 // under construction
 import Altar from '../components/sketches/Altar/Altar';
@@ -25,6 +26,7 @@ import MoonLight from '../components/sketches/MoonLight/MoonLight';
 import Loop from '../components/sketches/Loop/Loop';
 import Three from '../components/sketches/Three/Three';
 import Dinner from '../components/sketches/Dinner/Dinner';
+import Dig from '../components/sketches/Dig/Dig';
 
 // pages
 import About from '../components/pages/About';
@@ -68,13 +70,14 @@ class App extends React.Component {
       windowHeight: 0,
       wOG: 0,
       hOG: 0,
-      flipped: false
+      flipped: false,
+      classes: "App"
     };
 
     this.setHands = this.setHands.bind(this);
     this.updateDimensions = this.updateDimensions.bind(this);
     this.getDeviceDimensions = this.getDeviceDimensions.bind(this);
-
+    this.addClass = this.addClass.bind(this);
 
   }
 
@@ -131,10 +134,17 @@ class App extends React.Component {
     return dimensions;
   }
 
+  addClass(classn) {
+    let {classes} = this.state;
+    classes += " " + classn;
+    this.setState({classes});
+    //" " + this.state.cursor
+  }
+
   render() {
     let dimensions = this.getDeviceDimensions();
     return (
-      <div className={"App" + " " + this.state.cursor}>
+      <div className={this.state.classes}>
         <MuiThemeProvider theme={theme}>
           <div className="App-Header">
             <div className="BackHeader"></div>
@@ -149,13 +159,17 @@ class App extends React.Component {
               <Route  path="/jungle-gyms" component={JungleGyms} />
               <Route  path="/hard-drives-on-seashores" component={HardDrives} />
               <Route  path="/wasted-days-are-days-wasted" render={() => (<Spacetimes dimensions={dimensions} />)} />
-              <Route  path="/pothole-city-esc" render={() => (<Mars dimensions={dimensions} />)}/>
+              <Route  path="/mars-esc" render={() => (<Mars addClass={this.addClass} dimensions={dimensions} />)}/>
               <Route  path="/wet-streams" component={WetStreams} />
 
               <Route  path="/dinner" component={Dinner} />
               <Route  path="/altars" component={Altar} />
               <Route  path="/xfinity-depths" render={() => (<Loop dimensions={dimensions} />)}/>
               <Route  path="/cloud-confessional" render={() => (<WaveForms cursor={this.state.cursorID} />)} />
+              <Route  path="/confessions" render={() => (<Confessions />)} />
+
+              <Route  path="/dig" render={() => (<Dig addClass={this.addClass} />)} />
+
               <Route  path="/moon-light" component={MoonLight} />
               <Route  path="/three" component={Three} />
 
