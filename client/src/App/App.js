@@ -159,7 +159,7 @@ class App extends React.Component {
               <Route  path="/jungle-gyms" component={JungleGyms} />
               <Route  path="/hard-drives-on-seashores" component={HardDrives} />
               <Route  path="/wasted-days-are-days-wasted" render={() => (<Spacetimes dimensions={dimensions} />)} />
-              <Route  path="/mars-esc" render={() => (<Mars addClass={this.addClass} dimensions={dimensions} />)}/>
+              <Route  path="/esc-to-mars" render={() => (<Mars addClass={this.addClass} dimensions={dimensions} />)}/>
               <Route  path="/wet-streams" component={WetStreams} />
 
               <Route  path="/dinner" component={Dinner} />

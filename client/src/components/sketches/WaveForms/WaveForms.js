@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import Frame from '../../shared/Frame/Frame';
 import DesktopIcon from '../../shared/DesktopIcon/DesktopIcon';
 // import FrameSimple from '../../shared/Frame/FrameSimple';
@@ -41,9 +42,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { TwitterTimelineEmbed, TwitterShareButton, TwitterFollowButton, TwitterHashtagButton, TwitterMentionButton, TwitterTweetEmbed, TwitterMomentShare, TwitterDMButton, TwitterVideoEmbed, TwitterOnAirButton } from 'react-twitter-embed';
 import Webcam from "react-webcam";
 
-import divine from './assets/Canned/divine.gif';
-import devil from './assets/Canned/devil.png';
-import txt from './assets/Canned/txt.png';
+// import divine from './assets/Canned/divine.gif';
+// import devil from './assets/Canned/devil.png';
+// import txt from './assets/Canned/txt.png';
 
 // import socketIOClient from "socket.io-client";
 const processString = require('react-process-string');
@@ -131,7 +132,7 @@ class WaveForms extends React.Component {
     this.handleChange = this.handleChange.bind(this);
 
     this.renderForm = this.renderForm.bind(this);
-    this.renderConfessions = this.renderConfessions.bind(this);
+    // this.renderConfessions = this.renderConfessions.bind(this);
 
 
     this.memberRef0 = React.createRef();
@@ -153,7 +154,7 @@ class WaveForms extends React.Component {
     //   this.setTweet(data);
     // });
 
-    // this.fetchTweets();
+    this.fetchTweets();
 
     this.intervalConfession = setInterval(this.moveConfessions, 30);
   }
@@ -184,7 +185,7 @@ class WaveForms extends React.Component {
   };
 
   async fetchTweets() {
-    const query = encodeURI("psalm");
+    const query = encodeURI("#confession");
     const url = `/api/get/${query}`;
     const response = await fetch(url);
     const initialRes = await response.json();
@@ -383,6 +384,7 @@ class WaveForms extends React.Component {
 
 
     initConfessions() {
+
       let confessions = [
         {txt: "I am not thinking about my partner during sex."},
         {txt: "I said I love you but I didn't mean it."},
@@ -419,7 +421,7 @@ class WaveForms extends React.Component {
     }
 
     renderConfessions() {
-      const {confessions} = this.state;
+      const {confessions, tweets} = this.state;
 
       return (
         <div className="floating-confessions">
@@ -427,10 +429,10 @@ class WaveForms extends React.Component {
           const box={x: 100+i*20, y:100+i*20, w:400};
           return <DesktopIcon key={i} title={"confession " + i} ondblclick={this.ondblclick.bind(this)} x={0} y={confession.y} dx={confession.x} dy={confession.y} box={box}
             content={
-              <img src={txt} width={80} height={80} />
+              <img src={window.AWS+"/waveforms/txt.png"} width={80} height={80} />
             }
             frameContent={
-              <div className="confession-txt">{confession.txt}</div>
+              <div className="confession-txt">{tweets.text}</div>
             }
             />
         })
@@ -440,22 +442,25 @@ class WaveForms extends React.Component {
     );
   }
 
-  onSubmit()  {
-    alert("Thank you for your confession. Uploading to the cloud.");
+  // onSubmit()  {
+  //   alert("Thank you for your confession. Uploading to the cloud.");
     // setTimeout(this.toggleConfessions.bind(this), 4000);
-    this.toggleConfessions();
-  }
+    // this.toggleConfessions();
+    // window.location = process.env.PUBLIC_URL+"/#/confessions"
+  // }
 
-  toggleConfessions() {
-    this.setState({showConfessions: true});
-  }
+  // toggleConfessions() {
+    // this.setState({showConfessions: true});
+    // window.location=
+  // }
 
   render() {
     const {showConfessions} = this.state;
 
     return(
       <div className="WaveForms Sketch">
-        {showConfessions?this.renderConfessions():this.renderForm()}
+        {this.renderForm()}
+         {/*showConfessions?this.renderConfessions():this.renderForm()*/}
         <Glasses y={30} />
       </div>
     );
@@ -496,7 +501,7 @@ class WaveForms extends React.Component {
               /* <img height={130} width={230} src="https://media4.giphy.com/media/UiwxIx9BElaVi/giphy.gif?cid=ecf05e47a8bbe3d9385a466e6febc98bd9d83fe2e23ed054&rid=giphy.gif" />*/
               <div>
                 <Webcam videoConstraints={this.videoConstraints} />
-                <img src={divine} width={"100%"} height={"100%"} style={{opacity:.3, position: "absolute", top: 0, left:0}} />
+                <img src={window.AWS + "/waveforms/divine.gif"} width={"100%"} height={"100%"} style={{opacity:.3, position: "absolute", top: 0, left:0}} />
               </div>
             }
             x={this.state.webX} y={this.state.webY} width={this.videoConstraints.width} height={this.videoConstraints.height}
@@ -556,7 +561,7 @@ class WaveForms extends React.Component {
                 className="box text-line2"
                 size="medium"
                 />
-              <Button variant="outlined" size="small" onClick={this.onSubmit.bind(this)}>submit</Button>
+              <Link to="/confessions"><Button variant="outlined" size="small" >submit</Button></Link>
             </div>
           }
           width={this.tweetW}  x={this.state.tweetX} y={this.state.tweetY}
@@ -576,7 +581,7 @@ class WaveForms extends React.Component {
           </div>
           <div className="bar-good-bad">
             <Button variant="contained" ><img src={window.AWS + "/waveforms/emojis/halo.png"} /></Button>
-            <Button variant="contained" ><img src={devil} /></Button>
+            <Button variant="contained" ><img src={window.AWS + "/waveforms/emojis/devil.png"} /></Button>
           </div>
         </div>
       </div>

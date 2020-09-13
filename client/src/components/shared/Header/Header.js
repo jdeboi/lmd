@@ -47,7 +47,7 @@ class Header extends React.Component {
       {title: "hard drives on seashores", link:"/hard-drives-on-seashores", shortcut: "&#x2318;3"},
       {title: "jungle gyms", link:"/jungle-gyms", shortcut: "&#x2318;4"},
       {title: "wasted days are days wasted", link:"/wasted-days-are-days-wasted", shortcut: "&#x2318;5"},
-      {title: "mars esc", link:"/mars-esc", shortcut: "&#x2318;6"},
+      {title: "esc to mars", link:"/esc-to-mars", shortcut: "&#x2318;6"},
       {title: "xfinity depths", link:"/xfinity-depths", shortcut: "&#x2318;7"},
       {title: "cloud confessional", link:"/cloud-confessional", shortcut: "&#x2318;8"},
       // {title: "i got the feels", link:"/i-got-the-feels", shortcut: "&#x2318;8"},

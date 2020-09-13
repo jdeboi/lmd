@@ -83,7 +83,7 @@ class DesktopIcon extends React.Component {
     const {isHidden} = this.state;
 
     return(
-      <Frame title={this.props.title} isHidden={isHidden} onHide={this.onHide.bind(this)} x={this.props.box.x} y={this.props.box.y} width={this.props.box.w} height={this.props.box.h} content={this.props.frameContent} />
+      <Frame className="FolderOpenFrame" title={this.props.title} isHidden={isHidden} onHide={this.onHide.bind(this)} x={this.props.box.x} y={this.props.box.y} width={this.props.box.w} height={this.props.box.h} content={this.props.frameContent} />
 
     )
   }

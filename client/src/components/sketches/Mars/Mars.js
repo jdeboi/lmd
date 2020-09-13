@@ -30,7 +30,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Glasses from '../../shared/Glasses/Glasses';
 
 // https://media.giphy.com/media/3oEdv9ViYMxVPngmCA/source.gif
-import bubbles from './assets/Canned/bubbles3.gif';
+// import bubbles from './assets/Canned/bubbles3.gif';
 
 var camera, water, waterMesh;
 var tubes = [];
@@ -220,7 +220,7 @@ class Mars extends React.Component {
     const chairStyle = {color: "red", backgroundPosition: `${chairY}px 0`};
     return (
       <div className="Mars Sketch">
-      <Frame title="mars esc" content={
+      <Frame title="esc to mars" content={
         <div className="bigCrater" style={{height: `${pool.h}px`, backgroundSize: `${pool.w}px ${pool.h}px`}}>
         <video className="poolVid" key={this.state.poolVid} style={{height: `${pool.h}px`, width: `${pool.w}px`}} autoPlay muted loop>
         <source src={this.state.poolVid} type="video/mp4" ></source>
@@ -231,7 +231,7 @@ class Mars extends React.Component {
       width={pool.w} height={pool.h} x={pool.x} y={pool.y}
       />
       <Frame title="" content={
-        <div className="smallCrater"><div className="bubbles"><img src={bubbles} width={smallCrater.w} height={smallCrater.h} /></div></div>
+        <div className="smallCrater"><div className="bubbles"><img src={window.AWS+"/mars/bubbles3.gif"} width={smallCrater.w} height={smallCrater.h} /></div></div>
       }
       width={smallCrater.w} height={smallCrater.h} x={smallCrater.x} y={smallCrater.y}
       />

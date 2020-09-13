@@ -16,8 +16,8 @@ const server = http.createServer(app);
 
 const io = socketIo(server);
 
-const TweetStream = require('./TweetStream');
-const myStream = new TweetStream(io);
+// const TweetStream = require('./TweetStream');
+// const myStream = new TweetStream(io);
 
 const TweetFinder = require('./TweetFinder');
 
@@ -48,7 +48,7 @@ app.get('/api/get/:query', cors(), async (req, res, next) => {
   const tf = new TweetFinder();
   try {
     const query = decodeURI(req.params.query);
-    // console.log("QUERY", query);
+    console.log("QUERY", query);
     const tweets = await tf.findTweets(query);
     res.json({ tweets });
   } catch (err) {

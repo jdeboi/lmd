@@ -4,6 +4,8 @@
   overflow: hidden;
   background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/waveforms/sky4.jpg);
   background-size: cover; }
+  .WaveForms .FolderOpenFrame {
+    z-index: 10; }
   .WaveForms .Frame .window {
     background: transparent;
     box-shadow: -40px -40px 40px #ffffff;
