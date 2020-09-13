@@ -193,8 +193,8 @@ class WaveForms extends React.Component {
     if (initialRes.tweets.data) {
       const mode = Math.floor(Math.random()*3);
       // let id = getMostEngagement(mode, initialRes.tweets.data); //Math.floor(Math.random()*10);
-      const tweet = initialRes.tweets.data[0];
-
+      let id = 0;
+      const tweet = initialRes.tweets.data[id];
       const user = initialRes.tweets.includes.users[id];
 
       this.addTweet(tweet, user);
