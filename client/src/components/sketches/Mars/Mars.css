@@ -63,7 +63,7 @@
     overflow: hidden;
     background-color: black;
     background-size: 300% 100%;
-    background-image: url(./assets/Canned/waves.gif); }
+    background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/mars/waves.gif); }
     .Mars .umbrellas .waterCover {
       position: absolute;
       top: -10;
