@@ -39,7 +39,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import open from './assets/emojis/open.png';
 // import halo from './assets/emojis/halo.png';
 
-import { TwitterTimelineEmbed, TwitterShareButton, TwitterFollowButton, TwitterHashtagButton, TwitterMentionButton, TwitterTweetEmbed, TwitterMomentShare, TwitterDMButton, TwitterVideoEmbed, TwitterOnAirButton } from 'react-twitter-embed';
+// import { TwitterTimelineEmbed, TwitterShareButton, TwitterFollowButton, TwitterHashtagButton, TwitterMentionButton, TwitterTweetEmbed, TwitterMomentShare, TwitterDMButton, TwitterVideoEmbed, TwitterOnAirButton } from 'react-twitter-embed';
 import Webcam from "react-webcam";
 
 // import divine from './assets/Canned/divine.gif';
@@ -192,9 +192,11 @@ class WaveForms extends React.Component {
 
     if (initialRes.tweets.data) {
       const mode = Math.floor(Math.random()*3);
-      let id = getMostEngagement(mode, initialRes.tweets.data); //Math.floor(Math.random()*10);
-      const tweet = initialRes.tweets.data[id];
+      // let id = getMostEngagement(mode, initialRes.tweets.data); //Math.floor(Math.random()*10);
+      const tweet = initialRes.tweets.data[0];
+
       const user = initialRes.tweets.includes.users[id];
+
       this.addTweet(tweet, user);
 
 

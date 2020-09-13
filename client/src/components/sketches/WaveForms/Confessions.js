@@ -12,7 +12,7 @@ import ReactAudioPlayer from 'react-audio-player';
 // import shellSound from "./assets/shell_sound.wav";
 
 import Glasses from '../../shared/Glasses/Glasses';
-import txt from './assets/Canned/txt.png';
+// import txt from './assets/Canned/txt.png';
 
 import { faEye,faRetweet, faVideo, faMicrophoneAlt, faMicrophoneAltSlash } from "@fortawesome/free-solid-svg-icons";
 import { faComment, faHeart } from "@fortawesome/free-regular-svg-icons";
@@ -191,7 +191,7 @@ class Confessions extends React.Component {
             const box={x: 100+i*20, y:100+i*20, w:400};
             return <DesktopIcon key={i} title={"#confession"} ondblclick={this.ondblclick.bind(this)} x={0} y={confession.y} dx={confession.x} dy={confession.y} box={box}
               content={
-                <img src={txt} width={80} height={80} />
+                <img src={window.AWS+"/waveforms/txt.png"} width={80} height={80} />
               }
               frameContent={
                 <div className="confession-txt">{this.getTweet(i)}</div>
