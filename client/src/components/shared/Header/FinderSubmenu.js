@@ -1,14 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ListItem from './ListItem';
 
-class FinderSubmenu extends React.Component {
+class FinderSubmenu extends React.PureComponent {
 
   constructor(props) {
     super(props);
-    this.toggleHidden = this.toggleHidden.bind(this);
+
     this.state = {
       isVisible: false
     }
+
+    this.toggleHidden = this.toggleHidden.bind(this);
     this.setWrapperRef = this.setWrapperRef.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
   }
@@ -34,9 +37,9 @@ class FinderSubmenu extends React.Component {
   }
 
   toggleHidden () {
-    this.setState({
-      isVisible: !this.state.isVisible
-    })
+    this.setState(prevState => ({
+      isVisible: !prevState.isVisible
+    }));
   }
 
   render() {
@@ -45,7 +48,7 @@ class FinderSubmenu extends React.Component {
     if (title === "") {
       icon = <i className={this.props.icon}></i>
     }
-    const cursor = this.props.cursor;
+    // const cursor = this.props.cursor;
     const specialClass = this.props.specialClass;
     let ulSpecialClass = this.props.ulSpecialClass;
     if (this.props.dimensions.device === "mobile") ulSpecialClass += " mobile";
@@ -56,18 +59,27 @@ class FinderSubmenu extends React.Component {
       <li className={`expandable ${specialClass} ${this.state.isVisible ? 'selected': ''}`} onClick={this.toggleHidden} ref={this.setWrapperRef}><span id="pageTitle">{title}</span>
       {icon}
       <div className={`submenu ${this.state.isVisible ? 'visible': ''}`}>
-      <ul className={ulSpecialClass}>
-      {listItems.map((item) => {
-        return(
-          <ListItem key={item.title} dimensions={this.props.dimensions} shortcut={item.shortcut} cursor={cursor} title={item.title} link={item.link} callback={item.callback} />)}
-        )
-      }  </ul>
-      </div>
-      </li>
-    );
+        <ul className={ulSpecialClass}>
+          {listItems.map((item) => {
+            return(
+              <ListItem key={item.title} dimensions={this.props.dimensions} shortcut={item.shortcut} title={item.title} link={item.link} callback={item.callback} />)}
+              )
+            }  </ul>
+          </div>
+        </li>
+      );
+    }
+
+
   }
 
 
-}
+  FinderSubmenu.propTypes = {
+    name: PropTypes.string,
+    title: PropTypes.string,
+    icon: PropTypes.string,
+    specialClass: PropTypes.string,
+    listitems: PropTypes.array
+  };
 
-export default FinderSubmenu
+  export default FinderSubmenu

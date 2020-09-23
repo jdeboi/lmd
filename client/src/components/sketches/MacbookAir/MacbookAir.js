@@ -37,16 +37,18 @@ class MacbookAir extends React.Component {
   componentDidMount() {
     this.interval = setInterval(this.resetPlayer, 22000);
 
-    console.log(window.AWS + "/macbookAir/noframe.mp4")
+    console.log(window.AWS + "/macbookAir/noframe.mp4");
+    // window.addEventListener("resize", this.updateDimensions);
   }
   // componentDidMount() {
   //   this.updateDimensions();
   //   window.addEventListener("resize", this.updateDimensions.bind(this));
   // }
   //
-  // componentWillUnmount() {
-  //   window.removeEventListener("resize", this.updateDimensions.bind(this));
-  // }
+  componentWillUnmount() {
+    // window.removeEventListener("resize", this.updateDimensions.bind(this));
+    clearInterval(this.interval);
+  }
   //
   // updateDimensions() {
   //   this.setState({ windowWidth: window.innerWidth, windowHeight: window.innerHeight });
@@ -60,8 +62,8 @@ class MacbookAir extends React.Component {
   getDimensions() {
     var headerH = 34;
     var toolbarH = 28;
-    const {windowWidth, device} = this.props.dimensions;
-    var {windowHeight} = this.props.dimensions;
+    var {windowWidth, device, windowHeight} = this.props.dimensions;
+    // var {} = this.props.dimensions;
     windowHeight -= headerH;
 
     const originalDim = {w: 840, h: 540};
@@ -241,14 +243,14 @@ class MacbookAir extends React.Component {
     return (
       <div className="Slider">
         <Grid container spacing={2}>
-          <Grid item>
-            <span className="emoji-slider" role="img" aria-label="cloud">☁️</span>
+          <Grid item className="emoji-slider">
+            <div className="cloud-emoji" aria-label="cloud"></div>
           </Grid>
           <Grid item xs>
             <Slider value={value} onChange={handleChange} orientation={props.orientation} style={style} color='primary' aria-labelledby="continuous-slider" step={0.1} min={0.0} max={2.0} defaultValue={1.0} />
           </Grid>
-          <Grid item>
-            <span className="emoji-slider" role="img" aria-label="dashing away">💨</span>
+          <Grid item className="emoji-slider">
+            <div className="gust-emoji" aria-label="dashing away"></div>
           </Grid>
         </Grid>
       </div>

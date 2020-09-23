@@ -23,7 +23,8 @@
   .sliderBox {
     padding-left: 20px;
     padding-right: 20px;
-    padding-top: 18px;
+    padding-top: 12px;
+    padding-bottom: 12px;
     background-color: white;
     height: 100%;
   }
@@ -38,8 +39,25 @@
     min-height: 100%;
   }
 
-  span.emoji-slider{
-    font-size: 35px;
-    line-height: 28px;
+  .emoji-slider{
+    // font-size: 35px;
+    // line-height: 28px;
+
+    height: 55px;
+    width: 55px;
+
+    div {
+      height: 100%;
+      width: 100%;
+      background-size: cover;
+    }
+    .cloud-emoji {
+      background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/macbookAir/cloud.png);
+    }
+
+    .gust-emoji {
+      background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/macbookAir/gust.png);
+
+    }
   }
 }

@@ -15,12 +15,8 @@ import Glasses from '../../shared/Glasses/Glasses';
 
 var trees = [];
 var bottles = [];
-var limes = [];
-var tubes = [];
-var duckies = [];
 var camera;
 var water;
-var addedTubeWater = false;
 
 var start;
 var changed = false;
@@ -33,46 +29,15 @@ class HardDrives extends React.Component {
   constructor(props) {
     super(props);
 
-    this.sky = "https://www.google.com/maps/embed?pb=!4v1591820298439!6m8!1m7!1sCAoSLEFGMVFpcFBTYW9SYVFBMmR0QjhoeTVaSUs5R3lQaGJBNVB5dVhFQ2o0UVdW!2m2!1d-17.3611139!2d177.1339841!3f315.493974142352!4f79.53485037853946!5f0.4125900490817119";
-    this.water = "https://www.google.com/maps/embed?pb=!4v1591820453080!6m8!1m7!1sCAoSLEFGMVFpcE5UM1c2VUdrLWNWengzbEVjZUpXUUpOVGFBcnBrRmxOX0RWWFFt!2m2!1d-16.87437024377152!2d168.5315829096921!3f255.14238198590843!4f31.088706413108227!5f0.7820865974627469";
-    this.desert = "https://www.google.com/maps/embed?pb=!4v1591823417725!6m8!1m7!1sCAoSLEFGMVFpcFA2ZXdsLTdfUDVzcjhSb0hILXlPV2cxQlBpTm40dmd2MjZGQ2h0!2m2!1d24.432972!2d54.651138!3f12.11108208350993!4f-8.57353950629367!5f0.7820865974627469"
-    this.beaches =  [
-      "https://www.google.com/maps/embed?pb=!4v1591730465198!6m8!1m7!1sCAoSLEFGMVFpcFBTYW9SYVFBMmR0QjhoeTVaSUs5R3lQaGJBNVB5dVhFQ2o0UVdW!2m2!1d-17.3611139!2d177.1339841!3f99.14217177224654!4f16.212409154729073!5f0.5970117501821992",
-      "https://www.google.com/maps/embed?pb=!4v1591731061550!6m8!1m7!1s14MaFqgTRTaDiBSsL39GpQ!2m2!1d-3.870455013319621!2d-32.43747623434356!3f169.18860029370475!4f3.8811831878503256!5f0.4000000000000002",
-      "https://www.google.com/maps/embed?pb=!4v1591731152367!6m8!1m7!1sCAoSLEFGMVFpcE1TWTlDY19DbTZKS3o2a1JwTGVWWkp2cnJKTG9fVERiTDBxb3BZ!2m2!1d9.47087!2d100.053962!3f131.34!4f21.040000000000006!5f0.4000000000000002",
-
-    ];
-
-    this.islandURLs = {
-      aus: {
-        sv:"https://www.google.com/maps/embed?pb=!4v1591730465198!6m8!1m7!1sCAoSLEFGMVFpcFBTYW9SYVFBMmR0QjhoeTVaSUs5R3lQaGJBNVB5dVhFQ2o0UVdW!2m2!1d-17.3611139!2d177.1339841!3f99.14217177224654!4f16.212409154729073!5f0.5970117501821992",
-        waterAnimal: "https://media.giphy.com/media/VwTPbIxJyN1w4/giphy.gif",
-        skyAnimal: "https://media.giphy.com/media/l3Uchq9s6Hx0aK8F2/giphy.gif",
-        underAnimal: "https://media.giphy.com/media/3o7btWuHdqixPYqKuQ/giphy.gif"
-      },
-      amazon: {
-        sv: "https://www.google.com/maps/embed?pb=!4v1591729810341!6m8!1m7!1s8KHDdWjHmX-5VUuLadhpoA!2m2!1d-3.138365217661719!2d-60.49319170993962!3f183.4533009061596!4f4.597270194924249!5f0.7820865974627469",
-        waterAnimal: "https://media.giphy.com/media/hPLft0bT2HxEA/giphy.gif",
-        skyAnimal: "https://media.giphy.com/media/Tk1C1v8qWBocm9ryWx/giphy.gif",
-        underAnimal: "https://media.giphy.com/media/r4rma1tDoGRFK/giphy.gif"
-      },
-      nordic: {
-        sv:"https://www.google.com/maps/embed?pb=!4v1591725274284!6m8!1m7!1sCAoSLEFGMVFpcE5WMEpaUDVLcHVJcXl3YmhTcE56d2pOMnRtNkR5OFdWbzhMVDlM!2m2!1d80.1174164!2d17.0557976!3f105.0036195370437!4f0.19994726177958455!5f0.7820865974627469",
-        waterAnimal: "https://media.giphy.com/media/2Y8tvawHjIygnQnqVo/giphy.gif",
-        skyAnimal: "https://media.giphy.com/media/MRELXooGA4FXOxnoXL/giphy.gif",
-        underAnimal: "https://media.giphy.com/media/pJuWoH6laWXN6/giphy.gif"
-      }
-    };
-
-
-
-
     this.state = {
-      island : this.beaches[0],
+      island : "https://www.google.com/maps/embed?pb=!4v1591730465198!6m8!1m7!1sCAoSLEFGMVFpcFBTYW9SYVFBMmR0QjhoeTVaSUs5R3lQaGJBNVB5dVhFQ2o0UVdW!2m2!1d-17.3611139!2d177.1339841!3f99.14217177224654!4f16.212409154729073!5f0.5970117501821992",
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
       urlIndex: 0,
-      birds: this.initBirds()
+      birdInitialsX: [],
+      birdInitialsY: [],
+      flyIndex: 0,
+      flyDirection: true
     }
 
     this.svFrame = {};
@@ -100,6 +65,7 @@ class HardDrives extends React.Component {
 
   componentDidMount() {
     this.updateDimensions();
+    this.initBirds();
     window.addEventListener("resize", this.updateDimensions.bind(this));
 
     if (this.addingBirds) this.interval = setInterval(this.updateBirds, 50);
@@ -137,10 +103,6 @@ class HardDrives extends React.Component {
 
     ///////////////////////////////////////////////////////////////////////////////
     addPalms(scene);
-    // addInnerTubes(1, scene);
-    // addLimes(scene);
-    // addDuckies(scene);
-
 
     // Ground
     var groundTexture = new Texture(window.AWS+"/shared/black_sand.jpg", scene);
@@ -173,67 +135,17 @@ class HardDrives extends React.Component {
 
     addSkybox(scene);
 
-    // Skybox
-    // var skyW = 1000;
-    // var skybox = Mesh.CreateBox("skyBox", skyW, scene);
-    // var skyboxMaterial = new StandardMaterial("skyBox", scene);
-    // skyboxMaterial.backFaceCulling = false;
-    // skyboxMaterial.reflectionTexture = new CubeTexture(window.AWS+"/shared/sky/moon/moon", scene);
-    // skyboxMaterial.reflectionTexture.coordinatesMode = Texture.SKYBOX_MODE;
-    // skyboxMaterial.diffuseColor = new Color3(0, 0, 0);
-    // skyboxMaterial.specularColor = new Color3(0, 0, 0);
-    // skyboxMaterial.disableLighting = true;
-    // skybox.material = skyboxMaterial;
-    // water.addToRenderList(skybox);
-
     addBottles(scene, water);
-
-
 
   }
 
 
   onRender(scene) {
 
-    bottles.map((bot, i) => {
-      // let time = water._lastTime / 100000;
-      // let x = botMesh.position.x;
-      // let z = botMesh.position.z;
-      bot.position.y = 3+.5*Math.sin((new Date()).getTime()/800);//Math.abs((Math.sin(((x / 0.05) + time * water.waveSpeed)) * water.waveHeight * water.windDirection.x * 5.0) + (Math.cos(((z / 0.05) +  time * water.waveSpeed)) * water.waveHeight * water.windDirection.y * 5.0));
-      // bot.position.z += .005;
-      // if (i%2 == 0) bot.position.x += .002;
-      // else bot.position.x -= .002;
-
-    });
-
     for (let i = 0; i < trees.length; i++) {
       var sign = i % 2=== 0 ? 1 : -1;
       trees[i].rotation.y += .005 * sign;
     }
-
-    // for (let i = 0; i < limes.length; i++) {
-    //   // limes[i].l.position.y = 3+.3*Math.sin((new Date()).getTime()/800);
-    // }
-
-    let r = 280;
-    for (let i = 0; i < duckies.length; i++) {
-      let angle = (new Date()).getTime()/10000 - getRandomNum(i+3)+i/2;
-      // from 0 to PI/2, turn PI/2
-      // from PI/2 to PI, turn PI
-      // from PI to 1.5PI, PI
-      duckies[i].position.x = duckies[i].position.x0 + r * Math.cos(angle);
-      duckies[i].position.z = getRandomNum(i+10)*120 + r * Math.sin(angle);
-      duckies[i].rotation.y = -angle;//Math.atan2(duckies[i].position.y, duckies[i].position.x);
-      duckies[i].position.y = -6+1*Math.sin((new Date()).getTime()/800);
-    }
-
-    // for (let i = 0; i < tubes.length; i++) {
-    //   tubes[i].position.y = 3+.3*Math.sin((new Date()).getTime()/800);
-    //   if (!addedTubeWater) {
-    //     water.addToRenderList(tubes[i]);
-    //   }
-    //   if (!addedTubeWater && i === tubes.length-1) addedTubeWater = true;
-    // }
 
     let t = new Date();
     if (!changed && t - start > 5000) {
@@ -244,19 +156,6 @@ class HardDrives extends React.Component {
     let divFps = document.getElementById("fps");
     if(divFps) divFps.innerHTML = scene.getEngine().getFps().toFixed() + " fps";
   }
-
-
-  // getIslandButton() {
-  //   return (
-  //     <Frame title="" content={
-  //         <div className="controller-bar">
-  //           <Button className="islandButton" onClick={this.nextIsland.bind(this)} variant="outlined">🏝️</Button>
-  //         </div>
-  //       }
-  //       width={this.controller.w} height={this.controller.h} x={this.controller.x} y={this.controller.y}
-  //       />
-  //   );
-  // }
 
   nextIsland() {
     let islandIndex = this.state.urlIndex;
@@ -272,8 +171,9 @@ class HardDrives extends React.Component {
     let ySpace = 80;
     let num = Math.floor(4*Math.random()+2);
     let d =  Math.random();
-    let dir = d > .5 ? 1: -1;
-    // let wBirds = (num+1)*xSpace;
+    const dir = true;
+    const birdInitialsX = [];
+    const birdInitialsY = [];
 
     for (var i = 0; i < num; i++) {
       let mid = num/2;
@@ -284,66 +184,61 @@ class HardDrives extends React.Component {
 
       let dy = i * ySpace + Math.random()*10;
 
-      let x0 = dir == 1 ? dx-300 : window.innerWidth+dx*-1+300;
+      let x0 = dx-300;
       let y0 = dy;
-      birds.push({x: x0, y: y0, x0: x0, y0: y0, xd: dir, yd: 1});
+      birdInitialsX[i] = x0;
+      birdInitialsY[i] = y0;
     }
-    return birds;
+    this.setState({birdInitialsX, birdInitialsY, flyDirection: dir});
   }
 
   updateBirds() {
-    var inc = 5;
-    let {birds} = this.state;
-    let numReset = 0;
-    for (var i = 0; i < birds.length; i++) {
-      let bird = birds[i];
-      // bird.x += bird.xd*inc;
-      // bird.y += bird.yd*inc;
-
-      bird.x += bird.xd*inc;
-      bird.y = bird.y0+50*Math.sin(bird.x/100);
-      bird.y = Math.floor(bird.y);
-
-      if (bird.xd == 1 && bird.x > window.innerWidth+300) {
-        numReset++;
-      }
-      else if (bird.xd == -1 && bird.x < -300) {
-        numReset++;
-      }
-      // else if (bird.x < 0) {
-      //   bird.xd = 1;
-      //   bird.x = 0;
-      // }
-      // if (bird.y > window.innerHeight-100) {
-      //   bird.yd = -1;
-      //   bird.y = window.innerHeight-100;
-      // }
-      // else if (bird.y < 0) {
-      //   bird.yd = 1;
-      //   bird.y = 0;
-      // }
+    const maxW = this.state.windowWidth+600;
+    const {flyIndex, flyDirection} = this.state;
+    if (flyIndex > maxW) {
+      this.setState(prevState => ({
+        flyDirection: !prevState.flyDirection,
+        flyIndex: 0
+      }));
     }
-    if (numReset === birds.length) birds = this.initBirds();
-    this.setState({birds: birds})
+    else {
+      const inc = 5;
+      this.setState({flyIndex: this.state.flyIndex+inc});
+    }
   }
 
   getBird(index) {
+    const bird = this.getBirdLocation(index);
     return (
       <FrameSimple title="" content={
-          <div className={"bird " + (this.state.birds[index].xd === 1 ?"flippedX":"")}></div>
+          <div className={"bird " + (this.state.flyDirection?"flippedX":"")}></div>
         }
-        width={78+2} key={index} windowStyle={{background: "transparent"}} height={60} px={this.state.birds[index].x} py={this.state.birds[index].y}
+        width={78+2} key={index} windowStyle={{background: "transparent"}} height={60} px={bird.x} py={bird.y}
         />
     )
+  }
+
+  getBirdLocation(index) {
+    const {flyIndex, flyDirection, birdInitialsX, birdInitialsY, windowWidth} = this.state;
+    const bird = {};
+    if (flyDirection) {
+      bird.x = flyIndex + birdInitialsX[index];
+      bird.y = birdInitialsY[index]+50*Math.sin(bird.x/100);
+      bird.y = Math.floor(bird.y);
+    } else {
+      bird.x = (windowWidth+100) - (flyIndex + birdInitialsX[index]);
+      bird.y = birdInitialsY[index]+50*Math.sin(bird.x/100);
+      bird.y = Math.floor(bird.y);
+    }
+    return bird;
   }
 
   addBirds(ind=0) {
     return (
       <div className="birds">
-        {this.state.birds.map((pos, index) => {
-          // if (index%2 == ind)
-          return this.getBird(index);
-        })};
+        {this.state.birdInitialsX.map((pos, index) => {
+          return (this.getBird(index))
+        })}
       </div>
     );
   }
@@ -352,7 +247,6 @@ class HardDrives extends React.Component {
   render() {
     return (
       <div className="HardDrives Sketch">
-        {/* <div className="Frame-box">*/}
         <BabylonScene antialias onSceneReady={this.onSceneReady} onRender={this.onRender} id='babylon-canvas' />
 
         <Frame title="hard drives on seashores" content={
@@ -361,7 +255,6 @@ class HardDrives extends React.Component {
           width={this.svFrame.w} height={this.svFrame.h} x={this.svFrame.x} y={this.svFrame.y}
           />
         {this.addBirds()}
-        {/*</div>*/}
         <Glasses />
       </div>
     )
@@ -529,133 +422,5 @@ function addPalms(scene) {
 
 }
 
-function addLimes(scene) {
-  var container = new AssetContainer(scene);
-  var url = window.AWS + "/hardDrives/lime/";
-  SceneLoader.LoadAssetContainer(url, "lime.obj", scene, function (container) {
-    var meshes = container.meshes;
-    console.log("mmm", meshes)
-    let positions = [
-      {x: -25, z: 70},
-      {x: 15, z: 55},
-      {x: 4, z: -10},
-      {x: -20, z: -10},
-      {x: -4, z: -60},
-    ];
-    let scal = 5;
-
-    for (let i = 0; i < 3; i++) {
-      meshes[i].rotation.y = 0;
-      meshes[i].scaling = new Vector3(scal, scal, scal);
-      meshes[i].position.x = positions[0].x; //*scaler;
-      meshes[i].position.y = 3; //positions[0].y*scaler;
-      meshes[i].position.z = positions[0].z; //*scaler;
-      meshes[i].rotation.x = -.20; //getRandomNum(2)*Math.PI;
-      meshes[i].rotation.y = -2.3;
-      meshes[i].rotation.z = -.1;
-      water.addToRenderList(meshes[i]);
-    }
-    limes.push(meshes);
-
-    container.addAllToScene();  // Adds all elements to the scene
-
-    // water.addToRenderList(rind);
-
-    for (let i = 1; i < positions.length; i++) {
-      let copy = container.instantiateModelsToScene().rootNodes[1];
-      copy.rotation.y = Math.PI*1.5;
-      copy.position.x = positions[i].x*scaler;
-      copy.position.z = positions[i].z*scaler;
-      water.addToRenderList(copy);
-
-      let copyR = container.instantiateModelsToScene().rootNodes[0];
-      copyR.rotation.y = Math.PI*1.5;
-      copyR.position.x = positions[i].x*scaler;
-      copyR.position.z = positions[i].z*scaler;
-      water.addToRenderList(copyR);
-      limes.push({l: copy, r: copyR});
-    }
-
-  });
-
-}
-
-function addDuckies(scene) {
-  var container = new AssetContainer(scene);
-  var url = window.AWS + "/hardDrives/duck/";
-  SceneLoader.LoadAssetContainer(url, "duck.obj", scene, function (container) {
-    var meshes = container.meshes;
-    console.log("mmm", meshes)
-    let positions = [
-      {x: -25, z: 200},
-      {x: 15, z: 55},
-      {x: 4, z: -10},
-      {x: -20, z: -10},
-      // {x: -4, z: -60},
-      // {x: -4, z: -60},
-    ];
-    // let scal = 2.5;
-    let scal = 15;
-
-    let ducky = meshes[0];
-    ducky.rotation.y = 0;
-    ducky.scaling = new Vector3(scal, scal, scal);
-    ducky.position.x = positions[0].x; //*scaler;
-    ducky.position.y = -2; //positions[0].y*scaler;
-    ducky.position.z = positions[0].z; //*scaler;
-    ducky.rotation.x = 0; //getRandomNum(2)*Math.PI;
-    ducky.rotation.y = -2.3;
-    ducky.rotation.z = -.1;
-    ducky.position.x0 = 0;
-    ducky.position.z0 = 0;
-    water.addToRenderList(ducky);
-    duckies.push(ducky);
-    // limes.push(meshes);
-
-    container.addAllToScene();  // Adds all elements to the scene
-
-    // water.addToRenderList(rind);
-
-    for (let i = 1; i < positions.length; i++) {
-      let copy = container.instantiateModelsToScene().rootNodes[0];
-      copy.rotation.y = Math.PI*1.5;
-      copy.position.x = positions[i].x*scaler;
-      copy.position.z = positions[i].z*scaler;
-      copy.position.x0 = 0;
-      copy.position.z0 = 0;
-      water.addToRenderList(copy);
-      duckies.push(copy);
-    }
-
-  });
-}
-
-function addInnerTubes(num, scene, water) {
-  for (let i = 0; i < num; i++) {
-
-    var tubeMat = new StandardMaterial("groundMaterial", scene);
-    tubeMat.diffuseColor = new Color3(getRandomNum(i+2), getRandomNum(i+3), getRandomNum(i+4));
-    tubeMat.specularColor = new Color3(0.5, 0.6, 0.87);
-    tubeMat.emissiveColor = new Color3(.1, .1, .1);
-    tubeMat.ambientColor = new Color3(0.23, 0.98, 0.53);
-    tubeMat.alpha = 0.8;
-
-    // texture
-    // var tubeTex = new Texture(window.AWS+"/shared/black_sand.jpg", scene);
-    // tubeTex.vScale = groundTexture.uScale = 20.0;
-    // tubeMat.diffuseTexture = groundTexture;
-
-    var tube = MeshBuilder.CreateTorus("torus", {diameter: 35, thickness: 10}, scene);
-    tube.position.y = 2;
-    tube.rotation.y = Math.PI/2;
-    tube.position.x = i*50 -50;
-    tube.position.z = 80;
-    tube.material = tubeMat;
-    if (water) water.addToRenderList(tube);
-
-    tubes.push(tube);
-  }
-
-}
 
 export default HardDrives;

@@ -1,14 +1,18 @@
 import React from 'react';
 import { Route, Switch } from "react-router-dom";
 
+// import update from 'react-addons-update';
+import update from 'immutability-helper';
+
 import './App.css';
 import Header from '../components/shared/Header/Header';
+import SideBar from '../components/shared/SideBar/SideBar';
 
 // cookies
 import Cookies from 'js-cookie';
 
 // sketches
-import HomePage from '../components/sketches/HomePage/HomePage';
+import HomePage from '../components/HomePage/HomePage';
 import Dimension from '../components/sketches/Dimension/Dimension';
 import MacbookAir from '../components/sketches/MacbookAir/MacbookAir';
 import ClickMe from '../components/sketches/ClickMe/ClickMe';
@@ -34,11 +38,17 @@ import Credits from '../components/pages/Credits';
 import NotFound from '../components/pages/NotFound';
 
 import Frame from '../components/shared/Frame/Frame';
+import SignIn from '../components/shared/SignIn/SignIn';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import indigo from '@material-ui/core/colors/indigo';
 import pink from '@material-ui/core/colors/pink';
 import red from '@material-ui/core/colors/red';
+
+import socket from "../components/shared/Socket/Socket";
+// import socketIOClient from "socket.io-client";
+// const ENDPOINT = "http://127.0.0.1:5000";
+
 
 window.AWS = "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches";
 
@@ -66,93 +76,231 @@ class App extends React.Component {
     this.state = {
       cursor: 0,
       cursorID: 0,
-      windowWidth: 0,
-      windowHeight: 0,
-      wOG: 0,
-      hOG: 0,
-      flipped: false,
-      classes: "App"
+      dimensions: {windowWidth: window.innerWidth, windowHeight: window.innerHeight, device:"desktop", flipped: false, orientation: "landscape"},
+      wOG: window.innerWidth,
+      hOG: window.innerHeight,
+      classes: "App",
+      showSideBar: false,
+      hasAvatar: false,
+      showSignIn: false,
+      sessionID: null,
+      usersChange: false,
+      user: {avatar:"", userName:"", room:"", x: Math.random()*window.innerWidth, y: Math.random()*window.innerHeight, messages: [{to:"to", from:"from", message:"message"}]},
+      users: null,
+      messages: []
     };
 
-    this.setHands = this.setHands.bind(this);
-    this.updateDimensions = this.updateDimensions.bind(this);
-    this.getDeviceDimensions = this.getDeviceDimensions.bind(this);
+    // this.setHands = this.setHands.bind(this);
+    // this.updateDimensions = this.updateDimensions.bind(this);
+    this.updateDeviceDimensions = this.updateDeviceDimensions.bind(this);
     this.addClass = this.addClass.bind(this);
+    this.toggleSideBar = this.toggleSideBar.bind(this);
 
+    this.userClicked = this.userClicked.bind(this);
+    this.userUpdated = this.userUpdated.bind(this);
+    this.userSet = this.userSet.bind(this);
+    this.userMove = this.userMove.bind(this);
+    this.userRegister = this.userRegister.bind(this);
+    this.userRegisterCheck = this.userRegisterCheck.bind(this);
+    this.addUserMessage = this.addUserMessage.bind(this);
+    // this.usersChangeReset = this.usersChangeReset.bind(this);
   }
 
 
   componentDidMount() {
-    const id = Cookies.get('hand');
-    this.setState({cursor: `cursor-${id}`});
-    this.setState({cursorID: id});
+    // const id = Cookies.get('hand');
 
-    let windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
-    let windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
-    this.setState({ windowWidth, windowHeight, wOG:windowWidth, hOG:windowHeight });
+    const hasAvatar = Cookies.get('hasAvatar');
 
-    window.addEventListener("resize", this.updateDimensions);
-    /*
-    a, a:link, a:visited, a:focus, a:hover, a:active, .MuiSlider-root, .MuiButtonBase-root {
-    cursor: url("./assets/pointer.png"), auto;
+    if (hasAvatar) {
+      const userName = Cookies.get('userName');
+      const avatar = Cookies.get('avatar');
+      const user= {...this.state.user};
+      user.userName = userName;
+      user.avatar = avatar;
+      this.setState({user, showSignIn: false, hasAvatar: true});
+
+      if (socket.connected) {
+        socket.emit("setUser", user);
+      }
     }
-    */
+    else {
+      console.log("nope")
+      this.setState({showSignIn: true, hasAvatar: false});
+    }
+
+
+
+    socket.on('connect', () => {
+      console.log("CONNECTED", socket.id)
+      this.setState({sessionID: socket.id});
+      var {user} = this.state;
+      socket.emit("setUser", user);
+    });
+
+
+    socket.on("usersUpdate", data => {
+      var {sessionID} = this.state;
+      var filteredArray = data.filter(function(user){
+        return user.id != sessionID;
+      });
+      // console.log("USERS", filteredArray, sessionID )
+      this.setState({users: filteredArray});
+    });
+
+    socket.on("message", data => {
+      console.log("message received", data);
+      this.addUserMessage(data);
+    })
+
+    socket.on("userJoined", data => {
+      this.setState({usersChange: true});
+      console.log("SOMEONE JOINED");
+    })
+
+    socket.on("userDisconnected", data => {
+      this.setState({usersChange: true});
+      console.log("SOMEONE DISCONNECTED");
+    })
+
+    this.updateDeviceDimensions();
+    window.addEventListener("resize", this.updateDeviceDimensions);
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.updateDimensions);
+    window.removeEventListener("resize", this.updateDeviceDimensions);
+    // this.socket.disconnect();
   }
 
-  updateDimensions() {
-    let flipped = false;
-    let windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
-    let windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
+
+  addUserMessage(msg) {
+    const user = {...this.state.user};
+
+    var newUser = update(user, { messages:
+      {$push: [msg]}
+    });
+
+    // console.log("USER UDPATE", newUser);
+
+    this.setState({user: newUser});
+  }
+
+  toggleSideBar() {
+    console.log("TOGGLED");
+    this.setState(prevState => ({
+      showSideBar: !prevState.showSideBar
+    }));
+  }
+
+  handleDrawerClose() {
+    console.log("CLOSED")
+    this.setState({showSideBar: false});
+  }
+
+  updateDeviceDimensions() {
+    var dimensions= {};
+    // width, height
+    dimensions.windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+    dimensions.windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
+
+    // orientation and flipped
     let ratio = this.state.wOG/this.state.hOG;
-    if (windowWidth/windowHeight !== ratio) flipped = true;
-    // console.log("ratio",windowWidth/windowHeight, ratio,flipped );
-    this.setState({ windowWidth, windowHeight, flipped });
-  }
+    dimensions.flipped = false;
+    if (dimensions.windowWidth/dimensions.windowHeight !== ratio) dimensions.flipped = true;
+    dimensions.orientation = dimensions.windowWidth/dimensions.windowHeight > 1 ? "landscape":"portrait";
 
-  setHands(val) {
-    this.setState({cursor: `cursor-${val}`});
-    this.setState({cursorID: val});
-  }
+    // device type
+    let minD = Math.min(dimensions.windowWidth, dimensions.windowHeight);
+    console.log("minD", minD, dimensions.windowWidth, dimensions.windowHeight);
+    dimensions.device = "";
+    if (minD < 450) dimensions.device="mobile";
+    else if (minD <  700) dimensions.device="tablet";
+    else dimensions.device="desktop";
 
-  getDeviceDimensions() {
-    const {windowWidth, windowHeight, flipped} = this.state;
-    const orientation = windowWidth/windowHeight > 1 ? "landscape":"portrait";
-
-    let minD = Math.min(windowWidth, windowHeight);
-    console.log("minD", minD,window.innerWidth, window.innerHeight);
-    let deviceType = "";
-    if (minD < 450) deviceType="mobile";
-    else if (minD <  700) deviceType="tablet";
-    else deviceType="desktop";
-
-    let dimensions = {windowWidth: windowWidth, windowHeight:windowHeight, device:deviceType, orientation: orientation, flipped: flipped };
-    // console.log("info", dimensions)
-    return dimensions;
+    this.setState({dimensions: dimensions});
   }
 
   addClass(classn) {
-    let {classes} = this.state;
+    let classes = this.state.classes;
     classes += " " + classn;
-    this.setState({classes});
+    this.setState({classes: classes});
     //" " + this.state.cursor
   }
 
+  userClicked() {
+    this.setState({showSignIn: true});
+  }
+
+  userUpdated(avatar, userName) {
+    const newUser = { ...this.state.user }
+    newUser.userName = userName;
+    newUser.avatar = avatar;
+    this.setState({user: newUser});
+  }
+
+  userMove(x, y, time) {
+    let space = 50;
+    const user = { ...this.state.user }
+    user.x += x*space;
+    user.y += y*space;
+    // console.log("1", new Date() - time);
+    this.setState({user});
+    // console.log("dt", new Date() - time);
+    socket.emit("setUser", user);
+  }
+
+  userSet(userName, avatar) {
+    Cookies.set("hasAvatar", true);
+    Cookies.set("avatar", avatar);
+    Cookies.set("userName", userName);
+    this.userUpdated(avatar, userName);
+
+    // we have an avatar / username submitted
+    // make sign in go away
+    // let {hasAvatar, showSignIn} = this.state;
+    // hasAvatar = true;
+    // showSignIn = false;
+    this.setState({hasAvatar:true, showSignIn:false});
+
+    socket.emit("setUser", this.state.user);
+  }
+
+  userRegister({isUser, user}) {
+    console.log("user register!!!")
+    if (isUser) {
+      alert("username already exists. Please enter a new username.");
+    }
+    else {
+      this.userSet(user.userName, user.avatar);
+    }
+  }
+
+  userRegisterCheck(userName, avatar) {
+    console.log("userRegisterCheck");
+    const user={userName:userName, avatar:avatar};
+    socket.emit("registerUser", user, this.userRegister);
+  }
+
+  // usersChangeReset() {
+  //   this.setState({usersChange: false});
+  // }
+
+  closeSignIn() {
+    this.setState({showSignIn: false})
+  }
+
   render() {
-    let dimensions = this.getDeviceDimensions();
+    const {dimensions} = this.state;
     return (
       <div className={this.state.classes}>
         <MuiThemeProvider theme={theme}>
           <div className="App-Header">
             <div className="BackHeader"></div>
-            <Header callback={this.setHands} dimensions={dimensions} />
+            <Header dimensions={dimensions} toggleSideBar={this.toggleSideBar} user={this.state.user} userSet={this.userSet} userClicked={this.userClicked} />
           </div>
           <div className="App-Content inner-outline">
             <Switch>
-              <Route exact path="/" render={() => (<MacbookAir dimensions={dimensions} />)} />
+              <Route exact path="/" render={() => (<HomePage user={this.state.user} users={this.state.users} userMove={this.userMove}/>)} />
               <Route  path="/losing-my-dimension" component={Dimension} />
               <Route  path="/macbook-air" render={() => (<MacbookAir dimensions={dimensions} />)} />
               <Route  path="/i-got-the-feels" component={ClickMe} />
@@ -177,11 +325,17 @@ class App extends React.Component {
               <Route  path="/words" component={About} />
               <Route  component={NotFound} />
             </Switch>
-            {/* <div id="fps">0</div> */}
+            <div id="fps">0</div>
           </div>
+          <SideBar user={this.state.user} users={this.state.users} usersChange={this.state.usersChange} showSideBar={this.state.showSideBar} handleDrawerClose={this.handleDrawerClose.bind(this)} />
+          <SignIn user={this.state.user} hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} closeSignIn={this.closeSignIn.bind(this)} userUpdated={this.userUpdated} userSet={this.userSet} userRegisterCheck={this.userRegisterCheck} />
         </MuiThemeProvider>
       </div>
     );
+  }
+
+  componentDidUpdate() {
+    if (this.state.usersChange) this.setState({usersChange: false})
   }
 
 }

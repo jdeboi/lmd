@@ -1,11 +1,15 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-const ListItem = (props) => {
+class ListItem extends React.PureComponent {
 
+  constructor(props) {
+    super(props);
+  }
 
-    const {title, link, cursor, dimensions} = props;
-    const shortcut = getShortcut(props.shortcut, dimensions.windowWidth);
+  render() {
+    const {title, link, dimensions, callback} = this.props;
+    const shortcut = getShortcut(this.props.shortcut, dimensions.windowWidth);
     let classn = (shortcut === '' || shortcut === null || dimensions.device === "mobile") ? 'noShortcut': 'shortcut';
 
     // if (dimensions.windowWidth < 500) {
@@ -14,14 +18,16 @@ const ListItem = (props) => {
 
     if (link && link !== '') {
       return (
-        <Link className={cursor} to={link}>
+        <Link to={link}>
         <li key={title} className={classn} shortcut={shortcut}>{title}</li>
         </Link>
       );
     }
+
     return (
-      <li key={title} className={classn} onClick={props.callback} shortcut={shortcut}>{title}</li>
+      <li key={title} className={classn} onClick={callback} shortcut={shortcut}>{title}</li>
     );
+  }
 }
 
 function getShortcut(shortcut, width) {

@@ -35,7 +35,11 @@
   user-select: none;
   box-shadow: 0px 0px 20px #000000;
   z-index: 1000;
-  flex: 1 1 100%; }
+  flex: 1 1 100%;
+  /* Tooltip container */
+  /* Tooltip text */
+  /* Tooltip arrow */
+  /* Show the tooltip text when you mouse over the tooltip container */ }
   .Header .selected {
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fc03ad), color-stop(100%, #335ef6));
     color: #fff;
@@ -49,6 +53,8 @@
       line-height: 30px;
       padding: 0 0.5em;
       position: relative; }
+      .Header ul li a {
+        color: white; }
     .Header ul a {
       color: #000;
       text-decoration: none; }
@@ -120,6 +126,40 @@
       display: inline-block;
       position: absolute;
       right: 25px; }
+  .Header .tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+    /* If you want dots under the hoverable text */ }
+  .Header .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    top: 125%;
+    left: 50%;
+    margin-left: -60px;
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s; }
+  .Header .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent; }
+  .Header .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1; }
   @media screen and (max-width: 830px) {
     .Header {
       font-size: 14px; }

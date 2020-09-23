@@ -3,6 +3,9 @@ import './Frame.css';
 import Draggable from 'react-draggable';
 import Toolbar from './Toolbar';
 
+import PropTypes from 'prop-types';
+
+
 class Frame extends React.Component {
   // https://codepen.io/JohJakob/pen/YPxgwo
   constructor(props) {
@@ -10,20 +13,6 @@ class Frame extends React.Component {
 
     this.toolBarH = 26;
 
-    // this.dim = {
-    //   frameWidth : this.props.width+2,
-    //   frameHeight : this.props.height + this.toolBarH
-    // };
-    this.start = this.props.x;
-    this.state = {
-      isVisible : true,
-      isMinimized: false,
-      frameWidth : this.props.width + 2,
-      frameHeight : this.props.height + this.toolBarH,
-      currentFrameHeight: this.props.height + this.toolBarH,
-
-      controlledPosition: this.props.isControlled?{x: this.props.px, y:this.props.py}:null
-    }
 
     const {x, y} = this.props;
     this.origCoords = {
@@ -31,14 +20,55 @@ class Frame extends React.Component {
       y: y
     };
 
+    // this.start = this.props.x;
+    this.state = {
+      isVisible : true,
+      isMinimized: false,
+      deltaPosition: {
+        x: 0, y: 0
+      },
+      controlledPosition: {
+        x: x, y: y
+      }
+    }
+
+
+
 
     this.toggleMaximized = this.toggleMaximized.bind(this);
     this.toggleMinimzed = this.toggleMinimzed.bind(this);
     this.toggleClosed = this.toggleClosed.bind(this);
-    this.customDrag = this.customDrag.bind(this);
+    // this.customDrag = this.customDrag.bind(this);
 
     this.wrapper = React.createRef();
   }
+
+
+  // For controlled component
+  // adjustXPos = (e) => {
+  //   e.preventDefault();
+  //   e.stopPropagation();
+  //   const {x, y} = this.state.controlledPosition;
+  //   this.setState({controlledPosition: {x: x - 10, y}});
+  // };
+  //
+  // adjustYPos = (e) => {
+  //   e.preventDefault();
+  //   e.stopPropagation();
+  //   const {controlledPosition} = this.state;
+  //   const {x, y} = controlledPosition;
+  //   this.setState({controlledPosition: {x, y: y - 10}});
+  // };
+
+  onControlledDrag = (e, position) => {
+    const {x, y} = position;
+    this.setState({controlledPosition: {x, y}});
+  };
+
+  onControlledDragStop = (e, position) => {
+    this.onControlledDrag(e, position);
+    this.onStop();
+  };
 
   eventLogger = (e: MouseEvent, data: Object) => {
     console.log('Event: ', e);
@@ -55,74 +85,53 @@ class Frame extends React.Component {
   }
 
   toggleMinimzed() {
+    this.setState(prevState => ({
+      isMinimized: !prevState.isMinimized
+    }), () => {
+        if (this.props.onMinimized) this.props.onMinimized();
+    });
 
-    let mini = !this.state.isMinimized;
-    // let fh = this.toolBarH;
-    // console.log("MINI")
-    // if (mini) fh = "22";
-    this.setState({
-      isMinimized: mini
-    })
+
   }
 
   toggleMaximized() {
-    // this.setState({
-    //   isMaximized: !this.state.isMaximized
-    // })
-    //
-    // if (this.state.isMaximized) {
-    //   this.setState({
-    //     width: window.innerWidth + "px",
-    //     height: window.innerHeight + "px",
-    //   })
-    // }
-    // else {
-    //   this.setState({
-    //     width: this.dim.frameWidth + "px",
-    //     height:this.dim.frameHeight + "px",
-    //   })
-    // }
-    if (this.state.controlledPosition) this.returnOriginalCoords();
+    const controlledPosition = {...this.state.controlledPosition};
+    controlledPosition.x = this.origCoords.x;
+    controlledPosition.y = this.origCoords.y;
+    this.setState({controlledPosition}, () => {});
   }
 
-  customDrag(e, ui) {
-    if(this.props.onDrag) {
 
-      // let x = ui.x;
-      // let y = ui.y;
 
-      this.props.onDrag(this.props.id, ui);
-
-    }
-  }
-  // For controlled component
-  adjustXPos = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const {x, y} = this.state.controlledPosition;
-    this.setState({controlledPosition: {x: x - 10, y}});
+  onStart = () => {
+    this.setState({activeDrags: this.state.activeDrags+1});
+    if (this.props.onStart) this.props.onStart();
   };
 
-  adjustYPos = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const {controlledPosition} = this.state;
-    const {x, y} = controlledPosition;
-    this.setState({controlledPosition: {x, y: y - 10}});
+  onStop = () => {
+    this.setState({activeDrags: this.state.activeDrags-1});
+    if (this.props.onStop) this.props.onStop();
   };
 
-  returnOriginalCoords() {
-    // e.preventDefault();
-    // e.stopPropagation();
-    const {controlledPosition} = this.state;
-    const {x, y} = controlledPosition;
-    console.log(controlledPosition);
-    this.setState({controlledPosition: {x: this.origCoords.x, y: this.origCoords.y}});
-  }
+
+  // returnOriginalCoords() {
+  //   // e.preventDefault();
+  //   // e.stopPropagation();
+  //   const {controlledPosition} = this.state;
+  //   const {x, y} = controlledPosition;
+  //   console.log(controlledPosition);
+  //   this.setState({controlledPosition: {x: this.origCoords.x, y: this.origCoords.y}});
+  // }
 
   render() {
     const parser = new DOMParser();
     var title = this.props.title;
+    const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
+    const {deltaPosition, controlledPosition} = this.state;
+    // const cP = {x: controlledPosition.x, y: controlledPosition.y};
+    // cP.x += (this.props.x - this.origCoords.x);
+    // cP.y += (this.props.y - this.origCoords.y);
+
     if (title === "") {
       const parsedString = parser.parseFromString(this.props.icon, 'text/html');
       title = parsedString.body.innerHTML;
@@ -155,14 +164,14 @@ class Frame extends React.Component {
     //https://github.com/STRML/react-draggable
 
     // position = {...} makes it have a specific location. when you want direct control.
-    let pos = this.state.controlledPosition;
-    let off = this.props.dx ? {x: this.props.dx, y: this.props.dy}: null;
+    // let pos = this.state.controlledPosition;
+    // let off = this.props.dx ? {x: this.props.dx, y: this.props.dy}: null;
     let frameH = this.toolBarH + (this.state.isMinimized?0:this.props.height);
     // so if we make pos null, it stays where it is dragged to
     // however, it doesn't update when the page width / height changes
     // if we let pos be equal to props.px/ props.py, it changes location
 
-    let onDrag = this.props.onDrag?this.customDrag:this.handleDrag;
+    // let onDrag = this.props.onDrag?this.customDrag:this.handleDrag;
 
     return (
 
@@ -170,14 +179,14 @@ class Frame extends React.Component {
         axis="both"
         handle={this.props.handle?".handle, " + this.props.handle: ".handle"}
         defaultPosition={{x: this.props.x, y: this.props.y}}
-        position={pos}
-        positionOffset={off}
+        position={controlledPosition}
+        positionOffset={null}
         grid={[1, 1]}
         scale={1}
         bounds=".App-Content"
         cancel=".close, .minimize, .zoom"
         onStart={this.handleStart}
-        onDrag={onDrag}
+        onDrag={this.onControlledDrag}
         onStop={this.handleStop}
         nodeRef={this.wrapper}
         >
@@ -199,9 +208,30 @@ class Frame extends React.Component {
   }
 }
 
-//<span className="circleTxt"><strong>x</strong></span>
-//<span className="circleTxt"><strong>&ndash;</strong></span>
-//<span className="circleTxt"><strong>+</strong></span>
+Frame.propTypes = {
+  name: PropTypes.string,
+  title: PropTypes.string,
+  icon: PropTypes.string,
+  className: PropTypes.string,
+  handle: PropTypes.string,
+  window: PropTypes.string,
 
+  windowStyle: PropTypes.object,
+
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired,
+  content: PropTypes.node.isRequired,
+
+
+  isHidden: PropTypes.bool,
+  isMinimized: PropTypes.bool,
+
+  onHide: PropTypes.func,
+  onMinimized: PropTypes.func,
+  onStart: PropTypes.func,
+  onStop: PropTypes.func,
+};
 
 export default Frame

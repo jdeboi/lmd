@@ -1,8 +1,12 @@
 images to deal with
-* waveforms divine gif
-* waveforms devil png (added to s3)
-* confessions txt png
-* mars bubbles1 (added to s3/mars)
+
+# test production locally
+npm run build
+npm install -g serve
+serve -s build
+
+socketIo
+https://github.com/justadudewhohacks/websocket-chat
 
 created using:
 
