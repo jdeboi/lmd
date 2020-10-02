@@ -39,7 +39,8 @@ class Chat extends React.Component {
       textBox: "",
       // currentRecipient: null,
       userHover: null,
-      buttonDisabled: true
+      buttonDisabled: true,
+      wineBotJustAsked: false
     }
   }
 
@@ -70,9 +71,10 @@ class Chat extends React.Component {
 
   sendToOne = (txt, socketId) => {
     console.log("send to one", socketId, "msg:", txt);
+    const {userActiveChat} = this.props;
     const message = {socketId: socketId, message: txt, time: new Date(), avatar:this.props.user.avatar};
     if (socket.connected) socket.emit('messageUser', message); //sending to individual socketid
-    this.props.addUserMessage({from: "me", to: this.props.user.userName, message: txt, time: new Date()});
+    this.props.addUserMessage({from: "me", to: userActiveChat.userName, message: txt, time: new Date()});
   }
 
   sendToRoom = (txt) => {
@@ -87,6 +89,48 @@ class Chat extends React.Component {
     const message = {message: txt, room: this.props.room, time: new Date(), avatar:this.props.user.avatar};
     if (socket.connected) socket.emit('messageAll', message);
     this.props.addUserMessage({to: "all", from: "me", message: txt, time: new Date()});
+  }
+
+  // u: "hello?"
+  // wb: "hi, would you like some wine? Y/N."
+  // u: "yes"
+  // wb: "enjoy!"
+  // u: "what are you?"
+  // wb: "hi, would you like some wine? I only understand yes and no."
+
+  sendToHostBot = (txt) => {
+
+  }
+
+  sendToWineBot = (txt) => {
+    const message = {to: "wineBot", from: "me", message: txt, time: new Date()};
+    // console.log("MESSAGE", message);
+    this.props.addUserMessage(message);
+    setTimeout(() => this.wineBotRespond(txt), 1000);
+  }
+
+  wineBotRespond = (txt) => {
+    // console.log("winebot responding!");
+    const wineBotJustAsked = this.state.wineBotJustAsked;
+    const {userActiveChat} = this.props;
+    if (!wineBotJustAsked) {
+      const phrase= "hi, would you like some wine? Y/N.";
+      this.props.addUserMessage({to: "me", from: "wineBot", message: phrase, time: new Date(), avatar: userActiveChat.avatar});
+      this.setState({wineBotJustAsked: true});
+    }
+    else {
+      const lc = txt.toLowerCase();
+      let phrase = "";
+      if (lc === "y" || lc.indexOf("yes") > -1) {
+        phrase= "Stop by the bar to pick up your glass.";
+        this.props.addWine();
+      }
+      else {
+        phrase= "Cool, I don't drink either.";
+      }
+      this.props.addUserMessage({to: "me", from: "wineBot", message: phrase, time: new Date(), avatar: userActiveChat.avatar});
+      this.setState({wineBotJustAsked: false});
+    }
   }
 
   onSubmit = () => {
@@ -115,9 +159,13 @@ class Chat extends React.Component {
       else if (userActiveChat.userName === "Room") {
         this.sendToRoom(message);
       }
+      else if (userActiveChat.userName === "wineBot") {
+        this.sendToWineBot(message);
+      }
+      else if (userActiveChat.userName === "hostBot") {
+        this.sendToHostBot(message);
+      }
       else {
-        // const user = this.getUserObjectByListID(newValue);
-        // const id = "ID_testing123"
         this.sendToOne(message, userActiveChat.id);
       }
     }
@@ -141,19 +189,19 @@ class Chat extends React.Component {
     return (
       <div className="Chat Panel">
 
-          <div className="Chat-messages">
-            <div className="Chat-title">
-              <div className="Panel-title">chat</div>
+        <div className="Chat-messages">
+          <div className="Chat-title">
+            <div className="Panel-title">chat</div>
+          </div>
+          <Messages messages={this.props.messages} addUserMessage={this.props.addUserMessage} />
+          <div className="Chat-form">
+            <div className="to-form">
+              <div className="to-div">To: </div>
+              <ComboBox {...this.props} setRecipient={this.setRecipient}  />
             </div>
-            <Messages messages={this.props.messages} addUserMessage={this.props.addUserMessage} />
-            <div className="Chat-form">
-              <div className="to-form">
-                <div className="to-div">To: </div>
-                <ComboBox {...this.props} setRecipient={this.setRecipient}  />
-              </div>
-              <div className="Chat-send">
-                <div className="Chat-send-item">
-                  <input
+            <div className="Chat-send">
+              <div className="Chat-send-item">
+                <input
                   label=""
                   id="margin-dense"
                   className={"form-item blueOutline"}
@@ -162,12 +210,12 @@ class Chat extends React.Component {
                   onChange={this.handleTextBoxChange}
                   onKeyDown={this.handleKeyDown}
                   />
-                </div>
-                <button className="form-item blueOutline" disabled={this.state.buttonDisabled} onClick={this.onSubmit}><SendIcon disabled={this.state.buttonDisabled} /></button>
               </div>
+              <button className="form-item blueOutline" disabled={this.state.buttonDisabled} onClick={this.onSubmit}><SendIcon disabled={this.state.buttonDisabled} /></button>
             </div>
-
           </div>
+
+        </div>
       </div>
     );
   }

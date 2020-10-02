@@ -1,11 +1,15 @@
 
 import React from 'react';
+import {showWine} from './Helpers';
 
 function Avatar(props) {
   const {user, avatarW} = props;
-
+  const showWineEmoji = showWine(user);
   return (
-    <div style={{top: window.innerHeight/2-avatarW/2, left: window.innerWidth/2-avatarW/2}} className="userAvatar">{user.avatar}</div>
+    <div className="userAvatar" style={{top: window.innerHeight/2-avatarW/2, left: window.innerWidth/2-avatarW/2}}>
+      <div>{user.avatar}</div>
+      <div className={"emoji-wine" + (showWineEmoji?"":" hidden")}>🍷</div>
+    </div>
   )
 }
 

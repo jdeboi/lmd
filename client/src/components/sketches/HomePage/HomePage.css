@@ -14,14 +14,17 @@
     .HomePage .MFA-deets div a {
       text-decoration: none;
       color: black; }
+  .HomePage .WineBar {
+    padding: 6px;
+    padding-top: 15px;
+    font-size: 30px; }
   .HomePage .avatars {
     position: absolute;
     font-size: 36px;
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
-    pointer-events: all; }
+    height: 100vh; }
     .HomePage .avatars .otherAvatars {
       position: absolute;
       top: 0;
@@ -29,7 +32,8 @@
       width: 100vw;
       height: 100vh; }
       .HomePage .avatars .otherAvatars .otherAvatar {
-        position: absolute; }
+        position: absolute;
+        pointer-events: all; }
         .HomePage .avatars .otherAvatars .otherAvatar .tooltip {
           background-color: white;
           padding: 2px;
@@ -37,7 +41,13 @@
           border-radius: 4px;
           font-size: 10px; }
     .HomePage .avatars .userAvatar {
-      position: absolute; }
+      position: absolute;
+      pointer-events: all; }
+      .HomePage .avatars .userAvatar .emoji-wine {
+        position: relative;
+        top: -10px;
+        left: 20px;
+        font-size: 36px; }
   .HomePage .react-p5 {
     position: absolute;
     top: 0;

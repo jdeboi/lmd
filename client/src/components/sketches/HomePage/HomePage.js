@@ -13,6 +13,9 @@ import Avatar from './components/Avatar';
 
 import Folders from './components/Folders';
 import Welcome from './components/Welcome';
+import WineBar from './components/WineBar';
+
+import ArrowKeysReact from 'arrow-keys-react';
 
 class HomePage extends React.Component {
 
@@ -21,7 +24,9 @@ class HomePage extends React.Component {
 
     this.state = {
       keyDown: false,
-      zIndex: [0, 1, 2, 3]
+      zIndex: [0, 1, 2, 3],
+      OGW: window.innerWidth/2,
+      OGH: window.innerHeight/2
     }
 
     this.avatarW = 34;
@@ -29,14 +34,15 @@ class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    document.addEventListener("keydown", this.handleKeyDown.bind(this));
-    document.addEventListener("keyup", this.handleKeyUp.bind(this));
+    window.addEventListener("keydown", this.handleKeyDown);
+    window.addEventListener("keyup", this.handleKeyUp);
     this.props.userSetRoom("home");
+
   }
 
   componentWillUnmount() {
-    document.removeEventListener("keydown", this.handleKeyDown.bind(this));
-    document.removeEventListener("keyup", this.handleKeyUp.bind(this));
+    window.removeEventListener("keydown", this.handleKeyDown);
+    window.removeEventListener("keyup", this.handleKeyUp);
     this.props.userLeaveRoom("home");
   }
 
@@ -68,7 +74,7 @@ class HomePage extends React.Component {
 
 
 
-  handleKeyDown(e) {
+  handleKeyDown = (e) => {
     var {keyDown} = this.state;
 
     if (!keyDown) {
@@ -94,7 +100,7 @@ class HomePage extends React.Component {
 
   }
 
-  handleKeyUp(e) {
+  handleKeyUp = (e) => {
     this.setState({keyDown: false});
   }
 
@@ -103,11 +109,11 @@ class HomePage extends React.Component {
   }
 
   render() {
-    const {users, user, walls, doors} = this.props;
+    const {users, user, walls, doors, wineLocation} = this.props;
     const {zIndex} = this.state;
 
     return (
-      <div className="HomePage Sketch" >
+      <div className="HomePage Sketch" onKeyDown={this.handleKeyDown} onKeyUp={this.handleKeyUp} >
 
         <Sketch
           className="p5sketch"
@@ -118,8 +124,9 @@ class HomePage extends React.Component {
           />
 
 
-        <Welcome w={500} h={400} z={zIndex[0]} x={100-user.x} y={100-user.y} />
-        <Folders x={640-user.x} y={40-user.y} z0={zIndex[1]} z1={zIndex[2]} z2={zIndex[3]} onDblClick={this.onDblClick} />
+        <Welcome w={500} h={400} z={zIndex[0]} x={-250-user.x+ this.state.OGW} y={-250-user.y+ this.state.OGH} />
+        <WineBar x={wineLocation.x-user.x + this.state.OGW} y={wineLocation.y-user.y+ this.state.OGH} w={wineLocation.w} h={wineLocation.h} />
+        <Folders x={300-user.x+ this.state.OGW} y={-330-user.y+ this.state.OGH} z0={zIndex[1]} z1={zIndex[2]} z2={zIndex[3]} onDblClick={this.onDblClick} />
         <div className="avatars">
           <OtherAvatars users={users} user={user} avatarW={this.avatarW} userSetActiveChat={this.userSetActiveChat}  />
           <Avatar user={user} avatarW={this.avatarW} />

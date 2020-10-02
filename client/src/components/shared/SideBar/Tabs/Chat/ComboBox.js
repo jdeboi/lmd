@@ -36,10 +36,17 @@ class ComboBox extends React.Component {
       inputValue: "",
     }
 
-    this.firstUserObj = {userName: "Everyone", avatar: "👥"};
-    this.secondUserObj = {userName: "Room", avatar: "🚪"};
-    this.firstUser = this.firstUserObj.userName;
-    this.secondUser = this.secondUserObj.userName;
+
+    this.initialUsers = [{userName: "Everyone", avatar: "👥"}, {userName: "Room", avatar: "🚪"}];
+
+    // if (this.props.room === "home") {
+    //   const wineBot = {};
+    //   const hostBot = {};
+    //   this.initialUsers.push(wineBot);
+    //   this.initialUsers.push(hostBot);
+    // }
+
+
 
   }
 
@@ -52,6 +59,14 @@ class ComboBox extends React.Component {
       this.setState({inputValue: label});
       // this.setValue(this.props.userActiveChat);
     }
+  }
+
+  getInitialUserNames = () => {
+    const names = [];
+    for (const user of this.initialUsers) {
+      names.push(user.userName);
+    }
+    return names;
   }
 
   getLabel(user) {
@@ -70,7 +85,7 @@ class ComboBox extends React.Component {
   }
 
   getUserListInRoom = () => {
-    var users = [this.firstUser, this.secondUser];
+    var users = this.getInitialUserNames();
     if (this.props.users) {
       for (let i = 0; i < this.props.users.length; i++) {
         const user = {...this.props.users[i]};
@@ -83,7 +98,7 @@ class ComboBox extends React.Component {
   }
 
   getUsersInRoomTrunc = () => {
-    var users = [this.firstUserObj, this.secondUserObj];
+    var users = this.initialUsers;
     if (this.props.users) {
       for (let i = 0; i < this.props.users.length; i++) {
         const user = {...this.props.users[i]};
@@ -97,7 +112,7 @@ class ComboBox extends React.Component {
 
   getUsersInRoom = () => {
     // console.log("USERS", users)
-    var users = [this.firstUserObj, this.secondUserObj];
+    var users = this.initialUsers;
     if (this.props.users) users = [...users, ...this.props.users];
     let usersInRoom = users.filter((user, i) => {
       return (i < 2) || (user.room === this.props.room);
@@ -107,7 +122,7 @@ class ComboBox extends React.Component {
   }
 
   getUserObjectByListID(listID) {
-    var users = [this.firstUserObj, this.secondUserObj];
+    var users = this.initialUsers;
     if (this.props.users) users = [...users, ...this.props.users];
     let obj = users.find(user => listID === this.getLabel(user));
     return obj;
@@ -117,7 +132,7 @@ class ComboBox extends React.Component {
   // I.E. SELECTED FROM LIST
   setValue = (newValue) => {
     // this.setState({value: newValue});
-  
+
     this.props.setRecipient(newValue);
   }
 

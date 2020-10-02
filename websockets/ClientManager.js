@@ -14,7 +14,7 @@ var clients = new Map();
 
 setInterval(() => {
   const c = Array.from(clients.values());
-  console.log(c.length, "users");
+  // console.log(c.length, "users");
   io.emit('usersUpdate', c);
 }, 500);
 
@@ -36,7 +36,7 @@ module.exports = function(client) {
   })
 
   client.on('disconnect', function () {
-    console.log('client disconnect...', client.id)
+    // console.log('client disconnect...', client.id)
     clients.delete(client.id);
     io.sockets.emit('userDisconnected', client.id);
     // handleDisconnect()
@@ -48,34 +48,73 @@ module.exports = function(client) {
     clients.set(client.id, user);
   })
 
-  client.on('error', function (err) {
+  client.on('setBot', bot => {
+    // console.log("SETTING USER", user)
+    clients.set(bot.id, bot);
+  })
+
+  client.on('joinRoom', (room) => {
+    client.join(room);
+    // console.log(client.id, "joined room", room);
+  })
+
+  client.on('leaveRoom', (room) => {
+    client.leave(room);
+    // console.log(client.id, "left room", room);
+  })
+
+  client.on('error', (err) => {
     console.log('received error from client:', client.id)
     console.log(err)
   })
 
   /////////// MESSAGES
-  client.on('messageUser', ({socketId, message}) => {
-    client.broadcast.emit('message', getMessageObject(client.id, socketId, message));
+  client.on('messageUser', ({socketId, message, time, avatar}) => {
+    console.log("sending to", socketId, "msg:", message);
+    io.to(socketId).emit('message', getMessageObject(client.id, socketId, message, time, avatar));
+    // client.broadcast.emit('message', getMessageObject(client.id, socketId, message));
     // io.to(socketId).emit('message', getMessageObject(client.id, "private", message));
   })
 
-  client.on('messageRoom', ({room, message}) => {
-    client.to(room).emit('message', getMessageObject(client.id, room, message));
+  client.on('messageRoom', ({room, message, time, avatar}) => {
+    // console.log("sending room message to", room, message);
+    // io.sockets.in(room).emit('message', getMessageObject(client.id, "room", message))
+    // client.to(room).emit('message', getMessageObject(client.id, room, message));
+    client.to(room).emit('message', getMessageObject(client.id, room, message, time, avatar));
   })
 
-  client.on('messageAll', ({message}) => {
-    client.broadcast.emit('message', getMessageObject(client.id, "all", message));
+  client.on('messageAll', ({message, time, avatar}) => {
+    // includes sender
+    // io.emit('message', getMessageObject(client.id, "all", message));
+
+    client.broadcast.emit('message', getMessageObject(client.id, "all", message, time, avatar));
+  })
+
+  client.on('critique', (crit) => {
+    client.broadcast.emit('critique', crit);
   })
 }
 
-function getMessageObject(from, to, msg) {
-  return {from: from, to: to, message: msg};
+function getMessageObject(from, to, msg, time, avatar) {
+  return {from: from, to: to, message: msg, time: time, avatar: avatar};
 }
 
 function isUser(userName) {
+
+  var reservedUserNames = [
+    "everyone",
+    "host",
+    "room",
+    "jenna",
+    "winebot",
+    "hostbot",
+    "helpbot"
+  ];
+
   let values = Array.from(clients.values());
   // console.log("VAL", values);
-  const found = values.some(el => el.userName === userName);
-  if (found) return true;
+  const found = values.some(el => el.userName.toLowerCase() === userName.toLowerCase());
+  const foundReserved = reservedUserNames.includes(userName.toLowerCase());
+  if (found || foundReserved) return true;
   return false;
 }

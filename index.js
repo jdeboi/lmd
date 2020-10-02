@@ -6,6 +6,7 @@ const cors = require('cors');
 const path = require('path');
 const http = require("http");
 
+const fs = require('fs');
 
 const app = express();
 
@@ -19,41 +20,45 @@ const ClientManager = require('./websockets/ClientManager');
 io.on('connection', ClientManager);
 
 
-// const ClientManager = require('./websockets/ClientManager')
-// const ChatroomManager = require('./websockets/ChatroomManager')
-// const makeHandlers = require('./websockets/handlers')
-// const clientManager = ClientManager()
-// const chatroomManager = ChatroomManager()
-
-// const TweetStream = require('./TweetStream');
-// const myStream = new TweetStream(io);
-
 const TweetFinder = require('./TweetFinder');
 
 
-// Serve our api route /cow that returns a custom talking text cow
-// app.get('/api/cow/:say', cors(), async (req, res, next) => {
-//   try {
-//     const text = req.params.say;
-//     const moo = cowsay.say({ text });
-//     res.json({ moo });
-//   } catch (err) {
-//     next(err)
-//   }
-// });
+app.post('/api/post/critique', cors(), async(req, res, next) => {
+  try {
+    fs.readFile('./critiques.json', function (err, data) {
+      var json = JSON.parse(data)
+      const crit = req.body;
+      // crit.time = new Date();
+      json.push(crit);
+      fs.writeFile('./critiques.json', JSON.stringify(json), 'utf-8', function(err) {
+        if (err) throw err
+        console.log('ADDED CRIT', crit);
+        io.emit("critique", crit);
+        res.send(crit);
+      })
+    })
+  } catch (err) {
+    next(err);
+    // console.log(err);
+  }
+})
 
-// Serve our base route that returns a Hello World cow
-// app.get('/api/cow/', cors(), async (req, res, next) => {
-//   try {
-//     const moo = cowsay.say({ text: 'Hello World!' });
-//     res.json({ moo });
-//   } catch (err) {
-//     next(err);
-//   }
-// })
+app.get('/api/get/critiques/:room', cors(), async (req, res, next) => {
+  try {
+    const room = req.params.room;
+    console.log("GET ROOM CRITS", room);
+    fs.readFile('critiques.json', function (err, data) {
+      const json = JSON.parse(data)
+      const crits = json.filter(crit => crit.room == room);
+      res.json(crits);
+    })
+  } catch (err) {
+    next(err);
+  }
+})
 
 
-app.get('/api/get/:query', cors(), async (req, res, next) => {
+app.get('/api/get/tweets/:query', cors(), async (req, res, next) => {
   const tf = new TweetFinder();
   try {
     const query = decodeURI(req.params.query);

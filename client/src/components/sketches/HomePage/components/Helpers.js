@@ -4,3 +4,7 @@ export function getOtherUserLocation(user, otherUser, avatarW) {
   const x = otherUser.x+window.innerWidth/2-user.x-avatarW/2;
   return {x: x, y: y};
 }
+
+export function showWine(user) {
+  return user.hasWine && (new Date() - user.hasWine < 15000);
+}

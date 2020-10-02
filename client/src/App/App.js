@@ -118,17 +118,19 @@ class App extends React.Component {
       showSignIn: false,
       sessionID: null,
       usersChange: false,
-      user: {avatar:"", userName:"", room:"", x: 0, y: 0},
+      user: {avatar:"", userName:"", room:"", x: 0, y: 0, hasWine: null, needsWine: false},
       users: null,
       userActiveChat: null,
-      messages: [{to: "me", from:"bub", message: "1please work", avatar:"😋"},{to: "bub", from:"me", message: "2if you say so", avatar:"😋"}],
+      messages: [],
       room: "home"
     };
 
-    const centerW = 1400;
+    const centerW = 1000;
     this.centerPoints = [{x: 0 , y: -centerW/2},{x: centerW/2 , y: 0},{x: 0 , y: centerW/2},{x: -centerW/2 , y: 0},{x: 0 , y: -centerW/2}];
     this.doors = [{x0: 0 , y0: -centerW/2, x1: 200, y1: -centerW/2+200, to:"/macbook-air"},{x0: 0 , y0: centerW/2, x1: -200, y1: centerW/2-200, to:"/hard-drives-on-seashores"},{x0: centerW/2 , y0: 0, x1: centerW/2-200, y1: 200, to:"/jungle-gyms"},];
     //    {x0: 0 , y0: 200, x1: 200, y1: 200, to:"/wet-streams"}
+
+    this.wineLocation = {x: -100, y: 500, w: 80, h: 150};
   }
 
 
@@ -236,6 +238,8 @@ class App extends React.Component {
 
       socket.emit("setUser", user);
       socket.emit("joinRoom", this.state.room);
+
+      this.addBots();
     });
 
 
@@ -272,6 +276,34 @@ class App extends React.Component {
       // socket.emit("leaveRoom", user.room); // not sure if we need this?
       console.log("SOMEONE DISCONNECTED");
     })
+  }
+
+  addBots = () => {
+    const wineBot = {x: this.wineLocation.x -50, y: this.wineLocation.y+50, avatar: "🤖", room:"home", userName:"wineBot", id:0};
+    // const hostBot = {x: 300, y: 600, avatar: "🤖", room:"home", userName:"hostBot", id:1}
+    socket.emit("setBot", wineBot);
+    // socket.emit("setBot", hostBot);
+  }
+
+  addWine = () => {
+    const user = { ...this.state.user }
+    user.needsWine = true;
+    if (this.userNearWine()) {
+        user.needsWine = false;
+        user.hasWine = new Date();
+    }
+    this.setState({user});
+    socket.emit("setUser", user);
+  }
+
+  userNearWine = () => {
+    // const wineLocation = this.wineLocation;
+    const user = { ...this.state.user };
+    var dx = user.x - (this.wineLocation.x+this.wineLocation.w/2);
+    var dy = user.y - (this.wineLocation.y+this.wineLocation.h/2);
+    var dis = Math.sqrt(dx*dx + dy*dy);
+    // console.log("DIS", dis < 200);
+    return dis < 200;
   }
 
   getUserNameById = (id) => {
@@ -326,6 +358,10 @@ class App extends React.Component {
       // alert("boundary crossing");
     }
     else {
+      if (this.userNearWine() && user.needsWine) {
+          user.needsWine = false;
+          user.hasWine = new Date();
+      }
       // console.log("1", new Date() - time);
       this.setState({user});
       // console.log("dt", new Date() - time);
@@ -400,7 +436,7 @@ class App extends React.Component {
           </div>
           <div className="App-Content inner-outline">
             <Switch>
-              <Route exact path="/" render={() => (<HomePage user={this.state.user} users={this.state.users} userMove={this.userMove} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} walls={this.centerPoints} doors={this.doors} userSetActiveChat={this.userSetActiveChat} />)} />
+              <Route exact path="/" render={() => (<HomePage user={this.state.user} users={this.state.users} userMove={this.userMove} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} walls={this.centerPoints} doors={this.doors} userSetActiveChat={this.userSetActiveChat} wineLocation={this.wineLocation} />)} />
               <Route  path="/macbook-air" render={() => (<MacbookAir dimensions={dimensions} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
               <Route  path="/jungle-gyms" render={() => (<JungleGyms userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
               <Route  path="/hard-drives-on-seashores"      render={() => (<HardDrives userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)}  />
@@ -422,7 +458,7 @@ class App extends React.Component {
             {/*<div id="fps">0</div> */}
             <FPSStats top={window.innerHeight-55} left={10} />
           </div>
-          <SideBar room={this.state.room} user={this.state.user} users={this.state.users} usersChange={this.state.usersChange} showSideBar={this.state.showSideBar} handleDrawerClose={this.handleDrawerClose.bind(this)} messages={this.state.messages} addUserMessage={this.addUserMessage} userActiveChat={this.state.userActiveChat} userSetActiveChat={this.userSetActiveChat} />
+          <SideBar room={this.state.room} user={this.state.user} users={this.state.users} usersChange={this.state.usersChange} showSideBar={this.state.showSideBar} handleDrawerClose={this.handleDrawerClose.bind(this)} messages={this.state.messages} addUserMessage={this.addUserMessage} userActiveChat={this.state.userActiveChat} userSetActiveChat={this.userSetActiveChat} addWine={this.addWine} />
           <SignIn user={this.state.user} hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} closeSignIn={this.closeSignIn.bind(this)} userUpdated={this.userUpdated} userSet={this.userSet} userRegisterCheck={this.userRegisterCheck} />
         </MuiThemeProvider>
       </div>
