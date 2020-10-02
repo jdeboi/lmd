@@ -83,11 +83,13 @@ class WetStreams extends React.Component {
     this.updateDimensions();
     window.addEventListener("resize", this.updateDimensions.bind(this));
     this.interval = setInterval(this.playStreamReset, 4000);
+    this.props.userSetRoom("wet-streams");
   }
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions.bind(this));
     clearInterval(this.interval);
+    this.props.userLeaveRoom("wet-streams");
   }
 
   updateDimensions() {
@@ -154,7 +156,7 @@ class WetStreams extends React.Component {
       <div className="WetStreams Sketch">
 
 
-      {/* https://media.giphy.com/media/Kk4f3yrTot95K/giphy.gif*/}
+        {/* https://media.giphy.com/media/Kk4f3yrTot95K/giphy.gif*/}
 
 
         {imgs.map((img, i) => {
@@ -168,37 +170,37 @@ class WetStreams extends React.Component {
 
 
         <P5Wrapper className="p5sketch" sketch={sketch}
-        origins={origins}
-        offsets={offsets}
-        velocities={velocities}
-        deltas={this.state.deltaPositions}
-        degrees={degrees}
-        isPlaying={playingStreams}
-        />
+          origins={origins}
+          offsets={offsets}
+          velocities={velocities}
+          deltas={this.state.deltaPositions}
+          degrees={degrees}
+          isPlaying={playingStreams}
+          />
 
         <Glasses />
-        </div>
-      )
-    }
+      </div>
+    )
   }
+}
 
-  function getShower(id, x, y,dx, dy, w, h, img, dragHandler, toggleHandler, title, isPlaying ) {
-    //"./assets/images/tub/" + img + ".png"
+function getShower(id, x, y,dx, dy, w, h, img, dragHandler, toggleHandler, title, isPlaying ) {
+  //"./assets/images/tub/" + img + ".png"
 
-    return(
-      <Frame key={id} id={id} onDrag={dragHandler} title={title} content={
+  return(
+    <Frame key={id} id={id} onDrag={dragHandler} title={title} content={
         <div className={id===5?"showerhead flippedX":"showerhead"}>
-        <img src={require("./assets/showerHeads/" + img + ".png")} style={{width:w +"px", height:h+"px"}} alt="shower head" />
-        <Playbar isPlaying={isPlaying} onToggle={toggleHandler} />
+          <img src={require("./assets/showerHeads/" + img + ".png")} style={{width:w +"px", height:h+"px"}} alt="shower head" />
+          <Playbar isPlaying={isPlaying} onToggle={toggleHandler} />
         </div>
       }
       width={w} height={h} x={x} y={y} dx={dx} dy={dy}
       />
-    )
+  )
 
-  }
-
-
+}
 
 
-  export default WetStreams;
+
+
+export default WetStreams;

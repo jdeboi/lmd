@@ -36,23 +36,16 @@ class MacbookAir extends React.Component {
 
   componentDidMount() {
     this.interval = setInterval(this.resetPlayer, 22000);
-
+    this.props.userSetRoom("macbook-air");
     console.log(window.AWS + "/macbookAir/noframe.mp4");
     // window.addEventListener("resize", this.updateDimensions);
   }
-  // componentDidMount() {
-  //   this.updateDimensions();
-  //   window.addEventListener("resize", this.updateDimensions.bind(this));
-  // }
-  //
+
   componentWillUnmount() {
     // window.removeEventListener("resize", this.updateDimensions.bind(this));
     clearInterval(this.interval);
+    this.props.userLeaveRoom("macbook-air");
   }
-  //
-  // updateDimensions() {
-  //   this.setState({ windowWidth: window.innerWidth, windowHeight: window.innerHeight });
-  // }
 
   setSpeed(speed) {
     this.cloudsRef.current.playbackRate = speed;

@@ -4,68 +4,90 @@ import './DesktopIcon.css';
 import Frame from '../Frame/Frame';
 import Draggable from 'react-draggable';
 
+
 class DesktopIcon extends React.Component {
+  //https://github.com/STRML/react-draggable
   // https://codepen.io/JohJakob/pen/YPxgwo
   constructor(props) {
     super(props);
 
 
     this.state = {
-      isHidden: true
+      isHidden: true,
+      controlledPosition : {x: props.x, y: props.y}
     }
 
     this.wrapper = React.createRef();
-    this.doubleClicked = this.doubleClicked.bind(this);
+    // this.onDblClick = this.onDblClick.bind(this);
   }
 
-  doubleClicked() {
+  componentDidUpdate(prevProps) {
+    if (this.props.x !== prevProps.x || this.props.y !== prevProps.y) {
+      const dx = this.props.x - prevProps.x;
+      const dy = this.props.y - prevProps.y;
+      const controlledPosition = {...this.state.controlledPosition}
+
+      this.setState({controlledPosition: {x: controlledPosition.x + dx, y: controlledPosition.y + dy}});
+    }
+  }
+
+  onControlledDrag = (e, position) => {
+    const {x, y} = position;
+    this.setState({controlledPosition: {x, y}});
+  };
+
+  onControlledDragStop = (e, position) => {
+    this.onControlledDrag(e, position);
+    this.onStop();
+  };
+
+  onDblClick = () => {
     // let {isHidden} = this.state;
     // isHidden = !isHidden;
     this.setState({isHidden: false});
-    this.props.ondblclick(this.props.id);
+    this.props.onDblClick(this.props.id);
   }
 
-  onHide() {
+  onHide = () => {
     this.setState({isHidden: true});
   }
 
 
   render() {
+    const {controlledPosition, isHidden} = this.state;
+
     const parser = new DOMParser();
     var title = this.props.title;
 
     var classn = "DesktopIcon";
     if (this.props.className) classn += " " + this.props.className;
 
-    const {isHidden} = this.state;
-    //https://github.com/STRML/react-draggable
+
 
     // position = {...} makes it have a specific location. when you want direct control.
-    let pos = this.state.controlledPosition;
-    let off = this.props.dx ? {x: this.props.dx, y: this.props.dy}: null;
+    // let pos = this.state.controlledPosition;
     let frameH = this.toolBarH + (this.state.isMinimized?0:this.props.height);
     // so if we make pos null, it stays where it is dragged to
     // however, it doesn't update when the page width / height changes
     // if we let pos be equal to props.px/ props.py, it changes location
-
+    const bounded = this.props.bounded?".App-Content":null;
     return (
-      <div className="DesktopDiv" >
+      <div className="DesktopDiv" style={{zIndex: this.props.z?this.props.z:0}} >
         <Draggable
           axis="both"
           handle={".DesktopIcon"}
           defaultPosition={{x: this.props.x, y: this.props.y}}
-          position={pos}
-          positionOffset={off}
+          position={controlledPosition}
           grid={[1, 1]}
           scale={1}
-          bounds=".App-Content"
+          bounds={bounded}
           cancel=".close, .minimize, .zoom"
           onStart={this.handleStart}
-          onDrag={this.handleDrag}
+          onDrag={this.onControlledDrag}
           onStop={this.handleStop}
           nodeRef={this.wrapper}
           >
-          <div ref={this.wrapper} onDoubleClick={this.doubleClicked} className={classn} style={{width: this.props.width + "px",height: this.props.height + "px"}} >
+          <div ref={this.wrapper} onDoubleClick={this.onDblClick} className={classn} style={{width: this.props.width + "px",height: this.props.height + "px"}} >
             <div className="content">
               {this.props.content}
             </div>

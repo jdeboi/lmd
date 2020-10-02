@@ -3,95 +3,157 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
+// import { makeStyles, withStyles } from '@material-ui/core/styles';
+//
+// const styles = theme => ({
+//   root: {
+//     textField: {
+//       '& .MuiInput-underline': {
+//         borderBottom: '2px solid blue'
+//       },
+//       '& .MuiInput-underline:after': {
+//         borderBottom: '3px solid yellow'
+//       },
+//       '& .MuiInput-underline:hover': {
+//         borderBottom: '3px solid red'
+//       },
+//     }
+//
+//   },
+// });
 
-import socket from "../../../Socket/Socket";
 
 class ComboBox extends React.Component {
+
+  // really I only think this needs to rerender if someone joins/leaves a ROOM
+  // or registers/ connects / disconnects
 
   constructor(props) {
     super(props);
 
     this.state = {
-      value: null,
-      inputValue: ""
+      // value: null,
+      inputValue: "",
     }
 
-    this.firstUser = {userName: "Everyone", avatar:""};
+    this.firstUserObj = {userName: "Everyone", avatar: "👥"};
+    this.secondUserObj = {userName: "Room", avatar: "🚪"};
+    this.firstUser = this.firstUserObj.userName;
+    this.secondUser = this.secondUserObj.userName;
 
-    this.setValue = this.setValue.bind(this);
-    this.setInputValue = this.setInputValue.bind(this);
-
-    this.sendToOne = this.sendToOne.bind(this);
-    this.sendToAll = this.sendToAll.bind(this);
-    this.sendToRoom = this.sendToRoom.bind(this);
   }
 
-  // shouldComponentUpdate(nextProps) {
-  //   const change = nextProps.usersChange || this.props.usersChange;
-  //   console.log(change, nextProps.usersChange, this.props.usersChange);
-  //   return change;
-  // }
-
-  sendToOne(txt, socketId) {
-    console.log("send to one")
-    const message = {socketId: socketId, message: txt};
-    if (socket.connected) socket.emit('messageUser', message); //sending to individual socketid
+  componentDidUpdate(prevProps) {
+    // console.log("setting new chat user", this.props.userActiveChat);
+    if (prevProps.userActiveChat !== this.props.userActiveChat) {
+      // this.updateAndNotify();
+      var label = "";
+      if (this.props.userActiveChat) label = this.getLabel(this.props.userActiveChat);
+      this.setState({inputValue: label});
+      // this.setValue(this.props.userActiveChat);
+    }
   }
 
-  sendToRoom(txt, room) {
-    console.log("send to room ", room)
-    const message = {room: room, message: txt};
-    if (socket.connected) socket.emit('messageRoom', message);
+  getLabel(user) {
+    if (!user) return "";
+    return `${user.avatar} ${user.userName}`;
   }
 
-  sendToAll(txt) {
-    console.log("send to all");
-    const message = {message: txt};
-    if (socket.connected) socket.emit('messageAll', message);
-  }
-
-  setValue(newValue) {
-    this.setState({value: newValue});
-  }
-
-  setInputValue(newInputValue) {
-    // console.log("changing that user"+newInputValue+"0");
-    this.setState({inputValue: newInputValue});
-    const str = this.firstUser.avatar + " " + this.firstUser.userName;
-    if (newInputValue === str) {
-      this.sendToAll("hey y'all");
+  // CHANGES WHEN TYPING INPUT
+  setInputValue = (newInputValue) => {
+    if (newInputValue) {
+      this.setState({inputValue: newInputValue});
     }
     else {
-      this.sendToOne("wuts up", newInputValue.id);
+      this.setState({inputValue: ""});
     }
+  }
+
+  getUserListInRoom = () => {
+    var users = [this.firstUser, this.secondUser];
+    if (this.props.users) {
+      for (let i = 0; i < this.props.users.length; i++) {
+        const user = {...this.props.users[i]};
+        if (user.room === this.props.room) {
+          users.push(this.getLabel(user));
+        }
+      }
+    }
+    return users;
+  }
+
+  getUsersInRoomTrunc = () => {
+    var users = [this.firstUserObj, this.secondUserObj];
+    if (this.props.users) {
+      for (let i = 0; i < this.props.users.length; i++) {
+        const user = {...this.props.users[i]};
+        if (user.room === this.props.room) {
+          users.push({avatar: user.avatar, userName: user.userName});
+        }
+      }
+    }
+    return users;
+  }
+
+  getUsersInRoom = () => {
+    // console.log("USERS", users)
+    var users = [this.firstUserObj, this.secondUserObj];
+    if (this.props.users) users = [...users, ...this.props.users];
+    let usersInRoom = users.filter((user, i) => {
+      return (i < 2) || (user.room === this.props.room);
+    })
+    // console.log("ROOM USERS", usersInRoom)
+    return usersInRoom;
+  }
+
+  getUserObjectByListID(listID) {
+    var users = [this.firstUserObj, this.secondUserObj];
+    if (this.props.users) users = [...users, ...this.props.users];
+    let obj = users.find(user => listID === this.getLabel(user));
+    return obj;
+  }
+
+  // CHANGES WHEN HIT RETURN, CLICK,
+  // I.E. SELECTED FROM LIST
+  setValue = (newValue) => {
+    // this.setState({value: newValue});
+  
+    this.props.setRecipient(newValue);
   }
 
   render() {
-    // console.log("USERS", this.props.users);
-    const {users} = this.props;
-    // console.log(users);
-    if (users && users[0] && users[0].userName != this.firstUser.userName) users.unshift(this.firstUser)
+    // const userList = this.getUserListInRoom();
+    const users = this.getUsersInRoom();
 
-    const {value, inputValue} = this.state;
+    const {inputValue} = this.state;
+    const {userActiveChat} = this.props;
+    const { classes } = this.props;
 
     return (
       <Autocomplete
-      id="combo-box-demo"
-      value={value}
-      onChange={(event, newValue) => {
-        this.setValue(newValue);
-      }}
-      inputValue={inputValue}
-      onInputChange={(event, newInputValue) => {
-        this.setInputValue(newInputValue);
-      }}
-      options={users}
-      getOptionLabel={(option) => option.avatar + " " + option.userName}
-      style={{ width: 300 }}
-      renderInput={(params) => <TextField {...params} label="select user" variant="outlined" />}
-      />
+        id="combo-box-demo"
+        className="autocomplete"
+        value={userActiveChat}
+        onChange={(event, newValue) => {
+          this.setValue(newValue);
+        }}
+        inputValue={inputValue}
+        onInputChange={(event, newInputValue) => {
+          this.setInputValue(newInputValue);
+        }}
+        options={users}
+        getOptionLabel={(option) => this.getLabel(option)}
+        getOptionSelected={(option, value) => this.getLabel(option) === this.getLabel(value)}
+        fullWidth
+        renderInput={(params) => (
+          <div ref={params.InputProps.ref}>
+            <input className="autocomplete-input .blueOutline" style={{}} type="text" placeholder="select recipient" {...params.inputProps} />
+          </div>
+        )}
+        />
     );
   }
 }
+//    // style={{ border: '1px solid white'}}
 
 export default ComboBox;

@@ -36,11 +36,14 @@ class Spacetimes extends React.Component {
     window.addEventListener("resize", this.updateDimensions.bind(this));
 
     this.intervalFrames = setInterval(this.setFrame, 200);
+
+    this.props.userSetRoom("wasted-days");
   }
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions.bind(this));
     clearInterval(this.intervalFrames);
+    this.props.userLeaveRoom("wasted-days");
   }
 
   updateDimensions() {

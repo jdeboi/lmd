@@ -49,11 +49,13 @@ class Confessions extends React.Component {
   componentDidMount() {
     this.interval = setInterval(this.moveConfessions, 30);
     this.fetchTweets();
+    this.props.userSetRoom("confessions");
     alert("Thanks for your confession. Uploading to the cloud...");
   }
 
   componentWillUnmount() {
     clearInterval(this.interval);
+    this.props.userLeaveRoom("confessions");
   }
 
 
@@ -65,7 +67,7 @@ class Confessions extends React.Component {
   async fetchTweets() {
     // const query = encodeURI("\#confession");
     // console.log("WERERE", query);
-    const url = `/api/get/%23confession`;
+    const url = `/api/get/tweets/%23confession`;
     const response = await fetch(url);
     const initialRes = await response.json();
 
@@ -178,7 +180,7 @@ class Confessions extends React.Component {
       this.setState({confessions});
     }
 
-    ondblclick(id) {
+    onDblClick(id) {
       console.log(id);
     }
 
@@ -189,7 +191,7 @@ class Confessions extends React.Component {
         <div className="WaveForms Sketch">
           {confessions.map((confession, i) => {
             const box={x: 100+i*20, y:100+i*20, w:400};
-            return <DesktopIcon key={i} title={"#confession"} ondblclick={this.ondblclick.bind(this)} x={0} y={confession.y} dx={confession.x} dy={confession.y} box={box}
+            return <DesktopIcon key={i} title={"#confession"} onDblClick={this.onDblClick.bind(this)} x={0} y={confession.y} dx={confession.x} dy={confession.y} box={box}
               content={
                 <img src={window.AWS+"/waveforms/txt.png"} width={80} height={80} />
               }

@@ -1,0 +1,48 @@
+.Critique {
+  display: flex;
+  flex-direction: column;
+  flex: 1; }
+  .Critique .Critique-Box {
+    flex: 1;
+    display: flex;
+    flex-direction: column; }
+    .Critique .Critique-Box .Critique-title {
+      display: flex;
+      flex-direction: row; }
+      .Critique .Critique-Box .Critique-title .Panel-title {
+        flex: 1; }
+    .Critique .Critique-Box .Critique-text {
+      padding-bottom: 10px;
+      display: flex;
+      min-height: 200px; }
+      .Critique .Critique-Box .Critique-text .Critique-text-inner {
+        padding: 10px;
+        display: flex;
+        flex: 1; }
+        .Critique .Critique-Box .Critique-text .Critique-text-inner textarea {
+          flex: 1;
+          color: white; }
+    .Critique .Critique-Box #critButton {
+      padding: 5px;
+      border: 2px solid #d53a9d;
+      color: white; }
+      .Critique .Critique-Box #critButton:disabled {
+        color: rgba(255, 255, 255, 0.23); }
+  .Critique .Critiques {
+    padding-top: 30px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 200px; }
+    .Critique .Critiques .crits {
+      flex: 1;
+      min-height: 0;
+      overflow: auto; }
+      .Critique .Critiques .crits .crit {
+        padding-bottom: 4px; }
+        .Critique .Critiques .crits .crit .crit-inner {
+          padding: 15px;
+          background-color: #335ef6; }
+          .Critique .Critiques .crits .crit .crit-inner div:first-child {
+            padding-bottom: 5px;
+            opacity: .5; }

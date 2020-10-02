@@ -23,11 +23,18 @@ function Credits() {
     <li>thanks to Slanted Studios for the <a href="https://giphy.com/media/l3Uchq9s6Hx0aK8F2/giphy.gif">bird gif</a></li>
     </ul>
     </p>
+    <h2><Link to="/jungle-gyms">Jungle Gyms</Link></h2>
+    <p>
+    <ul>
+    <li>special thanks to <a href="https://github.com/1j01/pipes/blob/master/screensaver.js">Isaiah Odhner for the pipes code</a></li>
+    </ul>
+    </p>
     </div>
     </div>
     </div>
     </div>
   );
 }
+
 
 export default Credits;

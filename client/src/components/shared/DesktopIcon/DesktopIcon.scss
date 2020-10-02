@@ -1,14 +1,21 @@
 .DesktopIcon {
 
   position: absolute;
+  pointer-events: all;
 
   .content {
     pointer-events: none;
   }
-  
+
   .desktop-text {
     text-align: center;
     color: white;
     font-weight: bold;
+
+    text-shadow: 2px 2px #000000;
+    // color: black;
+    // -webkit-text-fill-color: white; /* Will override color (regardless of order) */
+    // -webkit-text-stroke-width: .5px;
+    // -webkit-text-stroke-color: black;
   }
 }

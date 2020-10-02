@@ -66,8 +66,10 @@ class Header extends React.Component {
 
     const hamburgerMenuItems = [
       {title: "statement", link:"/words", shortcut: "&#128222"},
+      {title: "thesis", link:"/words", shortcut: "&#128222"},
       // {title: "cookies", link:"/words", shortcut: "🍪"},
       {title: "credits", link:"/credits", shortcut: ""},
+      {title: "help", link:"/words", shortcut: "&#128222"},
     ];
 
 
@@ -86,12 +88,13 @@ class Header extends React.Component {
   }
 
   getRightMenus() {
-
+    //<button className="hamburger-button">
     return(
       <ul className="right">
-        <li onClick={this.props.userClicked}>{this.getAvatar()}</li>
         <li><Clock /></li>
-        <li onClick={this.props.toggleSideBar}><button><i className="fas fa-bars"></i></button></li>
+        <li className="header-avatar expandable" onClick={this.props.avatarClicked}>{this.getAvatar()}</li>
+
+        <li className="expandable" onClick={this.props.toggleSideBar}><i className="fas fa-bars"></i></li>
       </ul>
     );
   }

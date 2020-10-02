@@ -1,0 +1,118 @@
+.Chat {
+  display: flex;
+  flex-direction: column;
+  flex: 1; }
+  .Chat .Chat-title {
+    padding-bottom: 5px; }
+  .Chat .Chat-participants {
+    height: 100px;
+    padding-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll; }
+    .Chat .Chat-participants .Chat-title-participants {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch; }
+      .Chat .Chat-participants .Chat-title-participants .Chat-user {
+        flex: 1;
+        font-size: 8px;
+        text-align: right;
+        color: rgba(0, 0, 0, 0.2); }
+      .Chat .Chat-participants .Chat-title-participants hr {
+        width: 100%; }
+    .Chat .Chat-participants .Chat-emojis {
+      flex: 1;
+      font-size: 20px;
+      border: 1px dotted rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+      padding: 5px;
+      overflow: scroll; }
+  .Chat .Chat-messages {
+    flex: 1;
+    display: flex;
+    flex-direction: column; }
+    .Chat .Chat-messages .Chat-messages-box {
+      font-size: 10px;
+      padding: 10px;
+      height: 300px;
+      overflow: auto; }
+      .Chat .Chat-messages .Chat-messages-box .Chat-messages-inner-box {
+        min-height: 0;
+        flex: 1; }
+        .Chat .Chat-messages .Chat-messages-box .Chat-messages-inner-box .message-from {
+          color: white; }
+        .Chat .Chat-messages .Chat-messages-box .Chat-messages-inner-box .message-to {
+          color: #dddddd; }
+        .Chat .Chat-messages .Chat-messages-box .Chat-messages-inner-box .message-to-red {
+          color: #03cefc; }
+        .Chat .Chat-messages .Chat-messages-box .Chat-messages-inner-box .message-deets {
+          padding-bottom: 4px;
+          font-size: 8px; }
+        .Chat .Chat-messages .Chat-messages-box .Chat-messages-inner-box .message-txt {
+          font-size: 10px; }
+        .Chat .Chat-messages .Chat-messages-box .Chat-messages-inner-box .bubbleContainer {
+          display: flex;
+          flex-direction: row;
+          padding-top: 10px; }
+          .Chat .Chat-messages .Chat-messages-box .Chat-messages-inner-box .bubbleContainer .avatar {
+            width: 20px;
+            height: 20px;
+            font-size: 20px;
+            padding-top: 8px;
+            padding-right: 8px; }
+          .Chat .Chat-messages .Chat-messages-box .Chat-messages-inner-box .bubbleContainer .hidden {
+            visibility: hidden; }
+        .Chat .Chat-messages .Chat-messages-box .Chat-messages-inner-box .bubble {
+          padding: 10px;
+          border-radius: 8px;
+          border: 1px solid #335ef6;
+          background: #111111; }
+        .Chat .Chat-messages .Chat-messages-box .Chat-messages-inner-box .bubbleContainer.chat-from-me {
+          justify-content: flex-end; }
+          .Chat .Chat-messages .Chat-messages-box .Chat-messages-inner-box .bubbleContainer.chat-from-me .bubble {
+            background: #335ef6; }
+        .Chat .Chat-messages .Chat-messages-box .Chat-messages-inner-box .bubbleContainer.chat-from-other {
+          justify-content: flex-start; }
+    .Chat .Chat-messages .Chat-form {
+      display: flex;
+      flex-direction: column;
+      padding-top: 10px;
+      height: 150px; }
+      .Chat .Chat-messages .Chat-form .to-form {
+        display: flex;
+        flex-direction: row;
+        padding-bottom: 5px; }
+        .Chat .Chat-messages .Chat-form .to-form .to-div {
+          width: 30px;
+          margin-top: 15px;
+          padding-right: 10px; }
+        .Chat .Chat-messages .Chat-form .to-form .autocomplete {
+          flex: 1;
+          display: flex;
+          background-color: transparent; }
+          .Chat .Chat-messages .Chat-form .to-form .autocomplete div {
+            flex: 1;
+            display: flex;
+            background-color: transparent; }
+            .Chat .Chat-messages .Chat-form .to-form .autocomplete div input {
+              flex: 1;
+              background-color: transparent;
+              border-bottom: 2px solid #335ef6;
+              padding: 5px;
+              color: white;
+              height: 30px; }
+              .Chat .Chat-messages .Chat-form .to-form .autocomplete div input:focused {
+                color: red; }
+      .Chat .Chat-messages .Chat-form .Chat-send {
+        display: flex;
+        flex-direction: row;
+        padding: 5px 0 5px 0; }
+        .Chat .Chat-messages .Chat-form .Chat-send .Chat-send-item {
+          flex: 1;
+          display: flex;
+          padding-right: 5px; }
+          .Chat .Chat-messages .Chat-form .Chat-send .Chat-send-item input {
+            flex: 1; }
+        .Chat .Chat-messages .Chat-form .Chat-send button {
+          width: 60px; }

@@ -1,0 +1,74 @@
+.HomePage {
+  // background-image: url(https://whitecube.com/media/w1200/julia-dault-and-daniel-turner-and-raphael-hefti-inside-the-white-cube-north-gallery-and-9-x-9-x-9-bermondsey-london-20-july-26-august-2012-medium-res-9.jpg);
+  background-size: cover;
+  background-position: center;
+  pointer-events: none;
+
+  .MFA-deets {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+
+    div a {
+      text-decoration: none;
+      color: black;
+    }
+  }
+
+  .avatars {
+    position: absolute;
+    font-size: 36px;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: all;
+
+    .otherAvatars {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+
+      .otherAvatar {
+        position: absolute;
+
+        .emoji {
+
+        }
+
+        .tooltip {
+          background-color: rgba(255, 255, 255, 1);
+          padding: 2px;
+          border: 1px solid black;
+          border-radius: 4px;
+          font-size: 10px;
+        }
+      }
+    }
+
+    .userAvatar {
+      position: absolute;
+    }
+
+  }
+
+  .react-p5  {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    pointer-events: none;
+    // width: 100%;
+    // height: 100%;
+  }
+}

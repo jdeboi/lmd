@@ -5,7 +5,7 @@
 .expandable:hover {
   // cursor: pointer;
   background: $headerGradient;
-  border-bottom: 0.1em solid $headerGradientEndC;
+  border-bottom: 2px solid $headerGradientEndC;
   height: 30px;
   // border-top-right-radius: $borderRad;
   // border-top-left-radius: $borderRad;
@@ -14,7 +14,7 @@
 
 .clickable:hover {
   background: $headerGradient;
-  border-bottom: 0.1em solid $headerGradientEndC;
+  border-bottom: 2px solid $headerGradientEndC;
   height: 30px;
 }
 
@@ -56,6 +56,9 @@
   // width: 100%;
   flex: 1 1 100%;
 
+  .header-avatar {
+    // font-size: 18px;
+  }
 
   .selected {
     // background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #5978f5), color-stop(100%, #335ef6));
@@ -76,6 +79,8 @@
       line-height: $headerH;
       padding: 0 0.5em;
       position: relative;
+
+
 
       a {
         color: white;
@@ -107,6 +112,7 @@
   .submenu {
     display: none;
 
+
     input[type="text"] {
       border-radius: 2em;
       border: 1px solid #333;
@@ -121,6 +127,7 @@
     }
 
     ul {
+        // z-index: 1000;
       background: black;
       white-space: normal;
       border: white solid 2px;
@@ -281,7 +288,15 @@
     opacity: 1;
   }
 
-
+  .hamburger-button {
+    color: white;
+    background: black;
+    border: 1px solid white;
+    border-radius: 4px;
+    margin-top: -1px;
+    vertical-align: middle;
+    // line-height: 20px;
+  }
 
   @media screen and (max-width: 830px) {
     font-size: $fontSize-tablet-1;

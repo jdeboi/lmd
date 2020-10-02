@@ -60,6 +60,15 @@ class Frame extends React.Component {
   //   this.setState({controlledPosition: {x, y: y - 10}});
   // };
 
+  componentDidUpdate(prevProps) {
+    if (this.props.x !== prevProps.x || this.props.y !== prevProps.y) {
+      const dx = this.props.x - prevProps.x;
+      const dy = this.props.y - prevProps.y;
+      const controlledPosition = {...this.state.controlledPosition}
+      this.setState({controlledPosition: {x: controlledPosition.x + dx, y: controlledPosition.y + dy}});
+    }
+  }
+
   onControlledDrag = (e, position) => {
     const {x, y} = position;
     this.setState({controlledPosition: {x, y}});
@@ -88,7 +97,7 @@ class Frame extends React.Component {
     this.setState(prevState => ({
       isMinimized: !prevState.isMinimized
     }), () => {
-        if (this.props.onMinimized) this.props.onMinimized();
+      if (this.props.onMinimized) this.props.onMinimized();
     });
 
 
@@ -172,6 +181,7 @@ class Frame extends React.Component {
     // if we let pos be equal to props.px/ props.py, it changes location
 
     // let onDrag = this.props.onDrag?this.customDrag:this.handleDrag;
+    const bounds = this.props.bounded?".App-Content":null;
 
     return (
 
@@ -183,14 +193,14 @@ class Frame extends React.Component {
         positionOffset={null}
         grid={[1, 1]}
         scale={1}
-        bounds=".App-Content"
+        bounds={bounds}
         cancel=".close, .minimize, .zoom"
         onStart={this.handleStart}
         onDrag={this.onControlledDrag}
         onStop={this.handleStop}
         nodeRef={this.wrapper}
         >
-        <div ref={this.wrapper} className={classn} style={{width: this.props.width + 2 + "px",height: frameH + "px"}} >
+        <div ref={this.wrapper} className={classn} style={{width: this.props.width + 2 + "px",height: frameH + "px", zIndex: this.props.z?this.props.z:0}} >
           <div className={this.props.window?"window " + this.props.window:"window"} style={this.props.windowStyle}>
             <Toolbar title={this.props.title} toggleClosed={this.toggleClosed} toggleMinimzed={this.toggleMinimzed} toggleMaximized={this.toggleMaximized} />
             <div className="content" style={contentVisibility}>
@@ -215,11 +225,13 @@ Frame.propTypes = {
   className: PropTypes.string,
   handle: PropTypes.string,
   window: PropTypes.string,
+  bounded:PropTypes.bool,
 
   windowStyle: PropTypes.object,
 
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
+  z: PropTypes.number,
   height: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
   content: PropTypes.node.isRequired,

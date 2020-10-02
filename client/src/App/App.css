@@ -5,7 +5,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  display: block; }
+  display: block;
+  line-height: 1.6em; }
   .App.overflow-all .App-Content {
     overflow: scroll;
     height: 100%;
@@ -23,6 +24,7 @@
   overflow: hidden;
   padding: 0;
   perspective-origin: 0 0;
+  font-size: 10px;
   display: flex;
   flex-flow: column; }
   .App .App-Header {

@@ -7,9 +7,11 @@ import { WaterMaterial } from 'babylonjs-materials';
 import 'babylonjs-loaders';
 
 import Frame from '../../shared/Frame/Frame';
-import FrameSimple from '../../shared/Frame/FrameSimple';
-
 import Glasses from '../../shared/Glasses/Glasses';
+
+import Birds from './Birds';
+
+import socket from '../../shared/Socket/Socket';
 
 // palm https://poly.google.com/view/ficLBIjGliK
 
@@ -34,10 +36,7 @@ class HardDrives extends React.Component {
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
       urlIndex: 0,
-      birdInitialsX: [],
-      birdInitialsY: [],
-      flyIndex: 0,
-      flyDirection: true
+
     }
 
     this.svFrame = {};
@@ -56,19 +55,16 @@ class HardDrives extends React.Component {
 
     this.onRender = this.onRender.bind(this);
 
-    this.getBird = this.getBird.bind(this);
-    this.updateBirds = this.updateBirds.bind(this);
-    this.addingBirds = true;
-
   }
 
 
   componentDidMount() {
     this.updateDimensions();
-    this.initBirds();
-    window.addEventListener("resize", this.updateDimensions.bind(this));
 
-    if (this.addingBirds) this.interval = setInterval(this.updateBirds, 50);
+    window.addEventListener("resize", this.updateDimensions.bind(this));
+    this.props.userSetRoom("hard-drives");
+
+
     // console.log("Thanks to Jarlan Perez for the lime: https://poly.google.com/view/4Ddq9357jQ-");
     console.log("https://poly.google.com/view/3NwnG7YRk7A")
     console.log("Thanks to Slanted Studios for the bird gif: https://giphy.com/media/l3Uchq9s6Hx0aK8F2/giphy.gif");
@@ -76,8 +72,7 @@ class HardDrives extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions.bind(this));
-
-    if(this.addingBirds) clearInterval(this.interval);
+    this.props.userLeaveRoom("hard-drives");
   }
 
   updateDimensions() {
@@ -165,85 +160,6 @@ class HardDrives extends React.Component {
     this.setState({urlIndex: islandIndex, island: this.beaches[islandIndex]});
   }
 
-  initBirds() {
-    let birds = [];
-    let xSpace = 100;
-    let ySpace = 80;
-    let num = Math.floor(4*Math.random()+2);
-    let d =  Math.random();
-    const dir = true;
-    const birdInitialsX = [];
-    const birdInitialsY = [];
-
-    for (var i = 0; i < num; i++) {
-      let mid = num/2;
-
-      let dx = i * xSpace + Math.random()*30;
-      if (i >= mid) dx = (num - i) * xSpace + Math.random()*30;
-      if (num%2 == 0 && i>= mid) dx += xSpace/2;
-
-      let dy = i * ySpace + Math.random()*10;
-
-      let x0 = dx-300;
-      let y0 = dy;
-      birdInitialsX[i] = x0;
-      birdInitialsY[i] = y0;
-    }
-    this.setState({birdInitialsX, birdInitialsY, flyDirection: dir});
-  }
-
-  updateBirds() {
-    const maxW = this.state.windowWidth+600;
-    const {flyIndex, flyDirection} = this.state;
-    if (flyIndex > maxW) {
-      this.setState(prevState => ({
-        flyDirection: !prevState.flyDirection,
-        flyIndex: 0
-      }));
-    }
-    else {
-      const inc = 5;
-      this.setState({flyIndex: this.state.flyIndex+inc});
-    }
-  }
-
-  getBird(index) {
-    const bird = this.getBirdLocation(index);
-    return (
-      <FrameSimple title="" content={
-          <div className={"bird " + (this.state.flyDirection?"flippedX":"")}></div>
-        }
-        width={78+2} key={index} windowStyle={{background: "transparent"}} height={60} px={bird.x} py={bird.y}
-        />
-    )
-  }
-
-  getBirdLocation(index) {
-    const {flyIndex, flyDirection, birdInitialsX, birdInitialsY, windowWidth} = this.state;
-    const bird = {};
-    if (flyDirection) {
-      bird.x = flyIndex + birdInitialsX[index];
-      bird.y = birdInitialsY[index]+50*Math.sin(bird.x/100);
-      bird.y = Math.floor(bird.y);
-    } else {
-      bird.x = (windowWidth+100) - (flyIndex + birdInitialsX[index]);
-      bird.y = birdInitialsY[index]+50*Math.sin(bird.x/100);
-      bird.y = Math.floor(bird.y);
-    }
-    return bird;
-  }
-
-  addBirds(ind=0) {
-    return (
-      <div className="birds">
-        {this.state.birdInitialsX.map((pos, index) => {
-          return (this.getBird(index))
-        })}
-      </div>
-    );
-  }
-
-
   render() {
     return (
       <div className="HardDrives Sketch">
@@ -254,7 +170,7 @@ class HardDrives extends React.Component {
           }
           width={this.svFrame.w} height={this.svFrame.h} x={this.svFrame.x} y={this.svFrame.y}
           />
-        {this.addBirds()}
+        <Birds />
         <Glasses />
       </div>
     )

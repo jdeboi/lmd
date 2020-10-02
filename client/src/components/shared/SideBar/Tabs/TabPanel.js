@@ -14,8 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 import Chat from './Chat/Chat';
-import Critique from './Critique';
-import Watching from './Watching';
+import Critique from './Critique/Critique';
 import Help from './Help';
 
 function TabPanel(props) {
@@ -23,15 +22,16 @@ function TabPanel(props) {
 
   return (
     <div
-    role="tabpanel"
-    hidden={value !== index}
-    id={`scrollable-prevent-tabpanel-${index}`}
-    aria-labelledby={`scrollable-prevent-tab-${index}`}
-    {...other}
-    >
-    {value === index && (
-      <div>{children}</div>
-    )}
+      className={value !== index?"inactive-tabs-panel":"active-tabs-panel"}
+      role="tabpanel"
+      hidden={value !== index}
+      id={`scrollable-prevent-tabpanel-${index}`}
+      aria-labelledby={`scrollable-prevent-tab-${index}`}
+      {...other}
+      >
+      {value === index && (
+        <div className="tabs">{children}</div>
+      )}
     </div>
   );
 }
@@ -51,11 +51,40 @@ function a11yProps(index) {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+
+    // height: "100%",
     width: '100%',
-    backgroundColor: theme.palette.background.paper,
+    display: "flex",
+
+    flex: 1,
+    flexDirection: "column",
+    backgroundColor: "#000000dd" //theme.palette.background.paper,
   },
 }));
+
+const appBlue = "#335ef6";
+const appPink = "#fc03ad";
+const appLightBlue = "#03cefc";
+const AppBarMe = withStyles((theme) => ({
+  root: {
+    flex: "0 0 auto",
+    height: "50px",
+    background: `linear-gradient(${appBlue}, #1000ff);`,
+    zIndex: 0,
+    fontFamily: [
+      'Arial',
+      'sans-serif'
+    ].join(','),
+    '&:hover': {
+    },
+    '&$selected': {
+      borderColor: "green"
+    },
+    '&:focus': {
+    },
+  }
+}))((props) => <AppBar {...props} />);
+
 
 const AntTab = withStyles((theme) => ({
   root: {
@@ -101,33 +130,33 @@ export default function ScrollableTabsButtonPrevent(props) {
 
   return (
     <div className={classes.root}>
-    <AppBar position="static">
-    <Tabs
-    value={value}
-    onChange={handleChange}
-    variant="scrollable"
-    scrollButtons="off"
-    aria-label="scrollable prevent tabs example"
-    >
-    <AntTab icon={<SmsOutlinedIcon />} aria-label="chat" {...a11yProps(0)} />
-    <AntTab icon={<EditOutlinedIcon />} aria-label="leave critique" {...a11yProps(1)} />
-    <AntTab icon={<VisibilityOutlinedIcon />} aria-label="who is watching" {...a11yProps(2)} />
-    <AntTab icon={<HelpOutlineOutlinedIcon />} aria-label="help" {...a11yProps(3)} />
+      <AppBarMe position="static">
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          scrollButtons="off"
+          aria-label="scrollable prevent tabs example"
+          indicatorColor="primary"
+          textColor="primary"
+          centered
+          >
+          <AntTab icon={<SmsOutlinedIcon fontSize="large" />} aria-label="chat" {...a11yProps(0)} />
+          <AntTab icon={<EditOutlinedIcon fontSize="large" />} aria-label="leave critique" {...a11yProps(1)} />
+          <AntTab icon={<HelpOutlineOutlinedIcon fontSize="large" />} aria-label="help" {...a11yProps(2)} />
 
-    </Tabs>
-    </AppBar>
-    <TabPanel value={value} index={0}>
-    <Chat {...props} />
-    </TabPanel>
-    <TabPanel value={value} index={1}>
-    <Critique />
-    </TabPanel>
-    <TabPanel value={value} index={2}>
-    <Watching />
-    </TabPanel>
-    <TabPanel value={value} index={3}>
-    <Help />
-    </TabPanel>
+        </Tabs>
+      </AppBarMe>
+      <TabPanel value={value} index={0}>
+        <Chat {...props} />
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        <Critique user={props.user} room={props.room} />
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        <Help />
+      </TabPanel>
     </div>
   );
 }

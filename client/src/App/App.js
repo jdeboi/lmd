@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 
 // import update from 'react-addons-update';
 import update from 'immutability-helper';
@@ -12,7 +12,7 @@ import SideBar from '../components/shared/SideBar/SideBar';
 import Cookies from 'js-cookie';
 
 // sketches
-import HomePage from '../components/HomePage/HomePage';
+import HomePage from '../components/sketches/HomePage/HomePage';
 import Dimension from '../components/sketches/Dimension/Dimension';
 import MacbookAir from '../components/sketches/MacbookAir/MacbookAir';
 import ClickMe from '../components/sketches/ClickMe/ClickMe';
@@ -44,11 +44,31 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import indigo from '@material-ui/core/colors/indigo';
 import pink from '@material-ui/core/colors/pink';
 import red from '@material-ui/core/colors/red';
+import CssBaseline from '@material-ui/core/CssBaseline';
+
 
 import socket from "../components/shared/Socket/Socket";
+
+import FPSStats from "react-fps-stats";
+import {doorCrossing, boundaryCrossing} from './Helpers/Boundaries';
 // import socketIOClient from "socket.io-client";
 // const ENDPOINT = "http://127.0.0.1:5000";
 
+import dogicaFont from './assets/fonts/dogica.ttf';
+
+const dogica = {
+  fontFamily: 'dogica',
+  fontStyle: 'normal',
+  fontDisplay: 'swap',
+  fontWeight: 400,
+  src: `
+  local('dogica'),
+  local('dogica-Regular'),
+  url(${dogicaFont}) format('ttf')
+  `,
+  unicodeRange:
+  'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF',
+};
 
 window.AWS = "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches";
 
@@ -56,6 +76,7 @@ window.AWS = "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches";
 // We try our best to provide a great default value.
 const theme = createMuiTheme({
   palette: {
+    // type: 'dark',
     primary: { main: indigo[300] },
     secondary: pink,
     error: red,
@@ -66,6 +87,18 @@ const theme = createMuiTheme({
     // two indexes within its tonal palette.
     // E.g., shift from Red 500 to Red 300 or Red 700.
     tonalOffset: 0.2,
+
+  },
+  typography: {
+    fontFamily: 'dogica, Arial',
+    fontSize: 10,
+  },
+  overrides: {
+    // MuiCssBaseline: {
+    //   '@global': {
+    //     '@font-face': [dogica],
+    //   },
+    // },
   },
 });
 
@@ -85,31 +118,23 @@ class App extends React.Component {
       showSignIn: false,
       sessionID: null,
       usersChange: false,
-      user: {avatar:"", userName:"", room:"", x: Math.random()*window.innerWidth, y: Math.random()*window.innerHeight, messages: [{to:"to", from:"from", message:"message"}]},
+      user: {avatar:"", userName:"", room:"", x: 0, y: 0},
       users: null,
-      messages: []
+      userActiveChat: null,
+      messages: [{to: "me", from:"bub", message: "1please work", avatar:"😋"},{to: "bub", from:"me", message: "2if you say so", avatar:"😋"}],
+      room: "home"
     };
 
-    // this.setHands = this.setHands.bind(this);
-    // this.updateDimensions = this.updateDimensions.bind(this);
-    this.updateDeviceDimensions = this.updateDeviceDimensions.bind(this);
-    this.addClass = this.addClass.bind(this);
-    this.toggleSideBar = this.toggleSideBar.bind(this);
-
-    this.userClicked = this.userClicked.bind(this);
-    this.userUpdated = this.userUpdated.bind(this);
-    this.userSet = this.userSet.bind(this);
-    this.userMove = this.userMove.bind(this);
-    this.userRegister = this.userRegister.bind(this);
-    this.userRegisterCheck = this.userRegisterCheck.bind(this);
-    this.addUserMessage = this.addUserMessage.bind(this);
-    // this.usersChangeReset = this.usersChangeReset.bind(this);
+    const centerW = 1400;
+    this.centerPoints = [{x: 0 , y: -centerW/2},{x: centerW/2 , y: 0},{x: 0 , y: centerW/2},{x: -centerW/2 , y: 0},{x: 0 , y: -centerW/2}];
+    this.doors = [{x0: 0 , y0: -centerW/2, x1: 200, y1: -centerW/2+200, to:"/macbook-air"},{x0: 0 , y0: centerW/2, x1: -200, y1: centerW/2-200, to:"/hard-drives-on-seashores"},{x0: centerW/2 , y0: 0, x1: centerW/2-200, y1: 200, to:"/jungle-gyms"},];
+    //    {x0: 0 , y0: 200, x1: 200, y1: 200, to:"/wet-streams"}
   }
 
 
   componentDidMount() {
     // const id = Cookies.get('hand');
-
+    this.socketSetup();
     const hasAvatar = Cookies.get('hasAvatar');
 
     if (hasAvatar) {
@@ -121,6 +146,7 @@ class App extends React.Component {
       this.setState({user, showSignIn: false, hasAvatar: true});
 
       if (socket.connected) {
+        user.room = this.state.room;
         socket.emit("setUser", user);
       }
     }
@@ -129,39 +155,6 @@ class App extends React.Component {
       this.setState({showSignIn: true, hasAvatar: false});
     }
 
-
-
-    socket.on('connect', () => {
-      console.log("CONNECTED", socket.id)
-      this.setState({sessionID: socket.id});
-      var {user} = this.state;
-      socket.emit("setUser", user);
-    });
-
-
-    socket.on("usersUpdate", data => {
-      var {sessionID} = this.state;
-      var filteredArray = data.filter(function(user){
-        return user.id != sessionID;
-      });
-      // console.log("USERS", filteredArray, sessionID )
-      this.setState({users: filteredArray});
-    });
-
-    socket.on("message", data => {
-      console.log("message received", data);
-      this.addUserMessage(data);
-    })
-
-    socket.on("userJoined", data => {
-      this.setState({usersChange: true});
-      console.log("SOMEONE JOINED");
-    })
-
-    socket.on("userDisconnected", data => {
-      this.setState({usersChange: true});
-      console.log("SOMEONE DISCONNECTED");
-    })
 
     this.updateDeviceDimensions();
     window.addEventListener("resize", this.updateDeviceDimensions);
@@ -173,31 +166,35 @@ class App extends React.Component {
   }
 
 
-  addUserMessage(msg) {
-    const user = {...this.state.user};
-
-    var newUser = update(user, { messages:
-      {$push: [msg]}
-    });
-
-    // console.log("USER UDPATE", newUser);
-
-    this.setState({user: newUser});
+  componentDidUpdate() {
+    if (this.state.usersChange) this.setState({usersChange: false})
   }
 
-  toggleSideBar() {
+  addUserMessage = (message) => {
+    // const user = {...this.state.user};
+    const messages = [...this.state.messages, message];
+    // user.messages = messages;
+    // var newUser = update(user, { messages:
+    //   {$push: [msg]}
+    // });
+
+    // console.log("USER UDPATE", newUser);
+    this.setState({messages});
+  }
+
+  toggleSideBar = () => {
     console.log("TOGGLED");
     this.setState(prevState => ({
       showSideBar: !prevState.showSideBar
     }));
   }
 
-  handleDrawerClose() {
+  handleDrawerClose = () => {
     console.log("CLOSED")
     this.setState({showSideBar: false});
   }
 
-  updateDeviceDimensions() {
+  updateDeviceDimensions = () => {
     var dimensions= {};
     // width, height
     dimensions.windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
@@ -220,36 +217,125 @@ class App extends React.Component {
     this.setState({dimensions: dimensions});
   }
 
-  addClass(classn) {
+  addClass = (classn) => {
     let classes = this.state.classes;
     classes += " " + classn;
     this.setState({classes: classes});
     //" " + this.state.cursor
   }
 
-  userClicked() {
+  //////////////////////////////////////////////////////////
+  // USERS
+  socketSetup = () => {
+
+    socket.on('connect', () => {
+      const user = {...this.state.user};
+      user.room = this.state.room;
+      console.log("CONNECTED", socket.id, "in room", this.state.room);
+      this.setState({sessionID: socket.id});
+
+      socket.emit("setUser", user);
+      socket.emit("joinRoom", this.state.room);
+    });
+
+
+    socket.on("usersUpdate", data => {
+      var {sessionID} = this.state;
+      var filteredArray = data.filter(function(user){
+        return user.id != sessionID;
+      });
+      // console.log("USERS", filteredArray, sessionID )
+      this.setState({users: filteredArray});
+    });
+
+    socket.on("message", data => {
+      console.log("message received", data);
+      const message = {...data}
+      if (message.to === this.state.room) {
+        message.to = "room"
+      }
+      else if (message.to !== "all") {
+        message.to = "me";
+      }
+      message.from = this.getUserNameById(message.from);
+      this.addUserMessage(message);
+    })
+
+    socket.on("userJoined", data => {
+      const user = {...this.state.user};
+      this.setState({usersChange: true});
+      console.log("SOMEONE JOINED");
+    })
+
+    socket.on("userDisconnected", data => {
+      this.setState({usersChange: true});
+      // socket.emit("leaveRoom", user.room); // not sure if we need this?
+      console.log("SOMEONE DISCONNECTED");
+    })
+  }
+
+  getUserNameById = (id) => {
+    const users = this.state.users;
+    if (users) {
+      let obj = users.find(o => o.id === id);
+      if (obj) return obj.userName;
+    }
+    return "";
+  }
+
+  getAvatarById = (id) => {
+    const users = this.state.users;
+    if (users) {
+      let obj = users.find(o => o.id === id);
+      if (obj) return obj.avatar;
+    }
+    return "";
+  }
+
+  avatarClicked = () => {
     this.setState({showSignIn: true});
   }
 
-  userUpdated(avatar, userName) {
+  userSetActiveChat = (clickedUser) => {
+    // const mx = event.mx;
+    // const mouseX = mx-window.innerWidth;
+    var userActiveChat = null;
+    if (clickedUser) userActiveChat = {...clickedUser};
+    this.setState({userActiveChat, showSideBar: true});
+    // console.log("trying to set chat user", userActiveChat);
+  }
+
+  userUpdated = (avatar, userName) => {
     const newUser = { ...this.state.user }
     newUser.userName = userName;
     newUser.avatar = avatar;
     this.setState({user: newUser});
   }
 
-  userMove(x, y, time) {
+  userMove = (x, y, time) => {
     let space = 50;
     const user = { ...this.state.user }
     user.x += x*space;
     user.y += y*space;
-    // console.log("1", new Date() - time);
-    this.setState({user});
-    // console.log("dt", new Date() - time);
-    socket.emit("setUser", user);
+    const room = doorCrossing({x: user.x, y: user.y}, this.doors);
+    if (room) {
+      alert("door!");
+      this.props.history.push(room);
+    }
+    else if (boundaryCrossing({x: user.x, y: user.y}, this.centerPoints)) {
+      // alert("boundary crossing");
+    }
+    else {
+      // console.log("1", new Date() - time);
+      this.setState({user});
+      // console.log("dt", new Date() - time);
+      // user.room = this.state.user;
+      socket.emit("setUser", user);
+    }
+
   }
 
-  userSet(userName, avatar) {
+  userSet = (userName, avatar) => {
     Cookies.set("hasAvatar", true);
     Cookies.set("avatar", avatar);
     Cookies.set("userName", userName);
@@ -262,10 +348,13 @@ class App extends React.Component {
     // showSignIn = false;
     this.setState({hasAvatar:true, showSignIn:false});
 
-    socket.emit("setUser", this.state.user);
+    const user = {...this.state.user};
+    user.room = this.state.room;
+    socket.emit("setUser", user);
   }
 
-  userRegister({isUser, user}) {
+
+  userRegister = ({isUser, user}) => {
     console.log("user register!!!")
     if (isUser) {
       alert("username already exists. Please enter a new username.");
@@ -275,17 +364,27 @@ class App extends React.Component {
     }
   }
 
-  userRegisterCheck(userName, avatar) {
+  userRegisterCheck = (userName, avatar) => {
     console.log("userRegisterCheck");
-    const user={userName:userName, avatar:avatar};
-    socket.emit("registerUser", user, this.userRegister);
+    const userCheck={userName:userName, avatar:avatar};
+    socket.emit("registerUser", userCheck, this.userRegister);
   }
 
+  userSetRoom = (room) => {
+    // const user = {...this.state.user}
+    // user.room = room;
+    this.setState({room: room});
+    socket.emit("joinRoom", room);
+  }
+
+  userLeaveRoom = (room) => {
+    socket.emit("leaveRoom", room);
+  }
   // usersChangeReset() {
   //   this.setState({usersChange: false});
   // }
 
-  closeSignIn() {
+  closeSignIn = () => {
     this.setState({showSignIn: false})
   }
 
@@ -294,52 +393,43 @@ class App extends React.Component {
     return (
       <div className={this.state.classes}>
         <MuiThemeProvider theme={theme}>
+          {/* <CssBaseline />*/}
           <div className="App-Header">
             <div className="BackHeader"></div>
-            <Header dimensions={dimensions} toggleSideBar={this.toggleSideBar} user={this.state.user} userSet={this.userSet} userClicked={this.userClicked} />
+            <Header dimensions={dimensions} toggleSideBar={this.toggleSideBar} user={this.state.user} userSet={this.userSet} avatarClicked={this.avatarClicked} />
           </div>
           <div className="App-Content inner-outline">
             <Switch>
-              <Route exact path="/" render={() => (<HomePage user={this.state.user} users={this.state.users} userMove={this.userMove}/>)} />
-              <Route  path="/losing-my-dimension" component={Dimension} />
-              <Route  path="/macbook-air" render={() => (<MacbookAir dimensions={dimensions} />)} />
-              <Route  path="/i-got-the-feels" component={ClickMe} />
-              <Route  path="/jungle-gyms" component={JungleGyms} />
-              <Route  path="/hard-drives-on-seashores" component={HardDrives} />
-              <Route  path="/wasted-days-are-days-wasted" render={() => (<Spacetimes dimensions={dimensions} />)} />
-              <Route  path="/esc-to-mars" render={() => (<Mars addClass={this.addClass} dimensions={dimensions} />)}/>
-              <Route  path="/wet-streams" component={WetStreams} />
-
-              <Route  path="/dinner" component={Dinner} />
-              <Route  path="/altars" component={Altar} />
-              <Route  path="/xfinity-depths" render={() => (<Loop dimensions={dimensions} />)}/>
-              <Route  path="/cloud-confessional" render={() => (<WaveForms cursor={this.state.cursorID} />)} />
-              <Route  path="/confessions" render={() => (<Confessions />)} />
+              <Route exact path="/" render={() => (<HomePage user={this.state.user} users={this.state.users} userMove={this.userMove} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} walls={this.centerPoints} doors={this.doors} userSetActiveChat={this.userSetActiveChat} />)} />
+              <Route  path="/macbook-air" render={() => (<MacbookAir dimensions={dimensions} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
+              <Route  path="/jungle-gyms" render={() => (<JungleGyms userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
+              <Route  path="/hard-drives-on-seashores"      render={() => (<HardDrives userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)}  />
+              <Route  path="/wasted-days-are-days-wasted"   render={() => (<Spacetimes dimensions={dimensions} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
+              <Route  path="/esc-to-mars" render={() => (<Mars addClass={this.addClass} dimensions={dimensions} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
+              <Route  path="/wet-streams" render={() => (<WetStreams userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
+              <Route  path="/xfinity-depths" render={() => (<Loop dimensions={dimensions} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)}/>
+              <Route  path="/cloud-confessional" render={() => (<WaveForms cursor={this.state.cursorID} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
+              <Route  path="/confessions" render={() => (<Confessions userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
 
               <Route  path="/dig" render={() => (<Dig addClass={this.addClass} />)} />
-
               <Route  path="/moon-light" component={MoonLight} />
               <Route  path="/three" component={Three} />
 
-              <Route  path="/credits" component={Credits} />
-              <Route  path="/words" component={About} />
+              <Route  path="/credits" render={() => (<Credits userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
+              <Route  path="/words" render={() => (<About userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
               <Route  component={NotFound} />
             </Switch>
-            <div id="fps">0</div>
+            {/*<div id="fps">0</div> */}
+            <FPSStats top={window.innerHeight-55} left={10} />
           </div>
-          <SideBar user={this.state.user} users={this.state.users} usersChange={this.state.usersChange} showSideBar={this.state.showSideBar} handleDrawerClose={this.handleDrawerClose.bind(this)} />
+          <SideBar room={this.state.room} user={this.state.user} users={this.state.users} usersChange={this.state.usersChange} showSideBar={this.state.showSideBar} handleDrawerClose={this.handleDrawerClose.bind(this)} messages={this.state.messages} addUserMessage={this.addUserMessage} userActiveChat={this.state.userActiveChat} userSetActiveChat={this.userSetActiveChat} />
           <SignIn user={this.state.user} hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} closeSignIn={this.closeSignIn.bind(this)} userUpdated={this.userUpdated} userSet={this.userSet} userRegisterCheck={this.userRegisterCheck} />
         </MuiThemeProvider>
       </div>
     );
   }
 
-  componentDidUpdate() {
-    if (this.state.usersChange) this.setState({usersChange: false})
-  }
 
 }
 
-
-
-export default App;
+export default withRouter(App);

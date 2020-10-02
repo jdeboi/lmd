@@ -51,10 +51,13 @@ class Loop extends React.Component {
   componentDidMount() {
     this.divRef.current.addEventListener('wheel', this.preventDefault);
     this.setImages();
+
+    this.props.userSetRoom("xfinity-depths");
   }
 
   componentWillUnmount() {
     this.divRef.current.removeEventListener('wheel', this.preventDefault);
+    this.props.userLeaveRoom("xfinity-depths");
   }
 
 
@@ -215,21 +218,21 @@ class Loop extends React.Component {
 
     })}
 
-  {/*   <DesktopIcon x={100} y={100} width={60} height={90} title="dip" content={
-        <img src={folder} width={60} height={60} />
+    {/*   <DesktopIcon x={100} y={100} width={60} height={90} title="dip" content={
+      <img src={folder} width={60} height={60} />
       }
       />
-    <DesktopIcon x={100} y={220} width={60} height={90} title="dive" content={
-        <img src={folder} width={60} height={60} />
+      <DesktopIcon x={100} y={220} width={60} height={90} title="dive" content={
+      <img src={folder} width={60} height={60} />
       }
       />
 
-    <DesktopIcon x={100} y={340} width={60} height={90} title="descend" content={
-        <img src={folder} width={60} height={60} />
+      <DesktopIcon x={100} y={340} width={60} height={90} title="descend" content={
+      <img src={folder} width={60} height={60} />
       }
       />*/}
-  </div>
-);
+    </div>
+  );
 }
 
 }

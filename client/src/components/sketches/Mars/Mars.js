@@ -70,16 +70,18 @@ class Mars extends React.Component {
   componentDidMount() {
     this.updateDimensions();
     window.addEventListener("resize", this.updateDimensions.bind(this));
-    this.inverval = setInterval(this.chairUpdate, 50);
+    this.chairInterval = setInterval(this.chairUpdate, 50);
     this.swimInterval = setInterval(this.changeSwimLane, 400);
 
     this.props.addClass("overflow-all");
+    this.props.userSetRoom("esc-to-mars");
   }
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions.bind(this));
-    clearInterval(this.interval);
+    clearInterval(this.chairInterval);
     clearInterval(this.swimInterval);
+    this.props.userLeaveRoom("esc-to-mars");
   }
 
   updateDimensions() {

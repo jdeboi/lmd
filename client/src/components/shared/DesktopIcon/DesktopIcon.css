@@ -1,8 +1,10 @@
 .DesktopIcon {
-  position: absolute; }
+  position: absolute;
+  pointer-events: all; }
   .DesktopIcon .content {
     pointer-events: none; }
   .DesktopIcon .desktop-text {
     text-align: center;
     color: white;
-    font-weight: bold; }
+    font-weight: bold;
+    text-shadow: 2px 2px #000000; }

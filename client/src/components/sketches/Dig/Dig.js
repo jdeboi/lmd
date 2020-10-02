@@ -33,7 +33,7 @@ class Dig extends React.Component {
     return (((a % b) + b) % b);
   }
 
-  ondblclick(i) {
+  onDblClick(i) {
     console.log(i);
     let {numFrames} = this.state;
     numFrames++;
@@ -48,7 +48,7 @@ class Dig extends React.Component {
     return (
       <div className="Dig" ref={this.divRef} >
 
-        <DesktopIcon disableWindow={true} ondblclick={this.ondblclick.bind(this)} x={100} y={220} width={60} height={90} title="dive" box={box}
+        <DesktopIcon disableWindow={true} onDblClick={this.onDblClick.bind(this)} x={100} y={220} width={60} height={90} title="dive" box={box}
           title={"z-axis"}
           content={
             <img src={window.AWS + "/loop/folder.png"} width={80} height={80} />
@@ -86,7 +86,7 @@ class Dig extends React.Component {
           if (direction %2 == 0) x = startX + frame%framesW*20;
           else x = startX + framesW*20 - frame%framesW*20;
           return <Frame handle={".App"} key={frame} x={x} y={100+frame*20} width={400} height={300} title="work" windowStyle={{background: "red"}} content={
-              <div onDoubleClick={() => {this.clicked(frame)}}>
+              <div onDblClick={() => {this.clicked(frame)}}>
                 <img src={window.AWS + "/loop/folder.png"} width={20} height={20} />
                 <span>go deeper</span>
               </div>

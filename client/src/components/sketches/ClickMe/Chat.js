@@ -79,7 +79,9 @@ class Chat extends React.Component {
           <div className="Chat-messages">
             <div className="Chat-messages-bounding">
               {this.state.messages.map((value, index) => {
-                return <div className={"bubbleContainer " + value.id} key={index}><div className="bubble" key={index} >{value.txt}</div></div>
+                return <div className={"bubbleContainer " + value.id} key={index}>
+                  <div className="bubble" key={index} >{value.txt}</div>
+                </div>
               })}
             </div>
           </div>
