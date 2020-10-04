@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import Frame from '../../shared/Frame/Frame';
 import DesktopIcon from '../../shared/DesktopIcon/DesktopIcon';
 // import FrameSimple from '../../shared/Frame/FrameSimple';
@@ -94,8 +94,8 @@ class WaveForms extends React.Component {
       webY: winY - 50,
       earCursor: this.props.cursor,
       volume: this.minVol,
-
       timePeriod: "days",
+      prayTo: "Kanye"
     };
 
 
@@ -161,9 +161,13 @@ class WaveForms extends React.Component {
     }
   }
 
+  onSubmit = () => {
+    alert("thanks for your submission. uploading to the cloud");
+    this.props.history.push("/confessions");
+  }
 
   render() {
-    const {timePeriod} = this.state;
+    const {timePeriod, prayTo} = this.state;
 
     return(
       <div className="WaveForms Sketch">
@@ -217,42 +221,44 @@ class WaveForms extends React.Component {
 
           <Frame title="" windowStyle={{background: "transparent"}} content={
               <div className="confessional">
-                <div className="text-line0">Bless me Father for I have sinned. It has been:</div>
-                <div className="confessional-time">
-                  <TextField className="box field" size="small" id="outlined-basic" label="number" type="number" variant="outlined" />
-                  <FormControl size="small" className="field">
-                    {/*this.getTweet()*/}
+                <div className="text-line0">Bless me</div>
+                <select value={this.state.prayTo} onChange={this.handleChange}>
+                  <option value="RBG">RBG</option>
+                  <option value="Father">Father</option>
+                  <option value="Mitch McConnel">Mitch McConnel</option>
+                  <option value="Kanye">Kanye</option>
+                </select>
+                <div>for I have sinned. It has been:</div>
 
-                    <InputLabel id="demo-simple-select-label">Time Period</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={timePeriod}
-                      onChange={this.handleChange}
-                      >
-                      <MenuItem value={"days"}>days</MenuItem>
-                      <MenuItem value={"months"}>months</MenuItem>
-                      <MenuItem value={"years"}>years</MenuItem>
-                    </Select>
-                  </FormControl>
+                <div className="confessional-time">
+                  <div className="confessional-box">
+                    <input type="number" placeholder="number" />
+                  </div>
+
+                  <select value={this.state.timePeriod} onChange={this.handleChange}>
+                    <option value="days">days</option>
+                    <option value="months">months</option>
+                    <option value="years">years</option>
+                    <option value="never">never</option>
+                  </select>
                 </div>
                 <div className="text-line1">since I last went to confession.</div>
-                <TextField
-                  id="outlined-multiline-static"
-                  label="Multiline"
-                  multiline
-                  rows={4}
-                  defaultValue="confession"
-                  variant="outlined"
-                  className="box text-line2"
-                  size="medium"
-                  />
-                <Link to="/confessions"><Button variant="outlined" size="small" >submit</Button></Link>
+
+                <div className="multitext confessional-box">
+                  <textarea
+                    id="outlined-multiline-static"
+                    label=""
+                    multiline
+                    placeholder="confession"
+                    className="box text-line2"
+                    />
+                </div>
+                <button className="confessional-box" onClick={this.onSubmit}>submit</button>
               </div>
             }
             width={this.tweetW} height={280}  x={this.state.tweetX} y={this.state.tweetY}
             />
-            <BottomBar />
+          <BottomBar />
         </div>
 
         <Glasses y={30} />
@@ -353,4 +359,4 @@ function getTweetContent(string) {
         //   })
         // }
 
-        export default WaveForms;
+        export default withRouter(WaveForms);

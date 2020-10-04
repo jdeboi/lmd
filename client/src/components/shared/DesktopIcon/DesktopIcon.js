@@ -48,6 +48,10 @@ class DesktopIcon extends React.Component {
     this.props.onDblClick(this.props.id);
   }
 
+  onClick = () => {
+    if(this.props.newIconToTop) this.props.newIconToTop();
+  }
+
   onHide = () => {
     this.setState({isHidden: true});
   }
@@ -72,7 +76,7 @@ class DesktopIcon extends React.Component {
     // if we let pos be equal to props.px/ props.py, it changes location
     const bounded = this.props.bounded?".App-Content":null;
     return (
-      <div className="DesktopDiv" style={{zIndex: this.props.z?this.props.z:0}} >
+      <div className="DesktopDiv" style={{zIndex: this.props.zIcon?this.props.zIcon:0}} >
         <Draggable
           axis="both"
           handle={".DesktopIcon"}
@@ -87,7 +91,7 @@ class DesktopIcon extends React.Component {
           onStop={this.handleStop}
           nodeRef={this.wrapper}
           >
-          <div ref={this.wrapper} onDoubleClick={this.onDblClick} className={classn} style={{width: this.props.width + "px",height: this.props.height + "px"}} >
+          <div ref={this.wrapper} onDoubleClick={this.onDblClick} onClick={this.onClick} className={classn} style={{width: this.props.width + "px",height: this.props.height + "px"}} >
             <div className="content">
               {this.props.content}
             </div>
@@ -105,7 +109,7 @@ class DesktopIcon extends React.Component {
     const {isHidden} = this.state;
 
     return(
-      <Frame className="FolderOpenFrame" title={this.props.title} isHidden={isHidden} onHide={this.onHide.bind(this)} x={this.props.box.x} y={this.props.box.y} width={this.props.box.w} height={this.props.box.h} content={this.props.frameContent} />
+      <Frame className="FolderOpenFrame" title={this.props.title} isHidden={isHidden} onHide={this.onHide.bind(this)} x={this.props.box.x} y={this.props.box.y} z={this.props.zFrame?this.props.zFrame:0} width={this.props.box.w} height={this.props.box.h} content={this.props.frameContent} newFrameToTop={this.props.newFrameToTop} />
 
     )
   }

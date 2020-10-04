@@ -4,26 +4,24 @@
   overflow: hidden;
   background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/waveforms/sky4.jpg);
   background-size: cover; }
-  .WaveForms .FolderOpenFrame {
-    z-index: 10; }
   .WaveForms .Frame .window {
-    background: transparent;
+    background: rgba(255, 255, 255, 0.7);
     box-shadow: -40px -40px 40px #ffffff;
     /* #6c6c6c; */
-    border: 2px solid #ffffff; }
+    border: 2px solid #1e03fc42; }
   .WaveForms .Frame .circleButton {
-    background: #afafaf;
-    color: #afafaf; }
+    background: #1e03fc42;
+    color: #1e03fc42; }
     .WaveForms .Frame .circleButton:hover {
-      background: #afafaf; }
+      background: #1e03fc42; }
   .WaveForms .Frame .innerC {
     background: white; }
     .WaveForms .Frame .innerC:hover {
-      background: #afafaf; }
+      background: #1e03fc42; }
   .WaveForms .Frame .titlebar {
     color: white;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #1e03fc42));
-    border-bottom: 2px solid #ffffff; }
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f1eeff), color-stop(100%, #1e03fc42));
+    border-bottom: 2px solid #1e03fc42; }
   .WaveForms .react-player {
     position: absolute;
     top: 0;
@@ -81,6 +79,7 @@
     color: white;
     padding: 20px; }
   .WaveForms .liveStream {
+    font-size: 10px;
     position: relative;
     z-index: 10;
     top: 420px;
@@ -105,7 +104,7 @@
     height: 60px;
     position: fixed;
     bottom: 0px;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #1e03fc42));
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f1eeff), color-stop(100%, #1e03fc42));
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap; }
@@ -142,12 +141,11 @@
   .WaveForms .tweet {
     display: flex;
     flex-direction: column;
-    padding: 10px 15px 10px 15px;
+    padding: 5px;
     font-family: "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
     font-size: 10px;
     font-weight: bold;
-    line-height: 16px;
-    background-color: rgba(255, 255, 255, 0.6); }
+    line-height: 16px; }
     .WaveForms .tweet hr {
       border: 1px solid #aaaadd88; }
     .WaveForms .tweet .tweet-top {
@@ -219,12 +217,24 @@
           padding-left: 5px;
           text-align: center;
           vertical-align: middle; }
+  .WaveForms .confessional-box {
+    border: 1px solid #1e03fc42;
+    border-radius: 8px;
+    color: white; }
   .WaveForms .confessional {
+    font-size: 12px;
     padding: 15px;
     display: flex;
     flex-direction: column;
-    color: white;
-    background-color: rgba(0, 0, 50, 0.1); }
+    color: white; }
+    .WaveForms .confessional .multitext textarea {
+      height: 80px;
+      padding: 10px;
+      color: white; }
+    .WaveForms .confessional input {
+      padding: 10px;
+      width: 150px;
+      color: white; }
     .WaveForms .confessional .text-line0 {
       padding: 0px 0 20px 0; }
     .WaveForms .confessional .text-line1 {
@@ -253,10 +263,13 @@
       width: 100%;
       background-color: rgba(0, 0, 50, 0.2); }
   .WaveForms .confession-txt {
-    padding: 20px;
+    padding: 10px 15px 10px 15px;
     color: #6666cc;
     background: rgba(255, 255, 255, 0.3); }
+  .WaveForms .DesktopIcon {
+    opacity: .8; }
   .WaveForms .DesktopIcon .desktop-text {
-    box-shadow: -40px -40px 40px #ffffff;
+    box-shadow: -40px -40px 40px #f1eeff;
     font-size: 18px;
-    font-family: monospace; }
+    font-family: monospace;
+    text-shadow: none; }

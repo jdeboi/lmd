@@ -1,9 +1,9 @@
 @import "../../../styles/constants.scss";
 
-$pearlyGradientStartC: #ffffff;
+$pearlyGradientStartC: #f1eeff;
 $pearlyGradientEndC: #1e03fc42;
 $pearlyGradient: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $pearlyGradientStartC), color-stop(100%, $pearlyGradientEndC));
-$buttonCol: #afafaf;
+$buttonCol: $pearlyGradientEndC;
 
 $tweetColPrimary: #6666cc;
 $tweetColSecondary: #aaaadd; //#000011;
@@ -19,16 +19,16 @@ $tweetColHr: #aaaadd88;
   background-size: cover;
   // background-size: 250px 180px;
 
-.FolderOpenFrame {
-  z-index: 10;
-}
+  .FolderOpenFrame {
+    // z-index: 10;
+  }
 
   .Frame {
 
     .window {
-      background: transparent;
+      background: rgba(255, 255, 255, .7);
       box-shadow: -40px -40px 40px #ffffff; /* #6c6c6c; */
-      border: $borderH solid #ffffff;
+      border: $borderH solid $pearlyGradientEndC;
     }
 
     .circleButton {
@@ -51,7 +51,7 @@ $tweetColHr: #aaaadd88;
     .titlebar {
       color: white;
       background: $pearlyGradient;
-      border-bottom: $borderH solid #ffffff;
+      border-bottom: $borderH solid $pearlyGradientEndC;
     }
   }
 
@@ -175,7 +175,7 @@ $tweetColHr: #aaaadd88;
   .liveStream {
 
     // font-weight: bold;
-
+    font-size: 10px;
     position: relative;
     z-index: 10;
 
@@ -276,13 +276,13 @@ $tweetColHr: #aaaadd88;
   .tweet {
     display: flex;
     flex-direction: column;
-    padding: 10px 15px 10px 15px;
+    padding: 5px;
     // font-family: consoleFont, sans-serif;
     font-family: "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
     font-size: 10px;
     font-weight: bold;
     line-height: 16px;
-    background-color: rgba(255, 255, 255, .6);
+    // background-color: rgba(255, 255, 255, .6);
 
     hr {
       border: 1px solid $tweetColHr;
@@ -421,12 +421,37 @@ $tweetColHr: #aaaadd88;
     }
   }
 
+  .confessional-box {
+    border: 1px solid $pearlyGradientEndC;
+    border-radius: $borderRad;
+    color: white;
+  }
+
   .confessional {
+    font-size: 12px;
     padding: 15px;
     display: flex;
     flex-direction: column;
     color: white;
-    background-color: rgba(0, 0, 50, .1);
+    // background-color: rgba(0, 0, 50, .1);
+
+    .multitext {
+      textarea {
+        height: 80px;
+        padding: 10px;
+        color: white;
+      }
+    }
+
+    input {
+      padding: 10px;
+      width: 150px;
+      color: white;
+    }
+
+    button {
+
+    }
 
     .item {
       // padding-bottom: 15px;
@@ -506,14 +531,21 @@ $tweetColHr: #aaaadd88;
   // }
 
   .confession-txt {
-    padding: 20px;
+    padding: 10px 15px 10px 15px;
     color: $tweetColPrimary;
     background: rgba(255,255,255, .3);
   }
 
+  .DesktopIcon {
+    opacity: .8;
+  }
   .DesktopIcon .desktop-text {
-    box-shadow: -40px -40px 40px #ffffff;
+    box-shadow: -40px -40px 40px $pearlyGradientStartC;
     font-size: 18px;
     font-family: monospace;
+
+    // text-shadow: 2px 2px $tweetColPrimary;
+    // text-shadow: 1px 1px $pearlyGradientStartC;
+    text-shadow: none;
   }
 }

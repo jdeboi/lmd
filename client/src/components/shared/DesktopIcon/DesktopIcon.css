@@ -1,9 +1,9 @@
-.DesktopIcon {
+.DesktopDiv {
   position: absolute;
   pointer-events: all; }
-  .DesktopIcon .content {
+  .DesktopDiv .DesktopIcon .content {
     pointer-events: none; }
-  .DesktopIcon .desktop-text {
+  .DesktopDiv .DesktopIcon .desktop-text {
     text-align: center;
     color: white;
     font-weight: bold;

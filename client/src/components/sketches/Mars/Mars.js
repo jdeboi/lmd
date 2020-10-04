@@ -13,6 +13,9 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+
+import {getRandom, getRandomNum} from '../../shared/Helpers/Helpers';
+
 // import poolVid0 from './assets/pool/mars_0.mp4';
 // import poolVid1 from './assets/pool/mars_1.mp4';
 // import poolVid2 from './assets/pool/mars_2.mp4';
@@ -484,14 +487,6 @@ function addInnerTubes(num, scene, water) {
 
 }
 
-function getRandom() {
-  var x = Math.sin(seed++) * 10000;
-  return x - Math.floor(x);
-}
 
-function getRandomNum(val) {
-  var x = Math.sin(val) * 10000;
-  return x - Math.floor(x);
-}
 
 export default Mars;

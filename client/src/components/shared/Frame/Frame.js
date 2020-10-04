@@ -122,6 +122,14 @@ class Frame extends React.Component {
     if (this.props.onStop) this.props.onStop();
   };
 
+  handleStart = () => {
+    if (this.props.newFrameToTop) this.props.newFrameToTop();
+  }
+
+  handleClick = () => {
+    if (this.props.newFrameToTop) this.props.newFrameToTop();
+  }
+
 
   // returnOriginalCoords() {
   //   // e.preventDefault();
@@ -200,7 +208,7 @@ class Frame extends React.Component {
         onStop={this.handleStop}
         nodeRef={this.wrapper}
         >
-        <div ref={this.wrapper} className={classn} style={{width: this.props.width + 2 + "px",height: frameH + "px", zIndex: this.props.z?this.props.z:0}} >
+        <div ref={this.wrapper} onClick={this.handleClick} className={classn} style={{width: this.props.width + 2 + "px",height: frameH + "px", zIndex: this.props.z?this.props.z:0}} >
           <div className={this.props.window?"window " + this.props.window:"window"} style={this.props.windowStyle}>
             <Toolbar title={this.props.title} toggleClosed={this.toggleClosed} toggleMinimzed={this.toggleMinimzed} toggleMaximized={this.toggleMaximized} />
             <div className="content" style={contentVisibility}>

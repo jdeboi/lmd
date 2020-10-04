@@ -44,7 +44,7 @@ class Loop extends React.Component {
     this.numImages = 51;
 
     this.wheel = this.wheel.bind(this);
-    this.setImages = this.setImages.bind(this);
+    // this.setImages = this.setImages.bind(this);
   }
 
 
@@ -61,9 +61,9 @@ class Loop extends React.Component {
   }
 
 
-  setImages() {
+  setImages = () => {
     const {imageIndex} = this.state;
-    let {mapDivs} = this.state;
+    const mapDivs = [...this.state.mapDivs];
     for (let i = 0; i < this.numFrames; i++) {
       mapDivs[i] = this.mod((imageIndex+i*2)* this.imgW, this.imgW*this.numImages);
     }
@@ -71,15 +71,19 @@ class Loop extends React.Component {
   }
 
   wheel(e) {
-    let {deltaY, imageIndex, mapDivs} = this.state;
-    deltaY += e.deltaY;
+    var deltaY = this.state.deltaY + e.deltaY;
 
-    imageIndex = deltaY / 40;
+    var imageIndex = deltaY / 40;
     imageIndex = Math.floor(imageIndex);
     imageIndex = this.mod(imageIndex, this.numImages);
 
-    this.setState({deltaY, imageIndex});
-    this.setImages();
+    const mapDivs = [...this.state.mapDivs];
+    for (let i = 0; i < this.numFrames; i++) {
+      mapDivs[i] = this.mod((imageIndex+i*2)* this.imgW, this.imgW*this.numImages);
+    }
+
+    this.setState({deltaY, imageIndex, mapDivs});
+    // this.setImages();
 
     // console.log(imageIndex);
     return false;
@@ -193,8 +197,6 @@ class Loop extends React.Component {
 
   render() {
 
-    let mapDivs = [];
-
 
     return (
       <div className="Loop Sketch" ref={this.divRef} onWheel = {(e) => this.wheel(e)}>
@@ -209,10 +211,11 @@ class Loop extends React.Component {
         {this.state.mapDivs.map((balloonX, i) => {
           const opac = (i+1)*(1/this.numFrames);
           // console.log();
+          const val = this.state.imageIndex * this.imgW;
           return(<Frame windowStyle={{opacity:opac}} content={
-            <div className="balloon" style={{backgroundPosition: `${balloonX}px 0px`, width: this.imgW, height:this.imgH}}></div>
+            <div className="balloon" style={{backgroundPosition: `${val}px 0px`, width: this.imgW, height:this.imgH}}></div>
           }
-          key={i} width={this.imgW} height={this.imgH} isControlled={false} x={this.state.startX+i*15} y={this.state.startY-i*15}
+          key={i} width={this.imgW} height={this.imgH} isControlled={false} x={this.state.startX+i*15} y={this.state.startY-i*15} z={1}
           />
       );
 
