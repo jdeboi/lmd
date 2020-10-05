@@ -1,13 +1,17 @@
+var emoji;
+var emojisTransparent = [];
 
 export default function sketch (p) {;
 
   let ps = [];
   let percent = 0;
-  let emoji;
+  let emojiS = 34;
+
 
   p.setup = function () {
     p.createCanvas(p.windowWidth, p.windowHeight); //, p.WEBGL
-    // emoji = p.loadImage("")
+
+    emoji = p.loadImage("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/wetStreams/wateremoji.png", (img) => p.createEmojisTransparent());
   };
 
   p.myCustomRedrawAccordingToNewPropsHandler = function (props) {
@@ -33,6 +37,15 @@ export default function sketch (p) {;
       }
     }
   };
+
+  p.createEmojisTransparent = function() {
+    for (let i = 0; i < 5; i++) {
+      emojisTransparent[i] = p.createGraphics(emojiS, emojiS);
+      emojisTransparent[i].clear();
+      emojisTransparent[i].tint(255, p.map(i, -1, 4,0,255));
+      emojisTransparent[i].image(emoji, 0, 0, emojiS, emojiS);
+    }
+  }
 
   p.draw = function () {
     percent += .1;
@@ -133,7 +146,16 @@ function Particle(p, origin, id, velX, velY, deg) {
       this.p5.push();
       this.p5.translate(this.position.x,this.position.y);
       this.p5.rotate(this.p5.radians(this.deg))
-      this.p5.text("💦", 0, 0)
+      // this.p5.tint(alpha);
+
+      let index = this.p5.map(this.lifespan, 40, 0, 0, emojisTransparent.length-1);
+      index = this.p5.floor(index);
+      if (emoji && emojisTransparent[index]) {
+        // this.p5.image(emoji, 0, -24, 30, 30);
+
+        this.p5.image(emojisTransparent[index], 0, -24);
+      }
+      // this.p5.noTint();
       this.p5.pop();
       // this.p5.ellipse(this.position.x,this.position.y,this.r,this.r);
     }

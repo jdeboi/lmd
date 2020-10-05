@@ -34,10 +34,10 @@
       border-radius: 50%;
       opacity: .3;
       height: 50%;
-      width: 54%;
+      width: 51%;
       position: relative;
       top: 75px;
-      left: 75px;
+      left: 74px;
       overflow: hidden;
       color: red;
       -webkit-filter: grayscale(100%);
@@ -104,10 +104,15 @@
   .Mars .tank {
     width: 100%;
     height: 100%;
-    background-color: transparent;
+    background-color: white;
     background-repeat: repeat;
     background-size: 39px 40px; }
     .Mars .tank button {
       height: 100%;
       width: 74px;
-      padding-top: 30px; }
+      font-family: Arial;
+      padding-top: 30px;
+      background-color: white;
+      border: none; }
+    .Mars .tank button:not(:last-child) {
+      border-right: 1px solid black; }

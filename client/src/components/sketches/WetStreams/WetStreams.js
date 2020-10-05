@@ -10,7 +10,7 @@ import "./WetStreams.css";
 import Frame from '../../shared/Frame/Frame';
 // import FrameSimple from '../../shared/Frame/FrameSimple';
 // import ReactPlayer from 'react-player';
-import Playbar from "./Playbar";
+// import Playbar from "./Playbar";
 
 ///////////////////// p5.js
 import P5Wrapper from 'react-p5-wrapper';
@@ -191,7 +191,7 @@ function getShower(id, x, y,dx, dy, w, h, img, dragHandler, toggleHandler, title
     <Frame key={id} id={id} onDrag={dragHandler} title={title} content={
         <div className={id===5?"showerhead flippedX":"showerhead"}>
           <img src={require("./assets/showerHeads/" + img + ".png")} style={{width:w +"px", height:h+"px"}} alt="shower head" />
-          <Playbar isPlaying={isPlaying} onToggle={toggleHandler} />
+          {/*<Playbar isPlaying={isPlaying} onToggle={toggleHandler} /> */}
         </div>
       }
       width={w} height={h} x={x} y={y} dx={dx} dy={dy}
