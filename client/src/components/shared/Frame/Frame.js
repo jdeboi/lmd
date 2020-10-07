@@ -32,33 +32,8 @@ class Frame extends React.Component {
       }
     }
 
-
-
-
-    this.toggleMaximized = this.toggleMaximized.bind(this);
-    this.toggleMinimzed = this.toggleMinimzed.bind(this);
-    this.toggleClosed = this.toggleClosed.bind(this);
-    // this.customDrag = this.customDrag.bind(this);
-
     this.wrapper = React.createRef();
   }
-
-
-  // For controlled component
-  // adjustXPos = (e) => {
-  //   e.preventDefault();
-  //   e.stopPropagation();
-  //   const {x, y} = this.state.controlledPosition;
-  //   this.setState({controlledPosition: {x: x - 10, y}});
-  // };
-  //
-  // adjustYPos = (e) => {
-  //   e.preventDefault();
-  //   e.stopPropagation();
-  //   const {controlledPosition} = this.state;
-  //   const {x, y} = controlledPosition;
-  //   this.setState({controlledPosition: {x, y: y - 10}});
-  // };
 
   componentDidUpdate(prevProps) {
     if (this.props.x !== prevProps.x || this.props.y !== prevProps.y) {
@@ -72,6 +47,7 @@ class Frame extends React.Component {
   onControlledDrag = (e, position) => {
     const {x, y} = position;
     this.setState({controlledPosition: {x, y}});
+    if(this.props.onDrag) this.props.onDrag(position);
   };
 
   onControlledDragStop = (e, position) => {
@@ -84,8 +60,8 @@ class Frame extends React.Component {
     console.log('Data: ', data);
   };
 
-  toggleClosed() {
-    console.log("CLOSE")
+  toggleClosed = () => {
+    // console.log("CLOSE")
     this.setState({
       isVisible: false
     })
@@ -93,7 +69,7 @@ class Frame extends React.Component {
     if (this.props.onHide) this.props.onHide();
   }
 
-  toggleMinimzed() {
+  toggleMinimzed = () => {
     this.setState(prevState => ({
       isMinimized: !prevState.isMinimized
     }), () => {
@@ -103,11 +79,13 @@ class Frame extends React.Component {
 
   }
 
-  toggleMaximized() {
+  toggleMaximized = () => {
     const controlledPosition = {...this.state.controlledPosition};
     controlledPosition.x = this.origCoords.x;
     controlledPosition.y = this.origCoords.y;
-    this.setState({controlledPosition}, () => {});
+    this.setState({controlledPosition}, () => {
+      if (this.props.onMaximized) this.props.onMaximized();
+    });
   }
 
 
@@ -188,7 +166,6 @@ class Frame extends React.Component {
     // however, it doesn't update when the page width / height changes
     // if we let pos be equal to props.px/ props.py, it changes location
 
-    // let onDrag = this.props.onDrag?this.customDrag:this.handleDrag;
     const bounds = this.props.bounded?".App-Content":null;
 
     return (
@@ -250,8 +227,10 @@ Frame.propTypes = {
 
   onHide: PropTypes.func,
   onMinimized: PropTypes.func,
+  onMaximized: PropTypes.func,
   onStart: PropTypes.func,
   onStop: PropTypes.func,
+  newFrameToTop: PropTypes.func,
 };
 
 export default Frame

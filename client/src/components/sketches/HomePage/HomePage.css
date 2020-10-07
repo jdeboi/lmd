@@ -1,4 +1,5 @@
 .HomePage {
+  background: black;
   background-size: cover;
   background-position: center;
   pointer-events: none; }
@@ -54,4 +55,5 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    pointer-events: none; }
+    z-index: 0;
+    pointer-events: all; }

@@ -50,7 +50,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import socket from "../components/shared/Socket/Socket";
 
 import FPSStats from "react-fps-stats";
-import {doorCrossing, boundaryCrossing} from './Helpers/Boundaries';
+import {userNearWine} from './Helpers/Boundaries';
 // import socketIOClient from "socket.io-client";
 // const ENDPOINT = "http://127.0.0.1:5000";
 
@@ -112,7 +112,7 @@ class App extends React.Component {
       dimensions: {windowWidth: window.innerWidth, windowHeight: window.innerHeight, device:"desktop", flipped: false, orientation: "landscape"},
       wOG: window.innerWidth,
       hOG: window.innerHeight,
-      classes: "App",
+      classes: ["App"],
       showSideBar: false,
       hasAvatar: false,
       showSignIn: false,
@@ -124,11 +124,6 @@ class App extends React.Component {
       messages: [],
       room: "home"
     };
-
-    const centerW = 1000;
-    this.centerPoints = [{x: 0 , y: -centerW/2},{x: centerW/2 , y: 0},{x: 0 , y: centerW/2},{x: -centerW/2 , y: 0},{x: 0 , y: -centerW/2}];
-    this.doors = [{x0: 0 , y0: -centerW/2, x1: 200, y1: -centerW/2+200, to:"/macbook-air"},{x0: 0 , y0: centerW/2, x1: -200, y1: centerW/2-200, to:"/hard-drives-on-seashores"},{x0: centerW/2 , y0: 0, x1: centerW/2-200, y1: 200, to:"/jungle-gyms"},];
-    //    {x0: 0 , y0: 200, x1: 200, y1: 200, to:"/wet-streams"}
 
     this.wineLocation = {x: -100, y: 500, w: 80, h: 150};
   }
@@ -153,7 +148,6 @@ class App extends React.Component {
       }
     }
     else {
-      console.log("nope")
       this.setState({showSignIn: true, hasAvatar: false});
     }
 
@@ -185,14 +179,14 @@ class App extends React.Component {
   }
 
   toggleSideBar = () => {
-    console.log("TOGGLED");
+    // console.log("TOGGLED");
     this.setState(prevState => ({
       showSideBar: !prevState.showSideBar
     }));
   }
 
   handleDrawerClose = () => {
-    console.log("CLOSED")
+    // console.log("CLOSED")
     this.setState({showSideBar: false});
   }
 
@@ -210,7 +204,7 @@ class App extends React.Component {
 
     // device type
     let minD = Math.min(dimensions.windowWidth, dimensions.windowHeight);
-    console.log("minD", minD, dimensions.windowWidth, dimensions.windowHeight);
+    // console.log("minD", minD, dimensions.windowWidth, dimensions.windowHeight);
     dimensions.device = "";
     if (minD < 450) dimensions.device="mobile";
     else if (minD <  700) dimensions.device="tablet";
@@ -220,10 +214,19 @@ class App extends React.Component {
   }
 
   addClass = (classn) => {
-    let classes = this.state.classes;
-    classes += " " + classn;
-    this.setState({classes: classes});
+    let classes = [...this.state.classes];
+    classes.push(classn);
+    this.setState({classes});
     //" " + this.state.cursor
+  }
+
+  removeClass = (classn) => {
+    let classes = [...this.state.classes];
+    let indexOfClass = classes.indexOf(classn);
+    if (indexOfClass > -1) {
+      classes.splice(indexOfClass, 1);
+      this.setState({classes});
+    }
   }
 
   //////////////////////////////////////////////////////////
@@ -233,7 +236,7 @@ class App extends React.Component {
     socket.on('connect', () => {
       const user = {...this.state.user};
       user.room = this.state.room;
-      console.log("CONNECTED", socket.id, "in room", this.state.room);
+      // console.log("CONNECTED", socket.id, "in room", this.state.room);
       this.setState({sessionID: socket.id});
 
       socket.emit("setUser", user);
@@ -253,7 +256,7 @@ class App extends React.Component {
     });
 
     socket.on("message", data => {
-      console.log("message received", data);
+      // console.log("message received", data);
       const message = {...data}
       if (message.to === this.state.room) {
         message.to = "room"
@@ -268,13 +271,13 @@ class App extends React.Component {
     socket.on("userJoined", data => {
       const user = {...this.state.user};
       this.setState({usersChange: true});
-      console.log("SOMEONE JOINED");
+      // console.log("SOMEONE JOINED");
     })
 
     socket.on("userDisconnected", data => {
       this.setState({usersChange: true});
       // socket.emit("leaveRoom", user.room); // not sure if we need this?
-      console.log("SOMEONE DISCONNECTED");
+      // console.log("SOMEONE DISCONNECTED");
     })
   }
 
@@ -288,23 +291,23 @@ class App extends React.Component {
   addWine = () => {
     const user = { ...this.state.user }
     user.needsWine = true;
-    if (this.userNearWine()) {
-        user.needsWine = false;
-        user.hasWine = new Date();
+    if (userNearWine(user, this.wineLocation)) {
+      user.needsWine = false;
+      user.hasWine = new Date();
     }
     this.setState({user});
     socket.emit("setUser", user);
   }
 
-  userNearWine = () => {
-    // const wineLocation = this.wineLocation;
-    const user = { ...this.state.user };
-    var dx = user.x - (this.wineLocation.x+this.wineLocation.w/2);
-    var dy = user.y - (this.wineLocation.y+this.wineLocation.h/2);
-    var dis = Math.sqrt(dx*dx + dy*dy);
-    // console.log("DIS", dis < 200);
-    return dis < 200;
-  }
+  // userNearWine = () => {
+  //   // const wineLocation = this.wineLocation;
+  //   const user = { ...this.state.user };
+  //   var dx = user.x - (this.wineLocation.x+this.wineLocation.w/2);
+  //   var dy = user.y - (this.wineLocation.y+this.wineLocation.h/2);
+  //   var dis = Math.sqrt(dx*dx + dy*dy);
+  //   // console.log("DIS", dis < 200);
+  //   return dis < 200;
+  // }
 
   getUserNameById = (id) => {
     const users = this.state.users;
@@ -344,32 +347,44 @@ class App extends React.Component {
     this.setState({user: newUser});
   }
 
-  userMove = (x, y, time) => {
-    let space = 50;
-    const user = { ...this.state.user }
-    user.x += x*space;
-    user.y += y*space;
-    const room = doorCrossing({x: user.x, y: user.y}, this.doors);
-    if (room) {
-      alert("door!");
-      this.props.history.push(room);
+  userMove = (x, y) => {
+    const user = {...this.state.user};
+    user.x = x;
+    user.y = y;
+    if (userNearWine(user, this.wineLocation) && user.needsWine) {
+      user.needsWine = false;
+      user.hasWine = new Date();
     }
-    else if (boundaryCrossing({x: user.x, y: user.y}, this.centerPoints)) {
-      // alert("boundary crossing");
-    }
-    else {
-      if (this.userNearWine() && user.needsWine) {
-          user.needsWine = false;
-          user.hasWine = new Date();
-      }
-      // console.log("1", new Date() - time);
-      this.setState({user});
-      // console.log("dt", new Date() - time);
-      // user.room = this.state.user;
-      socket.emit("setUser", user);
-    }
-
+    this.setState({user});
+    socket.emit("setUser", user);
   }
+
+  // userMove = (x, y, time) => {
+  //   let space = 50;
+  //   const user = { ...this.state.user }
+  //   user.x += x*space;
+  //   user.y += y*space;
+  //   const room = doorCrossing({x: user.x, y: user.y}, this.doors);
+  //   if (room) {
+  //     alert("door!");
+  //     this.props.history.push(room);
+  //   }
+  //   else if (boundaryCrossing({x: user.x, y: user.y}, this.centerPoints)) {
+  //     // alert("boundary crossing");
+  //   }
+  //   else {
+  //     if (this.userNearWine() && user.needsWine) {
+  //         user.needsWine = false;
+  //         user.hasWine = new Date();
+  //     }
+  //     // console.log("1", new Date() - time);
+  //     this.setState({user});
+  //     // console.log("dt", new Date() - time);
+  //     // user.room = this.state.user;
+  //     socket.emit("setUser", user);
+  //   }
+  //
+  // }
 
   userSet = (userName, avatar) => {
     Cookies.set("hasAvatar", true);
@@ -391,7 +406,7 @@ class App extends React.Component {
 
 
   userRegister = ({isUser, user}) => {
-    console.log("user register!!!")
+    // console.log("user register!!!")
     if (isUser) {
       alert("username already exists. Please enter a new username.");
     }
@@ -401,9 +416,14 @@ class App extends React.Component {
   }
 
   userRegisterCheck = (userName, avatar) => {
-    console.log("userRegisterCheck");
+    // console.log("userRegisterCheck");
     const userCheck={userName:userName, avatar:avatar};
     socket.emit("registerUser", userCheck, this.userRegister);
+  }
+
+  userNewRoom = (room) => {
+    alert("door!");
+    this.props.history.push(room);
   }
 
   userSetRoom = (room) => {
@@ -424,10 +444,19 @@ class App extends React.Component {
     this.setState({showSignIn: false})
   }
 
+  getStringClasses = () => {
+    var str = "";
+    for (const classn of this.state.classes) {
+      str += classn + " ";
+    }
+    str = str.substring(0, str.length-1);
+    return str;
+  }
+
   render() {
     const {dimensions} = this.state;
     return (
-      <div className={this.state.classes}>
+      <div className={this.getStringClasses()}>
         <MuiThemeProvider theme={theme}>
           {/* <CssBaseline />*/}
           <div className="App-Header">
@@ -436,12 +465,12 @@ class App extends React.Component {
           </div>
           <div className="App-Content inner-outline">
             <Switch>
-              <Route exact path="/" render={() => (<HomePage user={this.state.user} users={this.state.users} userMove={this.userMove} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} walls={this.centerPoints} doors={this.doors} userSetActiveChat={this.userSetActiveChat} wineLocation={this.wineLocation} />)} />
+              <Route exact path="/" render={() => (<HomePage dimensions={dimensions} user={this.state.user} users={this.state.users} userMove={this.userMove} userNewRoom={this.userNewRoom} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} userSetActiveChat={this.userSetActiveChat} wineLocation={this.wineLocation} />)} />
               <Route  path="/macbook-air" render={() => (<MacbookAir dimensions={dimensions} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
               <Route  path="/jungle-gyms" render={() => (<JungleGyms userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
               <Route  path="/hard-drives-on-seashores"      render={() => (<HardDrives userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)}  />
               <Route  path="/wasted-days-are-days-wasted"   render={() => (<Spacetimes dimensions={dimensions} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
-              <Route  path="/esc-to-mars" render={() => (<Mars addClass={this.addClass} dimensions={dimensions} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
+              <Route  path="/esc-to-mars" render={() => (<Mars addClass={this.addClass} removeClass={this.removeClass} dimensions={dimensions} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
               <Route  path="/wet-streams" render={() => (<WetStreams userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
               <Route  path="/xfinity-depths" render={() => (<Loop dimensions={dimensions} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)}/>
               <Route  path="/cloud-confessional" render={() => (<WaveForms cursor={this.state.cursorID} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />

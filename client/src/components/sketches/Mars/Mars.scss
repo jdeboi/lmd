@@ -7,8 +7,10 @@
   left:0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
-  background-color: blue;
+  min-width: 1325px;
+  min-height: 716px;
+  // overflow: hidden;
+  background-color: black;
   position: relative;
 
   // background-image: url(./assets/grid.jpg);

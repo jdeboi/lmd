@@ -7,6 +7,18 @@ export default function sketch (p) {;
   let percent = 0;
   let emojiS = 34;
 
+  let velocities = [
+    {velX: {min: -.8, max:5}, velY: {min: -.5, max:0}},
+    {velX: {min: -5, max:2}, velY: {min: -.5, max:0}},
+    {velX: {min: -5, max:.8}, velY: {min: -.5, max:0}},
+    {velX: {min: -5, max:.8}, velY: {min: -.5, max:0}},
+    {velX: {min: -5, max:5}, velY: {min: -.5, max:0}},
+    {velX: {min: -.5, max:5}, velY: {min: -.5, max:0}}
+  ];
+  let offsets = [{x:215,y:328}, {x:215,y:215}, {x:50,y:195}, {x:132,y:254}, {x:260,y:335}, {x:285,y:330}];
+  let degrees = [0, 60, 90, 80, 40, 0];
+
+
 
   p.setup = function () {
     p.createCanvas(p.windowWidth, p.windowHeight); //, p.WEBGL
@@ -18,17 +30,20 @@ export default function sketch (p) {;
     if (props.origins) {
       if (ps.length === 0) {
         for (let i = 0; i < props.origins.length; i++) {
-          let x = props.origins[i].x + props.offsets[i].x;
-          let y = props.origins[i].y + props.offsets[i].y;
-          ps[i] = new ParticleSystem(p, p.createVector(x, y), props.velocities[i].velX, props.velocities[i].velY, props.degrees[i], props.isPlaying[i]);
+          let offsetX = offsets[i].x * props.scaler;
+          let offsetY = offsets[i].y * props.scaler;
+          let x = props.origins[i].x + offsetX;
+          let y = props.origins[i].y + offsetY;
+          ps[i] = new ParticleSystem(p, p.createVector(x, y), velocities[i].velX, velocities[i].velY, degrees[i], props.isPlaying[i]);
           ps[i].initParticles(40);
         }
       }
       else {
         for (let i = 0; i < ps.length; i++) {
-          //
-          let x =  props.origins[i].x + props.offsets[i].x + props.deltas[i].x;
-          let y =  props.origins[i].y + props.offsets[i].y+ props.deltas[i].y;
+          let offsetX = offsets[i].x * props.scaler;
+          let offsetY = offsets[i].y * props.scaler;
+          let x =  props.origins[i].x + offsetX + props.deltas[i].x;
+          let y =  props.origins[i].y + offsetY + props.deltas[i].y;
           let isPlaying = props.isPlaying[i];
           ps[i].origin.set(x, y, 0);
           ps[i].isPlaying = isPlaying;

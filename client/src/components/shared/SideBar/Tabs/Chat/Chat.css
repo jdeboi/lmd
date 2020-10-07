@@ -50,7 +50,8 @@
           padding-bottom: 4px;
           font-size: 8px; }
         .Chat .Chat-messages .Chat-messages-box .Chat-messages-inner-box .message-txt {
-          font-size: 10px; }
+          font-size: 10px;
+          line-height: 1.8em; }
         .Chat .Chat-messages .Chat-messages-box .Chat-messages-inner-box .bubbleContainer {
           display: flex;
           flex-direction: row;

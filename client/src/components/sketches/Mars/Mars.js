@@ -33,7 +33,6 @@ class Mars extends React.Component {
     this.poolVid3 = window.AWS+"/mars/pool/mars_3.mp4"
 
     this.state = {
-      chairY: 0,
       poolVid: this.poolVid1
     }
 
@@ -46,7 +45,7 @@ class Mars extends React.Component {
   }
 
   componentWillUnmount() {
-    clearInterval(this.chairInterval);
+    this.props.removeClass("overflow-all");
     this.props.userLeaveRoom("esc-to-mars");
   }
 
@@ -57,14 +56,20 @@ class Mars extends React.Component {
   }
 
   render() {
+    const headerBarH = 34;
     const toolbarH = 26;
     const spacing = 25;
 
     const dimensions = this.props.dimensions;
     const {windowWidth, windowHeight} = dimensions;
 
-    const startX = Math.max((windowWidth-1275)/2, 0);
-    const startY = Math.max((windowHeight-640)/2, 0);
+    const sketchW = 1275;
+    const sketchH = 640+toolbarH;
+    // 1325, 716
+    // console.log("min w/h:", sketchW+spacing*2, sketchH+spacing*2);
+
+    const startX = Math.max((windowWidth-sketchW)/2, spacing);
+    const startY = Math.max(((windowHeight-headerBarH)-sketchH)/2, spacing);
 
     const pool = {
       x: startX,

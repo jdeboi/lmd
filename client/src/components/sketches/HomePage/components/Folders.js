@@ -2,7 +2,7 @@ import React from 'react';
 import DesktopIcon from '../../../shared/DesktopIcon/DesktopIcon';
 
 export default function(props) {
-  const box = {x: 100, y: 100, w: 100, h: 100};
+  const box = {x: 100, y: 100, w: 300, h: 100};
   return (
     <div className="folders">
       <DesktopIcon title={"statement"} onDblClick={props.onDblClick} x={props.x} y={props.y} z={props.z0} bounded={false} box={box}

@@ -98,63 +98,28 @@ class WaveForms extends React.Component {
       prayTo: "Kanye"
     };
 
-
-
-
     factor = 0.1;
-    // this.shellW = 1600 *factor;
-    // this.shellH = 1038*factor;
-    // this.shellW = 100;
-    // this.shellH = 100;
-    // this.shellX =  (window.innerWidth - this.shellW)/2; //this.state.windowX + this.dimW/2 - this.shellW/2;
-    // this.shellY = (window.innerHeight - this.shellH-80)/2;
-
-    this.updateDimensions = this.updateDimensions.bind(this);
-    this.resetPlayer = this.resetPlayer.bind(this);
-    // this.earChange = this.earChange.bind(this);
-    // this.updateTime = this.updateTime.bind(this);
-    // this.updateWatchers = this.updateWatchers.bind(this);
-
-    // this.updateEmojis = this.updateEmojis.bind(this);
-    // this.setTweet = this.setTweet.bind(this);
-    // this.fetchTweets = this.fetchTweets.bind(this);
-    // this.getTweet = this.getTweet.bind(this);
-    // this.addTweet = this.addTweet.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-
-    // this.renderForm = this.renderForm.bind(this);
-    // this.renderConfessions = this.renderConfessions.bind(this);
-
-
     this.memberRef0 = React.createRef();
 
-    // this.moveConfessions = this.moveConfessions.bind(this);
   }
 
 
   componentDidMount() {
-
-    window.addEventListener("resize", this.updateDimensions);
     this.interval = setInterval(this.resetPlayer, 22000);
     this.props.userSetRoom("confessions");
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.updateDimensions);
     clearInterval(this.interval);
     this.props.userLeaveRoom("confessions");
   }
 
-  updateDimensions() {
-  }
 
-  handleChange(event) {
+  handleChange = (event) => {
     this.setState({timePeriod: event.target.value});
   };
 
-
-
-  resetPlayer() {
+  resetPlayer = () => {
     if (this.videoBack && this.videoMain) {
       this.videoBack.currentTime = 0;
       this.videoMain.currentTime = .50;
