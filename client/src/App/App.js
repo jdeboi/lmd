@@ -125,7 +125,7 @@ class App extends React.Component {
       room: "home"
     };
 
-    this.wineLocation = {x: -100, y: 500, w: 80, h: 150};
+    this.wineLocation = {x: -100, y: 50, w: 80, h: 150};
   }
 
 
