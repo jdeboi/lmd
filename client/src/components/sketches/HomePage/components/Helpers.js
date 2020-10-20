@@ -8,3 +8,19 @@ export function getOtherUserLocation(user, otherUser, avatarW) {
 export function showWine(user) {
   return user.hasWine && (new Date() - user.hasWine < 15000);
 }
+
+export function initZIndicesIcons() {
+  const zind = [];
+  for (let i = 6; i < 6+3; i++) {
+    zind[i] = i; // icons
+  }
+  return zind;
+}
+
+export function initZIndicesFrames() {
+  const zind = [];
+  for (let i = 0; i < 3; i++) {
+    zind[i] = i+100; // icons
+  }
+  return zind;
+}

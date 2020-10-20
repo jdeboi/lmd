@@ -13,9 +13,7 @@ import Cookies from 'js-cookie';
 
 // sketches
 import HomePage from '../components/sketches/HomePage/HomePage';
-import Dimension from '../components/sketches/Dimension/Dimension';
 import MacbookAir from '../components/sketches/MacbookAir/MacbookAir';
-import ClickMe from '../components/sketches/ClickMe/ClickMe';
 import JungleGyms from '../components/sketches/JungleGyms/JungleGyms';
 import HardDrives from '../components/sketches/HardDrives/HardDrives';
 import Spacetimes from '../components/sketches/Spacetimes/Spacetimes';
@@ -23,14 +21,22 @@ import Mars from '../components/sketches/Mars/Mars';
 import WetStreams from '../components/sketches/WetStreams/WetStreams';
 import WaveForms from '../components/sketches/WaveForms/WaveForms';
 import Confessions from '../components/sketches/WaveForms/Confessions';
+import Loop from '../components/sketches/Loop/Loop';
+import VorTech from '../components/sketches/VorTech/VorTech';
+import Oogle from '../components/sketches/Oogle/Oogle';
 
 // under construction
-import Altar from '../components/sketches/Altar/Altar';
-import MoonLight from '../components/sketches/MoonLight/MoonLight';
-import Loop from '../components/sketches/Loop/Loop';
-import Three from '../components/sketches/Three/Three';
-import Dinner from '../components/sketches/Dinner/Dinner';
-import Dig from '../components/sketches/Dig/Dig';
+// import Altar from '../components/sketches/Test/Altar/Altar';
+
+// import Three from '../components/sketches/Test/Three/Three';
+// import Dimension from '../components/sketches/Dimension/Dimension';
+
+import Dinner from '../components/sketches/Test/Dinner/Dinner';
+import Dig from '../components/sketches/Test/Dig/Dig';
+import Windows from '../components/sketches/Test/Windows/Windows';
+import ClickMe from '../components/sketches/Test/ClickMe/ClickMe';
+import MoonLight from '../components/sketches/Test/MoonLight/MoonLight';
+import Yosemite from '../components/sketches/Test/Yosemite/Yosemite';
 
 // pages
 import About from '../components/pages/About';
@@ -118,14 +124,16 @@ class App extends React.Component {
       showSignIn: false,
       sessionID: null,
       usersChange: false,
-      user: {avatar:"", userName:"", room:"", x: 0, y: 0, hasWine: null, needsWine: false},
+      user: {avatar:"", userName:"", room:"home", x: 0, y: 0, hasWine: null, needsWine: false},
       users: null,
       userActiveChat: null,
       messages: [],
-      room: "home"
+      // room: "home",
+      roomCount: {"macbook-air": 0, "hard-drives-on-seashores": 0, "wet-streams": 0, "jungle-gyms": 0, "cloud-confessional": 0, "esc-to-mars": 0, "xfinity-depths": 0, "wasted-days-are-days-wasted": 0, "home": 0}
     };
 
-    this.wineLocation = {x: -100, y: 50, w: 80, h: 150};
+    this.wineLocation = [{x: 1050, y: -1300, w: 80, h: 150}, {x: -1350, y: -2450, w: 80, h: 150}];
+    this.djLocation = {x: 800, y: -3000};
   }
 
 
@@ -140,12 +148,12 @@ class App extends React.Component {
       const user= {...this.state.user};
       user.userName = userName;
       user.avatar = avatar;
-      this.setState({user, showSignIn: false, hasAvatar: true});
 
       if (socket.connected) {
-        user.room = this.state.room;
+        user.room = "home";
         socket.emit("setUser", user);
       }
+      this.setState({user, showSignIn: false, hasAvatar: true});
     }
     else {
       this.setState({showSignIn: true, hasAvatar: false});
@@ -235,12 +243,12 @@ class App extends React.Component {
 
     socket.on('connect', () => {
       const user = {...this.state.user};
-      user.room = this.state.room;
+      // user.room = "home"
       // console.log("CONNECTED", socket.id, "in room", this.state.room);
       this.setState({sessionID: socket.id});
 
       socket.emit("setUser", user);
-      socket.emit("joinRoom", this.state.room);
+      socket.emit("joinRoom", user.room);
 
       this.addBots();
     });
@@ -251,6 +259,7 @@ class App extends React.Component {
       var filteredArray = data.filter(function(user){
         return user.id != sessionID;
       });
+      this.setRoomCount();
       // console.log("USERS", filteredArray, sessionID )
       this.setState({users: filteredArray});
     });
@@ -258,7 +267,8 @@ class App extends React.Component {
     socket.on("message", data => {
       // console.log("message received", data);
       const message = {...data}
-      if (message.to === this.state.room) {
+      const user = {...this.state.user};
+      if (message.to === user.room) {
         message.to = "room"
       }
       else if (message.to !== "all") {
@@ -282,16 +292,20 @@ class App extends React.Component {
   }
 
   addBots = () => {
-    const wineBot = {x: this.wineLocation.x -50, y: this.wineLocation.y+50, avatar: "🤖", room:"home", userName:"wineBot", id:0};
+    const wineBot0 = {x: this.wineLocation[0].x +120, y: this.wineLocation[0].y+50, avatar: "🤖", room:"home", userName:"wineBot", id:0};
+    const wineBot1 = {x: this.wineLocation[1].x +120, y: this.wineLocation[1].y+50, avatar: "🤖", room:"home", userName:"wineBot", id:1};
+    const dj = {x: this.djLocation.x, y: this.djLocation.y, avatar: "🤖", userName:"DJ", id: 2};
     // const hostBot = {x: 300, y: 600, avatar: "🤖", room:"home", userName:"hostBot", id:1}
-    socket.emit("setBot", wineBot);
+    socket.emit("setBot", wineBot0);
+    socket.emit("setBot", wineBot1);
+    socket.emit("setBot", dj);
     // socket.emit("setBot", hostBot);
   }
 
   addWine = () => {
     const user = { ...this.state.user }
     user.needsWine = true;
-    if (userNearWine(user, this.wineLocation)) {
+    if (userNearWine(user, this.wineLocation[0]) || userNearWine(user, this.wineLocation[1])) {
       user.needsWine = false;
       user.hasWine = new Date();
     }
@@ -299,15 +313,24 @@ class App extends React.Component {
     socket.emit("setUser", user);
   }
 
-  // userNearWine = () => {
-  //   // const wineLocation = this.wineLocation;
-  //   const user = { ...this.state.user };
-  //   var dx = user.x - (this.wineLocation.x+this.wineLocation.w/2);
-  //   var dy = user.y - (this.wineLocation.y+this.wineLocation.h/2);
-  //   var dis = Math.sqrt(dx*dx + dy*dy);
-  //   // console.log("DIS", dis < 200);
-  //   return dis < 200;
-  // }
+  setRoomCount = () => {
+    const roomCount = {...this.state.roomCount};
+    // reset it
+    for (var key in roomCount) {
+      if (roomCount.hasOwnProperty(key)) {
+        roomCount[key] = 0;
+      }
+    }
+    if (this.state.users) {
+      for (const usr of this.state.users) {
+        var room = usr.room;
+        if (room in roomCount) roomCount[room]++;
+      }
+      // console.log("OK", roomCount, this.state.users);
+      this.setState({roomCount})
+    }
+
+  }
 
   getUserNameById = (id) => {
     const users = this.state.users;
@@ -351,7 +374,7 @@ class App extends React.Component {
     const user = {...this.state.user};
     user.x = x;
     user.y = y;
-    if (userNearWine(user, this.wineLocation) && user.needsWine) {
+    if ((userNearWine(user, this.wineLocation[0]) || userNearWine(user, this.wineLocation[1])) && user.needsWine) {
       user.needsWine = false;
       user.hasWine = new Date();
     }
@@ -359,32 +382,6 @@ class App extends React.Component {
     socket.emit("setUser", user);
   }
 
-  // userMove = (x, y, time) => {
-  //   let space = 50;
-  //   const user = { ...this.state.user }
-  //   user.x += x*space;
-  //   user.y += y*space;
-  //   const room = doorCrossing({x: user.x, y: user.y}, this.doors);
-  //   if (room) {
-  //     alert("door!");
-  //     this.props.history.push(room);
-  //   }
-  //   else if (boundaryCrossing({x: user.x, y: user.y}, this.centerPoints)) {
-  //     // alert("boundary crossing");
-  //   }
-  //   else {
-  //     if (this.userNearWine() && user.needsWine) {
-  //         user.needsWine = false;
-  //         user.hasWine = new Date();
-  //     }
-  //     // console.log("1", new Date() - time);
-  //     this.setState({user});
-  //     // console.log("dt", new Date() - time);
-  //     // user.room = this.state.user;
-  //     socket.emit("setUser", user);
-  //   }
-  //
-  // }
 
   userSet = (userName, avatar) => {
     Cookies.set("hasAvatar", true);
@@ -400,7 +397,7 @@ class App extends React.Component {
     this.setState({hasAvatar:true, showSignIn:false});
 
     const user = {...this.state.user};
-    user.room = this.state.room;
+    // user.room = this.state.room;
     socket.emit("setUser", user);
   }
 
@@ -422,19 +419,29 @@ class App extends React.Component {
   }
 
   userNewRoom = (room) => {
-    alert("door!");
+    // alert("door!");
     this.props.history.push(room);
   }
 
   userSetRoom = (room) => {
     // const user = {...this.state.user}
     // user.room = room;
-    this.setState({room: room});
+    const user = {...this.state.user};
+    console.log("user room was", user.room);
+    user.room = room;
+    socket.emit("setUser", user);
     socket.emit("joinRoom", room);
+    console.log("user room to", room);
   }
 
   userLeaveRoom = (room) => {
     socket.emit("leaveRoom", room);
+    // this.setState({room: "home"}, () => {
+    //   const user = {...this.state.user};
+    //   user.room = this.state.room;
+    //   socket.emit("setUser", user);
+    //   socket.emit("joinRoom", room);
+    // });
   }
   // usersChangeReset() {
   //   this.setState({usersChange: false});
@@ -465,7 +472,7 @@ class App extends React.Component {
           </div>
           <div className="App-Content inner-outline">
             <Switch>
-              <Route exact path="/" render={() => (<HomePage dimensions={dimensions} user={this.state.user} users={this.state.users} userMove={this.userMove} userNewRoom={this.userNewRoom} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} userSetActiveChat={this.userSetActiveChat} wineLocation={this.wineLocation} />)} />
+              <Route exact path="/" render={() => (<HomePage dimensions={dimensions} user={this.state.user} users={this.state.users} userMove={this.userMove} userNewRoom={this.userNewRoom} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} userSetActiveChat={this.userSetActiveChat} wineLocation={this.wineLocation} djLocation={this.djLocation} roomCount={this.state.roomCount} />)} />
               <Route  path="/macbook-air" render={() => (<MacbookAir dimensions={dimensions} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
               <Route  path="/jungle-gyms" render={() => (<JungleGyms userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
               <Route  path="/hard-drives-on-seashores"      render={() => (<HardDrives userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)}  />
@@ -475,19 +482,23 @@ class App extends React.Component {
               <Route  path="/xfinity-depths" render={() => (<Loop dimensions={dimensions} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)}/>
               <Route  path="/cloud-confessional" render={() => (<WaveForms cursor={this.state.cursorID} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
               <Route  path="/confessions" render={() => (<Confessions userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
+              <Route  path="/vor-tech" render={() => (<VorTech userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
+              <Route  path="/oogle" render={() => (<Oogle userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
 
               <Route  path="/dig" render={() => (<Dig addClass={this.addClass} />)} />
-              <Route  path="/moon-light" component={MoonLight} />
-              <Route  path="/three" component={Three} />
-
+              {<Route  path="/moon-light" component={MoonLight} />}
+              <Route  path="/yosemite" component={Yosemite} />
+              {/*<Route  path="/three" component={Three} />*/}
+              <Route  path="/windows" component={Windows} />
               <Route  path="/credits" render={() => (<Credits userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
               <Route  path="/words" render={() => (<About userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
               <Route  component={NotFound} />
             </Switch>
             {/*<div id="fps">0</div> */}
-            <FPSStats top={window.innerHeight-55} left={10} />
+
           </div>
-          <SideBar room={this.state.room} user={this.state.user} users={this.state.users} usersChange={this.state.usersChange} showSideBar={this.state.showSideBar} handleDrawerClose={this.handleDrawerClose.bind(this)} messages={this.state.messages} addUserMessage={this.addUserMessage} userActiveChat={this.state.userActiveChat} userSetActiveChat={this.userSetActiveChat} addWine={this.addWine} />
+          {   <FPSStats top={window.innerHeight-55} left={10} />}
+          <SideBar room={this.state.user.room} user={this.state.user} users={this.state.users} usersChange={this.state.usersChange} showSideBar={this.state.showSideBar} handleDrawerClose={this.handleDrawerClose.bind(this)} messages={this.state.messages} addUserMessage={this.addUserMessage} userActiveChat={this.state.userActiveChat} userSetActiveChat={this.userSetActiveChat} addWine={this.addWine} />
           <SignIn user={this.state.user} hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} closeSignIn={this.closeSignIn.bind(this)} userUpdated={this.userUpdated} userSet={this.userSet} userRegisterCheck={this.userRegisterCheck} />
         </MuiThemeProvider>
       </div>
@@ -496,5 +507,6 @@ class App extends React.Component {
 
 
 }
+//
 
 export default withRouter(App);

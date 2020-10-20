@@ -1,0 +1,205 @@
+.Oogle {
+  background-color: #bae4b9; }
+  .Oogle .legend div {
+    display: inline-block; }
+  .Oogle .legendBar {
+    width: 100px;
+    height: 5px;
+    margin-left: 4px;
+    margin-right: 0px;
+    border-bottom: 2px solid black;
+    border-left: 2px solid black;
+    border-right: 2px solid black; }
+  .Oogle .arrows {
+    text-align: left;
+    width: 20px;
+    height: 20px;
+    background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/oogle/assets/arrows.png);
+    background-repeat: no-repeat;
+    background-position: 0px 0px;
+    background-size: 40px 20px;
+    margin-left: -10px; }
+  .Oogle .arrows:hover {
+    background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/oogle/assets/arrows.png);
+    background-position: -21px 0px; }
+  .Oogle .feedback a {
+    color: black;
+    text-decoration: none; }
+  .Oogle .feedback a:hover {
+    color: #343A40; }
+  .Oogle #dude {
+    width: 50px;
+    height: 50px;
+    background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/oogle/assets/dude.png);
+    background-repeat: no-repeat;
+    background-position: -4px -9px; }
+  .Oogle #BRButtons {
+    position: fixed;
+    bottom: 20px;
+    right: 10px; }
+    .Oogle #BRButtons button {
+      padding: 10px;
+      border: 1px solid black; }
+  .Oogle #mapData {
+    position: fixed;
+    background-color: white;
+    bottom: 0;
+    right: 0;
+    font-size: 9px;
+    color: black; }
+  .Oogle #mapData span {
+    padding-right: 15px;
+    padding-left: 5px; }
+  .Oogle .mobileContainer {
+    width: 100%;
+    height: 100%; }
+  .Oogle #blueBoxMobile {
+    width: 100%;
+    height: 180px;
+    left: 0px;
+    top: 0px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    overflow-y: scroll; }
+  .Oogle #locationsListMobile {
+    display: none;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 100; }
+  .Oogle #directionsMobile {
+    position: fixed;
+    z-index: 100;
+    overflow-y: scroll;
+    width: 100%;
+    bottom: 0px;
+    background-color: white;
+    box-shadow: 0 -4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
+  .Oogle #directionsListMobile {
+    display: none;
+    position: relative;
+    top: 0;
+    padding-bottom: 30px; }
+  .Oogle #buttonsMobile {
+    position: fixed;
+    bottom: 20px;
+    right: 10px; }
+  .Oogle #whiteBoxContainerMobile {
+    position: relative;
+    pointer-events: all;
+    overflow-y: scroll;
+    width: 100%;
+    height: 100%; }
+  .Oogle #mapContainerMobile {
+    pointer-events: all;
+    width: 100%;
+    height: 100%; }
+  .Oogle #mapContainerMobile svg {
+    height: 100%;
+    width: 100%; }
+  .Oogle #BRButtons {
+    position: fixed;
+    z-index: 10; }
+  .Oogle .buttonsDown {
+    bottom: 20px;
+    right: 10px; }
+  .Oogle .buttonsUp {
+    bottom: 130px;
+    right: 10px; }
+  .Oogle .summarySymbol {
+    position: absolute;
+    top: 24px;
+    right: 30px;
+    color: darkgray; }
+  .Oogle .sidebarContainer {
+    padding: 20px;
+    padding-left: 30px;
+    padding-right: 30px; }
+  .Oogle .hamburger {
+    cursor: pointer; }
+  .Oogle .bar {
+    width: 35px;
+    height: 5px;
+    background-color: #ffffff;
+    margin: 6px 0;
+    transition: 0.4s; }
+  .Oogle .directions {
+    height: 100%;
+    padding-bottom: 30px; }
+  .Oogle .directionsBox {
+    color: white;
+    padding-bottom: 20px;
+    width: 100%;
+    background-color: #4385f5; }
+  .Oogle .directionsBox h1 {
+    font-family: googleFont; }
+  .Oogle .listItemL {
+    padding: 15px; }
+  .Oogle .listItemL, .Oogle .listItemD {
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: white; }
+  .Oogle .listItemD {
+    padding-top: 15px; }
+  .Oogle .listItemL:hover {
+    background-color: #F0F0F0; }
+  .Oogle .listItemL img {
+    padding-right: 15px; }
+  .Oogle .listItemPodL .listItemPodD {
+    padding: 20px; }
+  .Oogle .listItemPodD img {
+    margin-right: 20px; }
+  .Oogle .directionsDis {
+    padding-top: 10px;
+    font-size: 8pt; }
+  .Oogle .directionText {
+    display: inline-block; }
+  .Oogle .summaryDis {
+    font-size: 22px; }
+  .Oogle .directionsTime {
+    color: #198139; }
+  .Oogle .directionsDeets {
+    font-size: 13px;
+    color: #646464; }
+  .Oogle .directionsDistance {
+    color: #757575; }
+  .Oogle .finalD {
+    font-weight: bold; }
+  .Oogle .routeimg {
+    max-width: 12px;
+    height: auto;
+    padding-top: 10px; }
+  .Oogle form.enterD input[type=text] {
+    color: white;
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding-top: 10px;
+    border-bottom: 1px solid #86acf7; }
+  .Oogle form.enterD input[type=text]::placeholder {
+    color: #cdd7ea; }
+  .Oogle input:focus {
+    outline: none; }
+  .Oogle .center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto; }
+  .Oogle .visible {
+    visibility: visible;
+    display: block; }
+  .Oogle .hidden {
+    visibility: hidden;
+    display: none; }
+  .Oogle .TLButtons {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    text-align: center; }
+  .Oogle .mapButton {
+    font-size: 20px;
+    text-align: center;
+    color: darkgray;
+    margin: 10 auto;
+    padding: 0;
+    display: inline-block;
+    line-height: 50px;
+    text-align: center; }

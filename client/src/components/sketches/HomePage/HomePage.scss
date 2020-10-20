@@ -1,13 +1,25 @@
 $emojiFontSize: 36px;
 
 .HomePage {
-  // background-image: url(/assets/s3-bucket/homePage/wallpaper/wallpaper0.png);
-  // background-repeat: repeat;
-  // background-size: 200px 200px;
-  background: black;
-  background-size: cover;
-  background-position: center;
+  // background-image: url(/assets/s3-bucket/homePage/grasses/200.png);
+  background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/homePage/shrub.jpg);
+  background-repeat: repeat;
+  background-size: 300px 300px;
+  // background: black;
+  // background-size: cover;
+  // background-position: center;
   pointer-events: none;
+
+
+  .clouds {
+    /*  made 0, was -200, because clouds were behind app-frame-box thing */
+    z-index: 0;
+    // fixed so that it doesn't push other divs down
+    position: fixed;
+
+    min-width: 100%;
+    min-height: 100%;
+  }
 
   .MFA-deets {
     text-align: center;
@@ -87,8 +99,8 @@ $emojiFontSize: 36px;
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 0;
-    pointer-events: all;
+    // z-index: 1;
+    pointer-events: none;
     // width: 100%;
     // height: 100%;
   }

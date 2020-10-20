@@ -16,7 +16,7 @@ export default function(props) {
           <div style={{fontSize: "12px"}}>April 2021</div>
         </div>
       }
-      width={props.w} height={props.h} x={props.x} y={props.y} bounded={false}
+      width={props.w} height={props.h} x={props.x} y={props.y} z={props.z}  bounded={false}
       />
   )
 }

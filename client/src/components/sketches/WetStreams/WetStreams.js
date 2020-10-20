@@ -77,7 +77,7 @@ class WetStreams extends React.Component {
   playStreamReset = () => {
     const playingStreams = [...this.state.playingStreams];
     for (let i = 0; i < playingStreams.length; i++) {
-      playingStreams[i] = Math.random()>.5;
+      playingStreams[i] = Math.random()>.4;
     }
     this.setState({playingStreams})
   }

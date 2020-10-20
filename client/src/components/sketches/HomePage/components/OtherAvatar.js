@@ -25,14 +25,15 @@ class OtherAvatar extends React.Component {
     const {otherUser, user, avatarW} = this.props;
     const {userHover} = this.state;
     const loc = getOtherUserLocation(user, otherUser, avatarW);
-    const sty = {top: loc.y, left: loc.x};
-
+    const sty = {top: loc.y, left: loc.x, zIndex: 10};
+    const hidden = otherUser.room !== "home";
+    // console.log(otherUser, hidden);
     const showWineEmoji = showWine(otherUser);
     // console.log(showWine);
 
     return (
-      <div className="otherAvatar" onMouseEnter={this.setUserHover} onMouseLeave={this.setUserHoverLeave} onClick={() => this.props.userSetActiveChat(otherUser)} style={sty}>
-        <div className="emoji">{otherUser.avatar}</div>
+      <div className={"otherAvatar" + (hidden?" hidden":"")} onMouseEnter={this.setUserHover} onMouseLeave={this.setUserHoverLeave} onClick={() => this.props.userSetActiveChat(otherUser)} style={sty}>
+        <div className={"emoji"}>{otherUser.avatar}</div>
         <div className={"emoji-wine" + (showWineEmoji?"":" hidden")} >🍷</div>
         <ToolTip userName={otherUser.userName} userHover={userHover} />
       </div>

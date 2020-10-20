@@ -6,14 +6,21 @@ import Glasses from '../../shared/Glasses/Glasses';
 
 import P5Wrapper from 'react-p5-wrapper';
 // import sketch from './HomeSketch';
-import Sketch from './HomeSketch';
+import Sketch from './p5/HomeSketch';
 
 import OtherAvatars from './components/OtherAvatars';
 import Avatar from './components/Avatar';
 
 import Folders from './components/Folders';
 import Welcome from './components/Welcome';
+import Oak from './components/Oak';
 import WineBar from './components/WineBar';
+import DJ from './components/DJ';
+import Dancer from './components/Dancer';
+import TrackLights from './components/TrackLights/TrackLights';
+
+import {initZIndicesIcons, initZIndicesFrames} from './components/Helpers';
+import {getNewZIndices} from '../../shared/Helpers/Helpers';
 
 import ArrowKeysReact from 'arrow-keys-react';
 
@@ -24,9 +31,11 @@ class HomePage extends React.Component {
 
     this.state = {
       keyDown: false,
-      zIndex: [0, 1, 2, 3],
+      zIndex: [3, 4, 5, 6],
       OGW: window.innerWidth/2,
-      OGH: window.innerHeight/2
+      OGH: window.innerHeight/2,
+      zIndicesIcons: initZIndicesIcons(),
+      zIndicesFrames: initZIndicesFrames()
     }
 
     this.avatarW = 34;
@@ -54,17 +63,35 @@ class HomePage extends React.Component {
   // 1, 2, 3, 0
   // 0, 1, 2, 3
 
-  onDblClick = (id) => {
-    // console.log("yeah clicked", id)
-    const zIndex = [...this.state.zIndex];
-    const prevId = zIndex[id];
-    let max = zIndex.length-1;
-    zIndex.map(function(element){
-      if (element > max) return element - 1;
-      return element;
-    });
-    // this.setState({zIndex});
+  newFrameToTop = (id) => {
+    const newZ = getNewZIndices(id, this.state.zIndicesFrames);
+    this.setState({zIndicesFrames: newZ});
+    // console.log("ZZZ", this.state.zIndices);
   }
+
+  newIconToTop = (id) => {
+    console.log("id", id)
+    const newZ = getNewZIndices(id, this.state.zIndicesIcons);
+    this.setState({zIndicesIcons: newZ});
+    // console.log("ZZZ", this.state.zIndices);
+  }
+
+  onDblClick = (id) => {
+    // console.log(id);
+    this.newFrameToTop(id);
+  }
+
+  // onDblClick = (id) => {
+  //   // console.log("yeah clicked", id)
+  //   const zIndex = [...this.state.zIndex];
+  //   const prevId = zIndex[id];
+  //   let max = zIndex.length-1;
+  //   zIndex.map(function(element){
+  //     if (element > max) return element - 1;
+  //     return element;
+  //   });
+  //   // this.setState({zIndex});
+  // }
 
 
   userSetActiveChat = (user) => {
@@ -109,13 +136,23 @@ class HomePage extends React.Component {
   }
 
   render() {
-    const {users, user, walls, doors, wineLocation} = this.props;
-    const {zIndex} = this.state;
+    const {users, user, walls, doors, wineLocation, roomCount, djLocation} = this.props;
+    const {zIndex, zIndicesIcons, zIndicesFrames} = this.state;
+
 
     // onKeyDown={this.handleKeyDown} onKeyUp={this.handleKeyUp}
 
     // walls={walls}
     // doors={doors}
+    // <video autoPlay muted loop className="backgroundCover">
+    //   <source src={window.AWS + "/macbookAir/clouds3d.mp4"} type="video/mp4" ></source>
+    //   Your browser does not support HTML5 video.
+    // </video>
+
+    // <TrackLights isFlipped={false} isHorizontal={true} x={-150-user.x+ this.state.OGW} y={-1000 -user.y +this.state.OGH} w={300} h={50} />
+    // <TrackLights isFlipped={true} isHorizontal={true} x={-150-user.x+ this.state.OGW} y={-1300 -user.y +this.state.OGH} w={300} h={50} />
+    // <TrackLights isFlipped={true} isHorizontal={false} x={-150-80-30-user.x+ this.state.OGW} y={-1300 -user.y +this.state.OGH} w={80} h={300} />
+    // <TrackLights isFlipped={false} isHorizontal={false} x={150 + 30-user.x+ this.state.OGW} y={-1300 -user.y +this.state.OGH} w={80} h={300} />
     return (
       <div className="HomePage Sketch" >
 
@@ -123,14 +160,23 @@ class HomePage extends React.Component {
           className="p5sketch"
           user={user}
           users={users}
+          roomCount={roomCount}
           userMove={this.props.userMove}
           userNewRoom={this.props.userNewRoom}
           />
 
 
-        <Welcome w={500} h={400} z={zIndex[0]} x={-250-user.x+ this.state.OGW} y={-650-user.y+ this.state.OGH} />
-        <WineBar x={wineLocation.x-user.x + this.state.OGW} y={wineLocation.y-user.y+ this.state.OGH} w={wineLocation.w} h={wineLocation.h} />
-        <Folders x={300-user.x+ this.state.OGW} y={-330-user.y+ this.state.OGH} z0={zIndex[1]} z1={zIndex[2]} z2={zIndex[3]} onDblClick={this.onDblClick} />
+        <Welcome w={500} h={400} z={1} x={-250-user.x+ this.state.OGW} y={-320-user.y+ this.state.OGH} />
+        <Oak w={500} h={400} z={0} x={-1550-user.x+ this.state.OGW} y={-220-user.y+ this.state.OGH} />
+        <DJ x={djLocation.x-user.x + this.state.OGW} y={djLocation.y-user.y + this.state.OGH} z={2} />
+        <Dancer x={djLocation.x-user.x+ this.state.OGW} y={djLocation.y-user.y + this.state.OGH} avatar="💃" z={2} />
+        <Dancer x={djLocation.x-user.x+ this.state.OGW} y={djLocation.y-user.y + this.state.OGH} avatar="🕺🏾" z={2} />
+        <Dancer x={djLocation.x-user.x+ this.state.OGW} y={djLocation.y-user.y + this.state.OGH} avatar="💃🏽" z={2} />
+        <WineBar x={wineLocation[0].x-user.x + this.state.OGW} y={wineLocation[0].y-user.y+ this.state.OGH} z={2} w={wineLocation[0].w} h={wineLocation[0].h} />
+        <WineBar x={wineLocation[1].x-user.x + this.state.OGW} y={wineLocation[1].y-user.y+ this.state.OGH} z={2} w={wineLocation[1].w} h={wineLocation[1].h} />
+        <TrackLights isFlipped={true} isHorizontal={false} x={-40-user.x+ this.state.OGW} y={-1250 -user.y +this.state.OGH} z={2} w={80} h={380} />
+        <TrackLights isFlipped={false} isHorizontal={false} x={-600 + 30-user.x+ this.state.OGW} y={-1600 -user.y +this.state.OGH} z={2} w={80} h={400} />
+        <Folders x={300-user.x+ this.state.OGW} y={-330-user.y+ this.state.OGH} zIcons={zIndicesIcons} zFrames={zIndicesFrames} onDblClick={this.onDblClick} newFrameToTop={this.newFrameToTop} newIconToTop={this.newIconToTop}  />
         <div className="avatars">
           <OtherAvatars users={users} user={user} avatarW={this.avatarW} userSetActiveChat={this.userSetActiveChat}  />
           <Avatar user={user} avatarW={this.avatarW} />

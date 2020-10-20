@@ -48,6 +48,7 @@ class Frame extends React.Component {
     const {x, y} = position;
     this.setState({controlledPosition: {x, y}});
     if(this.props.onDrag) this.props.onDrag(position);
+
   };
 
   onControlledDragStop = (e, position) => {
@@ -83,6 +84,7 @@ class Frame extends React.Component {
     const controlledPosition = {...this.state.controlledPosition};
     controlledPosition.x = this.origCoords.x;
     controlledPosition.y = this.origCoords.y;
+    console.log(this.origCoords);
     this.setState({controlledPosition}, () => {
       if (this.props.onMaximized) this.props.onMaximized();
     });
@@ -225,6 +227,7 @@ Frame.propTypes = {
   isHidden: PropTypes.bool,
   isMinimized: PropTypes.bool,
 
+  onDrag: PropTypes.func,
   onHide: PropTypes.func,
   onMinimized: PropTypes.func,
   onMaximized: PropTypes.func,

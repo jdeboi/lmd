@@ -1,8 +1,14 @@
 .HomePage {
-  background: black;
-  background-size: cover;
-  background-position: center;
+  background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/homePage/shrub.jpg);
+  background-repeat: repeat;
+  background-size: 300px 300px;
   pointer-events: none; }
+  .HomePage .clouds {
+    /*  made 0, was -200, because clouds were behind app-frame-box thing */
+    z-index: 0;
+    position: fixed;
+    min-width: 100%;
+    min-height: 100%; }
   .HomePage .MFA-deets {
     text-align: center;
     width: 100%;
@@ -55,5 +61,4 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 0;
-    pointer-events: all; }
+    pointer-events: none; }
