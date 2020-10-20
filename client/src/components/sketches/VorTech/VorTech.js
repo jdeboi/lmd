@@ -72,7 +72,7 @@ class VorTech extends React.Component {
 
 
     var mat = new StandardMaterial("groundMaterial", scene);
-    mat.diffuseTexture = new VideoTexture("video", window.AWS + "vorTech/whirl2.mp4", scene, true);
+    mat.diffuseTexture = new VideoTexture("video", window.AWS + "/vorTech/whirl2.mp4", scene, true);
     var plane = Mesh.CreateGround("plane", 512, 512, 32, scene, false);
     // plane.position.y = -10;
     plane.position.z = 180;

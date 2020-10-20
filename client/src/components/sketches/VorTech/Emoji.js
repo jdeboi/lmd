@@ -15,7 +15,7 @@ export default class Emoji {
     else if (rand < .1) this.index = 3;
     else if (rand < .125) this.index = 4;
 
-    var emojiTexture = new Texture(`${window.AWS}vorTech/emojis/${imgs[this.index]}.png`, scene);
+    var emojiTexture = new Texture(`${window.AWS}/vorTech/emojis/${imgs[this.index]}.png`, scene);
     // emojiTexture.vScale = emojiTexture.uScale = 10;
     var emojiMaterial = new StandardMaterial("emojiMaterial", scene);
     emojiMaterial.diffuseTexture = emojiTexture;
