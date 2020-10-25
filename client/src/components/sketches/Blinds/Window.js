@@ -19,12 +19,6 @@ class Window extends React.Component {
       randVal1: Math.random(),
       position: {x: this.props.ogPos.x, y: this.props.ogPos.y}
     }
-
-    this.imgs = [
-      "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/test/waterfall.jpg",
-      "/assets/s3-bucket/test/tree.jpg",
-      "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/test/waterfall.jpg"
-    ]
   }
 
 
@@ -97,9 +91,8 @@ class Window extends React.Component {
     const x = pos.x;
     const y = pos.y;
 
-    // const img = this.imgs[x>y?1:0];
-    const img = this.imgs[2];
-    var frameImg = "/assets/s3-bucket/test/blinds.png";
+
+    var frameImg = window.AWS+ "/blinds/blinds.png";
     const styWind = {backgroundPosition: `${-x+startX}px ${-y+startY}px`, backgroundSize: `${imgW}px ${imgH}px`}; //, backgroundImage: `url(${img})`
     // const styWind = {backgroundImage: `url(${img})`, backgroundSize: "100% 100%"};
     // onDrag={(position) => this.onDrag(i, position)}
