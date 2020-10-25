@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, withRouter } from "react-router-dom";
+import { Route, Switch, withRouter, useLocation } from "react-router-dom";
 
 // import update from 'react-addons-update';
 import update from 'immutability-helper';
@@ -33,7 +33,7 @@ import Oogle from '../components/sketches/Oogle/Oogle';
 
 import Dinner from '../components/sketches/Test/Dinner/Dinner';
 import Dig from '../components/sketches/Test/Dig/Dig';
-import Windows from '../components/sketches/Test/Windows/Windows';
+import Blinds from '../components/sketches/Blinds/Blinds';
 import ClickMe from '../components/sketches/Test/ClickMe/ClickMe';
 import MoonLight from '../components/sketches/Test/MoonLight/MoonLight';
 import Yosemite from '../components/sketches/Test/Yosemite/Yosemite';
@@ -148,10 +148,13 @@ class App extends React.Component {
       const user= {...this.state.user};
       user.userName = userName;
       user.avatar = avatar;
+      user.room = this.getRoom(); //useLocation().pathname;
 
       if (socket.connected) {
-        user.room = "home";
+        // user.room = "home";
         socket.emit("setUser", user);
+
+        // ok, so issue is that App mounts after subcomponent, overriding the room
       }
       this.setState({user, showSignIn: false, hasAvatar: true});
     }
@@ -397,7 +400,6 @@ class App extends React.Component {
     this.setState({hasAvatar:true, showSignIn:false});
 
     const user = {...this.state.user};
-    // user.room = this.state.room;
     socket.emit("setUser", user);
   }
 
@@ -423,19 +425,35 @@ class App extends React.Component {
     this.props.history.push(room);
   }
 
-  userSetRoom = (room) => {
+  getRoom = () => {
+    const path = this.props.location.pathname;
+    var rm = path.substring(1, path.length);
+
+    if (rm == "") rm = "home-page";
+    else if (rm == "confessions") rm = "cloud-confessional";
+
+    const pages = ["home-page","macbook-air", "wet-streams","hard-drives-on-seashores","blind-spot","cloud-confessional", "xfinity-depths", "esc-to-mars", "jungle-gyms"];
+    if (!pages.includes(rm)) rm = "";
+
+    return rm;
+  }
+
+  userSetRoom = () => {
     // const user = {...this.state.user}
     // user.room = room;
     const user = {...this.state.user};
-    console.log("user room was", user.room);
-    user.room = room;
+    user.room = this.getRoom();
+    // console.log("user room was", user.room);
+    // user.room = room;
     socket.emit("setUser", user);
-    socket.emit("joinRoom", room);
-    console.log("user room to", room);
+    socket.emit("joinRoom", user.room);
+    // console.log("user room to", user.room);
+    this.setState({user});
+    // console.log("usr", this.state.user);
   }
 
-  userLeaveRoom = (room) => {
-    socket.emit("leaveRoom", room);
+  userLeaveRoom = () => {
+    socket.emit("leaveRoom", this.state.user.room);
     // this.setState({room: "home"}, () => {
     //   const user = {...this.state.user};
     //   user.room = this.state.room;
@@ -462,34 +480,35 @@ class App extends React.Component {
 
   render() {
     const {dimensions} = this.state;
+    // console.log("app", this.state.user.room);
     return (
       <div className={this.getStringClasses()}>
         <MuiThemeProvider theme={theme}>
           {/* <CssBaseline />*/}
           <div className="App-Header">
             <div className="BackHeader"></div>
-            <Header dimensions={dimensions} toggleSideBar={this.toggleSideBar} user={this.state.user} userSet={this.userSet} avatarClicked={this.avatarClicked} />
+            <Header dimensions={dimensions} currentPage={this.state.user.room} toggleSideBar={this.toggleSideBar} user={this.state.user} userSet={this.userSet} avatarClicked={this.avatarClicked} />
           </div>
           <div className="App-Content inner-outline">
             <Switch>
               <Route exact path="/" render={() => (<HomePage dimensions={dimensions} user={this.state.user} users={this.state.users} userMove={this.userMove} userNewRoom={this.userNewRoom} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} userSetActiveChat={this.userSetActiveChat} wineLocation={this.wineLocation} djLocation={this.djLocation} roomCount={this.state.roomCount} />)} />
               <Route  path="/macbook-air" render={() => (<MacbookAir dimensions={dimensions} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
               <Route  path="/jungle-gyms" render={() => (<JungleGyms userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
-              <Route  path="/hard-drives-on-seashores"      render={() => (<HardDrives userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)}  />
-              <Route  path="/wasted-days-are-days-wasted"   render={() => (<Spacetimes dimensions={dimensions} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
+              <Route  path="/hard-drives-on-seashores" render={() => (<HardDrives userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)}  />
+              <Route  path="/wasted-days-are-days-wasted" render={() => (<Spacetimes dimensions={dimensions} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
               <Route  path="/esc-to-mars" render={() => (<Mars addClass={this.addClass} removeClass={this.removeClass} dimensions={dimensions} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
               <Route  path="/wet-streams" render={() => (<WetStreams userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
               <Route  path="/xfinity-depths" render={() => (<Loop dimensions={dimensions} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)}/>
               <Route  path="/cloud-confessional" render={() => (<WaveForms cursor={this.state.cursorID} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
               <Route  path="/confessions" render={() => (<Confessions userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
-              <Route  path="/vor-tech" render={() => (<VorTech userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
-              <Route  path="/oogle" render={() => (<Oogle userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
+              <Route  path="/flush" render={() => (<VorTech userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
+              <Route  path="/house-view" render={() => (<Oogle userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
+              <Route  path="/blind-eye" render={() => (<Blinds userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
 
               <Route  path="/dig" render={() => (<Dig addClass={this.addClass} />)} />
               {<Route  path="/moon-light" component={MoonLight} />}
               <Route  path="/yosemite" component={Yosemite} />
               {/*<Route  path="/three" component={Three} />*/}
-              <Route  path="/windows" component={Windows} />
               <Route  path="/credits" render={() => (<Credits userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
               <Route  path="/words" render={() => (<About userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
               <Route  component={NotFound} />

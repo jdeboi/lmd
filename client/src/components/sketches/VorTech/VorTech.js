@@ -12,6 +12,7 @@ var seed = 1;
 var emojis = [];
 var isFlushing = false;
 var isStopping = false;
+var handleDown = false;
 
 class VorTech extends React.Component {
   // https://codepen.io/JohJakob/pen/YPxgwo
@@ -94,6 +95,7 @@ class VorTech extends React.Component {
   flushToilet = () => {
     // this.setState({isFlushing: true});
     isFlushing = true;
+    handleDown = true;
     isStopping = false;
     for (const emoji of emojis) {
       // if (isFlushing)
@@ -101,6 +103,7 @@ class VorTech extends React.Component {
       // else emoji.hide();
     }
     setTimeout(this.stopFlush, 5000);
+    setTimeout(this.handleUp, 1000);
   }
 
   stopFlush = () => {
@@ -109,19 +112,20 @@ class VorTech extends React.Component {
     // this.setState({isFlushing: false});
   }
 
+  handleUp = () => {
+    handleDown = false;
+  }
+
   render() {
 
-
+    const deg = handleDown?"rotate(-20deg)":"rotate(0deg)";
     return (
       <div className="VorTech Sketch" ref={this.divRef} >
 
         { <BabylonScene  className="noSelect backgroundCover" antialias onSceneReady={this.onSceneReady} onRender={this.onRender} id='babylon-canvas' />}
-        <Frame title="vor-tech" x={window.innerWidth - 300} y={200} width={200} height={60} content={
+        <Frame title="" x={100} y={100} width={150} height={60} windowStyle={{background:"transparent"}} content={
             <div className="flush">
-              <div className="checkbox">
-                <input type="checkbox" />
-                <label></label>
-              </div>
+              <button onClick={this.flushToilet} style={{transform: deg}}><img src={window.AWS + "/vorTech/flush2.png"} /></button>
             </div>
           }
           />

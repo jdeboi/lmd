@@ -2,7 +2,7 @@ import React from 'react';
 import './Windows.css';
 
 import Frame from '../../../shared/Frame/Frame';
-import DesktopIcon from '../../../shared/DesktopIcon/DesktopIcon';
+import Window from './Window';
 
 import {getNewZIndices} from '../../../shared/Helpers/Helpers';
 
@@ -11,12 +11,20 @@ class Windows extends React.Component {
   constructor(props) {
     super(props);
 
+    const w = 150;
+    const h = 150;
+    const spacing = 20;
+
     this.state = {
-      pos0: {x: 0, y: 0},
-      pos1: {x: 0, y: 0},
-      zIndicesFrames: [0, 1]
+      ogPositions : initOgPos(w, h, spacing),
+      positions: initPos(w, h, spacing),
+      zIndicesFrames: initZIndices()
     }
 
+    this.imgs = [
+      "/assets/s3-bucket/test/palm.png",
+
+    ]
   }
 
 
@@ -26,22 +34,16 @@ class Windows extends React.Component {
   componentWillUnmount() {
   }
 
-  onDrag0 = (position) => {
-    const pos0 = {...this.state.pos0};
-    pos0.x = position.x;
-    pos0.y = position.y;
 
-    this.setState({pos0});
+
+  onDrag = (i, position) => {
+    const positions = [...this.state.positions];
+    const p = {...positions[i]};
+    p.x = position.x;
+    p.y = position.y;
+    positions[i] = p;
+    // this.setState({positions});
   }
-
-  onDrag1 = (position) => {
-    const pos1 = {...this.state.pos1};
-    pos1.x = position.x;
-    pos1.y = position.y;
-
-    this.setState({pos1});
-  }
-
 
   newFrameToTop = (id) => {
     const newZ = getNewZIndices(id, this.state.zIndicesFrames);
@@ -55,37 +57,76 @@ class Windows extends React.Component {
   }
 
 
+
+
+
   render() {
-    const {pos0, pos1, zIndicesFrames} = this.state;
-    const sty = {background: "transparent"};
-    const styWind1 = {backgroundPosition: `${-pos0.x}px ${-pos0.y}px`};
-    const styWind2 = {backgroundPosition: `${-pos1.x}px ${-pos1.y}px`};
+
+    // const xs = [0, 150, 300, 450, 600];
+
     return (
       <div className="Windows Sketch">
-        <Frame title="b1" x={400} y={400} width={300} height={263} windowStyle={sty} onDrag={this.onDrag0} content={
-            <div className="windowDiv">
-              <div className="background1 background" style={styWind1}></div>
-              <div className="windowFrame"></div>
-            </div>
-          }
-
-          z={zIndicesFrames[0]} newFrameToTop={() => this.newFrameToTop(0)} onDblClick={() => this.onDblClick(0)}
-          />
-        <Frame title="b2" x={800} y={400} width={300} height={263} windowStyle={sty} onDrag={this.onDrag1} content={
-            <div className="windowDiv">
-              <div className="background2 background" style={styWind2}></div>
-              <div className="windowFrame2"></div>
-            </div>
-          }
-
-          z={zIndicesFrames[1]} newFrameToTop={() => this.newFrameToTop(1)} onDblClick={() => this.onDblClick(1)}
-          />
+        {this.getFrames()}
       </div>
     );
   }
 
+  getFrames = () => {
+    const w = 130;
+    const h = w;
+    const {zIndicesFrames, ogPositions, positions} = this.state;
+
+    return (
+      this.state.positions.map((pos, i) => {
+        const props = {
+          z: zIndicesFrames[i],
+          ogPos: ogPositions[i],
+          pos: positions[i],
+          w: w,
+          h: h,
+          id: i,
+          newFrameToTop: this.newFrameToTop,
+          onDblClick: this.onDblClick
+        };
+        return <Window key={i} {...props} />
+      })
+    )
+  }
+
 }
 
+function initZIndices() {
+  let ind = [];
+  for (let i = 0; i < 100; i++) {
+    ind.push(i);
+  }
+  return ind;
+}
+
+function initPos(w, h, spacing) {
+  const positions = [];
+  for (let x = spacing; x < window.innerWidth; x += w+ spacing) {
+    for (let y = spacing; y < window.innerHeight; y += h + spacing + 24) {
+      positions.push({x: 0, y: 0})
+    }
+  }
+  return positions;
+}
+
+function initOgPos(w, h, spacing) {
+  const positions = [];
+
+  let i = 0;
+  for (let x = spacing; x < window.innerWidth; x += w+ spacing) {
+    for (let y = spacing; y < window.innerHeight; y += h + spacing + 24) {
+      // const xx = i%2===0?x-spacing/2:x;
+      positions.push({x: x, y: y})
+      i++;
+    }
+
+  }
+  return positions;
+}
 
 
 export default Windows;

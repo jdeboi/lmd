@@ -148,8 +148,6 @@ class HardDrives extends React.Component {
       changed = true;
     }
 
-    let divFps = document.getElementById("fps");
-    if(divFps) divFps.innerHTML = scene.getEngine().getFps().toFixed() + " fps";
   }
 
   nextIsland() {

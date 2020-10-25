@@ -60,6 +60,9 @@ class Header extends React.Component {
       {title: "esc to mars", link:"/esc-to-mars", shortcut: "&#x2318;6"},
       {title: "xfinity depths", link:"/xfinity-depths", shortcut: "&#x2318;7"},
       {title: "cloud confessional", link:"/cloud-confessional", shortcut: "&#x2318;8"},
+      {title: "blind eye", link:"/blind-eye", shortcut: "&#x2318;9"},
+      {title: "flush", link:"/flush", shortcut: "&#x2318;10"},
+      {title: "house view", link:"/house-view", shortcut: "&#x2318;11"},
       // {title: "i got the feels", link:"/i-got-the-feels", shortcut: "&#x2318;8"},
       // {title: "losing my dimension", link:"/losing-my-dimension", shortcut: "&#x2318;9"},
     ];
@@ -71,7 +74,7 @@ class Header extends React.Component {
       {title: "credits", link:"/credits", shortcut: ""},
       {title: "help", link:"/words", shortcut: "&#128222"},
     ];
-
+    // console.log("page", this.props.currentPage);
 
     return (
 
@@ -80,6 +83,7 @@ class Header extends React.Component {
           {/*<FinderSubmenu cursor={`cursor-${this.state.hand}`} dimensions={this.props.dimensions} title="" icon="fa fa-cube" specialClass="apple" listItems={hamburgerMenuItems} /> */}
           <FinderSubmenu dimensions={this.props.dimensions} title="" icon="fa fa-cube" specialClass="apple" listItems={hamburgerMenuItems} />
           <FinderSubmenu dimensions={this.props.dimensions} title="losing my dimension" icon="" specialClass="bold" listItems={finderMenuItems} />
+          {/* <li><span className="currentPage">{this.props.currentPage}</span></li>*/}
           {/*<li className={`expandable`}><Link to="/"><span id="pageTitle">Losing My Dimension</span></Link></li>*/}
         </ul>
         {this.props.dimensions.device==="desktop"?this.getRightMenus():<div></div>}
@@ -94,7 +98,7 @@ class Header extends React.Component {
         <li><Clock /></li>
         <li className="header-avatar expandable" onClick={this.props.avatarClicked}>{this.getAvatar()}</li>
 
-        <li className="expandable" onClick={this.props.toggleSideBar}><i className="fas fa-bars"></i></li>
+        <li className="expandable hamburger" onClick={this.props.toggleSideBar}><i className="fas fa-bars"></i></li>
       </ul>
     );
   }

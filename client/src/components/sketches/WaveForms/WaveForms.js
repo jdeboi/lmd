@@ -213,7 +213,7 @@ class WaveForms extends React.Component {
                   <textarea
                     id="outlined-multiline-static"
                     label=""
-                    multiline
+                    multiline="true"
                     placeholder="confession"
                     className="box text-line2"
                     />

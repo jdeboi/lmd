@@ -13,7 +13,7 @@ export default class Emoji {
     if (rand < .025) this.index = 1;
     else if (rand < .05) this.index = 2;
     else if (rand < .1) this.index = 3;
-    else if (rand < .125) this.index = 4;
+    else if (rand < .15) this.index = 4;
 
     var emojiTexture = new Texture(`${window.AWS}/vorTech/emojis/${imgs[this.index]}.png`, scene);
     // emojiTexture.vScale = emojiTexture.uScale = 10;

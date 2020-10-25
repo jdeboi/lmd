@@ -1,79 +1,12 @@
-.VorTech button.flush {
-  padding: 10px;
-  color: white;
-  border: 1px solid white; }
-
-.VorTech .flush .checkbox label {
-  background: #ddd;
-  width: 95px;
-  border-radius: 10px; }
-
-.VorTech .flush .checkbox label:after {
-  background: #fff;
-  border-radius: 10px;
-  top: 0;
-  width: 60px;
-  height: 42px; }
-
-.VorTech .flush .checkbox input:checked + label {
-  background: darkgray; }
-
-.VorTech .flush .checkbox input:checked + label:after {
-  left: 35px; }
-
-.VorTech .flush .checkbox {
-  position: relative;
-  display: inline-block; }
-
-.VorTech .flush .checkbox:after, .VorTech .flush .checkbox:before {
-  font-family: FontAwesome;
-  font-feature-settings: normal;
-  -webkit-font-kerning: auto;
-  font-kerning: auto;
-  font-language-override: normal;
-  font-stretch: normal;
-  font-style: normal;
-  font-synthesis: weight style;
-  font-variant: normal;
-  font-weight: normal;
-  text-rendering: auto; }
-
-.VorTech .flush .checkbox label {
-  width: 90px;
-  height: 42px;
-  background: #ccc;
-  position: relative;
-  display: inline-block;
-  border-radius: 46px;
-  -webkit-transition: 0.4s;
-  transition: 0.4s; }
-
-.VorTech .flush .checkbox label:after {
-  content: '';
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  border-radius: 100%;
-  left: 0;
-  top: -5px;
-  z-index: 2;
-  background: #fff;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-  -webkit-transition: 0.4s;
-  transition: 0.4s; }
-
-.VorTech .flush .checkbox input {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 5;
-  opacity: 0;
-  cursor: pointer; }
-
-.VorTech .flush .checkbox input:hover + label:after {
-  box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.2), 0 3px 8px 0 rgba(0, 0, 0, 0.15); }
-
-.VorTech .flush .checkbox input:checked + label:after {
-  left: 40px; }
+.VorTech .flush {
+  width: 150px;
+  height: 60px; }
+  .VorTech .flush button {
+    color: white;
+    width: 100%;
+    height: 100%;
+    transition: transform 1s;
+    transform-origin: top right; }
+    .VorTech .flush button img {
+      width: 100%;
+      height: 100%; }

@@ -1,0 +1,14 @@
+.Oogle .labels {
+  position: absolute; }
+
+.Oogle button {
+  position: absolute;
+  padding: 20px;
+  border: 1px solid white;
+  top: 30px; }
+
+.Oogle .rotateR {
+  left: 30px; }
+
+.Oogle .rotateL {
+  left: 140px; }

@@ -40,6 +40,8 @@
   /* Tooltip text */
   /* Tooltip arrow */
   /* Show the tooltip text when you mouse over the tooltip container */ }
+  .Header .currentPage {
+    color: blue; }
   .Header .selected {
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fc03ad), color-stop(100%, #335ef6));
     color: #fff;
@@ -162,11 +164,41 @@
     opacity: 1; }
   .Header .hamburger-button {
     color: white;
-    background: black;
+    background: red;
     border: 1px solid white;
     border-radius: 4px;
     margin-top: -1px;
     vertical-align: middle; }
+  .Header .glitz {
+    background: linear-gradient(270deg, #00ffbd, #e98fea, #8fcdea);
+    background-size: 600% 600%;
+    -webkit-animation: ClickMeGradient .60s ease infinite;
+    -moz-animation: ClickMeGradient .60s ease infinite;
+    animation: ClickMeGradient .60s ease infinite; }
+
+@-webkit-keyframes ClickMeGradient {
+  0% {
+    background-position: 0% 48%; }
+  50% {
+    background-position: 100% 53%; }
+  100% {
+    background-position: 0% 48%; } }
+
+@-moz-keyframes ClickMeGradient {
+  0% {
+    background-position: 0% 48%; }
+  50% {
+    background-position: 100% 53%; }
+  100% {
+    background-position: 0% 48%; } }
+
+@keyframes ClickMeGradient {
+  0% {
+    background-position: 0% 48%; }
+  50% {
+    background-position: 100% 53%; }
+  100% {
+    background-position: 0% 48%; } }
   @media screen and (max-width: 830px) {
     .Header {
       font-size: 14px; }

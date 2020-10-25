@@ -1,0 +1,68 @@
+.Windows {
+  background-image: url(/assets/s3-bucket/blinds/greenwall.jpg);
+  // background-image: url(/assets/s3-bucket/homePage/grass/200.png);
+  // background-image: url(/assets/s3-bucket/test/squares.gif);
+  background-size: 400px 400px;
+  background-repeat: repeat;
+
+  .windowDiv {
+    position: relative;
+    // width: 300px;
+    // height: 263px;
+
+    .background {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background-repeat: repeat;
+    }
+
+    .background1 {
+      // background-image: url(/assets/s3-bucket/wetStreams/blk2000.png);
+      background-image: url(/assets/s3-bucket/test/palm.png);
+
+      background-size: 220% 220%;
+    }
+
+    .background2 {
+      // background-image: url(/assets/s3-bucket/homePage/wallpaper/wallpaper2.jpg);
+      // background-image: url(/assets/s3-bucket/test/palmblk.jpg);
+      background-image: url(/assets/s3-bucket/test/palm.png);
+
+      // background-size: 160% 160%;
+    }
+
+    .windowFrame {
+      background-image: url(/assets/s3-bucket/test/blinds.png);
+      width: 350px;
+      opacity: .7;
+      height: 100px;
+      top: 0;
+      // background-size: 86% 86%;
+      background-size: 97% 100%;
+      background-position: -20px -20px;
+      position: absolute;
+      background-repeat: no-repeat;
+      transition: height 2s;
+      pointer-events: all;
+
+      &:hover {
+        height: 290px;
+      }
+    }
+    .windowFrame2 {
+      background-image: url(/assets/s3-bucket/test/window.png);
+      width: 350px;
+      // opacity: .5;
+      height: 300px;
+      top: 0;
+      background-size: 86% 86%;
+      // background-size: 97% 100%;
+      // background-position: -20px 0px;
+      position: absolute;
+    }
+  }
+
+
+
+}

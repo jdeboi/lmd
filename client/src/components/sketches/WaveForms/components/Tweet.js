@@ -12,7 +12,6 @@ class Tweet extends React.Component {
   }
 
   render() {
-    console.log("rendering tweeet");
     if (this.props.tweet) {
       return this.getTweet(this.props.tweet);
     }
