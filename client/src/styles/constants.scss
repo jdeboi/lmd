@@ -22,3 +22,19 @@ $fontSize-mobile-2: 10px;
 $fontSize-mobile-3: 8px;
 
 $appBlue: #335ef6;
+
+
+button.standardButton {
+  font-size: $fontSize-desktop-3;
+  padding: 10px;
+
+  min-width: 100px;
+
+  text-align: center;
+  border: 1px solid black;
+  border-radius: 6px;
+
+  &:hover {
+    background-color: red;
+  }
+}

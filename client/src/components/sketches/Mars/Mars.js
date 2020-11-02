@@ -41,12 +41,12 @@ class Mars extends React.Component {
 
   componentDidMount() {
     this.props.addClass("overflow-all");
-    this.props.userSetRoom("esc-to-mars");
+    // this.props.userSetRoom("esc-to-mars");
   }
 
   componentWillUnmount() {
     this.props.removeClass("overflow-all");
-    this.props.userLeaveRoom("esc-to-mars");
+    // this.props.userLeaveRoom("esc-to-mars");
   }
 
 

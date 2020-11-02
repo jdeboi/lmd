@@ -46,12 +46,12 @@ class Confessions extends React.Component {
   componentDidMount() {
     this.interval = setInterval(() => this.setState({ time: Date.now() }), 30);
     this.fetchTweets();
-    this.props.userSetRoom("confessions");
+    // this.props.userSetRoom("confessions");
   }
 
   componentWillUnmount() {
     clearInterval(this.interval);
-    this.props.userLeaveRoom("confessions");
+    // this.props.userLeaveRoom("confessions");
   }
 
 
@@ -112,16 +112,18 @@ class Confessions extends React.Component {
   }
 
 
-  newFrameToTop = (id) => {
-    const newZ = getNewZIndices(id, this.state.zIndicesFrames);
-    this.setState({zIndicesFrames: newZ});
-    // console.log("ZZZ", this.state.zIndices);
-  }
 
   newIconToTop = (id) => {
     console.log("id", id)
     const newZ = getNewZIndices(id, this.state.zIndicesIcons);
     this.setState({zIndicesIcons: newZ});
+    // console.log("ZZZ", this.state.zIndices);
+  }
+
+
+  newFrameToTop = (id) => {
+    const newZ = getNewZIndices(id, this.state.zIndicesFrames);
+    this.setState({zIndicesFrames: newZ});
     // console.log("ZZZ", this.state.zIndices);
   }
 

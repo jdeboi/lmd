@@ -1,0 +1,54 @@
+.Instructions {
+  height: 400px;
+  // padding-top: 20px;
+  text-align: center;
+
+  // button {
+  //   margin-top: 20px;
+  // }
+
+  .welcome-buttons {
+    display: flex;
+    flex-direction: row;
+    vertical-align: middle;
+
+    justify-content: center;
+    flex: 0;
+    // height: 50px;
+  }
+
+  .Instructions-list {
+    overflow: scroll;
+    height: 320px;
+
+    .instruction {
+      text-align: left;
+      display: flex;
+      padding: 20px;
+      flex-direction: row;
+      border-bottom: 1px solid gray;
+
+      img {
+        flex: 0;
+        width: 200px;
+        height: 200px;
+        padding-right: 20px;
+      }
+
+      .instruction-txt {
+        flex: 1;
+
+        h3 {
+          font-size: 14px;
+          padding-bottom: 8px;
+        }
+
+        p {
+          font-size: 10px;
+        }
+      }
+
+
+    }
+  }
+}

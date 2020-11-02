@@ -106,12 +106,12 @@ class WaveForms extends React.Component {
 
   componentDidMount() {
     this.interval = setInterval(this.resetPlayer, 22000);
-    this.props.userSetRoom("confessions");
+    // this.props.userSetRoom("confessions");
   }
 
   componentWillUnmount() {
     clearInterval(this.interval);
-    this.props.userLeaveRoom("confessions");
+    // this.props.userLeaveRoom("confessions");
   }
 
 

@@ -35,7 +35,7 @@ class JungleGyms extends React.Component {
     this.setupScene();
     this.startAnimationLoop();
 
-    this.props.userSetRoom("jungle-gyms");
+    // this.props.userSetRoom("jungle-gyms");
   }
 
   componentWillUnmount() {
@@ -43,7 +43,7 @@ class JungleGyms extends React.Component {
     window.cancelAnimationFrame(this.requestID);
     this.controls.dispose();
     clearInterval(this.interval);
-    this.props.userLeaveRoom("jungle-gyms");
+    // this.props.userLeaveRoom("jungle-gyms");
   }
 
   handleWindowResize = () => {

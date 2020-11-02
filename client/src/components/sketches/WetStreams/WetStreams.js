@@ -57,13 +57,13 @@ class WetStreams extends React.Component {
     this.updateDimensions();
     window.addEventListener("resize", this.updateDimensions.bind(this));
     this.interval = setInterval(this.playStreamReset, 4000);
-    this.props.userSetRoom("wet-streams");
+    // this.props.userSetRoom("wet-streams");
   }
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions.bind(this));
     clearInterval(this.interval);
-    this.props.userLeaveRoom("wet-streams");
+    // this.props.userLeaveRoom("wet-streams");
   }
 
   updateDimensions() {

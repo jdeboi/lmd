@@ -33,11 +33,11 @@ class Blinds extends React.Component {
 
   componentDidMount() {
     this.blindInterval = setInterval(this.changeBlindMode, 8000);
-    this.props.userSetRoom("blind-spot");
+    // this.props.userSetRoom("blind-spot");
   }
 
   componentWillUnmount() {
-    this.props.userLeaveRoom("blind-spot");
+    // this.props.userLeaveRoom("blind-spot");
   }
 
   handleMouseMove = e => {

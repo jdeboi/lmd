@@ -52,12 +52,12 @@ class Loop extends React.Component {
     this.divRef.current.addEventListener('wheel', this.preventDefault);
     this.setImages();
 
-    this.props.userSetRoom("xfinity-depths");
+    // this.props.userSetRoom("xfinity-depths");
   }
 
   componentWillUnmount() {
     this.divRef.current.removeEventListener('wheel', this.preventDefault);
-    this.props.userLeaveRoom("xfinity-depths");
+    // this.props.userLeaveRoom("xfinity-depths");
   }
 
 

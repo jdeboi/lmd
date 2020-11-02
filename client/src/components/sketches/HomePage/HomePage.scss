@@ -44,6 +44,33 @@ $emojiFontSize: 36px;
     font-size: 30px;
   }
 
+  .MiniMap {
+
+    .otherAvatarsMiniMap {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 200px;
+      height: 200px;
+
+      .avatars {
+        position: relative;
+        width: 200px;
+        height: 200px;
+
+        .emojiMiniMap {
+          position: absolute;
+          font-size: 12px;
+          margin-top: -6px;
+          margin-left: -6px;
+          width: 20px;
+          height: 20px;
+          // z-index: 600;
+        }
+      }
+    }
+  }
+
   .avatars {
     position: absolute;
     font-size: $emojiFontSize;
@@ -52,20 +79,22 @@ $emojiFontSize: 36px;
     width: 100vw;
     height: 100vh;
 
-
     .otherAvatars {
       position: absolute;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
+      z-index: 10;
 
       .otherAvatar {
         position: absolute;
         pointer-events: all;
 
         .emoji {
-
+          // font-size: $emojiFontSize;
+          // height: 40px;
+          // width: 40px;
         }
 
         .tooltip {
@@ -78,17 +107,33 @@ $emojiFontSize: 36px;
       }
     }
 
+
+
     .userAvatar {
       position: absolute;
       pointer-events: all;
+    }
 
-      .emoji-wine {
+    .avatar {
+
+      .emoji-addons {
         position: relative;
-        top: -10px;
-        left: 20px;
-        font-size: $emojiFontSize;
 
+        .emoji-chat {
+          position: absolute;
+          top: -50px;
+          left: 28px;
+          font-size: $emojiFontSize;
+        }
+
+        .emoji-wine {
+          position: absolute;
+          top: -10px;
+          left: -20px;
+          font-size: $emojiFontSize;
+        }
       }
+
     }
 
   }

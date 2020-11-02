@@ -1,3 +1,13 @@
+button.standardButton {
+  font-size: 12px;
+  padding: 10px;
+  min-width: 100px;
+  text-align: center;
+  border: 1px solid black;
+  border-radius: 6px; }
+  button.standardButton:hover {
+    background-color: red; }
+
 .expandable:hover {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fc03ad), color-stop(100%, #335ef6));
   border-bottom: 2px solid #335ef6;

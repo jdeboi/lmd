@@ -1,0 +1,73 @@
+.Welcome {
+  background-color: rgba(0, 0, 0, .8);
+  // opacity: 0;
+  // background: red;
+  position: absolute;
+  z-index: 200;
+  top: 0px;
+  left: 0px;
+  height: 100vh;
+  width: 100vw;
+
+  .welcome-buttons {
+    display: flex;
+    flex-direction: row;
+    vertical-align: middle;
+
+    justify-content: center;
+    flex: 0;
+    // height: 50px;
+  }
+
+  // button {
+  //   padding: 10px;
+  //   // width: 80px;
+  //   text-align: center;
+  //   border: 1px solid black;
+  //   border-radius: 6px;
+  //   font-size: 12px;
+  //
+  //   &:hover {
+  //     background-color: gray;
+  //   }
+  // }
+
+  .Welcome-Deets {
+    padding: 20px;
+    height: 400px-40px;
+  }
+
+  .MFA-deets {
+    display: flex;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+
+    .MFA-txt {
+      flex: 1;
+    }
+
+    div a {
+      text-decoration: none;
+      color: black;
+    }
+
+
+
+  }
+
+  .Frame .circleButton {
+    color: darkgray;
+
+    &:hover {
+      color: darkgray;
+    }
+  }
+
+
+
+}

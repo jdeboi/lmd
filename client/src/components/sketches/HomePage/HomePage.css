@@ -25,6 +25,23 @@
     padding: 6px;
     padding-top: 15px;
     font-size: 30px; }
+  .HomePage .MiniMap .otherAvatarsMiniMap {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 200px;
+    height: 200px; }
+    .HomePage .MiniMap .otherAvatarsMiniMap .avatars {
+      position: relative;
+      width: 200px;
+      height: 200px; }
+      .HomePage .MiniMap .otherAvatarsMiniMap .avatars .emojiMiniMap {
+        position: absolute;
+        font-size: 12px;
+        margin-top: -6px;
+        margin-left: -6px;
+        width: 20px;
+        height: 20px; }
   .HomePage .avatars {
     position: absolute;
     font-size: 36px;
@@ -37,7 +54,8 @@
       top: 0;
       left: 0;
       width: 100vw;
-      height: 100vh; }
+      height: 100vh;
+      z-index: 10; }
       .HomePage .avatars .otherAvatars .otherAvatar {
         position: absolute;
         pointer-events: all; }
@@ -50,10 +68,17 @@
     .HomePage .avatars .userAvatar {
       position: absolute;
       pointer-events: all; }
-      .HomePage .avatars .userAvatar .emoji-wine {
-        position: relative;
+    .HomePage .avatars .avatar .emoji-addons {
+      position: relative; }
+      .HomePage .avatars .avatar .emoji-addons .emoji-chat {
+        position: absolute;
+        top: -50px;
+        left: 28px;
+        font-size: 36px; }
+      .HomePage .avatars .avatar .emoji-addons .emoji-wine {
+        position: absolute;
         top: -10px;
-        left: 20px;
+        left: -20px;
         font-size: 36px; }
   .HomePage .react-p5 {
     position: absolute;

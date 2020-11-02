@@ -7,6 +7,7 @@ import update from 'immutability-helper';
 import './App.css';
 import Header from '../components/shared/Header/Header';
 import SideBar from '../components/shared/SideBar/SideBar';
+import Dock from '../components/shared/Dock/Dock';
 
 // cookies
 import Cookies from 'js-cookie';
@@ -45,6 +46,7 @@ import NotFound from '../components/pages/NotFound';
 
 import Frame from '../components/shared/Frame/Frame';
 import SignIn from '../components/shared/SignIn/SignIn';
+import Welcome from '../components/shared/Welcome/Welcome';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import indigo from '@material-ui/core/colors/indigo';
@@ -61,6 +63,8 @@ import {userNearWine} from './Helpers/Boundaries';
 // const ENDPOINT = "http://127.0.0.1:5000";
 
 import dogicaFont from './assets/fonts/dogica.ttf';
+
+const DEBUG = true;
 
 const dogica = {
   fontFamily: 'dogica',
@@ -118,13 +122,17 @@ class App extends React.Component {
       dimensions: {windowWidth: window.innerWidth, windowHeight: window.innerHeight, device:"desktop", flipped: false, orientation: "landscape"},
       wOG: window.innerWidth,
       hOG: window.innerHeight,
+      mx: 0,
+      my: 0,
       classes: ["App"],
       showSideBar: false,
       hasAvatar: false,
       showSignIn: false,
+      showWelcome: false,
+      showDock: true,
       sessionID: null,
       usersChange: false,
-      user: {avatar:"", userName:"", room:"home", x: 0, y: 0, hasWine: null, needsWine: false},
+      user: {avatar:"", userName:"", room:"home-page", x: 0, y: 0, hasWine: null, needsWine: false},
       users: null,
       userActiveChat: null,
       messages: [],
@@ -132,8 +140,8 @@ class App extends React.Component {
       roomCount: {"macbook-air": 0, "hard-drives-on-seashores": 0, "wet-streams": 0, "jungle-gyms": 0, "cloud-confessional": 0, "esc-to-mars": 0, "xfinity-depths": 0, "wasted-days-are-days-wasted": 0, "home": 0}
     };
 
-    this.wineLocation = [{x: 1050, y: -1300, w: 80, h: 150}, {x: -1350, y: -2450, w: 80, h: 150}];
-    this.djLocation = {x: 800, y: -3000};
+    this.wineLocation = [{x: 1050, y: -1300, w: 80, h: 150}, {x: -1050, y: -2000, w: 80, h: 150}];
+    this.djLocation = {x: 500, y: -2000};
   }
 
 
@@ -149,27 +157,31 @@ class App extends React.Component {
       user.userName = userName;
       user.avatar = avatar;
       user.room = this.getRoom(); //useLocation().pathname;
+      if (DEBUG) console.log("has avatar", user);
 
       if (socket.connected) {
-        // user.room = "home";
+        if (DEBUG) console.log("CONNECT, SET", user)
         socket.emit("setUser", user);
 
         // ok, so issue is that App mounts after subcomponent, overriding the room
       }
-      this.setState({user, showSignIn: false, hasAvatar: true});
+      this.setState({user, hasAvatar: true, showWelcome: false}); // false
     }
     else {
-      this.setState({showSignIn: true, hasAvatar: false});
+      this.setState({hasAvatar: false, showWelcome: true});
     }
 
 
     this.updateDeviceDimensions();
     window.addEventListener("resize", this.updateDeviceDimensions);
+
+    this.unlisten = this.props.history.listen((location, action) => this.userSetRoom(location));
   }
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDeviceDimensions);
     // this.socket.disconnect();
+    this.unlisten();
   }
 
 
@@ -185,19 +197,19 @@ class App extends React.Component {
     //   {$push: [msg]}
     // });
 
-    // console.log("USER UDPATE", newUser);
+    // if (DEBUG) console.log("USER UDPATE", newUser);
     this.setState({messages});
   }
 
   toggleSideBar = () => {
-    // console.log("TOGGLED");
+    // if (DEBUG) console.log("TOGGLED");
     this.setState(prevState => ({
       showSideBar: !prevState.showSideBar
     }));
   }
 
   handleDrawerClose = () => {
-    // console.log("CLOSED")
+    // if (DEBUG) console.log("CLOSED")
     this.setState({showSideBar: false});
   }
 
@@ -215,7 +227,7 @@ class App extends React.Component {
 
     // device type
     let minD = Math.min(dimensions.windowWidth, dimensions.windowHeight);
-    // console.log("minD", minD, dimensions.windowWidth, dimensions.windowHeight);
+    // if (DEBUG) console.log("minD", minD, dimensions.windowWidth, dimensions.windowHeight);
     dimensions.device = "";
     if (minD < 450) dimensions.device="mobile";
     else if (minD <  700) dimensions.device="tablet";
@@ -246,10 +258,8 @@ class App extends React.Component {
 
     socket.on('connect', () => {
       const user = {...this.state.user};
-      // user.room = "home"
-      // console.log("CONNECTED", socket.id, "in room", this.state.room);
       this.setState({sessionID: socket.id});
-
+      if (DEBUG) console.log("SETUP SOCKET, SET", user);
       socket.emit("setUser", user);
       socket.emit("joinRoom", user.room);
 
@@ -263,7 +273,7 @@ class App extends React.Component {
         return user.id != sessionID;
       });
       this.setRoomCount();
-      // console.log("USERS", filteredArray, sessionID )
+      // if (DEBUG) console.log("USERS UPDATED", data);
       this.setState({users: filteredArray});
     });
 
@@ -295,9 +305,9 @@ class App extends React.Component {
   }
 
   addBots = () => {
-    const wineBot0 = {x: this.wineLocation[0].x +120, y: this.wineLocation[0].y+50, avatar: "🤖", room:"home", userName:"wineBot", id:0};
-    const wineBot1 = {x: this.wineLocation[1].x +120, y: this.wineLocation[1].y+50, avatar: "🤖", room:"home", userName:"wineBot", id:1};
-    const dj = {x: this.djLocation.x, y: this.djLocation.y, avatar: "🤖", userName:"DJ", id: 2};
+    const wineBot0 = {x: this.wineLocation[0].x +120, y: this.wineLocation[0].y+50, avatar: "🤖", room:"home-page", userName:"wineBot", id:0};
+    const wineBot1 = {x: this.wineLocation[1].x +120, y: this.wineLocation[1].y+50, avatar: "🤖", room:"home-page", userName:"wineBot", id:1};
+    const dj = {x: this.djLocation.x, y: this.djLocation.y, room:"home-page", avatar: "🤖", userName:"DJ", id: 2};
     // const hostBot = {x: 300, y: 600, avatar: "🤖", room:"home", userName:"hostBot", id:1}
     socket.emit("setBot", wineBot0);
     socket.emit("setBot", wineBot1);
@@ -354,7 +364,8 @@ class App extends React.Component {
   }
 
   avatarClicked = () => {
-    this.setState({showSignIn: true});
+    if (DEBUG) console.log("SHOW AV")
+    if (!this.state.showWelcome) this.setState({showSignIn: true});
   }
 
   userSetActiveChat = (clickedUser) => {
@@ -370,6 +381,7 @@ class App extends React.Component {
     const newUser = { ...this.state.user }
     newUser.userName = userName;
     newUser.avatar = avatar;
+    if (DEBUG) console.log("USER UPDATE", newUser)
     this.setState({user: newUser});
   }
 
@@ -382,6 +394,7 @@ class App extends React.Component {
       user.hasWine = new Date();
     }
     this.setState({user});
+    // if (DEBUG) console.log("MOVE", user);
     socket.emit("setUser", user);
   }
 
@@ -390,22 +403,19 @@ class App extends React.Component {
     Cookies.set("hasAvatar", true);
     Cookies.set("avatar", avatar);
     Cookies.set("userName", userName);
-    this.userUpdated(avatar, userName);
+    // this.userUpdated(avatar, userName);
 
-    // we have an avatar / username submitted
-    // make sign in go away
-    // let {hasAvatar, showSignIn} = this.state;
-    // hasAvatar = true;
-    // showSignIn = false;
-    this.setState({hasAvatar:true, showSignIn:false});
-
-    const user = {...this.state.user};
+    const user = { ...this.state.user }
+    user.userName = userName;
+    user.avatar = avatar;
+    this.setState({hasAvatar:true, showSignIn:false, user});
+    if (DEBUG) console.log("USER SET", user);
     socket.emit("setUser", user);
   }
 
 
   userRegister = ({isUser, user}) => {
-    // console.log("user register!!!")
+    if (DEBUG) console.log("user register!!!")
     if (isUser) {
       alert("username already exists. Please enter a new username.");
     }
@@ -415,7 +425,7 @@ class App extends React.Component {
   }
 
   userRegisterCheck = (userName, avatar) => {
-    // console.log("userRegisterCheck");
+    if (DEBUG) console.log("userRegisterCheck");
     const userCheck={userName:userName, avatar:avatar};
     socket.emit("registerUser", userCheck, this.userRegister);
   }
@@ -425,8 +435,7 @@ class App extends React.Component {
     this.props.history.push(room);
   }
 
-  getRoom = () => {
-    const path = this.props.location.pathname;
+  getRoom = (path=this.props.location.pathname) => {
     var rm = path.substring(1, path.length);
 
     if (rm == "") rm = "home-page";
@@ -438,35 +447,25 @@ class App extends React.Component {
     return rm;
   }
 
-  userSetRoom = () => {
-    // const user = {...this.state.user}
-    // user.room = room;
+  userSetRoom = (location, action) => {
+    // if (DEBUG) console.log("LOC", location);
     const user = {...this.state.user};
-    user.room = this.getRoom();
-    // console.log("user room was", user.room);
-    // user.room = room;
+    const prevRoom = this.state.user.room;
+    const nextRoom = this.getRoom(location.pathname);
+    if (DEBUG) console.log("prev room", prevRoom, "next room", nextRoom);
+    socket.emit("leaveRoom", prevRoom);
+    socket.emit("joinRoom", nextRoom);
+    user.room = nextRoom;
     socket.emit("setUser", user);
-    socket.emit("joinRoom", user.room);
-    // console.log("user room to", user.room);
     this.setState({user});
-    // console.log("usr", this.state.user);
   }
-
-  userLeaveRoom = () => {
-    socket.emit("leaveRoom", this.state.user.room);
-    // this.setState({room: "home"}, () => {
-    //   const user = {...this.state.user};
-    //   user.room = this.state.room;
-    //   socket.emit("setUser", user);
-    //   socket.emit("joinRoom", room);
-    // });
-  }
-  // usersChangeReset() {
-  //   this.setState({usersChange: false});
-  // }
 
   closeSignIn = () => {
     this.setState({showSignIn: false})
+  }
+
+  closeWelcome = () => {
+    this.setState({showWelcome: false})
   }
 
   getStringClasses = () => {
@@ -477,6 +476,18 @@ class App extends React.Component {
     str = str.substring(0, str.length-1);
     return str;
   }
+
+  handleMouseMove = e => {
+    let showDock = this.state.showDock;
+    if (showDock) {
+      if (e.clientY < window.innerHeight-100) {
+        this.setState({showDock: false});
+      }
+    }
+    else if (e.clientY > window.innerHeight-25) {
+      this.setState({showDock: true});
+    }
+  };
 
   render() {
     const {dimensions} = this.state;
@@ -489,28 +500,28 @@ class App extends React.Component {
             <div className="BackHeader"></div>
             <Header dimensions={dimensions} currentPage={this.state.user.room} toggleSideBar={this.toggleSideBar} user={this.state.user} userSet={this.userSet} avatarClicked={this.avatarClicked} />
           </div>
-          <div className="App-Content inner-outline">
+          <div className="App-Content inner-outline" onMouseMove={this.handleMouseMove}>
             <Switch>
-              <Route exact path="/" render={() => (<HomePage dimensions={dimensions} user={this.state.user} users={this.state.users} userMove={this.userMove} userNewRoom={this.userNewRoom} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} userSetActiveChat={this.userSetActiveChat} wineLocation={this.wineLocation} djLocation={this.djLocation} roomCount={this.state.roomCount} />)} />
-              <Route  path="/macbook-air" render={() => (<MacbookAir dimensions={dimensions} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
-              <Route  path="/jungle-gyms" render={() => (<JungleGyms userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
-              <Route  path="/hard-drives-on-seashores" render={() => (<HardDrives userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)}  />
-              <Route  path="/wasted-days-are-days-wasted" render={() => (<Spacetimes dimensions={dimensions} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
-              <Route  path="/esc-to-mars" render={() => (<Mars addClass={this.addClass} removeClass={this.removeClass} dimensions={dimensions} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
-              <Route  path="/wet-streams" render={() => (<WetStreams userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
-              <Route  path="/xfinity-depths" render={() => (<Loop dimensions={dimensions} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)}/>
-              <Route  path="/cloud-confessional" render={() => (<WaveForms cursor={this.state.cursorID} userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
-              <Route  path="/confessions" render={() => (<Confessions userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
-              <Route  path="/flush" render={() => (<VorTech userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
-              <Route  path="/house-view" render={() => (<Oogle userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
-              <Route  path="/blind-eye" render={() => (<Blinds userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
+              <Route exact path="/" render={() => (<HomePage dimensions={dimensions} user={this.state.user} users={this.state.users} userMove={this.userMove} userNewRoom={this.userNewRoom} userSetActiveChat={this.userSetActiveChat} wineLocation={this.wineLocation} djLocation={this.djLocation} roomCount={this.state.roomCount} showDock={this.state.showDock} />)} />
+              <Route  path="/macbook-air" render={() => (<MacbookAir dimensions={dimensions} />)} />
+              <Route  path="/jungle-gyms" render={() => (<JungleGyms />)} />
+              <Route  path="/hard-drives-on-seashores" render={() => (<HardDrives />)}  />
+              <Route  path="/wasted-days-are-days-wasted" render={() => (<Spacetimes dimensions={dimensions} />)} />
+              <Route  path="/esc-to-mars" render={() => (<Mars addClass={this.addClass} removeClass={this.removeClass} dimensions={dimensions} />)} />
+              <Route  path="/wet-streams" render={() => (<WetStreams />)} />
+              <Route  path="/xfinity-depths" render={() => (<Loop dimensions={dimensions} />)}/>
+              <Route  path="/cloud-confessional" render={() => (<WaveForms cursor={this.state.cursorID} />)} />
+              <Route  path="/confessions" render={() => (<Confessions />)} />
+              <Route  path="/flush" render={() => (<VorTech />)} />
+              <Route  path="/house-view" render={() => (<Oogle />)} />
+              <Route  path="/blind-eye" render={() => (<Blinds  />)} />
 
               <Route  path="/dig" render={() => (<Dig addClass={this.addClass} />)} />
               {<Route  path="/moon-light" component={MoonLight} />}
               <Route  path="/yosemite" component={Yosemite} />
               {/*<Route  path="/three" component={Three} />*/}
-              <Route  path="/credits" render={() => (<Credits userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
-              <Route  path="/words" render={() => (<About userSetRoom={this.userSetRoom} userLeaveRoom={this.userLeaveRoom} />)} />
+              <Route  path="/credits" render={() => (<Credits  />)} />
+              <Route  path="/words" render={() => (<About />)} />
               <Route  component={NotFound} />
             </Switch>
             {/*<div id="fps">0</div> */}
@@ -518,7 +529,9 @@ class App extends React.Component {
           </div>
           {   <FPSStats top={window.innerHeight-55} left={10} />}
           <SideBar room={this.state.user.room} user={this.state.user} users={this.state.users} usersChange={this.state.usersChange} showSideBar={this.state.showSideBar} handleDrawerClose={this.handleDrawerClose.bind(this)} messages={this.state.messages} addUserMessage={this.addUserMessage} userActiveChat={this.state.userActiveChat} userSetActiveChat={this.userSetActiveChat} addWine={this.addWine} />
-          <SignIn user={this.state.user} hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} closeSignIn={this.closeSignIn.bind(this)} userUpdated={this.userUpdated} userSet={this.userSet} userRegisterCheck={this.userRegisterCheck} />
+          <SignIn user={this.state.user} hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} closeSignIn={this.closeSignIn} userUpdated={this.userUpdated} userSet={this.userSet} userRegisterCheck={this.userRegisterCheck} isFrame={true} />
+          <Welcome user={this.state.user} hasAvatar={this.state.hasAvatar} showWelcome={this.state.showWelcome} closeWelcome={this.closeWelcome} userUpdated={this.userUpdated} userSet={this.userSet} userRegisterCheck={this.userRegisterCheck} />
+          <Dock showDock={this.state.showDock} />
         </MuiThemeProvider>
       </div>
     );

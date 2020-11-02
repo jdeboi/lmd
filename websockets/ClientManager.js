@@ -43,7 +43,7 @@ module.exports = function(client) {
   })
 
   client.on('setUser', user => {
-    // console.log("SETTING USER", user)
+    console.log("SETTING USER", user)
     user.id = client.id;
     clients.set(client.id, user);
   })

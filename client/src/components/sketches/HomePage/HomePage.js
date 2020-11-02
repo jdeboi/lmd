@@ -2,12 +2,14 @@ import React from 'react';
 import "./HomePage.css";
 
 import Frame from '../../shared/Frame/Frame';
+import Dock from '../../shared/Dock/Dock';
 import Glasses from '../../shared/Glasses/Glasses';
 
 import P5Wrapper from 'react-p5-wrapper';
 // import sketch from './HomeSketch';
 import Sketch from './p5/HomeSketch';
 
+import MiniMap from './components/MiniMap';
 import OtherAvatars from './components/OtherAvatars';
 import Avatar from './components/Avatar';
 
@@ -45,14 +47,14 @@ class HomePage extends React.Component {
   componentDidMount() {
     // window.addEventListener("keydown", this.handleKeyDown);
     // window.addEventListener("keyup", this.handleKeyUp);
-    this.props.userSetRoom("home");
+    // this.props.userSetRoom("home");
 
   }
 
   componentWillUnmount() {
     // window.removeEventListener("keydown", this.handleKeyDown);
     // window.removeEventListener("keyup", this.handleKeyUp);
-    this.props.userLeaveRoom("home");
+    // this.props.userLeaveRoom("home");
   }
 
   // at id = 1
@@ -166,21 +168,29 @@ class HomePage extends React.Component {
           />
 
 
-        <Welcome w={500} h={400} z={1} x={-250-user.x+ this.state.OGW} y={-320-user.y+ this.state.OGH} />
+        {/*  <Welcome w={500} h={400} z={1} x={-250-user.x+ this.state.OGW} y={-320-user.y+ this.state.OGH} />*/}
         <Oak w={500} h={400} z={0} x={-1550-user.x+ this.state.OGW} y={-220-user.y+ this.state.OGH} />
-        <DJ x={djLocation.x-user.x + this.state.OGW} y={djLocation.y-user.y + this.state.OGH} z={2} />
-        <Dancer x={djLocation.x-user.x+ this.state.OGW} y={djLocation.y-user.y + this.state.OGH} avatar="💃" z={2} />
-        <Dancer x={djLocation.x-user.x+ this.state.OGW} y={djLocation.y-user.y + this.state.OGH} avatar="🕺🏾" z={2} />
-        <Dancer x={djLocation.x-user.x+ this.state.OGW} y={djLocation.y-user.y + this.state.OGH} avatar="💃🏽" z={2} />
-        <WineBar x={wineLocation[0].x-user.x + this.state.OGW} y={wineLocation[0].y-user.y+ this.state.OGH} z={2} w={wineLocation[0].w} h={wineLocation[0].h} />
-        <WineBar x={wineLocation[1].x-user.x + this.state.OGW} y={wineLocation[1].y-user.y+ this.state.OGH} z={2} w={wineLocation[1].w} h={wineLocation[1].h} />
-        <TrackLights isFlipped={true} isHorizontal={false} x={-40-user.x+ this.state.OGW} y={-1250 -user.y +this.state.OGH} z={2} w={80} h={380} />
-        <TrackLights isFlipped={false} isHorizontal={false} x={-600 + 30-user.x+ this.state.OGW} y={-1600 -user.y +this.state.OGH} z={2} w={80} h={400} />
+        <div className="Dance">
+          <DJ x={djLocation.x-user.x + this.state.OGW} y={djLocation.y-user.y + this.state.OGH} z={2} />
+          <Dancer x={djLocation.x-user.x+ this.state.OGW} y={djLocation.y-user.y + this.state.OGH} avatar="💃" z={2} />
+          <Dancer x={djLocation.x-user.x+ this.state.OGW} y={djLocation.y-user.y + this.state.OGH} avatar="🕺🏾" z={2} />
+          <Dancer x={djLocation.x-user.x+ this.state.OGW} y={djLocation.y-user.y + this.state.OGH} avatar="💃🏽" z={2} />
+        </div>
+        <div className="Wine">
+          <WineBar x={wineLocation[0].x-user.x + this.state.OGW} y={wineLocation[0].y-user.y+ this.state.OGH} z={2} w={wineLocation[0].w} h={wineLocation[0].h} />
+          <WineBar x={wineLocation[1].x-user.x + this.state.OGW} y={wineLocation[1].y-user.y+ this.state.OGH} z={2} w={wineLocation[1].w} h={wineLocation[1].h} />
+        </div>
+        <div className="Lights">
+          <TrackLights isFlipped={true} isHorizontal={false} x={-40-user.x+ this.state.OGW} y={-1250 -user.y +this.state.OGH} z={1200} w={80} h={380} />
+          <TrackLights isFlipped={false} isHorizontal={false} x={-600 + 30-user.x+ this.state.OGW} y={-1600 -user.y +this.state.OGH} z={1200} w={80} h={400} />
+        </div>
         <Folders x={300-user.x+ this.state.OGW} y={-330-user.y+ this.state.OGH} zIcons={zIndicesIcons} zFrames={zIndicesFrames} onDblClick={this.onDblClick} newFrameToTop={this.newFrameToTop} newIconToTop={this.newIconToTop}  />
         <div className="avatars">
           <OtherAvatars users={users} user={user} avatarW={this.avatarW} userSetActiveChat={this.userSetActiveChat}  />
           <Avatar user={user} avatarW={this.avatarW} />
         </div>
+        <MiniMap users={users} user={user} x={100} y={100} z={50} wineLocation={wineLocation}  />
+      
         <Glasses />
       </div>
     )

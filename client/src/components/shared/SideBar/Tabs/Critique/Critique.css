@@ -1,3 +1,13 @@
+button.standardButton {
+  font-size: 12px;
+  padding: 10px;
+  min-width: 100px;
+  text-align: center;
+  border: 1px solid black;
+  border-radius: 6px; }
+  button.standardButton:hover {
+    background-color: red; }
+
 .Critique {
   display: flex;
   flex-direction: column;

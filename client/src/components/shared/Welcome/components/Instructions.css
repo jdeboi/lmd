@@ -1,0 +1,30 @@
+.Instructions {
+  height: 400px;
+  text-align: center; }
+  .Instructions .welcome-buttons {
+    display: flex;
+    flex-direction: row;
+    vertical-align: middle;
+    justify-content: center;
+    flex: 0; }
+  .Instructions .Instructions-list {
+    overflow: scroll;
+    height: 320px; }
+    .Instructions .Instructions-list .instruction {
+      text-align: left;
+      display: flex;
+      padding: 20px;
+      flex-direction: row;
+      border-bottom: 1px solid gray; }
+      .Instructions .Instructions-list .instruction img {
+        flex: 0;
+        width: 200px;
+        height: 200px;
+        padding-right: 20px; }
+      .Instructions .Instructions-list .instruction .instruction-txt {
+        flex: 1; }
+        .Instructions .Instructions-list .instruction .instruction-txt h3 {
+          font-size: 14px;
+          padding-bottom: 8px; }
+        .Instructions .Instructions-list .instruction .instruction-txt p {
+          font-size: 10px; }

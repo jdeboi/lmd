@@ -31,7 +31,7 @@ export default class MiniMap {
   update(user, users, walls, doors, rooms, wallConfig) {
     this.miniMap.push();
     this.miniMap.background(0);
-    this.miniMap.translate(45, 40); //-user.x/wallConfig.scaler*miniMapScaler, -user.y/wallConfig.scaler*miniMapScaler);
+    this.miniMap.translate(0, 0); //-user.x/wallConfig.scaler*miniMapScaler, -user.y/wallConfig.scaler*miniMapScaler);
     this.miniMap.translate(0, 0); //wallConfig.x*miniMapScaler, wallConfig.y*miniMapScaler)
 
     // outline rooms
@@ -67,6 +67,7 @@ export default class MiniMap {
     this.p5.image(this.miniMap, 0, 0);
     this.p5.strokeWeight(3);
     this.p5.stroke(255, 0, 0);
+    this.p5.noStroke();
     this.p5.noFill();
     this.p5.rect(0, 0, this.w, this.h);
     this.p5.pop();

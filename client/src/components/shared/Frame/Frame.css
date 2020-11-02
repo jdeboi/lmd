@@ -105,8 +105,7 @@
     padding: 0px;
     margin-bottom: -3px;
     /* margin-left: -1px; */
-    /* making relative b/c video content from react-player was set to absolute and was bubbling right on top of title bar */
-    border-radius: 10px; }
+    /* making relative b/c video content from react-player was set to absolute and was bubbling right on top of title bar */ }
     .Frame .content video {
       border-bottom-left-radius: calc(10px-2);
       border-bottom-right-radius: calc(10px-2); }

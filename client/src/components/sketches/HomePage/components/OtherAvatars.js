@@ -13,11 +13,11 @@ class OtherAvatars extends React.Component {
     if (users) {
       return (
         <div className="otherAvatars">
-        {users.map((otherUser, i) => {
-          return (
-            <OtherAvatar key={i} user={user} otherUser={otherUser} avatarW={avatarW} userSetActiveChat={userSetActiveChat} />
-          )
-        })}
+          {users.map((otherUser, i) => {
+            return (
+              <OtherAvatar key={i} user={user} otherUser={otherUser} userName={otherUser.userName} avatarW={avatarW} userSetActiveChat={userSetActiveChat} />
+            )
+          })}
         </div>
       );
     }

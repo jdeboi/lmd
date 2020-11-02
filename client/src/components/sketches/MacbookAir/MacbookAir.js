@@ -36,15 +36,15 @@ class MacbookAir extends React.Component {
 
   componentDidMount() {
     this.interval = setInterval(this.resetPlayer, 22000);
-    this.props.userSetRoom("macbook-air");
-    console.log(window.AWS + "/macbookAir/noframe.mp4");
+    // this.props.userSetRoom("macbook-air");
+    console.log("macbook air mount");
     // window.addEventListener("resize", this.updateDimensions);
   }
 
   componentWillUnmount() {
     // window.removeEventListener("resize", this.updateDimensions.bind(this));
     clearInterval(this.interval);
-    this.props.userLeaveRoom("macbook-air");
+    // this.props.userLeaveRoom("macbook-air");
   }
 
   setSpeed(speed) {

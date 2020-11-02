@@ -62,7 +62,7 @@ class HardDrives extends React.Component {
     this.updateDimensions();
 
     window.addEventListener("resize", this.updateDimensions.bind(this));
-    this.props.userSetRoom("hard-drives");
+    // this.props.userSetRoom("hard-drives");
 
 
     // console.log("Thanks to Jarlan Perez for the lime: https://poly.google.com/view/4Ddq9357jQ-");
@@ -72,7 +72,7 @@ class HardDrives extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions.bind(this));
-    this.props.userLeaveRoom("hard-drives");
+    // this.props.userLeaveRoom("hard-drives");
   }
 
   updateDimensions() {

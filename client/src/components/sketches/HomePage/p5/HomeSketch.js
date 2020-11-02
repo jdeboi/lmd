@@ -88,7 +88,7 @@ export default (props) => {
       doors.push(new Door(p5, i, globalConfig));
     }
 
-    miniMap = new MiniMap(p5, 50, p5.windowHeight - 200 - 80, 200, 200);
+    // miniMap = new MiniMap(p5, 50, p5.windowHeight - 200 - 80, 200, 200);
   };
 
   const draw = (p5) => {
@@ -150,8 +150,8 @@ export default (props) => {
     p5.pop();
 
     // drawMiniMap(p5);
-    miniMap.update(user, users, walls, doors, rooms, globalConfig);
-    miniMap.display();
+    // miniMap.update(user, users, walls, doors, rooms, globalConfig);
+    // miniMap.display();
 
 
 

@@ -1,10 +1,8 @@
 import React from 'react';
 import {getEmojis} from '../Welcome/components/Helpers';
-import Frame from '../Frame/Frame';
-import './SignIn.css';
 import './SignInForm.css';
 
-class SignIn extends React.Component {
+class SignInForm extends React.Component {
 
   constructor(props) {
     super(props);
@@ -12,21 +10,6 @@ class SignIn extends React.Component {
     this.state = {
       user: {avatar:props.user.avatar, userName:props.user.userName},
     }
-  }
-
-  // basically, don't re-render this component unless that signin window
-  // has opened?
-  // have to check both nextProps && this props. not exactly sure of
-  // explanation at the moment
-  shouldComponentUpdate(nextProps, nextState) {
-    return (
-      (nextProps.showSignIn !== this.props.showSignIn)
-      || (nextState.user.userName !== this.state.user.userName)
-      || (nextState.user.avatar !== this.state.user.avatar)
-      || (nextState.user.userName !== this.state.user.userName)
-      || (nextProps.hasAvatar !== this.props.hasAvatar)
-      // nextProps.showSignIn || this.props.showSignIn || (nextProps.hasAvatar !== this.props.hasAvatar)
-    );
   }
 
   componentDidUpdate(prevProps) {
@@ -51,10 +34,8 @@ class SignIn extends React.Component {
     // this.props.userUpdated()
   }
 
-
-  onHide = () => {
-    this.handleSubmit();
-    if (this.props.hasAvatar && this.state.user.userName != "") this.props.closeSignIn();
+  canClose = () => {
+    return this.props.hasAvatar && this.state.user.userName != "";
   }
 
   handleSubmit = () => {
@@ -79,42 +60,30 @@ class SignIn extends React.Component {
       this.props.userRegisterCheck(userName, avatar);
       if (this.props.nextStep) this.props.nextStep();
     }
+
+    // }
+    // else {
+    //   alert("Creating randomized avatar and user name.");
+    //   const num = Math.floor(Math.random()*1000);
+    //   this.props.userSet(this.getRandomEmoji(), `user-${num}`);
+    // }
   }
 
   render() {
-    const w = 540;
-    const h = 400;
-    let s;
-    if (this.props.isFrame) s = this.getFrame(w, h);
-    else s = this.getForm(w, h);
-    return (s);
-  }
-
-  getFrame = (w, h) => {
-    return (
-      <div className="SignIn" >
-        <Frame title="avatar" isHidden={!this.props.showSignIn} onHide={this.onHide} content={
-            this.getForm(w, h)
-          }
-          width={w} height={h} x={(window.innerWidth-w)/2} y={(window.innerHeight-h-34-24)/2} z={2000}
-          />
-      </div>
-    )
-  }
-
-  getForm = (w, h) => {
     let {user} = this.state;
     let avatar = user.avatar===""?"👤":user.avatar;
-    const emojis = getEmojis();
+    const w = 540;
+    const h = 400;
 
-    return(
+    const emojis = getEmojis();
+    return (
       <div className="SignInForm" >
 
         <div className="SignIn-Box">
           <div className="SignIn-Content">
             <div className="userBar">
               <div className="avatar">{user.avatar}</div>
-              <input onChange={this.setUserName} value={user.userName} placeholder="enter user name" inputprops={{ 'aria-label': 'user name field' }} />
+              <input onChange={this.setUserName} value={user.userName} placeholder="enter user name" inputProps={{ 'aria-label': 'user name field' }} />
             </div>
             <div className="emoji-list">
               {
@@ -124,30 +93,14 @@ class SignIn extends React.Component {
               }
             </div>
             {/* <button onClick={() => this.setAvatar(false)}>Cancel</button>*/}
-            {this.getButtons()}
+            <div className="submit"><button onClick={() => this.handleSubmit(true)}>Submit</button></div>
           </div>
         </div>
       </div>
-    )
+    );
   }
 
-  getButtons = () => {
-    let content;
-    if (this.props.isFrame) {
-      content = <div className="submit"><button className="standardButton" onClick={() => this.handleSubmit(true)}>submit</button></div>
-    }
-    else {
-      content =
-      (
 
-        <div className="welcome-buttons">
-          <button className="standardButton" onClick={this.props.prevStep}>back</button>
-          <button className="standardButton highlightButton" onClick={() => this.handleSubmit(true)}>next</button>
-        </div>
-      )
-    }
-    return content;
-  }
 }
 
-export default SignIn;
+export default SignInForm;

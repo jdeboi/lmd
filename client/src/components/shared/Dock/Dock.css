@@ -1,0 +1,127 @@
+.Dock {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  /* Dock */ }
+  .Dock .dock {
+    position: absolute;
+    width: 100%;
+    pointer-events: all; }
+    .Dock .dock h1, .Dock .dock p {
+      text-align: center; }
+    .Dock .dock p {
+      margin-top: -18px; }
+  .Dock .showDock {
+    transition: bottom .5s;
+    bottom: 0px; }
+  .Dock .hideDock {
+    transition: bottom .5s;
+    bottom: -100px; }
+
+@-webkit-keyframes bounce {
+  0% {
+    transform: translateY(0); }
+  100% {
+    transform: translateY(-20px); } }
+
+@-moz-keyframes bounce {
+  0% {
+    transform: translateY(0); }
+  100% {
+    transform: translateY(-20px); } }
+  .Dock ul {
+    position: relative;
+    display: inline-block;
+    padding: 0 5px;
+    margin: 0;
+    background: url("https://bit.ly/11XOnb3") repeat-x bottom; }
+  .Dock ul:before, .Dock .dock ul:after {
+    content: " ";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 31px; }
+  .Dock ul:before {
+    left: -31px;
+    background: url("https://bit.ly/11MSxqX") no-repeat left bottom; }
+  .Dock ul:after {
+    right: -31px;
+    background: url("https://bit.ly/12uo9l4") no-repeat right bottom; }
+  .Dock li {
+    display: inline-block;
+    position: relative;
+    margin: 0 1px;
+    margin-bottom: 15px;
+    vertical-align: baseline;
+    box-reflect: below -16px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(91%, rgba(255, 255, 255, 0.1)), color-stop(91.01%, transparent), to(transparent)); }
+  .Dock a {
+    display: inline-block;
+    cursor: default;
+    outline: none; }
+  .Dock li:target a {
+    animation: bounce .3s 6 alternate ease-out; }
+  .Dock li:after {
+    content: " ";
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    opacity: 0;
+    visibility: hidden;
+    background-color: rgba(255, 255, 255, 0.8);
+    margin-left: -2px;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 3px rgba(75, 255, 255, 0.4), 0 0 4px rgba(75, 255, 255, 0.5), 0 -1px 7px #4bffff;
+    transition: opacity .5s; }
+  .Dock li:target:after {
+    visibility: visible;
+    opacity: 1; }
+  .Dock em {
+    position: absolute;
+    top: -34px;
+    left: 50%;
+    display: none;
+    width: 150px;
+    margin-left: -75px;
+    text-align: center; }
+  .Dock em:after {
+    content: " ";
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    margin-left: -6px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid rgba(0, 0, 0, 0.6);
+    border-bottom: none; }
+  .Dock em span {
+    display: inline-block;
+    padding: 5px 12px;
+    font-size: 14px;
+    font-style: normal;
+    color: #FFF;
+    background: #000;
+    background: rgba(0, 0, 0, 0.6);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
+    border-radius: 12px; }
+  .Dock li:hover em, .Dock .dock li a:focus em {
+    display: block; }
+  .Dock img {
+    width: 86px;
+    height: auto;
+    border: none;
+    transition: width .2s, height .2s; }
+  .Dock li:hover img, .Dock .dock li a:focus img {
+    width: 96px; }
+  .Dock li:active img {
+    opacity: .9; }
