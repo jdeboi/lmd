@@ -35,6 +35,24 @@ button.standardButton {
   border-radius: 6px;
 
   &:hover {
-    background-color: red;
+    background: $headerGradient;
   }
+}
+
+input.standardInput {
+  font-size: $fontSize-desktop-3;
+  padding: 15px 10px;
+  text-align: left;
+  border: 1px solid black;
+  color: black;
+  border-radius: 6px;
+}
+
+input.standardInputWhite {
+  font-size: $fontSize-desktop-3;
+  padding: 15px 10px;
+  text-align: left;
+  border: 1px solid white;
+  color: white;
+  border-radius: 6px;
 }

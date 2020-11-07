@@ -34,8 +34,10 @@ class SignInForm extends React.Component {
     // this.props.userUpdated()
   }
 
-  canClose = () => {
-    return this.props.hasAvatar && this.state.user.userName != "";
+
+  onHide = () => {
+    this.handleSubmit();
+    if (this.props.hasAvatar && this.state.user.userName != "") this.props.closeSignIn();
   }
 
   handleSubmit = () => {
@@ -60,23 +62,14 @@ class SignInForm extends React.Component {
       this.props.userRegisterCheck(userName, avatar);
       if (this.props.nextStep) this.props.nextStep();
     }
-
-    // }
-    // else {
-    //   alert("Creating randomized avatar and user name.");
-    //   const num = Math.floor(Math.random()*1000);
-    //   this.props.userSet(this.getRandomEmoji(), `user-${num}`);
-    // }
   }
 
   render() {
-
     const w = 540;
     const h = 400;
-
-
     return (
-
+      if (this.props.isForm) return this.getFrame(w, h);
+      return this.getForm(w, h);
     );
   }
 

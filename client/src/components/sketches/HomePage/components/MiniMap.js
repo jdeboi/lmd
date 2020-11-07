@@ -2,12 +2,19 @@ import React from 'react';
 import Frame from '../../../shared/Frame/Frame';
 import AvatarMiniMap from './AvatarMiniMap';
 
+import { connect } from 'react-redux';
+import { hideMap, toggleMap } from '../../../../store/actions/';
+
 
 class MiniMap extends React.Component {
 
   constructor(props) {
     super(props);
 
+  }
+
+  onHide = () => {
+    this.props.hideMap();
   }
 
   render() {
@@ -17,9 +24,10 @@ class MiniMap extends React.Component {
     wine0.room="home-page";
     const wine1 = {...wineLocation[1]};
     wine1.room="home-page";
+
     // if (otherUser.userName=="jdboi") console.log(otherUser.x, otherUser.y);
     return (
-      <Frame title="" content={
+      <Frame title="map" isHidden={this.props.mapIsHidden} onHide={this.onHide} bounded={true} windowStyle={{background: "rgba(255, 255, 255, .7)"}} content={
           /*<video width={dimW-2} height={dimH} muted loop autoPlay><source src={videoDimURL} type="video/mp4"></source></video>*/
           <div className="MiniMap">
             <img src={window.AWS + "/homePage/miniMap.png"} width="100%" height="100%" />;
@@ -51,4 +59,18 @@ class MiniMap extends React.Component {
 
 }
 
-export default MiniMap;
+const mapStateToProps = (state) => {
+ return {
+   mapIsHidden: state.mapIsHidden
+ }
+}
+
+const mapDispatchToProps = () => {
+ return {
+   hideMap,
+   toggleMap
+ }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps())(MiniMap);

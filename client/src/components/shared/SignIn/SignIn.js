@@ -4,6 +4,13 @@ import Frame from '../Frame/Frame';
 import './SignIn.css';
 import './SignInForm.css';
 
+// store
+import { connect } from 'react-redux';
+import { setUser } from '../../../store/actions/user';
+
+import socket from "../Socket/Socket";
+
+
 class SignIn extends React.Component {
 
   constructor(props) {
@@ -57,6 +64,24 @@ class SignIn extends React.Component {
     if (this.props.hasAvatar && this.state.user.userName != "") this.props.closeSignIn();
   }
 
+
+  userRegister = ({isUser, user}) => {
+    // if (DEBUG) console.log("user register!!!")
+    if (isUser) {
+      alert("username already exists. Please enter a new username.");
+    }
+    else {
+      this.props.setUser(user.userName, user.avatar);
+      if (this.props.closeSignIn) this.props.closeSignIn();
+      if (this.props.nextStep) this.props.nextStep();
+    }
+  }
+
+  userRegisterCheck = (userName, avatar) => {
+    const userCheck={userName:userName, avatar:avatar};
+    socket.emit("registerUser", userCheck, this.userRegister);
+  }
+
   handleSubmit = () => {
     // if (clickedSubmit) {
     const {avatar, userName} = this.state.user;
@@ -68,16 +93,15 @@ class SignIn extends React.Component {
     }
     else if (userName === this.props.user.userName) {
       // console.log("username and props same", userName);
-      this.props.userSet(userName, avatar);
-      if (this.props.nextStep) this.props.nextStep();
+      this.props.setUser(userName, avatar);
     }
     // else {
     //   this.props.userSet(avatar, userName);
     // }alert("Username already taken. Please enter a new user name.");
     else {
       // console.log("check registering user", userName);
-      this.props.userRegisterCheck(userName, avatar);
-      if (this.props.nextStep) this.props.nextStep();
+      this.userRegisterCheck(userName, avatar);
+
     }
   }
 
@@ -150,4 +174,17 @@ class SignIn extends React.Component {
   }
 }
 
-export default SignIn;
+const mapStateToProps = (state) => {
+ return {
+   user: state.user
+ }
+}
+
+const mapDispatchToProps = () => {
+ return {
+   setUser
+ }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps())(SignIn);

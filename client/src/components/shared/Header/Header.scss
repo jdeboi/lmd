@@ -64,6 +64,19 @@
     // font-size: 18px;
   }
 
+  .disabled {
+    color: rgba(255, 255, 255, .4);
+  }
+  .opened {
+    color: white;
+  }
+  .closed{
+    color: rgba(255, 255, 255, .4);
+  }
+  .icon {
+    font-size: 20px;
+  }
+
   .selected {
     // background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #5978f5), color-stop(100%, #335ef6));
     background: $headerGradient;

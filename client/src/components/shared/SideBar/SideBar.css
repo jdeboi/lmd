@@ -6,7 +6,23 @@ button.standardButton {
   border: 1px solid black;
   border-radius: 6px; }
   button.standardButton:hover {
-    background-color: red; }
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fc03ad), color-stop(100%, #335ef6)); }
+
+input.standardInput {
+  font-size: 12px;
+  padding: 15px 10px;
+  text-align: left;
+  border: 1px solid black;
+  color: black;
+  border-radius: 6px; }
+
+input.standardInputWhite {
+  font-size: 12px;
+  padding: 15px 10px;
+  text-align: left;
+  border: 1px solid white;
+  color: white;
+  border-radius: 6px; }
 
 .SideBar {
   position: absolute;

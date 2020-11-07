@@ -1,0 +1,11 @@
+.FAQ-Background {
+  background: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; }
+  .FAQ-Background .FAQFrame {
+    height: 300px;
+    width: 400px;
+    overflow: scroll; }

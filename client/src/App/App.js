@@ -6,11 +6,17 @@ import update from 'immutability-helper';
 
 import './App.css';
 import Header from '../components/shared/Header/Header';
-import SideBar from '../components/shared/SideBar/SideBar';
+// import SideBar from '../components/shared/SideBar/SideBar';
+import Chat from '../components/shared/Chat/Chat';
 import Dock from '../components/shared/Dock/Dock';
 
 // cookies
 import Cookies from 'js-cookie';
+
+// store
+import { connect } from 'react-redux';
+import { setUserRoom, setUser, moveUser, setWine, resetWine } from '../store/actions/user';
+import { addMessage } from '../store/actions/messages';
 
 // sketches
 import HomePage from '../components/sketches/HomePage/HomePage';
@@ -42,11 +48,14 @@ import Yosemite from '../components/sketches/Test/Yosemite/Yosemite';
 // pages
 import About from '../components/pages/About';
 import Credits from '../components/pages/Credits';
+import Contact from '../components/pages/Contact';
 import NotFound from '../components/pages/NotFound';
 
 import Frame from '../components/shared/Frame/Frame';
 import SignIn from '../components/shared/SignIn/SignIn';
+import Participants from '../components/shared/Participants/Participants';
 import Welcome from '../components/shared/Welcome/Welcome';
+import FAQFrame from '../components/shared/FAQ/FAQFrame';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import indigo from '@material-ui/core/colors/indigo';
@@ -132,11 +141,8 @@ class App extends React.Component {
       showDock: true,
       sessionID: null,
       usersChange: false,
-      user: {avatar:"", userName:"", room:"home-page", x: 0, y: 0, hasWine: null, needsWine: false},
       users: null,
-      userActiveChat: null,
-      messages: [],
-      // room: "home",
+      // userAxctiveChat: null,
       roomCount: {"macbook-air": 0, "hard-drives-on-seashores": 0, "wet-streams": 0, "jungle-gyms": 0, "cloud-confessional": 0, "esc-to-mars": 0, "xfinity-depths": 0, "wasted-days-are-days-wasted": 0, "home": 0}
     };
 
@@ -153,19 +159,13 @@ class App extends React.Component {
     if (hasAvatar) {
       const userName = Cookies.get('userName');
       const avatar = Cookies.get('avatar');
-      const user= {...this.state.user};
-      user.userName = userName;
-      user.avatar = avatar;
-      user.room = this.getRoom(); //useLocation().pathname;
-      if (DEBUG) console.log("has avatar", user);
-
-      if (socket.connected) {
-        if (DEBUG) console.log("CONNECT, SET", user)
-        socket.emit("setUser", user);
-
-        // ok, so issue is that App mounts after subcomponent, overriding the room
-      }
-      this.setState({user, hasAvatar: true, showWelcome: false}); // false
+      // const user= {...this.props.user};
+      // user.userName = userName;
+      // user.avatar = avatar;
+      const room = this.getRoom();
+      this.props.setUser(userName, avatar);
+      this.props.setUserRoom(room);
+      this.setState({hasAvatar: true, showWelcome: false}); // false
     }
     else {
       this.setState({hasAvatar: false, showWelcome: true});
@@ -189,17 +189,8 @@ class App extends React.Component {
     if (this.state.usersChange) this.setState({usersChange: false})
   }
 
-  addUserMessage = (message) => {
-    // const user = {...this.state.user};
-    const messages = [...this.state.messages, message];
-    // user.messages = messages;
-    // var newUser = update(user, { messages:
-    //   {$push: [msg]}
-    // });
 
-    // if (DEBUG) console.log("USER UDPATE", newUser);
-    this.setState({messages});
-  }
+
 
   toggleSideBar = () => {
     // if (DEBUG) console.log("TOGGLED");
@@ -257,12 +248,12 @@ class App extends React.Component {
   socketSetup = () => {
 
     socket.on('connect', () => {
-      const user = {...this.state.user};
+      const user = this.props.user;
       this.setState({sessionID: socket.id});
-      if (DEBUG) console.log("SETUP SOCKET, SET", user);
-      socket.emit("setUser", user);
+      // if (DEBUG) console.log("SETUP SOCKET, SET", user);
+      // socket.emit("setUser", user);
       socket.emit("joinRoom", user.room);
-
+      // this.props.setUser()
       this.addBots();
     });
 
@@ -280,7 +271,7 @@ class App extends React.Component {
     socket.on("message", data => {
       // console.log("message received", data);
       const message = {...data}
-      const user = {...this.state.user};
+      const user = {...this.props.user};
       if (message.to === user.room) {
         message.to = "room"
       }
@@ -288,11 +279,12 @@ class App extends React.Component {
         message.to = "me";
       }
       message.from = this.getUserNameById(message.from);
-      this.addUserMessage(message);
+      // this.addUserMessage(message);
+      this.props.addMessage(message);
     })
 
     socket.on("userJoined", data => {
-      const user = {...this.state.user};
+      const user = {...this.props.user};
       this.setState({usersChange: true});
       // console.log("SOMEONE JOINED");
     })
@@ -307,7 +299,7 @@ class App extends React.Component {
   addBots = () => {
     const wineBot0 = {x: this.wineLocation[0].x +120, y: this.wineLocation[0].y+50, avatar: "🤖", room:"home-page", userName:"wineBot", id:0};
     const wineBot1 = {x: this.wineLocation[1].x +120, y: this.wineLocation[1].y+50, avatar: "🤖", room:"home-page", userName:"wineBot", id:1};
-    const dj = {x: this.djLocation.x, y: this.djLocation.y, room:"home-page", avatar: "🤖", userName:"DJ", id: 2};
+    const dj = {x: this.djLocation.x, y: this.djLocation.y, room:"home-page", avatar: "🎧", userName:"DJ", id: 2};
     // const hostBot = {x: 300, y: 600, avatar: "🤖", room:"home", userName:"hostBot", id:1}
     socket.emit("setBot", wineBot0);
     socket.emit("setBot", wineBot1);
@@ -315,16 +307,6 @@ class App extends React.Component {
     // socket.emit("setBot", hostBot);
   }
 
-  addWine = () => {
-    const user = { ...this.state.user }
-    user.needsWine = true;
-    if (userNearWine(user, this.wineLocation[0]) || userNearWine(user, this.wineLocation[1])) {
-      user.needsWine = false;
-      user.hasWine = new Date();
-    }
-    this.setState({user});
-    socket.emit("setUser", user);
-  }
 
   setRoomCount = () => {
     const roomCount = {...this.state.roomCount};
@@ -368,71 +350,75 @@ class App extends React.Component {
     if (!this.state.showWelcome) this.setState({showSignIn: true});
   }
 
-  userSetActiveChat = (clickedUser) => {
-    // const mx = event.mx;
-    // const mouseX = mx-window.innerWidth;
-    var userActiveChat = null;
-    if (clickedUser) userActiveChat = {...clickedUser};
-    this.setState({userActiveChat, showSideBar: true});
-    // console.log("trying to set chat user", userActiveChat);
-  }
-
-  userUpdated = (avatar, userName) => {
-    const newUser = { ...this.state.user }
-    newUser.userName = userName;
-    newUser.avatar = avatar;
-    if (DEBUG) console.log("USER UPDATE", newUser)
-    this.setState({user: newUser});
-  }
-
-  userMove = (x, y) => {
-    const user = {...this.state.user};
-    user.x = x;
-    user.y = y;
-    if ((userNearWine(user, this.wineLocation[0]) || userNearWine(user, this.wineLocation[1])) && user.needsWine) {
-      user.needsWine = false;
-      user.hasWine = new Date();
-    }
-    this.setState({user});
-    // if (DEBUG) console.log("MOVE", user);
-    socket.emit("setUser", user);
-  }
 
 
-  userSet = (userName, avatar) => {
-    Cookies.set("hasAvatar", true);
-    Cookies.set("avatar", avatar);
-    Cookies.set("userName", userName);
-    // this.userUpdated(avatar, userName);
-
-    const user = { ...this.state.user }
-    user.userName = userName;
-    user.avatar = avatar;
-    this.setState({hasAvatar:true, showSignIn:false, user});
-    if (DEBUG) console.log("USER SET", user);
-    socket.emit("setUser", user);
-  }
+  // userSetActiveChat = (clickedUser) => {
+  //   // const mx = event.mx;
+  //   // const mouseX = mx-window.innerWidth;
+  //   var userActiveChat = null;
+  //   if (clickedUser) userActiveChat = {...clickedUser};
+  //   this.setState({userActiveChat, showSideBar: true});
+  //   // console.log("trying to set chat user", userActiveChat);
+  // }
 
 
-  userRegister = ({isUser, user}) => {
-    if (DEBUG) console.log("user register!!!")
-    if (isUser) {
-      alert("username already exists. Please enter a new username.");
-    }
-    else {
-      this.userSet(user.userName, user.avatar);
-    }
-  }
+  // addUserMessage = (message) => {
+  //   // const user = {...this.state.user};
+  //   const messages = [...this.state.messages, message];
+  //   // user.messages = messages;
+  //   // var newUser = update(user, { messages:
+  //   //   {$push: [msg]}
+  //   // });
+  //
+  //   // if (DEBUG) console.log("USER UDPATE", newUser);
+  //   this.setState({messages});
+  // }
 
-  userRegisterCheck = (userName, avatar) => {
-    if (DEBUG) console.log("userRegisterCheck");
-    const userCheck={userName:userName, avatar:avatar};
-    socket.emit("registerUser", userCheck, this.userRegister);
-  }
+  // userUpdated = (avatar, userName) => {
+  //   // const newUser = { ...this.state.user }
+  //   // newUser.userName = userName;
+  //   // newUser.avatar = avatar;
+  //   // if (DEBUG) console.log("USER UPDATE", newUser)
+  //   // this.setState({user: newUser});
+  //   this.props.setUser(avatar, userName);
+  // }
+
+  // userMove = (x, y) => {
+  //   // const user = {...this.state.user};
+  //   // user.x = x;
+  //   // user.y = y;
+  //   this.props.moveUser(x, y, this.wineLocation);
+  //
+  //   // this.setState({user});
+  //   // if (DEBUG) console.log("MOVE", user);
+  //   // socket.emit("setUser", this.props.user);
+  // }
+
+
+  // userSet = (userName, avatar) => {
+  //
+  //   // this.userUpdated(avatar, userName);
+  //
+  //   // const user = { ...this.state.user }
+  //   // user.userName = userName;
+  //   // user.avatar = avatar;
+  //   this.props.setUser(userName, avatar);
+  //   this.setState({hasAvatar:true, showSignIn:false});
+  //   // if (DEBUG) console.log("USER SET", user);
+  //
+  // }
+
+
 
   userNewRoom = (room) => {
     // alert("door!");
     this.props.history.push(room);
+    this.props.setUserRoom(room);
+  }
+
+  userSetRoom = (location, action) => {
+    const nextRoom = this.getRoom(location.pathname);
+    this.props.setUserRoom(nextRoom);
   }
 
   getRoom = (path=this.props.location.pathname) => {
@@ -447,18 +433,9 @@ class App extends React.Component {
     return rm;
   }
 
-  userSetRoom = (location, action) => {
-    // if (DEBUG) console.log("LOC", location);
-    const user = {...this.state.user};
-    const prevRoom = this.state.user.room;
-    const nextRoom = this.getRoom(location.pathname);
-    if (DEBUG) console.log("prev room", prevRoom, "next room", nextRoom);
-    socket.emit("leaveRoom", prevRoom);
-    socket.emit("joinRoom", nextRoom);
-    user.room = nextRoom;
-    socket.emit("setUser", user);
-    this.setState({user});
-  }
+
+
+
 
   closeSignIn = () => {
     this.setState({showSignIn: false})
@@ -490,6 +467,8 @@ class App extends React.Component {
   };
 
   render() {
+    // const counter = useSelector(state => state.counterReducer);
+    // console.log(counter);
     const {dimensions} = this.state;
     // console.log("app", this.state.user.room);
     return (
@@ -498,11 +477,11 @@ class App extends React.Component {
           {/* <CssBaseline />*/}
           <div className="App-Header">
             <div className="BackHeader"></div>
-            <Header dimensions={dimensions} currentPage={this.state.user.room} toggleSideBar={this.toggleSideBar} user={this.state.user} userSet={this.userSet} avatarClicked={this.avatarClicked} />
+            <Header dimensions={dimensions} currentPage={"home-page"} toggleSideBar={this.toggleSideBar} user={this.props.user} userSet={this.userSet} avatarClicked={this.avatarClicked} />
           </div>
           <div className="App-Content inner-outline" onMouseMove={this.handleMouseMove}>
             <Switch>
-              <Route exact path="/" render={() => (<HomePage dimensions={dimensions} user={this.state.user} users={this.state.users} userMove={this.userMove} userNewRoom={this.userNewRoom} userSetActiveChat={this.userSetActiveChat} wineLocation={this.wineLocation} djLocation={this.djLocation} roomCount={this.state.roomCount} showDock={this.state.showDock} />)} />
+              <Route exact path="/" render={() => (<HomePage dimensions={dimensions} users={this.state.users} userNewRoom={this.userNewRoom} wineLocation={this.wineLocation} djLocation={this.djLocation} roomCount={this.state.roomCount} showDock={this.state.showDock} />)} />
               <Route  path="/macbook-air" render={() => (<MacbookAir dimensions={dimensions} />)} />
               <Route  path="/jungle-gyms" render={() => (<JungleGyms />)} />
               <Route  path="/hard-drives-on-seashores" render={() => (<HardDrives />)}  />
@@ -521,17 +500,21 @@ class App extends React.Component {
               <Route  path="/yosemite" component={Yosemite} />
               {/*<Route  path="/three" component={Three} />*/}
               <Route  path="/credits" render={() => (<Credits  />)} />
-              <Route  path="/words" render={() => (<About />)} />
+              <Route  path="/about" render={() => (<About />)} />
+              <Route  path="/contact" render={() => (<Contact />)} />
               <Route  component={NotFound} />
             </Switch>
             {/*<div id="fps">0</div> */}
 
           </div>
           {   <FPSStats top={window.innerHeight-55} left={10} />}
-          <SideBar room={this.state.user.room} user={this.state.user} users={this.state.users} usersChange={this.state.usersChange} showSideBar={this.state.showSideBar} handleDrawerClose={this.handleDrawerClose.bind(this)} messages={this.state.messages} addUserMessage={this.addUserMessage} userActiveChat={this.state.userActiveChat} userSetActiveChat={this.userSetActiveChat} addWine={this.addWine} />
-          <SignIn user={this.state.user} hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} closeSignIn={this.closeSignIn} userUpdated={this.userUpdated} userSet={this.userSet} userRegisterCheck={this.userRegisterCheck} isFrame={true} />
-          <Welcome user={this.state.user} hasAvatar={this.state.hasAvatar} showWelcome={this.state.showWelcome} closeWelcome={this.closeWelcome} userUpdated={this.userUpdated} userSet={this.userSet} userRegisterCheck={this.userRegisterCheck} />
-          <Dock showDock={this.state.showDock} />
+          {/* <SideBar room={this.state.user.room} user={this.state.user} users={this.state.users} usersChange={this.state.usersChange} showSideBar={this.state.showSideBar} handleDrawerClose={this.handleDrawerClose.bind(this)} messages={this.state.messages} addUserMessage={this.addUserMessage} userActiveChat={this.state.userActiveChat} userSetActiveChat={this.userSetActiveChat}  />*/}
+          <Chat users={this.state.users} usersChange={this.state.usersChange} wineLocation={this.wineLocation}  />
+          <Participants users={this.state.users} />
+          <FAQFrame />
+          <SignIn hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} closeSignIn={this.closeSignIn} isFrame={true} />
+          <Welcome user={this.props.user} hasAvatar={this.state.hasAvatar} showWelcome={this.state.showWelcome} closeWelcome={this.closeWelcome}  />
+          {/* <Dock showDock={this.state.showDock} />*/}
         </MuiThemeProvider>
       </div>
     );
@@ -539,6 +522,22 @@ class App extends React.Component {
 
 
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
+
+const mapDispatchToProps = () => {
+  return {
+    setUserRoom,
+    setUser,
+    moveUser,
+    setWine,
+    addMessage
+  }
+}
 //
 
-export default withRouter(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps())(App));

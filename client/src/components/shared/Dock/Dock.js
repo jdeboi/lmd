@@ -23,6 +23,10 @@ class Dock extends React.Component {
     alert("already home");
   }
 
+  openChat = () => {
+    
+  }
+
   render() {
 
     let classn = this.state.showDock||this.props.showDock?"showDock":"hideDock";
@@ -38,13 +42,13 @@ class Dock extends React.Component {
                 <img src="/assets/s3-bucket/homePage/home.png" />
               </div>
             </li>
-            <li id="skype">
-              <a href="#skype">
+            <li id="chat">
+              <div onClick={this.openChat}>
                 <em>
                   <span>Chat</span>
                 </em>
                 <img src="/assets/s3-bucket/homePage/messages-icon.png" />
-              </a>
+              </div>
             </li>
             <li id="codepen">
               <a href="#codepen">

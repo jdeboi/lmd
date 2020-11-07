@@ -25,15 +25,9 @@
     width: 100%;
     height: 400px;
     box-sizing: border-box; }
-  .Page .Credits {
-    width: 100%;
-    height: 100%;
-    background-image: url("./assets/wallpaper3.jpg");
-    background-repeat: repeat;
-    background-size: 350px 250px; }
-    .Page .Credits h1 {
-      margin-left: -5px; }
-  .Page .About {
+  .Page .Credits h1 {
+    margin-left: -5px; }
+  .Page .About, .Page .Credits, .Page .Contact {
     width: 100%;
     height: 100%;
     background-image: url("./assets/wallpaper3.jpg");

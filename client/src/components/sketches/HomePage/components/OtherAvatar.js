@@ -2,6 +2,11 @@ import React from 'react';
 import {getOtherUserLocation, showWine, getDisToUser} from './Helpers';
 import ToolTip from './ToolTip';
 
+// store
+import { connect } from 'react-redux';
+import { showChat } from '../../../../store/actions/';
+import  { setUserActiveChat } from '../../../../store/actions/userActiveChat';
+
 class OtherAvatar extends React.Component {
 
   constructor(props) {
@@ -21,6 +26,11 @@ class OtherAvatar extends React.Component {
     this.setState({userHover: false})
   }
 
+  userClick = (otherUser) => {
+    this.props.setUserActiveChat(otherUser);
+    this.props.showChat();
+  }
+
   render() {
     const {otherUser, userName, user, avatarW} = this.props;
     const {userHover} = this.state;
@@ -30,9 +40,9 @@ class OtherAvatar extends React.Component {
     // console.log(otherUser, hidden);
     const showWineEmoji = showWine(otherUser);
     const showChatBubble = getDisToUser(user, otherUser)<150?true:false;
-    // console.log(showWine);
+
     return (
-      <div className={"otherAvatar avatar" + (hidden?" hidden":"")} onMouseEnter={this.setUserHover} onMouseLeave={this.setUserHoverLeave} onClick={() => this.props.userSetActiveChat(otherUser)} style={sty}>
+      <div className={"otherAvatar avatar" + (hidden?" hidden":"")} onMouseEnter={this.setUserHover} onMouseLeave={this.setUserHoverLeave} onClick={() => this.userClick(otherUser)} style={sty}>
         <div className={"emoji"}>{otherUser.avatar}</div>
         <div className="emoji-addons">
           <div className={"emoji-wine" + (showWineEmoji?"":" hidden")} >🍷</div>
@@ -46,4 +56,19 @@ class OtherAvatar extends React.Component {
 
 }
 
-export default OtherAvatar;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
+
+const mapDispatchToProps = () => {
+  return {
+    setUserActiveChat,
+    showChat
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps())(OtherAvatar);

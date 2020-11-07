@@ -26,6 +26,11 @@ import {getNewZIndices} from '../../shared/Helpers/Helpers';
 
 import ArrowKeysReact from 'arrow-keys-react';
 
+// store
+import { connect } from 'react-redux';
+import { moveUser } from '../../../store/actions/user';
+
+
 class HomePage extends React.Component {
 
   constructor(props) {
@@ -96,10 +101,7 @@ class HomePage extends React.Component {
   // }
 
 
-  userSetActiveChat = (user) => {
 
-    this.props.userSetActiveChat(user);
-  }
 
 
   //
@@ -163,7 +165,7 @@ class HomePage extends React.Component {
           user={user}
           users={users}
           roomCount={roomCount}
-          userMove={this.props.userMove}
+          userMove={(x, y) => this.props.moveUser(x, y, this.props.wineLocation)}
           userNewRoom={this.props.userNewRoom}
           />
 
@@ -186,11 +188,11 @@ class HomePage extends React.Component {
         </div>
         <Folders x={300-user.x+ this.state.OGW} y={-330-user.y+ this.state.OGH} zIcons={zIndicesIcons} zFrames={zIndicesFrames} onDblClick={this.onDblClick} newFrameToTop={this.newFrameToTop} newIconToTop={this.newIconToTop}  />
         <div className="avatars">
-          <OtherAvatars users={users} user={user} avatarW={this.avatarW} userSetActiveChat={this.userSetActiveChat}  />
+          <OtherAvatars users={users} user={user} avatarW={this.avatarW}  />
           <Avatar user={user} avatarW={this.avatarW} />
         </div>
         <MiniMap users={users} user={user} x={100} y={100} z={50} wineLocation={wineLocation}  />
-      
+
         <Glasses />
       </div>
     )
@@ -199,5 +201,17 @@ class HomePage extends React.Component {
 
 
 
+const mapStateToProps = (state) => {
+ return {
+   user: state.user
+ }
+}
 
-export default HomePage;
+const mapDispatchToProps = () => {
+ return {
+   moveUser
+ }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps())(HomePage);

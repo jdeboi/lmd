@@ -4,6 +4,15 @@ import FinderSubmenu from './FinderSubmenu';
 import {Link} from 'react-router-dom';
 import Clock from './Clock';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ChatIcon from '@material-ui/icons/Chat';
+import MapIcon from '@material-ui/icons/Room';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import UsersIcon from '@material-ui/icons/SupervisedUserCircle';
+
+// store
+import { connect } from 'react-redux';
+import { toggleMap, toggleFaq, toggleChat, toggleUserIcons } from '../../../store/actions/';
+
 
 /*
 React.PureComponent’s shouldComponentUpdate() only shallowly compares
@@ -67,12 +76,12 @@ class Header extends React.Component {
       // {title: "losing my dimension", link:"/losing-my-dimension", shortcut: "&#x2318;9"},
     ];
 
+    // phone shortcut: "&#128222"
     const hamburgerMenuItems = [
-      {title: "statement", link:"/words", shortcut: "&#128222"},
-      {title: "thesis", link:"/words", shortcut: "&#128222"},
+      {title: "about", link:"/about", shortcut: ""},
+      {title: "contact", link:"/contact", shortcut: ""},
       // {title: "cookies", link:"/words", shortcut: "🍪"},
-      {title: "credits", link:"/credits", shortcut: ""},
-      {title: "help", link:"/words", shortcut: "&#128222"},
+      {title: "credits", link:"/credits", shortcut: ""}
     ];
     // console.log("page", this.props.currentPage);
 
@@ -93,12 +102,28 @@ class Header extends React.Component {
 
   getRightMenus() {
     //<button className="hamburger-button">
+    const classChat = "expandable icon" + (this.props.chatIsHidden?" closed":" opened");
+    var classMap = "icon";
+    if (this.props.user.room === "home-page") {
+      classMap += (this.props.mapIsHidden?" closed":" opened");
+      classMap += " expandable";
+    }
+    else classMap += " closed disabled";
+    const classFaq = "expandable icon" + (this.props.faqIsHidden?" closed":" opened");
+    const classUserIcons = "expandable icon" + (this.props.userIconsIsHidden?" closed":" opened");
     return(
       <ul className="right">
+        <li className={classChat} onClick={this.props.toggleChat}><ChatIcon /></li>
+        <li className={classUserIcons} onClick={this.props.toggleUserIcons}><UsersIcon /></li>
+        <li className={classMap} onClick={this.props.toggleMap}><MapIcon /></li>
+        <li className={classFaq} onClick={this.props.toggleFaq}><HelpOutlineIcon /></li>
+
+        <li></li>
         <li><Clock /></li>
+        <li></li>
         <li className="header-avatar expandable" onClick={this.props.avatarClicked}>{this.getAvatar()}</li>
 
-        <li className="expandable hamburger" onClick={this.props.toggleSideBar}><i className="fas fa-bars"></i></li>
+        {/* <li className="expandable hamburger" onClick={this.props.toggleSideBar}><i className="fas fa-bars"></i></li>*/}
       </ul>
     );
   }
@@ -116,4 +141,23 @@ class Header extends React.Component {
 
 }
 
-export default Header
+const mapStateToProps = (state) => {
+  return {
+    chatIsHidden: state.chatIsHidden,
+    faqIsHidden: state.faqIsHidden,
+    mapIsHidden: state.mapIsHidden,
+    userIconsIsHidden: state.userIconsIsHidden
+  }
+}
+
+const mapDispatchToProps = () => {
+  return {
+    toggleMap,
+    toggleFaq,
+    toggleChat,
+    toggleUserIcons
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps())(Header);

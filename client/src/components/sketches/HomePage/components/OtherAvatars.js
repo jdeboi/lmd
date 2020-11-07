@@ -9,13 +9,13 @@ class OtherAvatars extends React.Component {
 
 
   render() {
-    const {users, user, userSetActiveChat, avatarW} = this.props;
+    const {users, avatarW} = this.props;
     if (users) {
       return (
         <div className="otherAvatars">
           {users.map((otherUser, i) => {
             return (
-              <OtherAvatar key={i} user={user} otherUser={otherUser} userName={otherUser.userName} avatarW={avatarW} userSetActiveChat={userSetActiveChat} />
+              <OtherAvatar key={i} otherUser={otherUser} userName={otherUser.userName} avatarW={avatarW} />
             )
           })}
         </div>

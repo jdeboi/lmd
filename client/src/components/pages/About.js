@@ -8,7 +8,14 @@ function About() {
 
         <div className="About Sketch">
           <div className="container">
-            <h1>Artist Statement</h1>
+            <h1>losing my dimension</h1>
+            <h3><a href="https://jdeboi.com">Jenna deBoisblanc</a></h3>
+            <br></br>
+            <h3>Tulane University</h3>
+            <h3>MFA Thesis Exhibition</h3>
+            <h3>April 2021</h3>
+            <h3><a href="">Thesis</a></h3>
+            <h2>Statement</h2>
             <p>Thinking about the simultaneous collapse / expansion of space during quarantine.</p>
             <ul>
               <li>2D & multi-dimensional</li>
