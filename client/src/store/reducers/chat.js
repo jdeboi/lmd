@@ -1,7 +1,7 @@
 import { SHOWCHAT, HIDECHAT, TOGGLECHAT } from '../actions/';
 
 // reducer (check what to do with action)
-const chatReducer = (state=false, action) => {
+const chatReducer = (state=true, action) => {
   switch(action.type) {
     case SHOWCHAT:
       return false;

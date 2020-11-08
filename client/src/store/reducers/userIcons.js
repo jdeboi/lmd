@@ -1,7 +1,7 @@
 import { SHOWUSERICONS, HIDEUSERICONS, TOGGLEUSERICONS } from '../actions/';
 
 // reducer (check what to do with action)
-const userIconsReducer = (state=false, action) => {
+const userIconsReducer = (state=true, action) => {
   switch(action.type) {
     case SHOWUSERICONS:
       return false;

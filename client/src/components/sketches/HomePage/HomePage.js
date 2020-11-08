@@ -21,8 +21,8 @@ import DJ from './components/DJ';
 import Dancer from './components/Dancer';
 import TrackLights from './components/TrackLights/TrackLights';
 
-import {initZIndicesIcons, initZIndicesFrames} from './components/Helpers';
-import {getNewZIndices} from '../../shared/Helpers/Helpers';
+import { initZIndicesIcons, initZIndicesFrames } from './components/Helpers';
+import { getNewZIndices } from '../../shared/Helpers/Helpers';
 
 import ArrowKeysReact from 'arrow-keys-react';
 
@@ -39,8 +39,8 @@ class HomePage extends React.Component {
     this.state = {
       keyDown: false,
       zIndex: [3, 4, 5, 6],
-      OGW: window.innerWidth/2,
-      OGH: window.innerHeight/2,
+      OGW: window.innerWidth / 2,
+      OGH: window.innerHeight / 2,
       zIndicesIcons: initZIndicesIcons(),
       zIndicesFrames: initZIndicesFrames()
     }
@@ -72,14 +72,14 @@ class HomePage extends React.Component {
 
   newFrameToTop = (id) => {
     const newZ = getNewZIndices(id, this.state.zIndicesFrames);
-    this.setState({zIndicesFrames: newZ});
+    this.setState({ zIndicesFrames: newZ });
     // console.log("ZZZ", this.state.zIndices);
   }
 
   newIconToTop = (id) => {
     console.log("id", id)
     const newZ = getNewZIndices(id, this.state.zIndicesIcons);
-    this.setState({zIndicesIcons: newZ});
+    this.setState({ zIndicesIcons: newZ });
     // console.log("ZZZ", this.state.zIndices);
   }
 
@@ -140,8 +140,8 @@ class HomePage extends React.Component {
   }
 
   render() {
-    const {users, user, walls, doors, wineLocation, roomCount, djLocation} = this.props;
-    const {zIndex, zIndicesIcons, zIndicesFrames} = this.state;
+    const { users, user, walls, doors, wineLocation, roomCount, djLocation } = this.props;
+    const { zIndex, zIndicesIcons, zIndicesFrames } = this.state;
 
 
     // onKeyDown={this.handleKeyDown} onKeyUp={this.handleKeyUp}
@@ -167,31 +167,31 @@ class HomePage extends React.Component {
           roomCount={roomCount}
           userMove={(x, y) => this.props.moveUser(x, y, this.props.wineLocation)}
           userNewRoom={this.props.userNewRoom}
-          />
+        />
 
 
         {/*  <Welcome w={500} h={400} z={1} x={-250-user.x+ this.state.OGW} y={-320-user.y+ this.state.OGH} />*/}
-        <Oak w={500} h={400} z={0} x={-1550-user.x+ this.state.OGW} y={-220-user.y+ this.state.OGH} />
+        <Oak w={500} h={400} z={0} x={-1550 - user.x + this.state.OGW} y={-220 - user.y + this.state.OGH} />
         <div className="Dance">
-          <DJ x={djLocation.x-user.x + this.state.OGW} y={djLocation.y-user.y + this.state.OGH} z={2} />
-          <Dancer x={djLocation.x-user.x+ this.state.OGW} y={djLocation.y-user.y + this.state.OGH} avatar="💃" z={2} />
-          <Dancer x={djLocation.x-user.x+ this.state.OGW} y={djLocation.y-user.y + this.state.OGH} avatar="🕺🏾" z={2} />
-          <Dancer x={djLocation.x-user.x+ this.state.OGW} y={djLocation.y-user.y + this.state.OGH} avatar="💃🏽" z={2} />
+          <DJ x={djLocation.x - user.x + this.state.OGW} y={djLocation.y - user.y + this.state.OGH} z={2} />
+          <Dancer x={djLocation.x - user.x + this.state.OGW} y={djLocation.y - user.y + this.state.OGH} avatar="💃" z={2} />
+          <Dancer x={djLocation.x - user.x + this.state.OGW} y={djLocation.y - user.y + this.state.OGH} avatar="🕺🏾" z={2} />
+          <Dancer x={djLocation.x - user.x + this.state.OGW} y={djLocation.y - user.y + this.state.OGH} avatar="💃🏽" z={2} />
         </div>
         <div className="Wine">
-          <WineBar x={wineLocation[0].x-user.x + this.state.OGW} y={wineLocation[0].y-user.y+ this.state.OGH} z={2} w={wineLocation[0].w} h={wineLocation[0].h} />
-          <WineBar x={wineLocation[1].x-user.x + this.state.OGW} y={wineLocation[1].y-user.y+ this.state.OGH} z={2} w={wineLocation[1].w} h={wineLocation[1].h} />
+          <WineBar x={wineLocation[0].x - user.x + this.state.OGW} y={wineLocation[0].y - user.y + this.state.OGH} z={2} w={wineLocation[0].w} h={wineLocation[0].h} />
+          <WineBar x={wineLocation[1].x - user.x + this.state.OGW} y={wineLocation[1].y - user.y + this.state.OGH} z={2} w={wineLocation[1].w} h={wineLocation[1].h} />
         </div>
         <div className="Lights">
-          <TrackLights isFlipped={true} isHorizontal={false} x={-40-user.x+ this.state.OGW} y={-1250 -user.y +this.state.OGH} z={1200} w={80} h={380} />
-          <TrackLights isFlipped={false} isHorizontal={false} x={-600 + 30-user.x+ this.state.OGW} y={-1600 -user.y +this.state.OGH} z={1200} w={80} h={400} />
+          <TrackLights isFlipped={true} isHorizontal={false} x={-40 - user.x + this.state.OGW} y={-1250 - user.y + this.state.OGH} z={1200} w={80} h={380} />
+          <TrackLights isFlipped={false} isHorizontal={false} x={-600 + 30 - user.x + this.state.OGW} y={-1600 - user.y + this.state.OGH} z={1200} w={80} h={400} />
         </div>
-        <Folders x={300-user.x+ this.state.OGW} y={-330-user.y+ this.state.OGH} zIcons={zIndicesIcons} zFrames={zIndicesFrames} onDblClick={this.onDblClick} newFrameToTop={this.newFrameToTop} newIconToTop={this.newIconToTop}  />
+        <Folders x={300 - user.x + this.state.OGW} y={-330 - user.y + this.state.OGH} zIcons={zIndicesIcons} zFrames={zIndicesFrames} onDblClick={this.onDblClick} newFrameToTop={this.newFrameToTop} newIconToTop={this.newIconToTop} />
         <div className="avatars">
-          <OtherAvatars users={users} user={user} avatarW={this.avatarW}  />
+          <OtherAvatars users={users} user={user} avatarW={this.avatarW} />
           <Avatar user={user} avatarW={this.avatarW} />
         </div>
-        <MiniMap users={users} user={user} x={100} y={100} z={50} wineLocation={wineLocation}  />
+        <MiniMap users={users} user={user} x={100} y={100} z={50} wineLocation={wineLocation} />
 
         <Glasses />
       </div>
@@ -202,15 +202,15 @@ class HomePage extends React.Component {
 
 
 const mapStateToProps = (state) => {
- return {
-   user: state.user
- }
+  return {
+    user: state.user
+  }
 }
 
 const mapDispatchToProps = () => {
- return {
-   moveUser
- }
+  return {
+    moveUser
+  }
 }
 
 
