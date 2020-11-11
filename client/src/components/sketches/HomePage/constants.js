@@ -37,7 +37,9 @@ export const outsideDoorFrames = outsideDoorFramesInit;
 export const lights = [
     p5ToDomCoords(3, 10),
     p5ToDomCoords(8, 15),
-    p5ToDomCoords(13, 20)
+    p5ToDomCoords(13, 20),
+    p5ToDomCoords(13, 20),
+    p5ToDomCoords(7, 13)
 ];
 
 

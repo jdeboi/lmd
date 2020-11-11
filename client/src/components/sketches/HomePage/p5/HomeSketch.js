@@ -132,8 +132,14 @@ export default (props) => {
 
     // floors
     drawDanceFloor(p5);
-    drawSpaceFloor(p5);
+    drawSpaceFloor(20, 12, 12, 10, p5);
+    drawSpaceFloor(5, 27, 20, 8, p5); // bottom
+    drawSpaceFloor(-8, 0, 8, 12, p5); // top left
+
+    drawSpaceFloor(20, -7, 15, 12, p5); // dance
     // drawPlants(p5);
+
+    drawSpaceFloor(24, 22, 4, 8, p5); // bottom to left
 
 
     drawGround(p5);
@@ -213,20 +219,14 @@ export default (props) => {
     }
   }
 
-  const drawSpaceFloor = (p5) => {
+  const drawSpaceFloor = (x0, y0, w, h, p5) => {
     let spacing = globalConfig.stepS;
     let yOffset = new Date() / 2000;
     // let bound = 5000;
-    var limits = [
-      { x: -12, y: -10 }, // outer limit
-      { x: 38, y: -10 },
-      { x: 38, y: 40 },
-      { x: -12, y: 40 },
-      { x: -12, y: -10 }
-    ];
+ 
     let sc = globalConfig.scaler;
-    for (let x = limits[0].x * sc; x < limits[1].x * sc; x += spacing) {
-      for (let y = limits[0].y * sc; y < limits[2].y * sc; y += spacing) {
+    for (let x = x0 * sc; x < (x0+w) * sc; x += spacing) {
+      for (let y = y0 * sc; y < (y0+h) * sc; y += spacing) {
         let n = p5.noise(x * .005, y * .005 + yOffset);
         let alpha = p5.map(n, 0, 1, 0, 150);
         p5.fill(255, alpha);

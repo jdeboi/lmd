@@ -28,13 +28,13 @@ import { getNewZIndices } from '../../shared/Helpers/Helpers';
 
 import ArrowKeysReact from 'arrow-keys-react';
 
-import { wineLocation, djLocation, outsideDoorFrames, lights } from './constants';
+import { wineLocation, djLocation, outsideDoorFrames, lights, globalConfig } from './constants';
 
 // store
 import { connect } from 'react-redux';
 import { moveUser } from '../../../store/actions/user';
 
-import flurry from './Canned/flurry_1.mp4';
+// import flurry from './Canned/flurry_1.mp4';
 
 
 class HomePage extends React.Component {
@@ -249,14 +249,14 @@ class HomePage extends React.Component {
 
 
 
-const getFlurry = () => {
-  return (
-    <video ref={this.cloudsRef} autoPlay muted loop className="backgroundCover">
-      <source src={flurry} type="video/mp4" ></source>
-        Your browser does not support HTML5 video.
-    </video>
-  )
-}
+// const getFlurry = () => {
+//   return (
+//     <video ref={this.cloudsRef} autoPlay muted loop className="backgroundCover">
+//       <source src={flurry} type="video/mp4" ></source>
+//         Your browser does not support HTML5 video.
+//     </video>
+//   )
+// }
 
 
 
