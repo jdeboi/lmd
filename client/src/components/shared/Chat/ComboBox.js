@@ -164,7 +164,7 @@ class ComboBox extends React.Component {
           getOptionSelected={(option, value) => this.getLabel(option) === this.getLabel(value)}
           fullWidth
           renderInput={(params) => {
-            console.log("PARAMS", params);
+            // console.log("PARAMS", params);
             return (
               <div ref={params.InputProps.ref}>
                 <input className="autocomplete-input" style={{}} type="text" placeholder="select recipient" {...params.inputProps} />

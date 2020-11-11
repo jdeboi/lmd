@@ -1,3 +1,4 @@
+
 export default class MiniMap {
 
   constructor(p5, x, y, w, h) {

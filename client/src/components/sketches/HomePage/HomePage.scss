@@ -1,14 +1,30 @@
 $emojiFontSize: 36px;
 
 .HomePage {
-  // background-image: url(/assets/s3-bucket/homePage/grasses/200.png);
-  background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/homePage/shrub.jpg);
-  background-repeat: repeat;
-  background-size: 300px 300px;
+  // background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/homePage/grass/200.png);
+  // background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/homePage/shrub.jpg);
+  // background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/jungleGyms/wallpaper3.jpg);
+  background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/homePage/galaxy.png);
+
+
+  // background-repeat: repeat;
+  // background-size: 450px 300px;
+
   // background: black;
-  // background-size: cover;
-  // background-position: center;
+  background-size: cover;
+  background-position: center;
   pointer-events: none;
+
+  .loading {
+    position: absolute;
+    top: 45%;
+    width: 100%;
+    font-size: 50px;
+    text-align: center;
+    color: white;
+    vertical-align: middle;
+    font-weight: normal;
+  }
 
 
   .clouds {

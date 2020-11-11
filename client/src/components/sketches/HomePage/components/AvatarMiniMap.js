@@ -1,4 +1,5 @@
 import React from 'react';
+import { globalConfig } from '../constants';
 
 class AvatarMiniMap extends React.Component {
 
@@ -12,9 +13,9 @@ class AvatarMiniMap extends React.Component {
     const miniScaler = 4;
     const miniX = 45;
     const miniY = 40;
-    const bigScaler = 50;
-    const bigX = -15;
-    const bigY = -35;
+    const bigScaler = globalConfig.scaler;
+    const bigX = globalConfig.x;
+    const bigY = globalConfig.y;
     const loc = {};
 
     loc.x = (user.x/bigScaler-bigX)*miniScaler+miniX;

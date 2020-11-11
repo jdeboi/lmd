@@ -40,7 +40,7 @@ class MiniMap extends React.Component {
             </div>
           </div>
         }
-        width={200} height={200} x={x} y={y}
+        width={200} height={200} x={x} y={y} z={1000}
         />
 
     )

@@ -1,0 +1,47 @@
+.Door {
+    img {
+        position: absolute;
+    }
+}
+
+.Door.normDoor {
+    img {
+        top: 0;
+    }
+
+    .doorFrame {
+        left: 0;
+    }
+
+    .door {
+        transition: left 0.5s;
+    }
+}
+
+.Door.rotDoor {
+    transform: rotate(90deg) translateX(90px) translateY(-90px);
+
+    img {
+        top: 0;
+    }
+
+    .doorFrame {
+        left: 0;
+    }
+
+    .door {
+        transition: left 0.5s;
+    }
+}
+
+.Doors {
+    .Frame {
+        .window {
+            border: 0px;
+
+            .content {
+                pointer-events: none;
+            }
+        }
+    }
+}

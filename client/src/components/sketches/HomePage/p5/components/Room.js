@@ -72,19 +72,9 @@ export default class Room {
     var count = 0;
     if (roomCount) count = roomCount[this.title];
     this.drawEye(eyeIcon, count);
-    // }
-    //
-    // this.p5.push();
-    // this.p5.translate(-this.w/2*this.globalConfig.scaler, -this.h/2*this.globalConfig.scaler)
-    // this.p5.noFill();
-    // this.p5.stroke(255);
-    // this.p5.strokeWeight(10);
-    // this.p5.rect(5, 5, this.w*this.globalConfig.scaler-10, this.h*this.globalConfig.scaler-10);
-    // this.p5.stroke(0);
-    // this.p5.strokeWeight(1);
-    // this.p5.rect(0, 0, this.w*this.globalConfig.scaler, this.h*this.globalConfig.scaler);
-    // this.p5.rect(10, 10, this.w*this.globalConfig.scaler-20, this.h*this.globalConfig.scaler-20);
-    // this.p5.pop();
+   
+    // this.drawRoomDoorCrossing();
+   
 
     this.p5.pop();
 
@@ -94,6 +84,15 @@ export default class Room {
 
 
     this.p5.pop();
+
+    // if (this.closeToDoor()) {
+    //   this.p5.noFill();
+    //   for (let i = 4 ; i > 0; i--) {
+    //     this.p5.strokeWeight(i*4);
+    //     this.p5.stroke(255, this.p5.map(i, 4, 1, 10, 140));
+    //     this.displayOutline();
+    //   }
+    // }
 
   }
 
@@ -134,6 +133,32 @@ export default class Room {
     p5.pop();
   }
 
+  drawRoomDoorCrossing(p5=this.p5) {
+    var x0, x1, y0, y1;
+    if (this.dir === "bottom") {
+      x0 = this.x + this.w*this.start;
+      x1 = this.x + this.w*this.end;
+      y0 = this.y + this.h;
+      y1 = this.y + this.h;
+    }
+    else if (this.dir === "left") {
+      y0 = this.y + this.h*this.start;
+      y1 = this.y + this.h*this.end;
+      x0 = this.x;
+      x1 = this.x;
+    }
+    else if (this.dir === "right") {
+      y0 = this.y + this.h;
+      y1 = this.y + this.h - this.h*this.end;
+      x0 = this.x + this.w;
+      x1 = this.x + this.w;
+    }
+    p5.stroke(255, 0, 0);
+    p5.strokeWeight(10);
+    let sc = this.globalConfig.scaler;
+    p5.line(x0*sc, y0*sc, x1*sc, y1*sc);
+  }
+
 
   roomDoorCrossing(userStep) {
     var x0, x1, y0, y1;
@@ -150,8 +175,8 @@ export default class Room {
       x1 = this.x;
     }
     else if (this.dir === "right") {
-      y0 = this.y + this.h*this.start;
-      y1 = this.y + this.h*this.end;
+      y0 = this.y + this.h;
+      y1 = this.y + this.h - this.h*this.end;
       x0 = this.x + this.w;
       x1 = this.x + this.w;
     }

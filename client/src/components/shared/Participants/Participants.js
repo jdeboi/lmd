@@ -55,7 +55,7 @@ class Participants extends React.Component {
         )
       })
     }
-    return null;
+    return <div></div>;
 
   }
 }

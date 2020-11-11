@@ -67,9 +67,11 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import socket from "../components/shared/Socket/Socket";
 
 import FPSStats from "react-fps-stats";
-import {userNearWine} from './Helpers/Boundaries';
-// import socketIOClient from "socket.io-client";
-// const ENDPOINT = "http://127.0.0.1:5000";
+
+import { userNearWine } from './Helpers/Boundaries';
+import { djLocation, wineLocation } from '../components/sketches/HomePage/constants';
+
+
 
 import dogicaFont from './assets/fonts/dogica.ttf';
 
@@ -86,7 +88,7 @@ const dogica = {
   url(${dogicaFont}) format('ttf')
   `,
   unicodeRange:
-  'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF',
+    'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF',
 };
 
 window.AWS = "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches";
@@ -128,7 +130,7 @@ class App extends React.Component {
     this.state = {
       cursor: 0,
       cursorID: 0,
-      dimensions: {windowWidth: window.innerWidth, windowHeight: window.innerHeight, device:"desktop", flipped: false, orientation: "landscape"},
+      dimensions: { windowWidth: window.innerWidth, windowHeight: window.innerHeight, device: "desktop", flipped: false, orientation: "landscape" },
       wOG: window.innerWidth,
       hOG: window.innerHeight,
       mx: 0,
@@ -143,11 +145,10 @@ class App extends React.Component {
       usersChange: false,
       users: null,
       // userAxctiveChat: null,
-      roomCount: {"macbook-air": 0, "hard-drives-on-seashores": 0, "wet-streams": 0, "jungle-gyms": 0, "cloud-confessional": 0, "esc-to-mars": 0, "xfinity-depths": 0, "wasted-days-are-days-wasted": 0, "home": 0}
+      roomCount: { "macbook-air": 0, "hard-drives-on-seashores": 0, "wet-streams": 0, "jungle-gyms": 0, "cloud-confessional": 0, "esc-to-mars": 0, "xfinity-depths": 0, "wasted-days-are-days-wasted": 0, "home": 0 }
     };
 
-    this.wineLocation = [{x: 1050, y: -1300, w: 80, h: 150}, {x: -1050, y: -2000, w: 80, h: 150}];
-    this.djLocation = {x: 500, y: -2000};
+
   }
 
 
@@ -165,10 +166,10 @@ class App extends React.Component {
       const room = this.getRoom();
       this.props.setUser(userName, avatar);
       this.props.setUserRoom(room);
-      this.setState({hasAvatar: true, showWelcome: false}); // false
+      this.setState({ hasAvatar: true, showWelcome: false }); // false
     }
     else {
-      this.setState({hasAvatar: false, showWelcome: true});
+      this.setState({ hasAvatar: false, showWelcome: true });
     }
 
 
@@ -186,7 +187,7 @@ class App extends React.Component {
 
 
   componentDidUpdate() {
-    if (this.state.usersChange) this.setState({usersChange: false})
+    if (this.state.usersChange) this.setState({ usersChange: false })
   }
 
 
@@ -201,36 +202,36 @@ class App extends React.Component {
 
   handleDrawerClose = () => {
     // if (DEBUG) console.log("CLOSED")
-    this.setState({showSideBar: false});
+    this.setState({ showSideBar: false });
   }
 
   updateDeviceDimensions = () => {
-    var dimensions= {};
+    var dimensions = {};
     // width, height
     dimensions.windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
     dimensions.windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
 
     // orientation and flipped
-    let ratio = this.state.wOG/this.state.hOG;
+    let ratio = this.state.wOG / this.state.hOG;
     dimensions.flipped = false;
-    if (dimensions.windowWidth/dimensions.windowHeight !== ratio) dimensions.flipped = true;
-    dimensions.orientation = dimensions.windowWidth/dimensions.windowHeight > 1 ? "landscape":"portrait";
+    if (dimensions.windowWidth / dimensions.windowHeight !== ratio) dimensions.flipped = true;
+    dimensions.orientation = dimensions.windowWidth / dimensions.windowHeight > 1 ? "landscape" : "portrait";
 
     // device type
     let minD = Math.min(dimensions.windowWidth, dimensions.windowHeight);
     // if (DEBUG) console.log("minD", minD, dimensions.windowWidth, dimensions.windowHeight);
     dimensions.device = "";
-    if (minD < 450) dimensions.device="mobile";
-    else if (minD <  700) dimensions.device="tablet";
-    else dimensions.device="desktop";
+    if (minD < 450) dimensions.device = "mobile";
+    else if (minD < 700) dimensions.device = "tablet";
+    else dimensions.device = "desktop";
 
-    this.setState({dimensions: dimensions});
+    this.setState({ dimensions: dimensions });
   }
 
   addClass = (classn) => {
     let classes = [...this.state.classes];
     classes.push(classn);
-    this.setState({classes});
+    this.setState({ classes });
     //" " + this.state.cursor
   }
 
@@ -239,7 +240,7 @@ class App extends React.Component {
     let indexOfClass = classes.indexOf(classn);
     if (indexOfClass > -1) {
       classes.splice(indexOfClass, 1);
-      this.setState({classes});
+      this.setState({ classes });
     }
   }
 
@@ -249,7 +250,7 @@ class App extends React.Component {
 
     socket.on('connect', () => {
       const user = this.props.user;
-      this.setState({sessionID: socket.id});
+      this.setState({ sessionID: socket.id });
       // if (DEBUG) console.log("SETUP SOCKET, SET", user);
       // socket.emit("setUser", user);
       socket.emit("joinRoom", user.room);
@@ -259,19 +260,19 @@ class App extends React.Component {
 
 
     socket.on("usersUpdate", data => {
-      var {sessionID} = this.state;
-      var filteredArray = data.filter(function(user){
+      var { sessionID } = this.state;
+      var filteredArray = data.filter(function (user) {
         return user.id != sessionID;
       });
       this.setRoomCount();
       // if (DEBUG) console.log("USERS UPDATED", data);
-      this.setState({users: filteredArray});
+      this.setState({ users: filteredArray });
     });
 
     socket.on("message", data => {
       // console.log("message received", data);
-      const message = {...data}
-      const user = {...this.props.user};
+      const message = { ...data }
+      const user = { ...this.props.user };
       if (message.to === user.room) {
         message.to = "room"
       }
@@ -284,22 +285,22 @@ class App extends React.Component {
     })
 
     socket.on("userJoined", data => {
-      const user = {...this.props.user};
-      this.setState({usersChange: true});
+      const user = { ...this.props.user };
+      this.setState({ usersChange: true });
       // console.log("SOMEONE JOINED");
     })
 
     socket.on("userDisconnected", data => {
-      this.setState({usersChange: true});
+      this.setState({ usersChange: true });
       // socket.emit("leaveRoom", user.room); // not sure if we need this?
       // console.log("SOMEONE DISCONNECTED");
     })
   }
 
   addBots = () => {
-    const wineBot0 = {x: this.wineLocation[0].x +120, y: this.wineLocation[0].y+50, avatar: "🤖", room:"home-page", userName:"wineBot", id:0};
-    const wineBot1 = {x: this.wineLocation[1].x +120, y: this.wineLocation[1].y+50, avatar: "🤖", room:"home-page", userName:"wineBot", id:1};
-    const dj = {x: this.djLocation.x, y: this.djLocation.y, room:"home-page", avatar: "🎧", userName:"DJ", id: 2};
+    const wineBot0 = { x: wineLocation[0].x + 120, y: wineLocation[0].y + 50, avatar: "🤖", room: "home-page", userName: "wineBot", id: 0 };
+    const wineBot1 = { x: wineLocation[1].x + 120, y: wineLocation[1].y + 50, avatar: "🤖", room: "home-page", userName: "wineBot", id: 1 };
+    const dj = { x: djLocation.x, y: djLocation.y, room: "home-page", avatar: "🎧", userName: "DJ", id: 2 };
     // const hostBot = {x: 300, y: 600, avatar: "🤖", room:"home", userName:"hostBot", id:1}
     socket.emit("setBot", wineBot0);
     socket.emit("setBot", wineBot1);
@@ -309,7 +310,7 @@ class App extends React.Component {
 
 
   setRoomCount = () => {
-    const roomCount = {...this.state.roomCount};
+    const roomCount = { ...this.state.roomCount };
     // reset it
     for (var key in roomCount) {
       if (roomCount.hasOwnProperty(key)) {
@@ -322,7 +323,7 @@ class App extends React.Component {
         if (room in roomCount) roomCount[room]++;
       }
       // console.log("OK", roomCount, this.state.users);
-      this.setState({roomCount})
+      this.setState({ roomCount })
     }
 
   }
@@ -347,7 +348,7 @@ class App extends React.Component {
 
   avatarClicked = () => {
     if (DEBUG) console.log("SHOW AV")
-    if (!this.state.showWelcome) this.setState({showSignIn: true});
+    if (!this.state.showWelcome) this.setState({ showSignIn: true });
   }
 
 
@@ -387,7 +388,7 @@ class App extends React.Component {
   //   // const user = {...this.state.user};
   //   // user.x = x;
   //   // user.y = y;
-  //   this.props.moveUser(x, y, this.wineLocation);
+  //   this.props.moveUser(x, y, wineLocation);
   //
   //   // this.setState({user});
   //   // if (DEBUG) console.log("MOVE", user);
@@ -421,13 +422,13 @@ class App extends React.Component {
     this.props.setUserRoom(nextRoom);
   }
 
-  getRoom = (path=this.props.location.pathname) => {
+  getRoom = (path = this.props.location.pathname) => {
     var rm = path.substring(1, path.length);
 
     if (rm == "") rm = "home-page";
     else if (rm == "confessions") rm = "cloud-confessional";
 
-    const pages = ["home-page","macbook-air", "wet-streams","hard-drives-on-seashores","blind-spot","cloud-confessional", "xfinity-depths", "esc-to-mars", "jungle-gyms"];
+    const pages = ["home-page", "macbook-air", "wet-streams", "hard-drives-on-seashores", "blind-spot", "cloud-confessional", "xfinity-depths", "esc-to-mars", "jungle-gyms"];
     if (!pages.includes(rm)) rm = "";
 
     return rm;
@@ -438,11 +439,11 @@ class App extends React.Component {
 
 
   closeSignIn = () => {
-    this.setState({showSignIn: false})
+    this.setState({ showSignIn: false })
   }
 
   closeWelcome = () => {
-    this.setState({showWelcome: false})
+    this.setState({ showWelcome: false })
   }
 
   getStringClasses = () => {
@@ -450,26 +451,26 @@ class App extends React.Component {
     for (const classn of this.state.classes) {
       str += classn + " ";
     }
-    str = str.substring(0, str.length-1);
+    str = str.substring(0, str.length - 1);
     return str;
   }
 
   handleMouseMove = e => {
     let showDock = this.state.showDock;
     if (showDock) {
-      if (e.clientY < window.innerHeight-100) {
-        this.setState({showDock: false});
+      if (e.clientY < window.innerHeight - 100) {
+        this.setState({ showDock: false });
       }
     }
-    else if (e.clientY > window.innerHeight-25) {
-      this.setState({showDock: true});
+    else if (e.clientY > window.innerHeight - 25) {
+      this.setState({ showDock: true });
     }
   };
 
   render() {
     // const counter = useSelector(state => state.counterReducer);
     // console.log(counter);
-    const {dimensions} = this.state;
+    const { dimensions } = this.state;
     // console.log("app", this.state.user.room);
     return (
       <div className={this.getStringClasses()}>
@@ -481,39 +482,39 @@ class App extends React.Component {
           </div>
           <div className="App-Content inner-outline" onMouseMove={this.handleMouseMove}>
             <Switch>
-              <Route exact path="/" render={() => (<HomePage dimensions={dimensions} users={this.state.users} userNewRoom={this.userNewRoom} wineLocation={this.wineLocation} djLocation={this.djLocation} roomCount={this.state.roomCount} showDock={this.state.showDock} />)} />
-              <Route  path="/macbook-air" render={() => (<MacbookAir dimensions={dimensions} />)} />
-              <Route  path="/jungle-gyms" render={() => (<JungleGyms />)} />
-              <Route  path="/hard-drives-on-seashores" render={() => (<HardDrives />)}  />
-              <Route  path="/wasted-days-are-days-wasted" render={() => (<Spacetimes dimensions={dimensions} />)} />
-              <Route  path="/esc-to-mars" render={() => (<Mars addClass={this.addClass} removeClass={this.removeClass} dimensions={dimensions} />)} />
-              <Route  path="/wet-streams" render={() => (<WetStreams />)} />
-              <Route  path="/xfinity-depths" render={() => (<Loop dimensions={dimensions} />)}/>
-              <Route  path="/cloud-confessional" render={() => (<WaveForms cursor={this.state.cursorID} />)} />
-              <Route  path="/confessions" render={() => (<Confessions />)} />
-              <Route  path="/flush" render={() => (<VorTech />)} />
-              <Route  path="/house-view" render={() => (<Oogle />)} />
-              <Route  path="/blind-eye" render={() => (<Blinds  />)} />
+              <Route exact path="/" render={() => (<HomePage dimensions={dimensions} users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} />)} />
+              <Route path="/macbook-air" render={() => (<MacbookAir dimensions={dimensions} />)} />
+              <Route path="/jungle-gyms" render={() => (<JungleGyms />)} />
+              <Route path="/hard-drives-on-seashores" render={() => (<HardDrives />)} />
+              <Route path="/wasted-days-are-days-wasted" render={() => (<Spacetimes dimensions={dimensions} />)} />
+              <Route path="/esc-to-mars" render={() => (<Mars addClass={this.addClass} removeClass={this.removeClass} dimensions={dimensions} />)} />
+              <Route path="/wet-streams" render={() => (<WetStreams />)} />
+              <Route path="/xfinity-depths" render={() => (<Loop dimensions={dimensions} />)} />
+              <Route path="/cloud-confessional" render={() => (<WaveForms cursor={this.state.cursorID} />)} />
+              <Route path="/confessions" render={() => (<Confessions />)} />
+              <Route path="/flush" render={() => (<VorTech />)} />
+              <Route path="/house-view" render={() => (<Oogle />)} />
+              <Route path="/blind-eye" render={() => (<Blinds />)} />
 
-              <Route  path="/dig" render={() => (<Dig addClass={this.addClass} />)} />
-              {<Route  path="/moon-light" component={MoonLight} />}
-              <Route  path="/yosemite" component={Yosemite} />
+              <Route path="/dig" render={() => (<Dig addClass={this.addClass} />)} />
+              {<Route path="/moon-light" component={MoonLight} />}
+              <Route path="/yosemite" component={Yosemite} />
               {/*<Route  path="/three" component={Three} />*/}
-              <Route  path="/credits" render={() => (<Credits  />)} />
-              <Route  path="/about" render={() => (<About />)} />
-              <Route  path="/contact" render={() => (<Contact />)} />
-              <Route  component={NotFound} />
+              <Route path="/credits" render={() => (<Credits />)} />
+              <Route path="/about" render={() => (<About />)} />
+              <Route path="/contact" render={() => (<Contact />)} />
+              <Route component={NotFound} />
             </Switch>
             {/*<div id="fps">0</div> */}
 
           </div>
-          {   <FPSStats top={window.innerHeight-55} left={10} />}
+          {<FPSStats top={window.innerHeight - 55} left={10} />}
           {/* <SideBar room={this.state.user.room} user={this.state.user} users={this.state.users} usersChange={this.state.usersChange} showSideBar={this.state.showSideBar} handleDrawerClose={this.handleDrawerClose.bind(this)} messages={this.state.messages} addUserMessage={this.addUserMessage} userActiveChat={this.state.userActiveChat} userSetActiveChat={this.userSetActiveChat}  />*/}
-          <Chat users={this.state.users} usersChange={this.state.usersChange} wineLocation={this.wineLocation}  />
+          <Chat users={this.state.users} usersChange={this.state.usersChange} />
           <Participants users={this.state.users} />
           <FAQFrame />
           <SignIn hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} closeSignIn={this.closeSignIn} isFrame={true} />
-          <Welcome user={this.props.user} hasAvatar={this.state.hasAvatar} showWelcome={this.state.showWelcome} closeWelcome={this.closeWelcome}  />
+          <Welcome user={this.props.user} hasAvatar={this.state.hasAvatar} showWelcome={this.state.showWelcome} closeWelcome={this.closeWelcome} />
           {/* <Dock showDock={this.state.showDock} />*/}
         </MuiThemeProvider>
       </div>

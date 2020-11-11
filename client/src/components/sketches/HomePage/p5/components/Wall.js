@@ -31,8 +31,8 @@ export default class Wall {
       ],
       [
         {x: -12, y:-10}, // outer limit
-        {x: 40, y:-10},
-        {x: 40, y:40},
+        {x: 38, y:-10},
+        {x: 38, y:40},
         {x: -12, y:40},
         {x: -12, y:-10},
       ],

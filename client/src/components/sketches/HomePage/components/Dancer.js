@@ -1,5 +1,5 @@
 import React from 'react';
-import Frame from '../../../shared/Frame/Frame';
+import { danceFloor } from '../constants';
 
 class Dancer extends React.Component {
 
@@ -7,8 +7,8 @@ class Dancer extends React.Component {
     super(props);
 
     this.state = {
-      x: 300,
-      y: 400
+      x: this.props.startPos.x,
+      y: this.props.startPos.y
     }
   }
 
@@ -20,15 +20,13 @@ class Dancer extends React.Component {
   }
 
   update = () => {
-    var x = this.state.x;
-    var y = this.state.y;
-    // x += (Math.random()*2-1)*50;
-    // y += (Math.random()*2-1)*50;
+    var x = (Math.random()*2-1)*50+this.state.x;
+    var y = (Math.random()*2-1)*50+this.state.y;
 
-    var maxX = 300;
-    var minX = -100;
-    var minY = 150;
-    var maxY = 400;
+    var maxX = danceFloor.w-60;
+    var minX = 0;
+    var minY = 120;
+    var maxY = danceFloor.h+60;
     if (x < minX) x = minX;
     else if (x > maxX) x = maxX;
     if (y < minY) y = minY;
@@ -39,7 +37,7 @@ class Dancer extends React.Component {
   render() {
     const sty = {fontSize: "40px", position: "absolute", left: this.props.x+this.state.x, top: this.props.y+this.state.y, zIndex:this.props.z};
     return (
-      <div className="dancer" style={sty}>{this.props.avatar}</div>
+      <div className={"dancer" + (this.props.isFlipped?" flippedX":"")} style={sty}>{this.props.avatar}</div>
     )
   }
 

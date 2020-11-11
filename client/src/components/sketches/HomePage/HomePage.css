@@ -1,8 +1,17 @@
 .HomePage {
-  background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/homePage/shrub.jpg);
-  background-repeat: repeat;
-  background-size: 300px 300px;
+  background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/homePage/galaxy.png);
+  background-size: cover;
+  background-position: center;
   pointer-events: none; }
+  .HomePage .loading {
+    position: absolute;
+    top: 45%;
+    width: 100%;
+    font-size: 50px;
+    text-align: center;
+    color: white;
+    vertical-align: middle;
+    font-weight: normal; }
   .HomePage .clouds {
     /*  made 0, was -200, because clouds were behind app-frame-box thing */
     z-index: 0;

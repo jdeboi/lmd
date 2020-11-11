@@ -53,7 +53,7 @@ class TrackLights extends React.Component {
             {this.getSwitch()}
           </div>
         }
-        width={this.props.w} height={this.props.h} x={this.props.x} y={this.props.y} bounded={false}
+        width={this.props.w} height={this.props.h} x={this.props.x} y={this.props.y} z={this.props.z} bounded={false}
         />
     )
 
