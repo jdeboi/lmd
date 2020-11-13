@@ -1,7 +1,7 @@
 .Welcome {
   background-color: rgba(0, 0, 0, 0.8);
   position: absolute;
-  z-index: 200;
+  z-index: 2500;
   top: 0px;
   left: 0px;
   height: 100vh;

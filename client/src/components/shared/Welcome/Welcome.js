@@ -4,7 +4,8 @@ import './Welcome.css';
 import MFADeets from './components/MFADeets';
 import SignIn from '../SignIn/SignIn';
 import Instructions from './components/Instructions';
-import {getEmojis} from './components/Helpers';
+import { getEmojis } from './components/Helpers';
+import Glasses from './components/Glasses';
 
 import Frame from '../Frame/Frame';
 
@@ -51,12 +52,12 @@ class Welcome extends React.Component {
     const content = this.getWelcomeStep(this.state.step);
     // const isHidden={!this.props.showSignIn}
     return (
-      <div className="Welcome" style={{display: this.props.showWelcome?"block":"none"}}>
-        <Frame title={this.state.title} isHidden={false} onHide={this.onHide} windowStyle={{backgroundColor: "white"}} content={
-            content
-          }
-          width={w} height={h} x={(window.innerWidth-w)/2} y={(window.innerHeight-h-34-24)/2} z={2000}
-          />
+      <div className="Welcome" style={{ display: this.props.showWelcome ? "block" : "none" }}>
+        <Frame title={this.state.title} isHidden={false} onHide={this.onHide} windowStyle={{ backgroundColor: "white" }} content={
+          content
+        }
+          width={w} height={h} x={(window.innerWidth - w) / 2} y={(window.innerHeight - h - 34 - 24) / 2} z={2000}
+        />
       </div>
     );
 
@@ -67,7 +68,7 @@ class Welcome extends React.Component {
     if (step === 0) return <MFADeets nextStep={this.nextStep} />
     else if (step === 1) return <SignIn {...this.props} nextStep={this.nextStep} prevStep={this.prevStep} isFrame={false} />;
     else if (step === 2) return <Instructions prevStep={this.prevStep} nextStep={this.nextStep} />
-    else if (step == 3) return <Instructions prevStep={this.prevStep} closeWelcome={this.props.closeWelcome} />
+    else if (step == 3) return <Glasses prevStep={this.prevStep} closeWelcome={this.props.closeWelcome} />
     return null;
   }
 
@@ -79,7 +80,7 @@ class Welcome extends React.Component {
     var title = "";
     if (step - 1 === 1) title = "avatar";
     else if (step - 1 === 2) title = "instructions";
-    this.setState({step: step - 1, title});
+    this.setState({ step: step - 1, title });
   }
 
   nextStep = () => {
@@ -89,7 +90,8 @@ class Welcome extends React.Component {
     var title = "";
     if (step + 1 === 1) title = "avatar";
     else if (step + 1 === 2) title = "instructions";
-    this.setState({step: step + 1, title});
+    else if (step + 1 === 3) title = "3D glasses";
+    this.setState({ step: step + 1, title });
   }
 
 }

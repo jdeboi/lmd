@@ -21,9 +21,9 @@ class FAQFrame extends React.Component {
   }
 
   render() {
-
+    let zInd = 1200;
     return (
-      <div className="FAQ-Background" style={{visibility: (this.props.faqIsHidden?"hidden":"visible")}}>
+      <div className="FAQ-Background" style={{visibility: (this.props.faqIsHidden?"hidden":"visible"), zIndex : zInd}}>
         <Frame title="FAQ" isHidden={this.props.faqIsHidden} onHide={this.onHide} windowStyle={{background: "white"}} content={
 
             <div className="FAQFrame">
@@ -31,7 +31,7 @@ class FAQFrame extends React.Component {
               <FAQ />
             </div>
           }
-          width={400} height={300} x={400} y={200} z={1000}
+          width={400} height={300} x={400} y={200} z={zInd}
           />
       </div>
     );

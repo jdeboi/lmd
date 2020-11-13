@@ -4,10 +4,9 @@ import glasses from './glasses.png';
 export default function Glasses (props) {
   return (
     <div className="Glasses">
-      <div></div>
       <h2>Don't forget your 3D glasses!</h2>
       <p>This work is meant to be viewed in 2D and 3D.</p>
-      <img src={glasses} width={200} height={200} />}
+      <img src={glasses} width={350} height={90} />
       <div className="welcome-buttons">
         <button className="standardButton" onClick={props.prevStep}>back</button>
         <button className="standardButton highlightButton" onClick={props.closeWelcome}>finish</button>
