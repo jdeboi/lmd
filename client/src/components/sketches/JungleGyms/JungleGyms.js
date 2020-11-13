@@ -12,7 +12,7 @@ import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 
 import Frame from '../../shared/Frame/Frame';
 import ReactPlayer from 'react-player';
-import Glasses from '../../shared/Glasses/Glasses';
+// import Glasses from '../../shared/Glasses/Glasses';
 
 import Pipe from './Pipe';
 
@@ -261,7 +261,7 @@ class JungleGyms extends React.Component {
           Your browser does not support HTML5 video.
         </video>
 
-        <Glasses />
+        {/*Glasses />*/}
       </div>
     )
   }

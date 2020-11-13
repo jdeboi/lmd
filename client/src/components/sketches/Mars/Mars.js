@@ -18,7 +18,7 @@ import PoolButtons from './components/PoolButtons';
 import Chairs from './components/Chairs';
 import BigCrater from './components/BigCrater';
 
-import Glasses from '../../shared/Glasses/Glasses';
+// import Glasses from '../../shared/Glasses/Glasses';
 
 
 
@@ -131,7 +131,7 @@ class Mars extends React.Component {
         <Frame title="" content={<div className="diving"></div>} width={board.w} height={board.h} x={board.x} y={board.y} />
         <SwimLane w={swimLaneFrame.w} h={swimLaneFrame.h} x={swimLaneFrame.x} y={swimLaneFrame.y} />
 
-        <Glasses />
+        {/*Glasses />*/}
       </div>
     )
   }

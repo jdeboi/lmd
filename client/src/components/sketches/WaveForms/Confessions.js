@@ -14,7 +14,7 @@ import Confession from './components/Confession';
 // import dove from  "./assets/dove_t.gif";
 // import shellSound from "./assets/shell_sound.wav";
 
-import Glasses from '../../shared/Glasses/Glasses';
+// import Glasses from '../../shared/Glasses/Glasses';
 
 
 
@@ -152,7 +152,7 @@ class Confessions extends React.Component {
             return(<Confession key={i} i={i}  {...props}/>)
           })
         }
-        <Glasses y={30} />
+        {/* <Glasses y={30} /> */}
       </div>
     );
   }

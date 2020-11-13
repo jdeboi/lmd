@@ -13,7 +13,7 @@ import Shower from './components/Shower';
 // import {getNewZIndices} from '../../shared/Helpers/Helpers';
 // import Stair from './Stair';
 
-import Glasses from '../../shared/Glasses/Glasses';
+// import Glasses from '../../shared/Glasses/Glasses';
 
 class WetStreams extends React.Component {
 
@@ -171,7 +171,7 @@ class WetStreams extends React.Component {
           isPlaying={showWater}
           />
 
-        <Glasses />
+        {/* <Glasses /> */}
       </div>
     )
   }

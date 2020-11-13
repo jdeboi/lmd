@@ -7,7 +7,7 @@ import { WaterMaterial } from 'babylonjs-materials';
 import 'babylonjs-loaders';
 
 import Frame from '../../shared/Frame/Frame';
-import Glasses from '../../shared/Glasses/Glasses';
+// import Glasses from '../../shared/Glasses/Glasses';
 
 import Birds from './Birds';
 
@@ -169,7 +169,7 @@ class HardDrives extends React.Component {
           width={this.svFrame.w} height={this.svFrame.h} x={this.svFrame.x} y={this.svFrame.y}
           />
         <Birds />
-        <Glasses />
+       {/*Glasses />*/}
       </div>
     )
   }

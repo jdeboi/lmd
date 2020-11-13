@@ -10,7 +10,7 @@ import ReactPlayer from 'react-player'
 // import mainVid from  "./assets/noframe.mp4";
 // import cloudsVid from  "./assets/clouds3d.mp4";
 
-import Glasses from '../../shared/Glasses/Glasses';
+// import Glasses from '../../shared/Glasses/Glasses';
 
 class MacbookAir extends React.Component {
   // https://codepen.io/JohJakob/pen/YPxgwo
@@ -212,7 +212,7 @@ class MacbookAir extends React.Component {
             </video>
             {this.getMainWindow(windowDim)}
             {this.getSliderWindow(sliderDim)}
-          <Glasses />
+          {/*Glasses />*/}
         </div>
       );
     }

@@ -26,7 +26,7 @@ import ReactAudioPlayer from 'react-audio-player';
 // import dove from  "./assets/dove_t.gif";
 // import shellSound from "./assets/shell_sound.wav";
 
-import Glasses from '../../shared/Glasses/Glasses';
+// import Glasses from '../../shared/Glasses/Glasses';
 
 import { faEye,faRetweet, faVideo, faMicrophoneAlt, faMicrophoneAltSlash } from "@fortawesome/free-solid-svg-icons";
 import { faComment, faHeart } from "@fortawesome/free-regular-svg-icons";
@@ -226,7 +226,7 @@ class WaveForms extends React.Component {
           <BottomBar />
         </div>
 
-        <Glasses y={30} />
+        {/* <Glasses y={30} /> */}
       </div>
     );
 

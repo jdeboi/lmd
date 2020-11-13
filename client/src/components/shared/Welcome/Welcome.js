@@ -66,7 +66,8 @@ class Welcome extends React.Component {
   getWelcomeStep = (step) => {
     if (step === 0) return <MFADeets nextStep={this.nextStep} />
     else if (step === 1) return <SignIn {...this.props} nextStep={this.nextStep} prevStep={this.prevStep} isFrame={false} />;
-    else if (step === 2) return <Instructions prevStep={this.prevStep} closeWelcome={this.props.closeWelcome} />
+    else if (step === 2) return <Instructions prevStep={this.prevStep} nextStep={this.nextStep} />
+    else if (step == 3) return <Instructions prevStep={this.prevStep} closeWelcome={this.props.closeWelcome} />
     return null;
   }
 

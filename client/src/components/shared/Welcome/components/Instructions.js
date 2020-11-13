@@ -9,7 +9,7 @@ export default function Instructions (props) {
       <FAQ />
       <div className="welcome-buttons">
         <button className="standardButton" onClick={props.prevStep}>back</button>
-        <button className="standardButton highlightButton" onClick={props.closeWelcome}>finish</button>
+        <button className="standardButton highlightButton" onClick={props.nextStep}>next</button>
       </div>
     </div>
   )

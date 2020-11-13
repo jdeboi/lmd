@@ -116,12 +116,12 @@ class HomePage extends React.Component {
          <Folders x={540 - user.x + this.state.OGW} y={0 - user.y + this.state.OGH} zIcons={zIndicesIcons} zFrames={zIndicesFrames} onDblClick={this.onDblClick} newFrameToTop={this.newFrameToTop} newIconToTop={this.newIconToTop} />
         {this.getAvatars()}
         <MiniMap users={users} user={user} x={50} y={50} z={50} wineLocation={wineLocation} />
-        <Glasses />
+        {/*Glasses />*/}
       </React.Fragment>
     )
   }
 
-  getDancers = () => {
+  getDancers = () => {=
     const { users, user } = this.props;
     return (
       <div className="Dance">
