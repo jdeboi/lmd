@@ -215,7 +215,7 @@ class Chat extends React.Component {
             </div>
           </div>
         }
-        width={300} height={h} x={window.innerWidth-330} y={y}
+        width={300} height={h} x={window.innerWidth-330} y={y} z={1000}
         />
     );
   }

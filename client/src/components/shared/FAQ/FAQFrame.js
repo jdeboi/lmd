@@ -31,7 +31,7 @@ class FAQFrame extends React.Component {
               <FAQ />
             </div>
           }
-          width={400} height={300} x={400} y={200}
+          width={400} height={300} x={400} y={200} z={1000}
           />
       </div>
     );
