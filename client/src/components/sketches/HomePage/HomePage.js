@@ -121,7 +121,7 @@ class HomePage extends React.Component {
     )
   }
 
-  getDancers = () => {=
+  getDancers = () => {
     const { users, user } = this.props;
     return (
       <div className="Dance">
