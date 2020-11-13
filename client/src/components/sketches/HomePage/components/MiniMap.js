@@ -27,7 +27,7 @@ class MiniMap extends React.Component {
 
     // if (otherUser.userName=="jdboi") console.log(otherUser.x, otherUser.y);
     return (
-      <Frame title="map" isHidden={this.props.mapIsHidden} onHide={this.onHide} bounded={true} windowStyle={{background: "rgba(255, 255, 255, .7)"}} content={
+      <Frame title="map" isHidden={this.props.mapIsHidden} onHide={this.onHide} bounded={true} windowStyle={{background: "rgba(255, 255, 255, .9)"}} content={
           /*<video width={dimW-2} height={dimH} muted loop autoPlay><source src={videoDimURL} type="video/mp4"></source></video>*/
           <div className="MiniMap">
             <img src={window.AWS + "/homePage/miniMap.png"} width="100%" height="100%" />;

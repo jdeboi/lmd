@@ -186,7 +186,7 @@ class Chat extends React.Component {
     const y = 34 + bufferH * 2 + 24 + 120
     const h = window.innerHeight - y - 24 - 30;
     return (
-      <Frame title="chat" bounded={true} isHidden={this.props.chatIsHidden} onHide={this.props.hideChat} windowStyle={{ background: "rgba(0, 0, 0, .8)" }} content={
+      <Frame title="chat" bounded={true} isHidden={this.props.chatIsHidden} onHide={this.props.hideChat} windowStyle={{ background: "rgba(0, 0, 0, .9)" }} content={
 
         <div className="Chat">
 

@@ -66,7 +66,7 @@ class SignIn extends React.Component {
 
 
   userRegister = ({isUser, user}) => {
-    // if (DEBUG) console.log("user register!!!")
+    console.log("user register!!!")
     if (isUser) {
       alert("username already exists. Please enter a new username.");
     }
@@ -74,16 +74,20 @@ class SignIn extends React.Component {
       this.props.setUser(user.userName, user.avatar);
       if (this.props.closeSignIn) this.props.closeSignIn();
       if (this.props.nextStep) this.props.nextStep();
+
+      console.log("shoulda set");
     }
   }
 
   userRegisterCheck = (userName, avatar) => {
+    console.log("checking", userName);
     const userCheck={userName:userName, avatar:avatar};
     socket.emit("registerUser", userCheck, this.userRegister);
   }
 
   handleSubmit = () => {
     // if (clickedSubmit) {
+      console.log("submit");
     const {avatar, userName} = this.state.user;
     if (avatar === "") {
       alert("Please select an emoji avatar");
@@ -92,8 +96,9 @@ class SignIn extends React.Component {
       alert("Please set a user name");
     }
     else if (userName === this.props.user.userName) {
-      // console.log("username and props same", userName);
+      console.log("username and props same", userName);
       this.props.setUser(userName, avatar);
+      if (this.props.closeSignIn) this.props.closeSignIn();
     }
     // else {
     //   this.props.userSet(avatar, userName);

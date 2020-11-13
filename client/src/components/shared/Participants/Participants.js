@@ -23,7 +23,7 @@ class Participants extends React.Component {
   render() {
 
     return (
-      <Frame title="users" bounded={true} isHidden={this.props.userIconsIsHidden} onHide={this.props.hideUserIcons} className="Participants" windowStyle={{background: "rgba(0, 0, 0, .8)"}} content={
+      <Frame title="users" bounded={true} isHidden={this.props.userIconsIsHidden} onHide={this.props.hideUserIcons} className="Participants" windowStyle={{background: "rgba(0, 0, 0, .9)"}} content={
         this.getUsers()
       }
       width={300} height={120} x={window.innerWidth-330} y={34+30} z={1000}
