@@ -1,6 +1,6 @@
 
-import {boundaryCrossing, intersectionPoint} from './Boundaries';
-
+import {boundaryLineCrossing, intersectionPoint} from './Boundaries';
+import { limits } from '../../constants';
 
 export default class Wall {
 
@@ -28,16 +28,10 @@ export default class Wall {
         {x: 0, y: 12, dx: 0, dy: -1},
         {x: 0, y: 0, dx: -1, dy: 0},
         {x: 20, y: 0, dx: 0, dy: -1},
-      ],
-      [
-        {x: -12, y:-10}, // outer limit
-        {x: 38, y:-10},
-        {x: 38, y:40},
-        {x: -12, y:40},
-        {x: -12, y:-10},
-      ],
+      ]
     ];
 
+    wallsInit.push(limits);
     this.p5 = p5;
     this.points = wallsInit[i];
 
@@ -109,7 +103,7 @@ export default class Wall {
   }
 
 
-  wallBoundaryCrossing(userStep) {
-    return boundaryCrossing(userStep, this.points, this.config);
+  wallBoundaryCrossing(prevStep, userStep) {
+    return boundaryLineCrossing(prevStep, userStep, this.points, this.config);
   }
 }

@@ -28,7 +28,7 @@ import { getNewZIndices } from '../../shared/Helpers/Helpers';
 
 import ArrowKeysReact from 'arrow-keys-react';
 
-import { wineLocation, djLocation, outsideDoorFrames, lights, globalConfig } from './constants';
+import { wineLocation, djLocation, outsideDoorFrames, lights, globalConfig, limits, limitsDiv } from './constants';
 
 // store
 import { connect } from 'react-redux';
@@ -97,7 +97,8 @@ class HomePage extends React.Component {
   }
 
   getHomeComponents = () => {
-    const { users, user, zIndicesIcons, zIndicesFrames } = this.props;
+    const { users, user } = this.props;
+    const {zIndicesIcons, zIndicesFrames } = this.state;
     if (this.state.loading)
       return (
         <div className="backgroundCover"><div className="loading">LOADING</div></div>
@@ -106,12 +107,13 @@ class HomePage extends React.Component {
       <React.Fragment>
         {/*  <Welcome w={500} h={400} z={1} x={-250-user.x+ this.state.OGW} y={-320-user.y+ this.state.OGH} />*/}
         {/* <Oak w={500} h={400} z={0} x={-1550 - user.x + this.state.OGW} y={-220 - user.y + this.state.OGH} /> */}
+        {this.getOuterFrame()}
         {this.getDancers()}
         {this.getWineBars()}
         {this.getLights()}
         {this.getDoors()}
         {this.getColumns()}
-        {/* <Folders x={300 - user.x + this.state.OGW} y={-330 - user.y + this.state.OGH} zIcons={zIndicesIcons} zFrames={zIndicesFrames} onDblClick={this.onDblClick} newFrameToTop={this.newFrameToTop} newIconToTop={this.newIconToTop} />*/}
+         <Folders x={540 - user.x + this.state.OGW} y={0 - user.y + this.state.OGH} zIcons={zIndicesIcons} zFrames={zIndicesFrames} onDblClick={this.onDblClick} newFrameToTop={this.newFrameToTop} newIconToTop={this.newIconToTop} />
         {this.getAvatars()}
         <MiniMap users={users} user={user} x={50} y={50} z={50} wineLocation={wineLocation} />
         <Glasses />
@@ -155,13 +157,13 @@ class HomePage extends React.Component {
   getColumns = () => {
     const { users, user } = this.props;
     const y0 = -820;
-    const dy = 60;
-    const dx = 110;
-    const y1 = 50;
+    const dy = 100;
+    const dx = 100;
+    const y1 = -50;
     const h = 280;
     return (
       <div className="Columns">
-        {/*<Column w={80} h={h} x={-240 - dx * 2 - user.x + this.state.OGW} y={y0 + dy * 2 - user.y + this.state.OGH} z={502} />
+       {/*  <Column w={80} h={h} x={-240 - dx * 2 - user.x + this.state.OGW} y={y0 + dy * 2 - user.y + this.state.OGH} z={502} />
         <Column w={80} h={h} x={-240 - dx - user.x + this.state.OGW} y={y0 + dy - user.y + this.state.OGH} z={502} />
         <Column w={80} h={h} x={-240 - user.x + this.state.OGW} y={y0 - user.y + this.state.OGH} z={502}  />
 
@@ -174,18 +176,40 @@ class HomePage extends React.Component {
         <Column w={80} h={h} x={-240 - dx * 2 - user.x + this.state.OGW} y={y1 - dy * 2 - user.y + this.state.OGH} z={502} />
         <Column w={80} h={h} x={-240 - dx - user.x + this.state.OGW} y={y1 - dy - user.y + this.state.OGH} z={502} />
         <Column w={80} h={h} x={-240 - user.x + this.state.OGW} y={y1 - user.y + this.state.OGH} z={502}  />
-
+*/}
         <Column w={80} h={h} x={160 - user.x + this.state.OGW} y={y1 - user.y + this.state.OGH} z={502}  />
         <Column w={80} h={h} x={160 + dx - user.x + this.state.OGW} y={y1 - dy - user.y + this.state.OGH} z={502}  />
         <Column w={80} h={h} x={160 + dx * 2 - user.x + this.state.OGW} y={y1 - dy * 2 - user.y + this.state.OGH} z={502} /> 
+        <Column w={80} h={h} x={160 + dx * 3 - user.x + this.state.OGW} y={y1 - dy * 3 - user.y + this.state.OGH} z={502} /> 
         
-         <Column w={80} h={h} x={-340 - user.x + this.state.OGW} y={y0 - user.y + this.state.OGH} z={502} />
-        <Column w={80} h={h} x={260 - user.x + this.state.OGW} y={y0 - user.y + this.state.OGH} z={502} />
-        */}
+        {/*   <Column w={80} h={h} x={-340 - user.x + this.state.OGW} y={y0 - user.y + this.state.OGH} z={502} />
+        <Column w={80} h={h} x={260 - user.x + this.state.OGW} y={y0 - user.y + this.state.OGH} z={502} />*/}
+       
        
        
       </div>
     )
+  }
+
+  getOuterFrame = () => {
+    const startX = limitsDiv[0].x;
+    const endX = limitsDiv[1].x;
+    const startY = limitsDiv[0].y;
+    const endY = limitsDiv[2].y-24;
+    const w = endX - startX;
+    const h = endY - startY;
+   return (
+    <Frame 
+      className="outerFrame"
+      windowStyle={{background: "transparent"}} 
+      content={<div></div>}
+      x={startX - this.props.user.x + this.state.OGW} 
+      y={startY - this.props.user.y + this.state.OGH} 
+      z={20} 
+      width={w} 
+      height={h}
+    />
+   )
   }
 
   getDoors = () => {
@@ -194,10 +218,10 @@ class HomePage extends React.Component {
     const w = 500;
     return (
       <div className="Doors">
-        <Door id={1} isFlipped={false} w={w} h={h} z={0} x={outsideDoorFrames[2].x - w / 2} dx={-user.x + this.state.OGW} y={outsideDoorFrames[2].y - 24 - h / 2} dy={-user.y + this.state.OGH} user={user} users={users} />
-        <Door id={2} isFlipped={false} w={w} h={h} z={0} x={outsideDoorFrames[0].x - w / 2} dx={-user.x + this.state.OGW} y={outsideDoorFrames[0].y - 24 - h / 2} dy={-user.y + this.state.OGH} user={user} users={users} />
-        <Door id={2} isFlipped={false} w={w} h={h} z={0} x={outsideDoorFrames[3].x - w / 2} dx={-user.x + this.state.OGW} y={outsideDoorFrames[3].y - 24 - h / 2} dy={-user.y + this.state.OGH} user={user} users={users} />
-        <Door id={3} isFlipped={true} w={h} h={w} z={0} x={outsideDoorFrames[1].x - h / 2} dx={-user.x + this.state.OGW} y={outsideDoorFrames[1].y - w / 2} dy={- user.y + this.state.OGH} user={user} users={users} />
+        <Door id={1} isFlipped={false} w={w} h={h} z={0} x={outsideDoorFrames[2].x - w / 2} dx={-user.x + this.state.OGW} y={outsideDoorFrames[2].y - 24 - h} dy={-user.y + this.state.OGH} user={user} users={users} />
+        <Door id={2} isFlipped={false} w={w} h={h} z={0} x={outsideDoorFrames[0].x - w / 2} dx={-user.x + this.state.OGW} y={outsideDoorFrames[0].y - 24 - h} dy={-user.y + this.state.OGH} user={user} users={users} />
+        <Door id={2} isFlipped={false} w={w} h={h} z={0} x={outsideDoorFrames[3].x - w / 2} dx={-user.x + this.state.OGW} y={outsideDoorFrames[3].y - 24 - h} dy={-user.y + this.state.OGH} user={user} users={users} />
+        <Door id={3} isFlipped={true} w={h} h={w} z={0} x={outsideDoorFrames[1].x} dx={-user.x + this.state.OGW} y={outsideDoorFrames[1].y - w / 2-50} dy={- user.y + this.state.OGH} user={user} users={users} />
       </div>
     )
   }

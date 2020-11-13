@@ -3,6 +3,8 @@
   background-size: cover;
   background-position: center;
   pointer-events: none; }
+  .HomePage .outerFrame {
+    pointer-events: none; }
   .HomePage .loading {
     position: absolute;
     top: 45%;

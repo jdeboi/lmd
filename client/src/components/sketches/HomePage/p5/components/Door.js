@@ -1,5 +1,5 @@
 
-import { doorCrossing, boundaryCrossing } from './Boundaries';
+import { doorLineCrossing } from './Boundaries';
 import { outsideDoors } from '../../constants';
 
 export default class Door {
@@ -16,7 +16,7 @@ export default class Door {
     p5.line(this.point.x0 * scaler, this.point.y0 * scaler, this.point.x1 * scaler, this.point.y1 * scaler);
   }
 
-  doorCrossing(userStep) {
-    return doorCrossing(userStep, this.point, this.config);
+  doorCrossing(prevStop, userStep) {
+    return doorLineCrossing(prevStop, userStep, this.point, this.config);
   }
 }
