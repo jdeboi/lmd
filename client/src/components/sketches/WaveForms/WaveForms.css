@@ -250,19 +250,26 @@ input.standardInputWhite {
   .WaveForms .confessional {
     font-size: 12px;
     padding: 15px;
+    width: 370px;
     display: flex;
     flex-direction: column;
     color: white; }
-    .WaveForms .confessional .multitext textarea {
-      height: 80px;
-      padding: 10px;
-      color: white; }
+    .WaveForms .confessional .txt-box {
+      padding-bottom: 10px; }
+      .WaveForms .confessional .txt-box .multitext textarea {
+        height: 40px;
+        padding: 10px;
+        color: white; }
     .WaveForms .confessional input {
       padding: 10px;
       width: 150px;
       color: white; }
-    .WaveForms .confessional .text-line0 {
-      padding: 0px 0 20px 0; }
+    .WaveForms .confessional .line0 {
+      display: flex;
+      flex-direction: row;
+      padding-bottom: 20px; }
+      .WaveForms .confessional .line0 .text-line0 {
+        padding: 0px 20px 20px 0; }
     .WaveForms .confessional .text-line1 {
       padding: 10px 0 20px 0; }
     .WaveForms .confessional .text-line2 {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Frame from '../../shared/Frame/Frame';
 import DesktopIcon from '../../shared/DesktopIcon/DesktopIcon';
 // import FrameSimple from '../../shared/Frame/FrameSimple';
@@ -20,7 +20,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 
-import ReactAudioPlayer from 'react-audio-player';
+// import ReactAudioPlayer from 'react-audio-player';
 
 // import mainVid from  "./assets/waves2_lines.mp4";
 // import dove from  "./assets/dove_t.gif";
@@ -28,7 +28,7 @@ import ReactAudioPlayer from 'react-audio-player';
 
 // import Glasses from '../../shared/Glasses/Glasses';
 
-import { faEye,faRetweet, faVideo, faMicrophoneAlt, faMicrophoneAltSlash } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faRetweet, faVideo, faMicrophoneAlt, faMicrophoneAltSlash } from "@fortawesome/free-solid-svg-icons";
 import { faComment, faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -56,8 +56,8 @@ class WaveForms extends React.Component {
     super(props);
 
     let factor = .3;
-    this.dimW = 1584*factor;
-    this.dimH = 1588*factor;
+    this.dimW = 1584 * factor;
+    this.dimH = 1588 * factor;
 
     this.minVol = .01;
 
@@ -65,16 +65,16 @@ class WaveForms extends React.Component {
 
     factor = 1.4;
     this.videoConstraints = {
-      width: 230*factor,
-      height: 130*factor,
+      width: 230 * factor,
+      height: 130 * factor,
       facingMode: "user"
     };
 
     const bottomBar = 60;
     const spacing = 120;
     this.tweetW = 400;
-    const winX = Math.max((window.innerWidth - this.dimW - this.tweetW - spacing)/2, 50)
-    const winY = (window.innerHeight - this.dimH - 26 - 30 -bottomBar)/2+30;
+    const winX = Math.max((window.innerWidth - this.dimW - this.tweetW - spacing) / 2, 50)
+    const winY = (window.innerHeight - this.dimH - 26 - 30 - bottomBar) / 2 + 30;
 
     // const webY = winY -50;
     // const webX = tX;
@@ -88,9 +88,9 @@ class WaveForms extends React.Component {
       windowHeight: window.innerHeight,
       windowX: winX,//(window.innerWidth - this.dimW)/2,
       windowY: winY,//(window.innerHeight - this.dimH-80)/2,
-      tweetX: winX+this.dimW + 100,
+      tweetX: winX + this.dimW + 100,
       tweetY: winY + 20,
-      webX: winX+this.dimW + 100,
+      webX: winX + this.dimW + 100,
       webY: winY - 50,
       earCursor: this.props.cursor,
       volume: this.minVol,
@@ -116,7 +116,7 @@ class WaveForms extends React.Component {
 
 
   handleChange = (event) => {
-    this.setState({timePeriod: event.target.value});
+    this.setState({ timePeriod: event.target.value });
   };
 
   resetPlayer = () => {
@@ -132,47 +132,47 @@ class WaveForms extends React.Component {
   }
 
   render() {
-    const {timePeriod, prayTo} = this.state;
+    const { timePeriod, prayTo } = this.state;
 
-    return(
+    return (
       <div className="WaveForms Sketch">
         <div className="confessions-form">
           <Frame className="stairway" title="cloud confessional" content={
-              /*<video width={dimW-2} height={dimH} muted loop autoPlay><source src={videoDimURL} type="video/mp4"></source></video>*/
-              <div>
-                <video autoPlay muted loop
-                  ref={video => {this.videoMain = video;}}
-                  className={"react-player mainContent"}
-                  width={this.dimW}
-                  height={this.dimH}
-                  >
-                  <source src={window.AWS + "/waveforms/waves2_lines.mp4"} type="video/mp4" ></source>
-                </video>
-                <LiveBar />
-              </div>
-            }
+            /*<video width={dimW-2} height={dimH} muted loop autoPlay><source src={videoDimURL} type="video/mp4"></source></video>*/
+            <div>
+              <video autoPlay muted loop
+                ref={video => { this.videoMain = video; }}
+                className={"react-player mainContent"}
+                width={this.dimW}
+                height={this.dimH}
+              >
+                <source src={window.AWS + "/waveforms/waves2_lines.mp4"} type="video/mp4" ></source>
+              </video>
+              <LiveBar />
+            </div>
+          }
             width={this.dimW} height={this.dimH} x={this.state.windowX} y={this.state.windowY}
-            />
+          />
 
-          <Frame className="doveFrame" title="" windowStyle={{background: "transparent"}} content={
-              <img src={window.AWS + "/waveforms/dove_t.gif"} width={90} height={90} />
-            }
-            width={90} height={90} x={this.state.windowX+this.dimW/2-45} y={this.state.windowY+this.dimH/2-45}
-            />
+          <Frame className="doveFrame" title="" windowStyle={{ background: "transparent" }} content={
+            <img src={window.AWS + "/waveforms/dove_t.gif"} width={90} height={90} />
+          }
+            width={90} height={90} x={this.state.windowX + this.dimW / 2 - 45} y={this.state.windowY + this.dimH / 2 - 45}
+          />
 
           <div className="member" ref={this.memberRef0}>
             <Frame className="static" content={
-                /* <img height={130} width={230} src="https://media4.giphy.com/media/UiwxIx9BElaVi/giphy.gif?cid=ecf05e47a8bbe3d9385a466e6febc98bd9d83fe2e23ed054&rid=giphy.gif" />*/
-                <div>
-                  <Webcam videoConstraints={this.videoConstraints} />
-                  <img src={window.AWS + "/waveforms/divine.gif"} width={"100%"} height={"100%"} style={{opacity:.3, position: "absolute", top: 0, left:0}} />
-                </div>
-              }
+              /* <img height={130} width={230} src="https://media4.giphy.com/media/UiwxIx9BElaVi/giphy.gif?cid=ecf05e47a8bbe3d9385a466e6febc98bd9d83fe2e23ed054&rid=giphy.gif" />*/
+              <div>
+                <Webcam videoConstraints={this.videoConstraints} />
+                <img src={window.AWS + "/waveforms/divine.gif"} width={"100%"} height={"100%"} style={{ opacity: .3, position: "absolute", top: 0, left: 0 }} />
+              </div>
+            }
               x={this.state.webX} y={this.state.webY} width={this.videoConstraints.width} height={this.videoConstraints.height}
-              />
+            />
           </div>
           {/*this.getEarMenu()*/}
-          <ReactAudioPlayer
+          {/* <ReactAudioPlayer
             src={window.AWS + "/waveforms/shell_sound.wav"}
             autoPlay={true}
             volume={this.state.volume}
@@ -181,34 +181,36 @@ class WaveForms extends React.Component {
             ref={player => {
               this.audioPlayer = player;
             }}
-            />
+            /> */}
           {/* </div>*/}
 
-          <Frame title="" windowStyle={{background: "transparent"}} content={
-              <div className="confessional">
+          <Frame title="" windowStyle={{ background: "transparent" }} content={
+            <div className="confessional">
+              <div className="line0">
                 <div className="text-line0">Bless me</div>
-                <select value={this.state.prayTo} onChange={this.handleChange}>
+                <select className="confessional-box" value={this.state.prayTo} onChange={this.handleChange}>
                   <option value="RBG">RBG</option>
                   <option value="Father">Father</option>
                   <option value="Mitch McConnel">Mitch McConnel</option>
                   <option value="Kanye">Kanye</option>
                 </select>
-                <div>for I have sinned. It has been:</div>
+              </div>
+              <div>for I have sinned. It has been:</div>
 
-                <div className="confessional-time">
-                  <div className="confessional-box">
-                    <input type="number" placeholder="number" />
-                  </div>
-
-                  <select value={this.state.timePeriod} onChange={this.handleChange}>
-                    <option value="days">days</option>
-                    <option value="months">months</option>
-                    <option value="years">years</option>
-                    <option value="never">never</option>
-                  </select>
+              <div className="confessional-time">
+                <div className="confessional-box">
+                  <input type="number" placeholder="number" />
                 </div>
-                <div className="text-line1">since I last went to confession.</div>
 
+                <select className="confessional-box" value={this.state.timePeriod} onChange={this.handleChange}>
+                  <option value="days">days</option>
+                  <option value="months">months</option>
+                  <option value="years">years</option>
+                  <option value="never">never</option>
+                </select>
+              </div>
+              <div className="text-line1">since I last went to confession.</div>
+              <div className="txt-box">
                 <div className="multitext confessional-box">
                   <textarea
                     id="outlined-multiline-static"
@@ -216,13 +218,14 @@ class WaveForms extends React.Component {
                     multiline="true"
                     placeholder="confession"
                     className="box text-line2"
-                    />
+                  />
                 </div>
-                <button className="confessional-box" onClick={this.onSubmit}>submit</button>
               </div>
-            }
-            width={this.tweetW} height={280}  x={this.state.tweetX} y={this.state.tweetY}
-            />
+              <button className="confessional-box" onClick={this.onSubmit}>submit</button>
+            </div>
+          }
+            width={this.tweetW} height={300} x={this.state.tweetX} y={this.state.tweetY}
+          />
           <BottomBar />
         </div>
 
@@ -250,78 +253,79 @@ function getTweetContent(string) {
         let username = result[0];
         const profileUrl = "https://twitter.com/" + username.substring(1, username.length);
         return <a key={key} href={profileUrl} target="_blank">{username}</a>;
-        }},
-        {
-          regex: /(http|https):\/\/(\S+)\.([a-z]{2,}?)(.*?)( |\,|$|\.)/gim,
-          fn: (key, result) => <span key={key}>
-          <a target="_blank" href={`${result[1]}://${result[2]}.${result[3]}${result[4]}`}>{result[2]}.{result[3]}{result[4]}</a>{result[5]}
-          </span>
-        },
-        {
-          regex: /\#([a-z0-9_\-]+?)( |\,|$|\.|\:)/gim, //regex to match a hashtag
-          fn: (key, result) => {
-            let hashtag = result[0];
-            const hashtagUrl = `https://twitter.com/hashtag/${hashtag.substring(1, hashtag.length)}?src=hashtag_click`;
-            return <a key={key} href={hashtagUrl} target="_blank">{hashtag}</a>;
-            }
-          },
-          {
-            regex: /\&amp/,
-            fn: (key, result) => {
-              let amp = result;
-              return "&";
-            }
-          }];
+      }
+    },
+    {
+      regex: /(http|https):\/\/(\S+)\.([a-z]{2,}?)(.*?)( |\,|$|\.)/gim,
+      fn: (key, result) => <span key={key}>
+        <a target="_blank" href={`${result[1]}://${result[2]}.${result[3]}${result[4]}`}>{result[2]}.{result[3]}{result[4]}</a>{result[5]}
+      </span>
+    },
+    {
+      regex: /\#([a-z0-9_\-]+?)( |\,|$|\.|\:)/gim, //regex to match a hashtag
+      fn: (key, result) => {
+        let hashtag = result[0];
+        const hashtagUrl = `https://twitter.com/hashtag/${hashtag.substring(1, hashtag.length)}?src=hashtag_click`;
+        return <a key={key} href={hashtagUrl} target="_blank">{hashtag}</a>;
+      }
+    },
+    {
+      regex: /\&amp/,
+      fn: (key, result) => {
+        let amp = result;
+        return "&";
+      }
+    }];
 
-          let processed = processString(config)(string);
-          return processed;
-        }
+  let processed = processString(config)(string);
+  return processed;
+}
 
-        function getMostEngagement(mode, tweets) {
-          let max = 0;
-          let id = 0;
-          let maxId = 0;
+function getMostEngagement(mode, tweets) {
+  let max = 0;
+  let id = 0;
+  let maxId = 0;
 
-          for (const tweet of tweets) {
-            let likes = tweet.public_metrics.like_count;
-            let rts = tweet.public_metrics.retweet_count;
-            let replies = tweet.public_metrics.reply_count;
-            let metrics = [likes, rts, replies];
+  for (const tweet of tweets) {
+    let likes = tweet.public_metrics.like_count;
+    let rts = tweet.public_metrics.retweet_count;
+    let replies = tweet.public_metrics.reply_count;
+    let metrics = [likes, rts, replies];
 
-            if (metrics[mode] > max) {
-              max = likes;
-              maxId = id;
-            }
-            id++;
-          }
-          return maxId;
-        }
+    if (metrics[mode] > max) {
+      max = likes;
+      maxId = id;
+    }
+    id++;
+  }
+  return maxId;
+}
 
-        function mapVal(val, in_min, in_max, out_min, out_max) {
-          return (val - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-        }
+function mapVal(val, in_min, in_max, out_min, out_max) {
+  return (val - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
 
-        function getTweetTime(tweet_created_at) {
-          // const dateToFormat = new Date('1976-04-19T12:59-0500');
-          // const created_time = isoStringToDate(tweet_created_at);
-          // var timeDiff = new Date() - created_time;
-          // timeDiff /= 1000;
-          // var seconds = Math.round(timeDiff);
-          // console.log(created_time, timeDiff, seconds);
-          // return seconds + "s";
-          return "5s";
-        }
+function getTweetTime(tweet_created_at) {
+  // const dateToFormat = new Date('1976-04-19T12:59-0500');
+  // const created_time = isoStringToDate(tweet_created_at);
+  // var timeDiff = new Date() - created_time;
+  // timeDiff /= 1000;
+  // var seconds = Math.round(timeDiff);
+  // console.log(created_time, timeDiff, seconds);
+  // return seconds + "s";
+  return "5s";
+}
 
-        function isoStringToDate(s) {
-          var b = s.split(/[-t:+]/ig);
-          return new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5]));
-        }
-        //
-        // function urlify(text) {
-        //   var urlRegex = /(https?:\/\/[^\s]+)/g;
-        //   return text.replace(urlRegex, function(url) {
-        //     return '<a href="' + url + '">' + url + '</a>';
-        //   })
-        // }
+function isoStringToDate(s) {
+  var b = s.split(/[-t:+]/ig);
+  return new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5]));
+}
+//
+// function urlify(text) {
+//   var urlRegex = /(https?:\/\/[^\s]+)/g;
+//   return text.replace(urlRegex, function(url) {
+//     return '<a href="' + url + '">' + url + '</a>';
+//   })
+// }
 
-        export default withRouter(WaveForms);
+export default withRouter(WaveForms);

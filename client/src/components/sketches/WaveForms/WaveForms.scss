@@ -425,24 +425,32 @@ $tweetColHr: #aaaadd88;
     border: 1px solid $pearlyGradientEndC;
     border-radius: $borderRad;
     color: white;
+    // padding: 10px 20px;
   }
 
   .confessional {
     font-size: 12px;
     padding: 15px;
+    width: 400px-30px;
     display: flex;
     flex-direction: column;
     color: white;
     // background-color: rgba(0, 0, 50, .1);
 
-    .multitext {
-      textarea {
-        height: 80px;
-        padding: 10px;
-        color: white;
-      }
-    }
+    .txt-box {
+      padding-bottom: 10px;
 
+      .multitext {
+        textarea {
+          height: 40px;
+          padding: 10px;
+          color: white;
+        }
+  
+      }
+  
+    }
+    
     input {
       padding: 10px;
       width: 150px;
@@ -450,16 +458,27 @@ $tweetColHr: #aaaadd88;
     }
 
     button {
-
+      
     }
 
     .item {
       // padding-bottom: 15px;
     }
 
-    .text-line0 {
-      padding: 0px 0 20px 0;
+    .line0 {
+      display: flex;
+      flex-direction: row;
+      padding-bottom: 20px;
+     
+
+      .text-line0 {
+        padding: 0px 20px 20px 0;
+      }
+
+
     }
+
+    
     .text-line1 {
       padding: 10px 0 20px 0;
     }
