@@ -23,14 +23,16 @@ class Dancer extends React.Component {
     var x = (Math.random()*2-1)*50+this.state.x;
     var y = (Math.random()*2-1)*50+this.state.y;
 
-    var maxX = danceFloor.w-60;
-    var minX = 0;
+    
+    var minX = -300;
+    var maxX = 360;
     var minY = 120;
-    var maxY = danceFloor.h+60;
+    var maxY = danceFloor.h-50;
     if (x < minX) x = minX;
     else if (x > maxX) x = maxX;
     if (y < minY) y = minY;
     else if (y > maxY) y = maxY;
+    
     this.setState({x, y})
   }
 

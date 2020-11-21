@@ -1,6 +1,7 @@
 import { roomConfig, globalConfig } from '../../constants';
 import {doorCrossing, boundaryCrossing, doorLineCrossing, boundaryLineCrossing} from './Boundaries';
 
+import { rooms } from '../../constants';
 
 export default class Room {
 
@@ -8,24 +9,7 @@ export default class Room {
 
 
   constructor(p5, i) {
-    const roomsInit = [
-      {id: "B", title: "bathroom", x: -5, y: 12, rot: -90, dir: "right"},
-      {id: 0, title: "gift-shop", x: 20, y: 22, rot: 90, dir: "left"},
-      {id: 1, title: "macbook-air", x: 5, y: 22, rot: -90, dir: "right"},
-      {id: 2, title: "wet-streams", x: 12, y: 13, rot: 0, dir: "bottom"},
-      {id: 3, title: "hard-drives-on-seashores", x: 12, y: 8, rot: -90, dir: "right"},
-      {id: 4, title: "jungle-gyms", x: 7, y: 8, rot: 90, dir: "left"},
-      {id: 5, title: "wasted-days-are-days-wasted", x: 0, y: 17, rot: -90, dir: "right"},
-      {id: 6, title: "esc-to-mars", x: 0, y: 0, rot: 0, dir: "bottom"},
-      {id: 7, title: "xfinity-depths", x: 5, y: 0, rot: 0, dir: "bottom"},
-      {id: 8, title: "cloud-confessional", x: 10, y: 0, rot: 0, dir: "bottom"},
-      {id: 9, title: "same-storm-different-boat", x: 15, y: 0, rot: 0, dir: "bottom"},
-      // {id: 9, title: "tbd", x: 20, y: 0, rot: 0, dir: "bottom"},
-      {id: 10, title: "tbd", x: 27, y: 5, rot: 90, dir: "left"},
-      {id: 11, title: "tbd", x: 27, y: 10, rot: 90, dir: "left"},
-      {id: 12, title: "tbd", x: 27, y: 15, rot: 90, dir: "left"},
-    ];
-    const room = roomsInit[i];
+    const room = rooms[i];
 
     this.p5 = p5;
     this.x = room.x;

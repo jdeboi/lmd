@@ -4,7 +4,11 @@
   background-position: center;
   pointer-events: none; }
   .HomePage .outerFrame {
-    pointer-events: none; }
+    pointer-events: none;
+    box-shadow: 0px 0px 20px #000000;
+    /* #6c6c6c; */
+    background: transparent;
+    position: absolute; }
   .HomePage .loading {
     position: absolute;
     top: 45%;
@@ -32,10 +36,28 @@
     .HomePage .MFA-deets div a {
       text-decoration: none;
       color: black; }
-  .HomePage .WineBar {
+  .HomePage .Bar {
     padding: 6px;
     padding-top: 15px;
     font-size: 30px; }
+  .HomePage .DJStation {
+    padding: 6px;
+    font-size: 30px; }
+  .HomePage .pools .poolContainer .pool {
+    width: 300px;
+    pointer-events: all;
+    height: 300px;
+    background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/homePage/waves_white.gif);
+    background-size: cover; }
+  .HomePage .room-info {
+    padding: 10px;
+    color: black;
+    background-color: white;
+    height: 200px; }
+    .HomePage .room-info h3 {
+      font-size: 14px; }
+    .HomePage .room-info p {
+      font-size: 10px; }
   .HomePage .MiniMap .otherAvatarsMiniMap {
     position: absolute;
     top: 0px;
@@ -86,11 +108,21 @@
         top: -50px;
         left: 28px;
         font-size: 36px; }
-      .HomePage .avatars .avatar .emoji-addons .emoji-wine {
+      .HomePage .avatars .avatar .emoji-addons .emoji-item {
         position: absolute;
-        top: -10px;
-        left: -20px;
         font-size: 36px; }
+      .HomePage .avatars .avatar .emoji-addons .emoji-wine {
+        top: -10px;
+        left: -20px; }
+      .HomePage .avatars .avatar .emoji-addons .emoji-cocktail {
+        top: -10px;
+        left: 20px; }
+      .HomePage .avatars .avatar .emoji-addons .emoji-bread {
+        top: -10px;
+        left: 0px; }
+      .HomePage .avatars .avatar .emoji-addons .emoji-cheese {
+        top: 5px;
+        left: 0px; }
   .HomePage .react-p5 {
     position: absolute;
     top: 0;

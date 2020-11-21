@@ -1,12 +1,10 @@
 @import "../../../styles/constants.scss";
 
-
-
 .expandable:hover {
   // cursor: pointer;
   background: $headerGradient;
   border-bottom: 2px solid $headerGradientEndC;
-  height: 30px;
+  height: $headerH;
   // border-top-right-radius: $borderRad;
   // border-top-left-radius: $borderRad;
   // border-bottom: 0.1em solid #5978F5;
@@ -15,9 +13,8 @@
 .clickable:hover {
   background: $headerGradient;
   border-bottom: 2px solid $headerGradientEndC;
-  height: 30px;
+  height: $headerH;
 }
-
 
 /*--Header--*/
 /* a3a3a3 */
@@ -65,16 +62,25 @@
   }
 
   .disabled {
-    color: rgba(255, 255, 255, .4);
+    color: rgba(255, 255, 255, 0.4);
   }
   .opened {
     color: white;
   }
-  .closed{
-    color: rgba(255, 255, 255, .4);
+  .closed {
+    color: rgba(255, 255, 255, 0.4);
   }
   .icon {
     font-size: 20px;
+    line-height: $headerH;
+    
+    svg {
+      vertical-align: middle;
+    }
+
+    &.notify {
+      padding-right: 20px;
+    }
   }
 
   .selected {
@@ -84,7 +90,7 @@
     border-bottom: 0.1em solid $headerGradientEndC;
     // border-top-left-radius: $borderRad;
     // border-top-right-radius: $borderRad;
-    height: 30px;
+    height: $headerH;
   }
 
   ul {
@@ -96,8 +102,6 @@
       line-height: $headerH;
       padding: 0 0.5em;
       position: relative;
-
-
 
       a {
         color: white;
@@ -119,16 +123,12 @@
     }
   }
 
-
-
-
   .fa {
     color: white;
   }
 
   .submenu {
     display: none;
-
 
     input[type="text"] {
       border-radius: 2em;
@@ -161,8 +161,6 @@
       white-space: nowrap;
       z-index: 200;
 
-
-
       &.mobile {
         max-height: 250px;
 
@@ -171,12 +169,7 @@
           padding: 8px 8px 8px 15px;
           white-space: normal;
           // background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #000000), color-stop(100%, #333333));
-
-
-
         }
-
-
       }
 
       // .white {
@@ -243,10 +236,7 @@
           margin-right: 0px;
         }
       }
-
-
     }
-
 
     .hasSubMenu:after {
       content: "\f04b";
@@ -323,25 +313,63 @@
     background: linear-gradient(270deg, #00ffbd, #e98fea, #8fcdea);
     background-size: 600% 600%;
 
-    -webkit-animation: ClickMeGradient .60s ease infinite;
-    -moz-animation: ClickMeGradient .60s ease infinite;
-    animation: ClickMeGradient .60s ease infinite;
+    -webkit-animation: ClickMeGradient 0.6s ease infinite;
+    -moz-animation: ClickMeGradient 0.6s ease infinite;
+    animation: ClickMeGradient 0.6s ease infinite;
   }
 
+  .notification {
+    position: relative;
+
+    .badge {
+      position: absolute;
+      font-size: 10px;
+      top: -30px;
+      left: 18px;
+      height: 20px;
+      width: 20px;
+      text-align: center;
+      line-height: 20px; 
+      // padding: 2px 2px;
+      border-radius: 50%;
+      background: red;
+      color: white;
+    }
+  }
+  
+
   @-webkit-keyframes ClickMeGradient {
-    0%{background-position:0% 48%}
-    50%{background-position:100% 53%}
-    100%{background-position:0% 48%}
+    0% {
+      background-position: 0% 48%;
+    }
+    50% {
+      background-position: 100% 53%;
+    }
+    100% {
+      background-position: 0% 48%;
+    }
   }
   @-moz-keyframes ClickMeGradient {
-    0%{background-position:0% 48%}
-    50%{background-position:100% 53%}
-    100%{background-position:0% 48%}
+    0% {
+      background-position: 0% 48%;
+    }
+    50% {
+      background-position: 100% 53%;
+    }
+    100% {
+      background-position: 0% 48%;
+    }
   }
   @keyframes ClickMeGradient {
-    0%{background-position:0% 48%}
-    50%{background-position:100% 53%}
-    100%{background-position:0% 48%}
+    0% {
+      background-position: 0% 48%;
+    }
+    50% {
+      background-position: 100% 53%;
+    }
+    100% {
+      background-position: 0% 48%;
+    }
   }
 
   @media screen and (max-width: 830px) {
@@ -366,28 +394,22 @@
       font-size: $fontSize-mobile-3;
     }
   }
-
 }
 
 .BackHeader {
   position: absolute;
   top: 0;
-  left:0;
+  left: 0;
   background: black;
   z-index: 499;
   width: 100%;
   height: 10px;
 }
 
-
-
-
-
 /*--Menus--*/
 .visible {
   display: block !important;
 }
-
 
 .search {
   padding: 5px 10px !important;
@@ -404,7 +426,6 @@
 #volume-icon-li {
   width: 1em;
 }
-
 
 .focus img {
   border: 2px solid rgba(225, 225, 225, 0.5) !important;

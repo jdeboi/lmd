@@ -108,7 +108,9 @@ function isUser(userName) {
     "jenna",
     "winebot",
     "hostbot",
-    "helpbot"
+    "helpbot",
+    "dj", 
+    "djbot"
   ];
 
   let values = Array.from(clients.values());

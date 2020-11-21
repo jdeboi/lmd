@@ -1,26 +1,11 @@
 /* eslint-disable no-use-before-define */
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-// import { makeStyles, withStyles } from '@material-ui/core/styles';
-//
-// const styles = theme => ({
-//   root: {
-//     textField: {
-//       '& .MuiInput-underline': {
-//         borderBottom: '2px solid blue'
-//       },
-//       '& .MuiInput-underline:after': {
-//         borderBottom: '3px solid yellow'
-//       },
-//       '& .MuiInput-underline:hover': {
-//         borderBottom: '3px solid red'
-//       },
-//     }
-//
-//   },
-// });
+
+import { connect } from 'react-redux';
+import { resetMessgeNotification } from '../../../store/actions/messages';
+
 
 
 class ComboBox extends React.Component {
@@ -116,7 +101,7 @@ class ComboBox extends React.Component {
     var users = this.initialUsers;
     if (this.props.users) users = [...users, ...this.props.users];
     let usersInRoom = users.filter((user, i) => {
-      return (i < 2) || (user.room === this.props.room && user.id !== 1);
+      return (i < 10) || (user.room === this.props.room && user.id);
     })
     // console.log("ROOM USERS", usersInRoom)
     return usersInRoom;
@@ -159,6 +144,7 @@ class ComboBox extends React.Component {
           onInputChange={(event, newInputValue) => {
             this.setInputValue(newInputValue);
           }}
+          onFocus={this.props.resetMessgeNotification}
           options={users}
           getOptionLabel={(option) => this.getLabel(option)}
           getOptionSelected={(option, value) => this.getLabel(option) === this.getLabel(value)}
@@ -176,6 +162,17 @@ class ComboBox extends React.Component {
     );
   }
 }
-//    // style={{ border: '1px solid white'}}
 
-export default ComboBox;
+const mapStateToProps = (state) => {
+  return {
+  }
+}
+
+const mapDispatchToProps = () => {
+  return {
+    resetMessgeNotification
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps())(ComboBox);

@@ -16,7 +16,7 @@ import Cookies from 'js-cookie';
 // store
 import { connect } from 'react-redux';
 import { setUserRoom, setUser, moveUser, setWine, resetWine } from '../store/actions/user';
-import { addMessage } from '../store/actions/messages';
+import { addMessage, addMessageNotification } from '../store/actions/messages';
 
 // sketches
 import HomePage from '../components/sketches/HomePage/HomePage';
@@ -282,6 +282,7 @@ class App extends React.Component {
       message.from = this.getUserNameById(message.from);
       // this.addUserMessage(message);
       this.props.addMessage(message);
+      this.props.addMessageNotification();
     })
 
     socket.on("userJoined", data => {
@@ -298,12 +299,14 @@ class App extends React.Component {
   }
 
   addBots = () => {
-    const wineBot0 = { x: wineLocation[0].x + 120, y: wineLocation[0].y + 50, avatar: "🤖", room: "home-page", userName: "wineBot", id: 0 };
+    const wineBot0 = { x: wineLocation[0].x + 120, y: wineLocation[0].y + 50, avatar: "🤖", room: "home-page", userName: "cheeseBot", id: 0 };
     const wineBot1 = { x: wineLocation[1].x + 120, y: wineLocation[1].y + 50, avatar: "🤖", room: "home-page", userName: "wineBot", id: 1 };
-    const dj = { x: djLocation.x, y: djLocation.y, room: "home-page", avatar: "🎧", userName: "DJ", id: 2 };
+    const wineBot2 = { x: wineLocation[2].x + 120, y: wineLocation[2].y + 50, avatar: "🤖", room: "home-page", userName: "cocktailBot", id: 2 };
+    const dj = { x: djLocation.x, y: djLocation.y, room: "home-page", avatar: "🎧", userName: "DJ", id: 3 };
     // const hostBot = {x: 300, y: 600, avatar: "🤖", room:"home", userName:"hostBot", id:1}
     socket.emit("setBot", wineBot0);
     socket.emit("setBot", wineBot1);
+    socket.emit("setBot", wineBot2);
     socket.emit("setBot", dj);
     // socket.emit("setBot", hostBot);
   }
@@ -536,7 +539,8 @@ const mapDispatchToProps = () => {
     setUser,
     moveUser,
     setWine,
-    addMessage
+    addMessage,
+    addMessageNotification
   }
 }
 //

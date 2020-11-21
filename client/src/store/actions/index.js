@@ -1,8 +1,4 @@
 // action types
-export const LOGIN = 'LOGIN';
-export const INCREMENT = 'INCREMENT';
-export const DECREMENT = 'DECREMENT';
-
 export const SHOWMAP = 'SHOWMAP';
 export const HIDEMAP = 'HIDEMAP';
 export const TOGGLEMAP = 'TOGGLEMAP';
@@ -22,25 +18,6 @@ export const TOGGLEUSERICONS = 'TOGGLEUSERICONS';
 export const SETUSERROOM = 'SETUSERROOM';
 
 
-
-// action creators
-export const login = () => {
-  return {
-    type: LOGIN
-  }
-}
-
-export const incrementCount = () => {
-  return {
-    type: INCREMENT
-  }
-}
-
-export const decrementCount = () => {
-  return {
-    type: DECREMENT
-  }
-}
 
 ///////////// MAP
 export const toggleMap = () => {
@@ -80,7 +57,7 @@ export const hideFaq = () => {
   }
 }
 
-///////////// MAP
+///////////// Chat
 export const toggleChat = () => {
   return {
     type: TOGGLECHAT

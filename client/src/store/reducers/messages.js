@@ -1,7 +1,6 @@
-import { ADDMESSAGE } from '../actions/messages';
+import { ADDMESSAGE, INCREMENTMESSAGENOTIFICATION, RESETMESSAGENOTIFICATION } from '../actions/messages';
 
-// reducer (check what to do with action)
-const messagesReducer = (state=[], action) => {
+export const messagesReducer = (state=[], action) => {
   switch(action.type) {
     case ADDMESSAGE:
       const messages = [...state, action.payload.message];
@@ -11,4 +10,15 @@ const messagesReducer = (state=[], action) => {
   }
 }
 
-export default messagesReducer;
+
+export const messageNotificationReducer = (state=0, action) => {
+  switch(action.type) {
+    case INCREMENTMESSAGENOTIFICATION:
+      return state + 1;
+    case RESETMESSAGENOTIFICATION:
+      return 0;
+    default:
+      return state;
+  }
+}
+

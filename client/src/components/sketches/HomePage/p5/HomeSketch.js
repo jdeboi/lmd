@@ -7,7 +7,7 @@ import Wall from "./components/Wall";
 import Room from "./components/Room";
 import Door from "./components/Door";
 import MiniMap from "./components/MiniMap";
-import { globalConfig, danceFloor, limits } from "../constants";
+import { globalConfig, danceFloor, limits, pools } from "../constants";
 
 var walls = [];
 var rooms = [];
@@ -137,24 +137,67 @@ export default (props) => {
     // drawSpaceFloor(24, 22, 4, 8, p5); // bottom to left
     ////////
 
-    drawFloor(0, 22, 28, 18, false, false, globalConfig.scaler, p5);
-    drawFloor(-10, -5, 28, 18, false, false, globalConfig.scaler*4, p5);
+    // top row
+    drawFloor(limits[0].x, limits[0].y, 28, 3, false, false, globalConfig.scaler, p5);
+    // right alley
+    drawFloor(32, 5, 3, 14, false, false, globalConfig.scaler, p5);
+
+
+    // stairsOG
+    // drawFloor(-10, 12, 5, 10, false, false, globalConfig.scaler, p5);
+    // drawFloor(-5, 17, 5, 10, false, false, globalConfig.scaler, p5); // left column
+    // drawFloor(0, 22, 5, 10, false, false, globalConfig.scaler, p5);
+    // drawFloor(5, 27, 5, 8, false, false, globalConfig.scaler, p5);
+
+    drawFloor(limits[0].x, 12, 3, 8, false, false, globalConfig.scaler, p5);
+    drawFloor(limits[0].x+3, 17, 5, 3, false, false, globalConfig.scaler, p5); // left column
+    drawFloor(-3, 20, 3, 5, false, false, globalConfig.scaler, p5);
+    drawFloor(0, 22, 5, 3, false, false, globalConfig.scaler, p5);
+    drawFloor(2, 25, 3, 5, false, false, globalConfig.scaler, p5);
+    drawFloor(5, 27, 5, 3, false, false, globalConfig.scaler, p5);
+    drawFloor(7, 30, 3, 5, false, false, globalConfig.scaler, p5);
+
+    // connect right side corner
+    drawFloor(25, 25, 3, 5, false, false, globalConfig.scaler, p5);
+    drawFloor(23, 27, 3, 3, false, false, globalConfig.scaler, p5);
+    drawFloor(22, 28, 1, 1, false, false, globalConfig.scaler, p5);
+    drawFloor(21, 29, 2, 1, false, false, globalConfig.scaler, p5);
+    drawFloor(26, 24, 2, 1, false, false, globalConfig.scaler, p5);
+    drawFloor(27, 23, 1, 1, false, false, globalConfig.scaler, p5);
+
+    // stairsBig
+    // drawFloor(pools[0].x, pools[0].y, 5, 5, true, false, globalConfig.scaler*5, p5);
+    // drawFloor(pools[1].x, pools[1].y, 5, 5, true, false, globalConfig.scaler*5, p5);
+    // drawFloor(pools[2].x, pools[2].y, 5, 5, true, false, globalConfig.scaler*5, p5);
+    p5.noStroke();
+    drawSpaceFloor(pools[0].x, pools[0].y, 5, 5, p5);
+    drawSpaceFloor(pools[1].x, pools[1].y, 5, 5, p5);
+    drawSpaceFloor(pools[2].x, pools[2].y, 5, 5, p5);
+
+    // drawFloor(-10, 22+15, 15, 5, false, false, globalConfig.scaler*5, p5); // bottom row
+    // drawFloor(-10, 22+10, 10, 5, false, false, globalConfig.scaler*5, p5);
+    // drawFloor(-10, 22+5, 5, 5, false, false, globalConfig.scaler*5, p5);
+    // drawFloor(5, 27, 5, 5, false, false, globalConfig.scaler, p5);
+
+    // top left
+    p5.noStroke();
+    drawSpaceFloor(limits[0].x, 0, 8, 12, p5);
+    // behind dance
+    drawSpaceFloor(20, limits[0].y, 15, 8, p5);
+
+
+    // drawFloor(0, 22, 28, 18, false, false, globalConfig.scaler, p5);
+    // drawFloor(limits[0].x, limits[0].y, limits[2].x-limits[0].x, limits[2].y-limits[0].y, false, false, globalConfig.scaler*5, p5); // big floor
     // drawFloor(0, 0, 30, 30, false, false, p5);
     // drawSpaceFloorTriangle(5 - 15, 27 - 15, 5 + 9, 27 + 9, p5);
     // drawSpaceFloorTriangle(15, 27 + 9, 15 + 9, 27, p5);
-    let startX = 14;
-    let startY = 32;
-    let h = 10;
+    let startX = 10;
+    let startY = 39;
+    let dx = 21;
+    let h = 14;
     let w = 15;
-
-
-    drawSpaceFloorLine(10, 38, 10 + 22, 38 - 22, 14, p5);
-    // drawSpaceFloorLine(5, 34+5,10, 34,  5, p5);
-    // drawSpaceFloor(0, 32, 10, 7, p5); // dance
-
-    // drawSpaceFloorLine(-25, 0,5, 38,  6, p5);
-    // drawSpaceFloor(-8, 0, 8, 12, p5); // top left
-    // drawSpaceFloor(20, -7, 15, 12, p5); // dance
+    drawSpaceFloorLine(startX, startY, startX + dx, startY - dx, h, p5);
+    // drawSpaceFloor(20, 15, 1, 1, p5);
 
     // drawPlants(p5);
 
@@ -363,13 +406,14 @@ export default (props) => {
 
   }
 
-  const drawFloor = (x0, y0, w, h, isCheckered, isFilled, spacing, p5) => {
+  const drawFloor = (x0, y0, w, h, isDark, isFilled, spacing, p5) => {
     // let spacing = globalConfig.stepS;
     let yOffset = new Date() / 2000;
     // let bound = 5000;
-    p5.noFill();
-
-  
+    if (isFilled) p5.fill(255, 150);
+    else p5.noFill();
+    p5.stroke(255, 200);
+    if (isDark) p5.stroke(0, 255);
 
     let sc = globalConfig.scaler;
     let xInd = 0;
@@ -379,11 +423,14 @@ export default (props) => {
         let alpha = 255;
         if (isFilled) {
           // if (isCheckered) alpha = ((xInd + yInd) % 2 == 0) ? 200 : 50;
-          alpha = p5.map(Math.sin(new Date()/1000 + x/100 + y/200), -1, 1, 0, 110);
+          alpha = p5.map(Math.sin(new Date() / 1000 + x / 100 + y / 200), -1, 1, 0, 110);
           p5.fill(255, alpha);
         } else {
           // alpha = p5.map(Math.sin(new Date()/1000 + x/100 + y/200), -1, 1, 0, 180);
-          p5.stroke(255, alpha);
+          // p5.stroke(255, alpha);
+        }
+        if (isDark) {
+          p5.fill(0, 150);
         }
         p5.rect(x, y, spacing, spacing);
         yInd++;
@@ -833,6 +880,7 @@ export default (props) => {
     else if (outsideDoor) {
       props.userMove(userStep.x, userStep.y);
       // console.log("outside door")
+      props.toggleOutside();
     }
     else if (roomDoorEntry) {
       props.userMove(userStep.x, userStep.y);

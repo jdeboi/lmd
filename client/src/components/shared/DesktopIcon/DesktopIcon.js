@@ -76,7 +76,7 @@ class DesktopIcon extends React.Component {
     // if we let pos be equal to props.px/ props.py, it changes location
     const bounded = this.props.bounded?".App-Content":null;
     return (
-      <div className="DesktopDiv" style={{zIndex: this.props.zIcon?this.props.zIcon:0}} >
+      <div className="DesktopDiv" >
         <Draggable
           axis="both"
           handle={".DesktopIcon"}
@@ -91,7 +91,7 @@ class DesktopIcon extends React.Component {
           onStop={this.handleStop}
           nodeRef={this.wrapper}
           >
-          <div ref={this.wrapper} onDoubleClick={this.onDblClick} onClick={this.onClick} className={classn} style={{width: this.props.width + "px",height: this.props.height + "px"}} >
+          <div ref={this.wrapper} onDoubleClick={this.onDblClick} onClick={this.onClick} className={classn} style={{width: this.props.width + "px",height: this.props.height + "px", zIndex: this.props.zIcon?this.props.zIcon:0}} >
             <div className="content">
               {this.props.content}
             </div>

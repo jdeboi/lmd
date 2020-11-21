@@ -2,31 +2,19 @@ export const SETUSERROOM = 'SETUSERROOM';
 export const SETUSER = 'SETUSER';
 export const MOVEUSER = 'MOVEUSER';
 export const REGISTERUSER = 'REGISTERUSER';
+
 export const ADDWINE = 'ADDWINE';
 export const SETWINE = 'SETWINE';
 export const RESETWINE = 'RESETWINE';
-//setUserRoom, setUser,moveUser,registerUser
+export const ADDCHEESE = 'ADDCHEESE';
+export const SETCHEESE = 'SETCHEESE';
+export const RESETCHEESE = 'RESETCHEESE';
+export const ADDCOCKTAIL = 'ADDCOCKTAIL';
+export const SETCOCKTAIL = 'SETCOCKTAIL';
+export const RESETCOCKTAIL = 'RESETCOCKTAIL';
 
+export const TOGGLEOUTSIDE = 'TOGGLEOUTSIDE';
 
-export const addWine = (wineLocation) => {
-  return {
-    type: ADDWINE,
-    payload: {wineLocation}
-  }
-}
-
-export const setWine = (needsWine, hasWine) => {
-  return {
-    type: SETWINE,
-    payload: {needsWine, hasWine}
-  }
-}
-
-export const resetWine = () => {
-  return {
-    type: RESETWINE
-  }
-}
 
 
 export const setUser = (userName, avatar) => {
@@ -54,5 +42,72 @@ export const registerUser = (userName, avatar) => {
   return {
     type: REGISTERUSER,
     payload: {userName, avatar}
+  }
+}
+
+
+export const addWine = (location) => {
+  return {
+    type: ADDWINE,
+    payload: {location}
+  }
+}
+
+export const setWine = (needsWine, hasWine) => {
+  return {
+    type: SETWINE,
+    payload: {needsWine, hasWine}
+  }
+}
+
+export const resetWine = () => {
+  return {
+    type: RESETWINE
+  }
+}
+
+export const addCheese = (location) => {
+  return {
+    type: ADDCHEESE,
+    payload: {location}
+  }
+}
+
+export const setCheese = (needsCheese, hasCheese) => {
+  return {
+    type: SETCHEESE,
+    payload: {needsCheese, hasCheese}
+  }
+}
+
+export const resetCheese = () => {
+  return {
+    type: RESETCHEESE
+  }
+}
+
+export const addCocktail = (location) => {
+  return {
+    type: ADDCOCKTAIL,
+    payload: {location}
+  }
+}
+
+export const setCocktail = (needsCocktail, hasCocktail) => {
+  return {
+    type: SETCOCKTAIL,
+    payload: {needsCocktail, hasCocktail}
+  }
+}
+
+export const resetCocktail = () => {
+  return {
+    type: RESETCOCKTAIL
+  }
+}
+
+export const toggleOutside = () => {
+  return {
+    type: TOGGLEOUTSIDE
   }
 }

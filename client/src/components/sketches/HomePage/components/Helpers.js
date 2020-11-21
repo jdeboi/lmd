@@ -12,6 +12,13 @@ export function getOtherUserLocation(user, otherUser, avatarW) {
   return {x: x, y: y};
 }
 
+export function showCheese(user) {
+  return user.hasCheese && (new Date() - user.hasCheese < 15000);
+}
+
+export function showCocktail(user) {
+  return user.hasCocktail && (new Date() - user.hasCocktail < 15000);
+}
 
 export function showWine(user) {
   return user.hasWine && (new Date() - user.hasWine < 15000);
