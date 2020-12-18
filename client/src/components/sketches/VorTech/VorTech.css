@@ -1,3 +1,6 @@
+.VorTech .Frame .content .flush {
+  pointer-events: all; }
+
 .VorTech .flush {
   width: 150px;
   height: 60px; }

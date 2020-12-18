@@ -9,6 +9,10 @@ import { mapReducer, faqReducer, chatReducer, userIconsReducer } from './menuIte
 import { userReducer, userActiveChatReducer, userHoverChatReducer, userOutsideReducer } from './user';
 import { musicReducer } from './music';
 
+import Cookies from 'js-cookie';
+import socket from "../../components/shared/Socket/Socket";
+
+
 const allReducers = combineReducers({
   user: userReducer,
   messages: messagesReducer,
@@ -23,4 +27,22 @@ const allReducers = combineReducers({
   outside: userOutsideReducer
 })
 
-export default allReducers;
+// export default allReducers;
+
+// in order to reset app, set state of allReducers to undefined
+// https://www.digitalocean.com/community/tutorials/redux-reset-state-redux
+const rootReducer = (state, action) => {
+
+  if (action.type === 'RESETAPP') {
+    console.log("RESETTTTT");
+    Cookies.remove("hasAvatar");
+    Cookies.remove("avatar");
+    Cookies.remove("userName");
+
+    state = undefined;
+  }
+
+  return allReducers(state, action);
+}
+
+export default rootReducer;

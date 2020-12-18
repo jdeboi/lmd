@@ -21,17 +21,21 @@ class FAQFrame extends React.Component {
   }
 
   render() {
-    let zInd = 1200;
+    let zInd = 2500;
+    const x = (window.innerWidth-this.props.w)/2;
+    const y = (window.innerHeight-this.props.h-34-24)/2;
+    const classN = "FAQ-Background" + (!this.props.faqIsHidden ? " GrayedOut":"");
     return (
-      <div className="FAQ-Background" style={{visibility: (this.props.faqIsHidden?"hidden":"visible"), zIndex : zInd}}>
+      <div className={classN} style={{visibility: (this.props.faqIsHidden?"hidden":"visible"), zIndex : zInd}}>
         <Frame title="FAQ" isHidden={this.props.faqIsHidden} onHide={this.onHide} windowStyle={{background: "white"}} content={
 
             <div className="FAQFrame">
 
               <FAQ />
+              <button className="standardButton" onClick={this.onHide}>close</button>
             </div>
           }
-          width={400} height={300} x={400} y={200} z={zInd}
+          width={this.props.w} height={this.props.h} x={x} y={y} z={zInd}
           />
       </div>
     );

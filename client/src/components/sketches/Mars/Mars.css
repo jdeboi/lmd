@@ -13,6 +13,8 @@
   background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/mars/grid.jpg);
   background-repeat: repeat;
   background-size: 350px 350px; }
+  .Mars .Frame .content .tank {
+    pointer-events: all; }
   .Mars .fullContent {
     width: 100%;
     height: 100%; }

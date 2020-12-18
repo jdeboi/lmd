@@ -1,14 +1,15 @@
 import React from 'react';
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
+
 import "./JungleGyms.css";
 
 import * as THREE from "three";
 import { AnaglyphEffect } from 'three/examples/jsm/effects/AnaglyphEffect.js';
-import { ImprovedNoise } from 'three/examples/jsm/math/ImprovedNoise.js'
-import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader.js';
+// import { ImprovedNoise } from 'three/examples/jsm/math/ImprovedNoise.js'
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
-import {DDSLoader} from 'three/examples/jsm/loaders/DDSLoader.js';
-import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
+import { DDSLoader } from 'three/examples/jsm/loaders/DDSLoader.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import Frame from '../../shared/Frame/Frame';
 import ReactPlayer from 'react-player';
@@ -49,7 +50,7 @@ class JungleGyms extends React.Component {
   handleWindowResize = () => {
     const width = window.innerWidth; //this.el.clientWidth;
     const height = window.innerHeight; //this.el.clientHeight;
-    this.renderer.setSize( width, height );
+    this.renderer.setSize(width, height);
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
   };
@@ -57,15 +58,15 @@ class JungleGyms extends React.Component {
   setupScene = () => {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 100000);
-    this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true,});
+    this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     // document.body.appendChild( renderer.domElement );
     // use ref as a mount point of the Three.js scene instead of the document.body
-    this.mount.appendChild( this.renderer.domElement );
+    this.mount.appendChild(this.renderer.domElement);
 
 
-    this.effect = new AnaglyphEffect( this.renderer );
-    this.effect.setSize( window.innerWidth, window.innerHeight );
+    this.effect = new AnaglyphEffect(this.renderer);
+    this.effect.setSize(window.innerWidth, window.innerHeight);
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.minDistance = 1;
@@ -77,7 +78,7 @@ class JungleGyms extends React.Component {
     this.addLight(1, -10, -2);
 
     this.addScreenCube(this.videoGym, 1920, 1080, .01, [0, 0, -8], [0, 0, 0], 47);
-    this.addScreenCube(this.videoSwings, 1080, 1920, .01, [6, 0, -20], [0, -Math.PI/2, 0], 20);
+    this.addScreenCube(this.videoSwings, 1080, 1920, .01, [6, 0, -20], [0, -Math.PI / 2, 0], 20);
 
     this.pipes = [];
     this.vines = [];
@@ -99,11 +100,11 @@ class JungleGyms extends React.Component {
       }
     }
     for (let i = 0; i < 3; i++) {
-      if (this.vines[i]) this.vines[i].position.y = -10 -i*5+ Math.sin(new Date().getTime()/1000);
+      if (this.vines[i]) this.vines[i].position.y = -10 - i * 5 + Math.sin(new Date().getTime() / 1000);
     }
 
     if (this.controls) this.controls.update();
-    this.effect.render( this.scene, this.camera);
+    this.effect.render(this.scene, this.camera);
     this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
 
   };
@@ -129,46 +130,46 @@ class JungleGyms extends React.Component {
   }
 
   addScreenCube = (video, pW, pH, fac, pos, rot, boxLen) => {
-    var videoTex = new THREE.VideoTexture( video );
+    var videoTex = new THREE.VideoTexture(video);
     pW *= fac;
-    pH  *= fac;
+    pH *= fac;
 
     video.play();
     videoTex.minFilter = THREE.LinearFilter;
     videoTex.magFilter = THREE.LinearFilter;
     videoTex.format = THREE.RGBFormat;
-    var geometry = new THREE.PlaneGeometry(pW, pH, 1 );
-    var material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide, map: videoTex} );
-    var plane = new THREE.Mesh( geometry, material );
+    var geometry = new THREE.PlaneGeometry(pW, pH, 1);
+    var material = new THREE.MeshBasicMaterial({ color: 0xffff00, side: THREE.DoubleSide, map: videoTex });
+    var plane = new THREE.Mesh(geometry, material);
     plane.position.set(...pos);
     plane.rotation.set(...rot);
-    this.scene.add( plane );
+    this.scene.add(plane);
 
 
-    var geometry = new THREE.BoxGeometry( pW, pH, boxLen );
-    var material = new THREE.MeshPhongMaterial( {color: 0x00aa00,  opacity: .3, transparent: true, side:THREE.DoubleSide} ); //
-    var cube = new THREE.Mesh( geometry, material );
+    var geometry = new THREE.BoxGeometry(pW, pH, boxLen);
+    var material = new THREE.MeshPhongMaterial({ color: 0x00aa00, opacity: .3, transparent: true, side: THREE.DoubleSide }); //
+    var cube = new THREE.Mesh(geometry, material);
     cube.position.set(...pos);
     cube.rotation.set(...rot);
-    this.scene.add( cube );
+    this.scene.add(cube);
 
-    var geometry = new THREE.BoxBufferGeometry( pW, pH, boxLen );
-    var edges = new THREE.EdgesGeometry( geometry );
-    var line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0x00ff00, linewidth: 24 } ) );
+    var geometry = new THREE.BoxBufferGeometry(pW, pH, boxLen);
+    var edges = new THREE.EdgesGeometry(geometry);
+    var line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x00ff00, linewidth: 24 }));
     line.position.set(...pos);
     line.rotation.set(...rot);
-    this.scene.add( line );
+    this.scene.add(line);
   }
 
   addWallPaper = () => {
-    const url = window.AWS+"/jungleGyms/wallpaper3.jpg";
-    var wall = new THREE.TextureLoader().load(  url );
+    const url = window.AWS + "/jungleGyms/wallpaper3.jpg";
+    var wall = new THREE.TextureLoader().load(url);
     wall.wrapS = THREE.RepeatWrapping;
     wall.wrapT = THREE.RepeatWrapping;
-    wall.repeat.set( 4, 4 );
-    var geometry = new THREE.PlaneGeometry(200, 100, 1 );
-    var material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide, map: wall} );
-    var plane = new THREE.Mesh( geometry, material );
+    wall.repeat.set(4, 4);
+    var geometry = new THREE.PlaneGeometry(200, 100, 1);
+    var material = new THREE.MeshBasicMaterial({ color: 0xffff00, side: THREE.DoubleSide, map: wall });
+    var plane = new THREE.Mesh(geometry, material);
     plane.position.set(0, 0, -14);
     // scene.add( plane );
     this.scene.background = wall;
@@ -178,45 +179,45 @@ class JungleGyms extends React.Component {
     var self = this;
     var modelPath = window.AWS + "/jungleGyms/vines/";
     var model = "Vines";
-    var onProgress = function ( xhr ) {
-      if ( xhr.lengthComputable ) {
+    var onProgress = function (xhr) {
+      if (xhr.lengthComputable) {
         var percentComplete = xhr.loaded / xhr.total * 100;
-        console.log( Math.round( percentComplete, 2 ) + '% downloaded' );
+        console.log(Math.round(percentComplete, 2) + '% downloaded');
       }
     }
     var onError = function () { };
     var manager = new THREE.LoadingManager();
-    manager.addHandler( /\.dds$/i, new DDSLoader() );
-    new MTLLoader( manager )
-    .setPath( modelPath )
-    .load( model + '.mtl', function ( materials ) {
+    manager.addHandler(/\.dds$/i, new DDSLoader());
+    new MTLLoader(manager)
+      .setPath(modelPath)
+      .load(model + '.mtl', function (materials) {
 
-      materials.preload();
+        materials.preload();
 
-      new OBJLoader( manager )
-      .setMaterials( materials )
-      .setPath( modelPath )
-      .load( model + '.obj', function ( vine ) {
-        vine.rotation.set(0, Math.PI, 0);
-        vine.position.set(-10, -10, -10);
-        vine.scale.set(5, 5, 5);
-        self.vines.push(vine);
+        new OBJLoader(manager)
+          .setMaterials(materials)
+          .setPath(modelPath)
+          .load(model + '.obj', function (vine) {
+            vine.rotation.set(0, Math.PI, 0);
+            vine.position.set(-10, -10, -10);
+            vine.scale.set(5, 5, 5);
+            self.vines.push(vine);
 
-        var newVine = vine.clone();
-        newVine.position.set(0, -15, 0);
-        vine.rotation.set(0, 0,0);
-        self.vines.push(newVine);
+            var newVine = vine.clone();
+            newVine.position.set(0, -15, 0);
+            vine.rotation.set(0, 0, 0);
+            self.vines.push(newVine);
 
-        var newVine2 = vine.clone();
-        newVine2.rotation.set(0, -Math.PI/2, 0);
-        self.vines.push(newVine2);
-        self.scene.add( vine );
-        self.scene.add(newVine);
-        self.scene.add(newVine2);
+            var newVine2 = vine.clone();
+            newVine2.rotation.set(0, -Math.PI / 2, 0);
+            self.vines.push(newVine2);
+            self.scene.add(vine);
+            self.scene.add(newVine);
+            self.scene.add(newVine2);
 
-      }, onProgress, onError );
+          }, onProgress, onError);
 
-    } );
+      });
 
     //
   }
@@ -227,7 +228,7 @@ class JungleGyms extends React.Component {
       // head-on view
 
       this.camera.position.set(0, 0, 14);
-      this.setState({firstLoad: false});
+      this.setState({ firstLoad: false });
     } else {
       // random view
 
@@ -247,8 +248,24 @@ class JungleGyms extends React.Component {
     this.controls.update();
   }
 
+  getControlsFrame = () => {
+    const w = 250;
+    return (
+      <Frame title="jungle gyms" content={
+        <div className="jungleControls">
+          <button>left</button>
+          <button>right</button>
+          <button>+</button>
+          <button>-</button>
+        </div>
+      }
+        width={w} height={50} x={window.innerWidth - w - 50} y={window.innerHeight - 124}
+      />
+    )
+  }
+
   render() {
-    const gymUrl = window.AWS+"/jungleGyms/gym.mp4"
+    const gymUrl = window.AWS + "/jungleGyms/gym.mp4"
     return (
       <div className="JungleGyms Sketch">
         <div className="threeCanvas" ref={ref => (this.mount = ref)} />
@@ -257,10 +274,11 @@ class JungleGyms extends React.Component {
           Your browser does not support HTML5 video.
         </video>
         <video crossOrigin="anonymous" ref={ref => (this.videoSwings = ref)} autoPlay muted loop className="gym" >
-          <source src={window.AWS+"/jungleGyms/swings.mp4"} type="video/mp4" ></source>
+          <source src={window.AWS + "/jungleGyms/swings.mp4"} type="video/mp4" ></source>
           Your browser does not support HTML5 video.
         </video>
 
+       { this.getControlsFrame()}
         {/*Glasses />*/}
       </div>
     )
@@ -284,7 +302,7 @@ function shuffleArrayInPlace(array) {
 }
 
 function showElementsIf(selector, condition) {
-  Array.from(document.querySelectorAll(selector)).forEach(function(el) {
+  Array.from(document.querySelectorAll(selector)).forEach(function (el) {
     if (condition) {
       el.removeAttribute("hidden");
     } else {
@@ -296,18 +314,18 @@ function showElementsIf(selector, condition) {
 function getFrame(dimW, dimH, dimX, dimY, tit, vid) {
   return (
     <Frame title={tit} content={
-        <ReactPlayer
-          className={"react-player gym"}
-          playing
-          muted
-          loop
-          width={Math.floor(dimW) + "px"}
-          height={Math.floor(dimH+1) + "px"}
-          url={vid}
-          />
-      }
-      width={dimW+2} height={dimH} x={dimX} y={dimY}
+      <ReactPlayer
+        className={"react-player gym"}
+        playing
+        muted
+        loop
+        width={Math.floor(dimW) + "px"}
+        height={Math.floor(dimH + 1) + "px"}
+        url={vid}
       />
+    }
+      width={dimW + 2} height={dimH} x={dimX} y={dimY}
+    />
   )
 }
 

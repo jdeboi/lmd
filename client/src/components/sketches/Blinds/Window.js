@@ -8,9 +8,9 @@ class Window extends React.Component {
   constructor(props) {
     super(props);
 
-    const w = 150;
-    const h = 150;
-    const spacing = 20;
+    // // const w = 180;
+    // // const h = w;
+    // const spacing = 20;
 
     this.state = {
       currentImg: 1,
@@ -84,7 +84,7 @@ class Window extends React.Component {
   }
 
   render() {
-    const {z, ogPos, w, h, imgW, imgH, startX, startY, id, newFrameToTop, onDblClick} = this.props;
+    const {z, ogPos, w, h, imgW, imgH, startX, startY, id, title, newFrameToTop, onDblClick} = this.props;
     const pos = this.state.position;
     // const x = pos.x + ogPos.x;
     // const y = pos.y + ogPos.y;
@@ -105,7 +105,7 @@ class Window extends React.Component {
 
     return(
 
-      <Frame title="" x={ogPos.x} y={ogPos.y} width={w} height={h} windowStyle={{background: "transparent"}} onDrag={this.onDrag} content={
+      <Frame title={title} x={ogPos.x} y={ogPos.y} width={w} height={h} windowStyle={{background: "transparent"}} onDrag={this.onDrag} content={
           <div className="windowDiv">
             <div className="background1 background" style={styWind}></div>
             <div className="windowFrame" style={{backgroundImage: `url(${frameImg})`, height: isClosed?0:200}}></div>

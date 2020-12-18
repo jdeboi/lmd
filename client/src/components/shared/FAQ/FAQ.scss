@@ -21,6 +21,8 @@
     text-align: center;
     overflow: scroll;
     height: 320px;
+    border: 2px solid black;
+    border-radius: 6px;
     // color: white;
 
     .instruction {
@@ -28,7 +30,14 @@
       display: flex;
       padding: 20px;
       flex-direction: row;
-      border-bottom: 1px solid gray;
+      // border-bottom: 1px solid gray;
+      h3 {
+        border-bottom: 1px solid rgb(207, 207, 207);
+        margin-bottom: 5px;
+      }
+      p {
+        line-height: 14px;
+      }
 
       img {
         flex: 0;

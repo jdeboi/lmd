@@ -2,3 +2,56 @@
   position: absolute; }
   .SignIn .Frame .window {
     background: white; }
+    .SignIn .Frame .window .content {
+      pointer-events: all; }
+  .SignIn .welcome-buttons {
+    display: flex;
+    flex-direction: row;
+    vertical-align: middle;
+    justify-content: center; }
+    .SignIn .welcome-buttons button {
+      margin: 5px; }
+  .SignIn .SignInForm {
+    position: absolute;
+    height: 400px;
+    width: 540px; }
+    .SignIn .SignInForm .SignIn-Box {
+      padding: 20px; }
+    .SignIn .SignInForm .SignIn-Content {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 360px;
+      align-items: center;
+      color: black; }
+      .SignIn .SignInForm .SignIn-Content .userBar {
+        display: flex;
+        height: 38px;
+        flex-direction: row;
+        align-self: flex-start;
+        padding-bottom: 20px; }
+        .SignIn .SignInForm .SignIn-Content .userBar .avatar {
+          font-size: 36px;
+          height: 38px;
+          width: 38px;
+          padding-right: 15px; }
+        .SignIn .SignInForm .SignIn-Content .userBar input {
+          flex: 1;
+          border-bottom: 2px solid black;
+          font-size: 14px;
+          width: 225px; }
+      .SignIn .SignInForm .SignIn-Content .emoji-list {
+        flex: 1;
+        height: 80px;
+        border: 2px solid black;
+        border-radius: 6px;
+        overflow: scroll; }
+        .SignIn .SignInForm .SignIn-Content .emoji-list button {
+          font-size: 18px;
+          width: 24px;
+          height: 24px;
+          padding: 2px;
+          border: none; }
+      .SignIn .SignInForm .SignIn-Content .submit {
+        flex: 0 0 34px;
+        padding-top: 20px; }

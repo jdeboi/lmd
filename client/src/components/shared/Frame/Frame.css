@@ -4,7 +4,9 @@
   position: absolute;
   margin-bottom: -33px;
   font-size: 16px;
-  pointer-events: all; }
+  pointer-events: none; }
+  .Frame input, .Frame button {
+    pointer-events: all; }
   .Frame span {
     line-height: 8px;
     vertical-align: 50%; }
@@ -24,6 +26,7 @@
   .Frame .titlebar {
     position: relative;
     height: 26px;
+    pointer-events: all;
     /* background: white; */
     font-family: consoleFont, sans-serif;
     font-size: .8em;

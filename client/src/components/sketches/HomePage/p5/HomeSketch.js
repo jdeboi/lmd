@@ -6,18 +6,17 @@ import Sketch from "react-p5";
 import Wall from "./components/Wall";
 import Room from "./components/Room";
 import Door from "./components/Door";
-import MiniMap from "./components/MiniMap";
+
+import Draggable from './components/Draggable/Draggable';
+
+// import MiniMap from "./components/MiniMap";
 import { globalConfig, danceFloor, limits, pools } from "../constants";
+
 
 var walls = [];
 var rooms = [];
 var doors = [];
-
-
-
-
-var miniMap;
-
+// var miniMap;
 
 var floorTex;
 var palm;
@@ -29,14 +28,23 @@ var roomTextures = [];
 var eyeIcon;
 
 // const centerW = 1000;
+var isWalking = false;
+// var isStepping = false;
+// var stepTo = {x: 0, y: 0};
+// var transitionStep = {x: 0, y: 0};
+var userEase = { x: 0, y: 0 };
+var destination = { x: null, y: null, time: null };
 
+var user, roomCount;
+
+var lastMouseMove = 0;
+
+var divs = [];
 
 export default (props) => {
-  let x = 50;
-  const y = 50;
-  const user = props.user;
-  const users = props.users;
-  const roomCount = props.roomCount;
+  user = props.user;
+  // const users = props.users;
+  roomCount = props.roomCount;
 
   const preload = (p5) => {
     const url = "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/homePage/";
@@ -61,7 +69,9 @@ export default (props) => {
   const setup = (p5, canvasParentRef) => {
     // use parent to render the canvas in this ref
     // (without that p5 will render the canvas outside of your component)
-    p5.createCanvas(window.innerWidth, window.innerHeight).parent(canvasParentRef);
+    const cnv = p5.createCanvas(window.innerWidth, window.innerHeight);
+    cnv.parent(canvasParentRef);
+    cnv.mousePressed(() => triggerMove(p5));
     // img = p5.loadImage("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/jungleGyms/wallpaper3.jpg",
     // img => {p5.image(img, 0, 0);},
     // (err) => { console.log("ERR", err)}
@@ -98,9 +108,56 @@ export default (props) => {
     // });
 
     props.loadingDone();
+
+    initDivs(p5);
   };
 
 
+  function initDivs(p5) {
+    let num = 20;
+    // let inc = 10;
+    for (let i = 0; i < num; i++) {
+      // let x = p5.windowWidth/2+i*inc;
+      // let y = 60+i*inc;
+      divs[i] = new Draggable(i, i * 10 + 1000, i * 20 + 2500, 100, 100, p5);
+    }
+  }
+
+  function displayDivs() {
+    for (let i = 0; i < divs.length; i++) {
+      divs[i].display(user.x, user.y);
+    }
+  }
+
+  function endDivDrag() {
+    for (const div of divs) {
+      div.endDrag();
+    }
+  }
+
+  // function resetDivs() {
+  //   for (const div of divs) {
+  //     div.resetWindow();
+  //   }
+  // }
+
+
+  function updateDivs() {
+    for (const div of divs) {
+      div.update();
+    }
+  }
+
+  const updateUserEase = (p5) => {
+    let amt = .8;
+    userEase.x = userEase.x * amt + user.x * (1 - amt);
+    userEase.y = userEase.y * amt + user.y * (1 - amt);
+    let d = p5.dist(userEase.x, userEase.y, user.x, user.y);
+    if (d < 5) {
+      userEase.x = user.x;
+      userEase.y = user.y;
+    }
+  }
 
   const draw = (p5) => {
     p5.clear();
@@ -113,6 +170,7 @@ export default (props) => {
 
     p5.push();
     p5.translate(-user.x, -user.y);
+    // p5.translate(-userEase.x, -userEase.y);
 
     // if (img) p5.image(img, 0, 0);
 
@@ -129,6 +187,9 @@ export default (props) => {
 
     // drawStairs(p5);
     // floors
+    p5.strokeWeight(2);
+    p5.stroke(255, 50);
+    drawFloor(limits[0].x, limits[0].y, limits[2].x - limits[0].x, limits[2].y - limits[0].y, false, false, globalConfig.scaler * 5, p5); // big floor
     drawDanceFloor(p5);
 
     ////// not these
@@ -138,56 +199,65 @@ export default (props) => {
     ////////
 
     // top row
-    drawFloor(limits[0].x, limits[0].y, 28, 3, false, false, globalConfig.scaler, p5);
+    p5.strokeWeight(2);
+    p5.stroke(255, 50);
+    drawFloor(limits[0].x + 10, limits[0].y, 20, 3, false, false, globalConfig.scaler, p5);
     // right alley
     drawFloor(32, 5, 3, 14, false, false, globalConfig.scaler, p5);
 
 
     // stairsOG
-    // drawFloor(-10, 12, 5, 10, false, false, globalConfig.scaler, p5);
-    // drawFloor(-5, 17, 5, 10, false, false, globalConfig.scaler, p5); // left column
-    // drawFloor(0, 22, 5, 10, false, false, globalConfig.scaler, p5);
-    // drawFloor(5, 27, 5, 8, false, false, globalConfig.scaler, p5);
+    drawFloor(-10, 12, 5, 10, false, false, globalConfig.scaler, p5);
+    drawFloor(-5, 17, 5, 10, false, false, globalConfig.scaler, p5); // left column
+    drawFloor(0, 22, 5, 10, false, false, globalConfig.scaler, p5);
+    drawFloor(5, 27, 5, 10, false, false, globalConfig.scaler, p5);
 
-    drawFloor(limits[0].x, 12, 3, 8, false, false, globalConfig.scaler, p5);
-    drawFloor(limits[0].x+3, 17, 5, 3, false, false, globalConfig.scaler, p5); // left column
-    drawFloor(-3, 20, 3, 5, false, false, globalConfig.scaler, p5);
-    drawFloor(0, 22, 5, 3, false, false, globalConfig.scaler, p5);
-    drawFloor(2, 25, 3, 5, false, false, globalConfig.scaler, p5);
-    drawFloor(5, 27, 5, 3, false, false, globalConfig.scaler, p5);
-    drawFloor(7, 30, 3, 5, false, false, globalConfig.scaler, p5);
+    // drawFloor(limits[0].x, 12, 3, 8, false, false, globalConfig.scaler, p5);
+    // drawFloor(limits[0].x+3, 17, 5, 3, false, false, globalConfig.scaler, p5); // left column
+    // drawFloor(-3, 20, 3, 5, false, false, globalConfig.scaler, p5);
+    // drawFloor(0, 22, 5, 3, false, false, globalConfig.scaler, p5);
+    // drawFloor(2, 25, 3, 5, false, false, globalConfig.scaler, p5);
+    // drawFloor(5, 27, 5, 3, false, false, globalConfig.scaler, p5);
+    // drawFloor(7, 30, 3, 5, false, false, globalConfig.scaler, p5);
 
     // connect right side corner
-    drawFloor(25, 25, 3, 5, false, false, globalConfig.scaler, p5);
-    drawFloor(23, 27, 3, 3, false, false, globalConfig.scaler, p5);
-    drawFloor(22, 28, 1, 1, false, false, globalConfig.scaler, p5);
-    drawFloor(21, 29, 2, 1, false, false, globalConfig.scaler, p5);
-    drawFloor(26, 24, 2, 1, false, false, globalConfig.scaler, p5);
-    drawFloor(27, 23, 1, 1, false, false, globalConfig.scaler, p5);
+    // drawFloor(25, 25, 3, 5, false, false, globalConfig.scaler, p5);
+    // drawFloor(23, 27, 3, 3, false, false, globalConfig.scaler, p5);
+    // drawFloor(22, 28, 1, 1, false, false, globalConfig.scaler, p5);
+    // drawFloor(21, 29, 2, 1, false, false, globalConfig.scaler, p5);
+    // drawFloor(26, 24, 2, 1, false, false, globalConfig.scaler, p5);
+    // drawFloor(27, 23, 1, 1, false, false, globalConfig.scaler, p5);
 
     // stairsBig
-    // drawFloor(pools[0].x, pools[0].y, 5, 5, true, false, globalConfig.scaler*5, p5);
-    // drawFloor(pools[1].x, pools[1].y, 5, 5, true, false, globalConfig.scaler*5, p5);
-    // drawFloor(pools[2].x, pools[2].y, 5, 5, true, false, globalConfig.scaler*5, p5);
+    drawFloor(pools[0].x, pools[0].y, 5, 5, false, false, globalConfig.scaler * 5, p5);
+    drawFloor(pools[1].x, pools[1].y, 5, 5, false, false, globalConfig.scaler * 5, p5);
+    drawFloor(pools[2].x, pools[2].y, 5, 5, false, false, globalConfig.scaler * 5, p5);
     p5.noStroke();
-    drawSpaceFloor(pools[0].x, pools[0].y, 5, 5, p5);
-    drawSpaceFloor(pools[1].x, pools[1].y, 5, 5, p5);
-    drawSpaceFloor(pools[2].x, pools[2].y, 5, 5, p5);
+    // drawSpaceFloor(pools[0].x, pools[0].y, 5, 5, p5);
+    // drawSpaceFloor(pools[1].x, pools[1].y, 5, 5, p5);
+    // drawSpaceFloor(pools[2].x, pools[2].y, 5, 5, p5);
 
-    // drawFloor(-10, 22+15, 15, 5, false, false, globalConfig.scaler*5, p5); // bottom row
-    // drawFloor(-10, 22+10, 10, 5, false, false, globalConfig.scaler*5, p5);
-    // drawFloor(-10, 22+5, 5, 5, false, false, globalConfig.scaler*5, p5);
+    // drawFloor(-8, 35, 15, 5, true, false, globalConfig.scaler*5, p5); // bottom row
+    // drawFloor(-8, 30, 10, 5, true, false, globalConfig.scaler*5, p5);
+    // drawFloor(-8, 25, 5, 5, true, false, globalConfig.scaler*5, p5);
+
+
+    // drawFloor(25, 30, 5, 5, true, false, globalConfig.scaler*5, p5);
+    // drawFloor(30, 30, 5, 5, true, false, globalConfig.scaler*5, p5);
+    // drawFloor(25, 35, 5, 5, true, false, globalConfig.scaler*5, p5);
+    // drawFloor(30, 35, 5, 5, true, false, globalConfig.scaler*5, p5);
+
     // drawFloor(5, 27, 5, 5, false, false, globalConfig.scaler, p5);
 
     // top left
     p5.noStroke();
-    drawSpaceFloor(limits[0].x, 0, 8, 12, p5);
+    drawSpaceFloor(limits[0].x, -3, 10, 15, p5);
     // behind dance
     drawSpaceFloor(20, limits[0].y, 15, 8, p5);
 
 
     // drawFloor(0, 22, 28, 18, false, false, globalConfig.scaler, p5);
-    // drawFloor(limits[0].x, limits[0].y, limits[2].x-limits[0].x, limits[2].y-limits[0].y, false, false, globalConfig.scaler*5, p5); // big floor
+
     // drawFloor(0, 0, 30, 30, false, false, p5);
     // drawSpaceFloorTriangle(5 - 15, 27 - 15, 5 + 9, 27 + 9, p5);
     // drawSpaceFloorTriangle(15, 27 + 9, 15 + 9, 27, p5);
@@ -229,37 +299,51 @@ export default (props) => {
 
     // drawOuterBoundary(p5);
 
+    displayDivs();
+
+    p5.pop();
+
+
     p5.pop();
 
 
-    p5.pop();
-
-
-    p5.stroke(255, 0, 255);
-    p5.strokeWeight(2);
-    p5.fill(255, 0, 255);
-    p5.textSize(50);
-    var str = (p5.round(user.x / globalConfig.scaler - globalConfig.x, 1)) + ", " + (p5.round(user.y / globalConfig.scaler - globalConfig.y, 1)) + "";
-    // var str = (user.x) + ", " + (user.y) + "";
-    // p5.text(str, 0, 0)
-
 
     p5.pop();
+
+
+
+    // p5.noStroke();
+    // p5.fill(255, 0, 255);
+    // p5.textSize(50);
+    // const dx2 = p5.mouseX > window.innerWidth / 2 ? 50 : -50;
+    // const dy2 = p5.mouseY > window.innerHeight / 2 ? 50 : -50;
+    // const mx = roundToMult2((p5.mouseX - window.innerWidth / 2) + dx2, globalConfig.stepS);
+    // const my = roundToMult2((p5.mouseY - window.innerHeight / 2) + dy2, globalConfig.stepS);
+    // p5.text(mx + " " + my, p5.mouseX, p5.mouseY);
+
+    mouseStep();
+    showDestination(p5);
+    showUserEllipses(p5);
+    showMouseLoc(p5);
+
+
+    updateDivs();
+    // updateUserEase(p5);
   };
 
-  const keyPressed = (p5) => {
 
+  const keyPressed = (p5) => {
     if (p5.keyCode === p5.UP_ARROW) {
-      userTakeStep(p5, 0, -1);
+      userTakeStep(0, -1);
     }
     else if (p5.keyCode === p5.RIGHT_ARROW) {
-      userTakeStep(p5, 1, 0);
+      userTakeStep(1, 0);
     }
     else if (p5.keyCode === p5.LEFT_ARROW) {
-      userTakeStep(p5, -1, 0);
+      userTakeStep(-1, 0);
     }
     else if (p5.keyCode === p5.DOWN_ARROW) {
-      userTakeStep(p5, 0, 1);
+      userTakeStep(0, 1);
     }
   }
 
@@ -280,6 +364,12 @@ export default (props) => {
 
   const roundToMult = (num, mult) => {
     let newNum = num + mult / 2; // to round up if necessary
+    let diff = newNum % mult;
+    return newNum - diff;
+  }
+
+  const roundToMult2 = (num, mult) => {
+    let newNum = num; // to round up if necessary
     let diff = newNum % mult;
     return newNum - diff;
   }
@@ -345,7 +435,7 @@ export default (props) => {
     let slope = (y1 - y0) / (x1 - x0);
     let b = y0 - slope * x0;
 
-    p5.stroke(255, 150);
+    p5.stroke(0, 150);
     p5.noStroke();
     p5.strokeWeight(2);
     if (slope >= 0) {
@@ -411,10 +501,10 @@ export default (props) => {
     let yOffset = new Date() / 2000;
     // let bound = 5000;
     if (isFilled) p5.fill(255, 150);
-    else p5.noFill();
+    else p5.fill(0, 100);
     p5.stroke(255, 200);
-    if (isDark) p5.stroke(0, 255);
-
+    // if (isDark) p5.stroke(0, 255);
+    if (isDark) p5.fill(255, 30);
     let sc = globalConfig.scaler;
     let xInd = 0;
     let yInd = 0;
@@ -429,9 +519,9 @@ export default (props) => {
           // alpha = p5.map(Math.sin(new Date()/1000 + x/100 + y/200), -1, 1, 0, 180);
           // p5.stroke(255, alpha);
         }
-        if (isDark) {
-          p5.fill(0, 150);
-        }
+        // if (isDark) {
+        //   p5.fill(0, 150);
+        // }
         p5.rect(x, y, spacing, spacing);
         yInd++;
       }
@@ -859,7 +949,7 @@ export default (props) => {
 
 
 
-  const userTakeStep = (p5, x, y) => {
+  const userTakeStep = (x, y) => {
     var t = new Date();
     let space = globalConfig.stepS;
     const prevStep = { x: user.x, y: user.y }
@@ -874,7 +964,10 @@ export default (props) => {
     // check if crossed a room boundary
 
     if (roomDoor) {
-      props.userNewRoom(roomDoor);
+      if (window.confirm('Leave the main gallery?')) {
+        props.userNewRoom(roomDoor);
+      }
+      isWalking = false;
       // console.log("entering room", roomDoor);
     }
     else if (outsideDoor) {
@@ -887,23 +980,190 @@ export default (props) => {
       // console.log("enter/exit room")
     }
     else if (roomBoundary(prevStep, userStep)) {
+      isWalking = false;
       // console.log("room boundary")
     }
     else if (roomDoorB) {
+      isWalking = false;
       // console.log("room door boundary")
     }
     else if (wallBoundary(prevStep, userStep)) {
+      isWalking = false;
       // console.log("wall boundary")
     }
     else {
+      // isStepping = true;
       props.userMove(userStep.x, userStep.y);
+      // stepTo = {x: userStep.x, y: userStep.y};
     }
     // console.log(new Date() - t);
   }
+
+  // const transitionStepping = (p5) => {
+  //   let d = p5.dist(stepTo.x, stepTo.y, user.x+transitionStep.x, user.y+transitionStep.y);
+  //   if (isStepping && d > 10) {
+  //     transitionStep.x = 
+  //   }
+  //   else {
+  //     isStepping = false;
+  //     props.userMove(x, y);
+  //   }
+  // }
+
 
   const windowResized = (p5) => {
     p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
   }
 
-  return <Sketch preload={preload} setup={setup} draw={draw} windowResized={windowResized} keyPressed={keyPressed} />;
+
+  const checkDivPress = () => {
+    for (const div of divs) {
+      if (div.checkButtons(user.x, user.y)) {
+        return true;
+      }
+      else if (div.checkDragging(user.x, user.y)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  const triggerMove = (p5) => {
+    if (!checkDivPress(user.x, user.y)) {
+      const dx = p5.mouseX > window.innerWidth / 2 ? 50 : -50;
+      const dy = p5.mouseY > window.innerHeight / 2 ? 50 : -50;
+      const mx = roundToMult2((p5.mouseX - window.innerWidth / 2) + dx, globalConfig.stepS);
+      const my = roundToMult2((p5.mouseY - window.innerHeight / 2) + dy, globalConfig.stepS);
+      if (!(mx === 0 && my === 0)) {
+        const x = mx + user.x;
+        const y = my + user.y;
+        const time = new Date();
+        destination = { x, y, time };
+        isWalking = true;
+      }
+    }
+
+  }
+
+  const mouseStep = () => {
+    if (isWalking) {
+      if (reachedDestination()) {
+        isWalking = false;
+      }
+      else if (new Date() - destination.time > 150) {
+        let step = getNextStep();
+        userTakeStep(step[0], step[1]);
+        destination.time = new Date();
+      }
+    }
+  }
+
+  const showMouseLoc = (p5) => {
+    if (p5.pmouseX !== p5.mouseX || p5.pmouseY !== p5.mouseY) {
+      lastMouseMove = new Date();
+    }
+    if (new Date() - lastMouseMove < 800) {
+      if (!p5.mouseIsPressed) { //!isWalking&& 
+        let sc = globalConfig.stepS;
+        let sw = 10;
+        const dx2 = p5.mouseX > window.innerWidth / 2 ? 50 : -50;
+        const dy2 = p5.mouseY > window.innerHeight / 2 ? 50 : -50;
+        const mx = roundToMult2((p5.mouseX - window.innerWidth / 2) + dx2, sc);
+        const my = roundToMult2((p5.mouseY - window.innerHeight / 2) + dy2, sc);
+        p5.noStroke();
+        p5.noFill();
+        p5.strokeWeight(sw / 2);
+        p5.stroke(20, 0, 50, 25);
+        // p5.rect(mx+window.innerWidth/2-50+sw, my+window.innerHeight/2-50+sw, sc-sw*2, sc-sw*2, 10);
+        p5.ellipse(mx + window.innerWidth / 2, my + window.innerHeight / 2, sc - sw * 2);
+        p5.ellipse(mx + window.innerWidth / 2, my + window.innerHeight / 2, sc - sw * 4);
+        p5.ellipse(mx + window.innerWidth / 2, my + window.innerHeight / 2, sc - sw * 6);
+      }
+    }
+  }
+
+  const showUserEllipses = (p5) => {
+    let sc = globalConfig.stepS;
+    let sw = 10;
+    p5.noStroke();
+    p5.noFill();
+    p5.strokeWeight(sw / 2);
+    p5.stroke(20, 0, 50, 55);
+    // p5.rect(mx+window.innerWidth/2-50+sw, my+window.innerHeight/2-50+sw, sc-sw*2, sc-sw*2, 10);
+    // p5.ellipse(window.innerWidth/2, window.innerHeight/2, sc-sw*2);
+    // p5.ellipse(window.innerWidth/2, window.innerHeight/2, sc-sw*4);
+    // p5.ellipse(window.innerWidth/2, window.innerHeight/2, sc-sw*6);
+
+    const x = destination.x + window.innerWidth / 2 - user.x;
+    const y = destination.y + window.innerHeight / 2 - user.y;
+    const lineL = 20;
+
+    
+    if (destination.x) {
+      p5.line(x - lineL / 2, y - lineL / 2, x + lineL / 2, y + lineL / 2);
+      p5.line(x + lineL / 2, y - lineL / 2, x - lineL / 2, y + lineL / 2);
+    }
+  }
+
+  const showDestination = (p5) => {
+    if (isWalking) {
+      lastMouseMove = new Date();
+      const sc = globalConfig.stepS;
+      p5.noStroke();
+      p5.noFill();
+      let sw = 10;
+      p5.noStroke();
+      p5.noFill();
+      p5.strokeWeight(5);
+      p5.stroke(20, 0, 50, 55);
+      const x = destination.x + window.innerWidth / 2 - user.x;
+      const y = destination.y + window.innerHeight / 2 - user.y;
+      const lineL = 20;
+      if (destination.x) {
+        p5.line(x - lineL / 2, y - lineL / 2, x + lineL / 2, y + lineL / 2);
+        p5.line(x + lineL / 2, y - lineL / 2, x - lineL / 2, y + lineL / 2);
+       
+      }
+       // p5.rect(destination.x+window.innerWidth/2-user.x-50+sw, destination.y+window.innerHeight/2-user.y-50+sw,  sc-sw*2, sc-sw*2, 10);
+      // p5.ellipse(destination.x+window.innerWidth/2-user.x, destination.y+window.innerHeight/2-user.y,  sc-sw*2);
+      // p5.ellipse(destination.x+window.innerWidth/2-user.x, destination.y+window.innerHeight/2-user.y,  sc-sw*4);
+      // p5.ellipse(destination.x+window.innerWidth/2-user.x, destination.y+window.innerHeight/2-user.y,  sc-sw*6);
+    }
+  }
+
+  const reachedDestination = () => {
+    if (user.x === destination.x && user.y === destination.y)
+      return true;
+    return false;
+  }
+
+  const getNextStep = () => {
+    let steps = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+    let min = 1000000;
+    let index = 0;
+    let i = 0;
+    for (const step of steps) {
+      let stepDis = getStepDist(step);
+      if (stepDis < min) {
+        min = stepDis;
+        index = i;
+      }
+      i++;
+    }
+    return steps[index];
+  }
+
+  const getStepDist = (step) => {
+    const space = globalConfig.stepS;
+    const dx = destination.x - (user.x + step[0] * space);
+    const dy = destination.y - (user.y + step[1] * space);
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  const mouseReleased = (p5) => {
+    endDivDrag();
+  }
+
+
+  return <Sketch preload={preload} setup={setup} draw={draw} windowResized={windowResized} keyPressed={keyPressed} mouseReleased={mouseReleased} />;
 };

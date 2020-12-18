@@ -1,0 +1,19 @@
+.exitImg {
+  height: 100%;
+  width: 100%;
+  background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/shared/exit.png);
+  background-repeat: no-repeat;
+  background-size: contain; }
+
+.glassesFrame {
+  position: absolute; }
+
+.backButton {
+  position: absolute;
+  background-color: white;
+  font-size: 12px;
+  padding: 10px;
+  text-align: center;
+  border: .14em solid black;
+  box-shadow: 0px 0px 20px #000000;
+  border-radius: 6px; }

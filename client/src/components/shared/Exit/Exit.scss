@@ -1,0 +1,37 @@
+.exitImg {
+  // position: fixed;
+  // bottom: 40px;
+  // right: 40px;
+  // width: 80px;
+  // height: 20px;
+
+  height: 100%;
+  width: 100%;
+  background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/shared/exit.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.glassesFrame {
+  position: absolute;
+  // bottom: 60px;
+  // right: 30px;
+}
+
+.backButton {
+  position: absolute;
+  // height: 30px;
+  // width: 60px;
+  // background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/shared/exit_ai.png);
+  // background-repeat: no-repeat;
+  // background-size: contain;
+
+  background-color: white;
+  font-size: 12px;
+  padding: 10px;
+  // min-width: 100px;
+  text-align: center;
+  border: .14em solid black;
+  box-shadow: 0px 0px 20px #000000;
+  border-radius: 6px;
+}

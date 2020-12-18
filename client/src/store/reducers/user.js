@@ -1,4 +1,4 @@
-import { SETUSERROOM, SETUSER, MOVEUSER, TOGGLEOUTSIDE, SETWINE, RESETWINE, ADDWINE, SETCHEESE, RESETCHEESE, ADDCHEESE, SETCOCKTAIL, RESETCOCKTAIL, ADDCOCKTAIL } from '../actions/user';
+import { SETUSERROOM, SETUSER, MOVEUSER, MOVEUSERROOM, TOGGLEOUTSIDE, SETWINE, RESETWINE, ADDWINE, SETCHEESE, RESETCHEESE, ADDCHEESE, SETCOCKTAIL, RESETCOCKTAIL, ADDCOCKTAIL } from '../actions/user';
 import { SETUSERACTIVECHAT, SETUSERHOVERCHAT, USERHOVERCHATLEAVE } from '../actions/userActiveChat';
 
 import Cookies from 'js-cookie';
@@ -7,7 +7,7 @@ import socket from "../../components/shared/Socket/Socket";
 import { globalConfig } from '../../components/sketches/HomePage/constants';
 
 // reducer (check what to do with action)
-const initState = { avatar: "😀", userName: "", room: "home-page", x: globalConfig.stepS / 2, y: globalConfig.stepS / 2, hasWine: null, needsWine: false, hasCheese: null, needsCheese: false, hasCocktail: null, needsCocktail: false };
+const initState = { avatar: "😀", userName: "", room: "home-page", roomX: 0, roomY: 0, x: globalConfig.stepS / 2, y: globalConfig.stepS / 2, hasWine: null, needsWine: false, hasCheese: null, needsCheese: false, hasCocktail: null, needsCocktail: false };
 
 export const userReducer = (state = initState, action) => {
   const user = { ...state };
@@ -17,6 +17,8 @@ export const userReducer = (state = initState, action) => {
     case SETUSERROOM:
       const prevRoom = user.room;
       const nextRoom = action.payload.room;
+      user.roomX = 50;
+      user.roomY = 50;
       user.room = nextRoom;
       socket.emit("leaveRoom", prevRoom);
       socket.emit("joinRoom", nextRoom);
@@ -49,6 +51,12 @@ export const userReducer = (state = initState, action) => {
         user.hasCocktail = new Date();
       }
       socket.emit("setUser", user);
+      return user;
+
+    case MOVEUSERROOM:
+      user.x = action.payload.x;
+      user.y = action.payload.y;
+      // action.payload.exitLocation
       return user;
 
     case ADDWINE:

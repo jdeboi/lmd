@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, withRouter, useLocation } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 
 // import update from 'react-addons-update';
 import update from 'immutability-helper';
@@ -67,6 +67,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import socket from "../components/shared/Socket/Socket";
 
 import FPSStats from "react-fps-stats";
+
+import Exit from '../components/shared/Exit/Exit';
 
 import { userNearWine } from './Helpers/Boundaries';
 import { djLocation, wineLocation } from '../components/sketches/HomePage/constants';
@@ -167,6 +169,7 @@ class App extends React.Component {
       this.props.setUser(userName, avatar);
       this.props.setUserRoom(room);
       this.setState({ hasAvatar: true, showWelcome: false }); // false
+      console.log("HAS AVA");
     }
     else {
       this.setState({ hasAvatar: false, showWelcome: true });
@@ -299,14 +302,14 @@ class App extends React.Component {
   }
 
   addBots = () => {
-    const wineBot0 = { x: wineLocation[0].x + 120, y: wineLocation[0].y + 50, avatar: "🤖", room: "home-page", userName: "cheeseBot", id: 0 };
-    const wineBot1 = { x: wineLocation[1].x + 120, y: wineLocation[1].y + 50, avatar: "🤖", room: "home-page", userName: "wineBot", id: 1 };
-    const wineBot2 = { x: wineLocation[2].x + 120, y: wineLocation[2].y + 50, avatar: "🤖", room: "home-page", userName: "cocktailBot", id: 2 };
+    const cheeseBot = { x: wineLocation[0].x - 100, y: wineLocation[0].y + 50, avatar: "🤖", room: "home-page", userName: "cheeseBot", id: 0 };
+    const wineBot = { x: wineLocation[1].x + 120, y: wineLocation[1].y + 50, avatar: "🤖", room: "home-page", userName: "wineBot", id: 1 };
+    const cocktailBot = { x: wineLocation[2].x + 120, y: wineLocation[2].y + 50, avatar: "🤖", room: "home-page", userName: "cocktailBot", id: 2 };
     const dj = { x: djLocation.x, y: djLocation.y, room: "home-page", avatar: "🎧", userName: "DJ", id: 3 };
     // const hostBot = {x: 300, y: 600, avatar: "🤖", room:"home", userName:"hostBot", id:1}
-    socket.emit("setBot", wineBot0);
-    socket.emit("setBot", wineBot1);
-    socket.emit("setBot", wineBot2);
+    socket.emit("setBot", cheeseBot);
+    socket.emit("setBot", wineBot);
+    socket.emit("setBot", cocktailBot);
     socket.emit("setBot", dj);
     // socket.emit("setBot", hostBot);
   }
@@ -437,6 +440,11 @@ class App extends React.Component {
     return rm;
   }
 
+  getRoomTitle = () => {
+    var rm = this.getRoom();
+    rm = rm.replace(/-/g, ' ');
+    return rm;
+  }
 
 
 
@@ -446,7 +454,7 @@ class App extends React.Component {
   }
 
   closeWelcome = () => {
-    this.setState({ showWelcome: false })
+    this.setState({ showWelcome: false, hasAvatar: true })
   }
 
   getStringClasses = () => {
@@ -481,7 +489,7 @@ class App extends React.Component {
           {/* <CssBaseline />*/}
           <div className="App-Header">
             <div className="BackHeader"></div>
-            <Header dimensions={dimensions} currentPage={"home-page"} toggleSideBar={this.toggleSideBar} user={this.props.user} userSet={this.userSet} avatarClicked={this.avatarClicked} />
+            <Header dimensions={dimensions} currentPage={this.getRoomTitle()} toggleSideBar={this.toggleSideBar} user={this.props.user} userSet={this.userSet} avatarClicked={this.avatarClicked} />
           </div>
           <div className="App-Content inner-outline" onMouseMove={this.handleMouseMove}>
             <Switch>
@@ -508,17 +516,17 @@ class App extends React.Component {
               <Route path="/contact" render={() => (<Contact />)} />
               <Route component={NotFound} />
             </Switch>
-            {/*<div id="fps">0</div> */}
 
           </div>
           {<FPSStats top={window.innerHeight - 55} left={10} />}
+          {/* <Exit /> */}
           {/* <SideBar room={this.state.user.room} user={this.state.user} users={this.state.users} usersChange={this.state.usersChange} showSideBar={this.state.showSideBar} handleDrawerClose={this.handleDrawerClose.bind(this)} messages={this.state.messages} addUserMessage={this.addUserMessage} userActiveChat={this.state.userActiveChat} userSetActiveChat={this.userSetActiveChat}  />*/}
           <Chat users={this.state.users} usersChange={this.state.usersChange} />
           <Participants users={this.state.users} />
-          <FAQFrame />
-          <SignIn hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} closeSignIn={this.closeSignIn} isFrame={true} />
-          <Welcome user={this.props.user} hasAvatar={this.state.hasAvatar} showWelcome={this.state.showWelcome} closeWelcome={this.closeWelcome} />
-          {/* <Dock showDock={this.state.showDock} />*/}
+          <FAQFrame w={540} h={400} />
+          <SignIn w={540} h={400} hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} closeSignIn={this.closeSignIn} isFrame={true} />
+          <Welcome w={540} h={400} user={this.props.user} hasAvatar={this.state.hasAvatar} showWelcome={this.state.showWelcome} closeWelcome={this.closeWelcome} />
+          {/* <Dock showDock={this.state.showDock} /> */}
         </MuiThemeProvider>
       </div>
     );

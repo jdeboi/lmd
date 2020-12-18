@@ -185,6 +185,19 @@
   .flippedY {
     transform: scaleY(-1);
   }
+
+  .GrayedOut {
+    background-color: rgba(0, 0, 0, .8);
+    // opacity: 0;
+    // background: red;
+    position: absolute;
+    z-index: 2500;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    width: 100vw;
+    pointer-events: all;
+  }
 }
 
 @font-face {

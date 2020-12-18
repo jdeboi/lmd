@@ -1,13 +1,19 @@
 .Instructions-list {
   text-align: center;
   overflow: scroll;
-  height: 320px; }
+  height: 320px;
+  border: 2px solid black;
+  border-radius: 6px; }
   .Instructions-list .instruction {
     text-align: left;
     display: flex;
     padding: 20px;
-    flex-direction: row;
-    border-bottom: 1px solid gray; }
+    flex-direction: row; }
+    .Instructions-list .instruction h3 {
+      border-bottom: 1px solid #cfcfcf;
+      margin-bottom: 5px; }
+    .Instructions-list .instruction p {
+      line-height: 14px; }
     .Instructions-list .instruction img {
       flex: 0;
       width: 200px;

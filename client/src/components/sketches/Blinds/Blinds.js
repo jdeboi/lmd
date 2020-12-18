@@ -11,15 +11,16 @@ class Blinds extends React.Component {
   constructor(props) {
     super(props);
 
-    this.w = 150;
-    this.h = 150;
-    this.spacing = 20;
-    this.numFramesW = Math.floor((window.innerWidth-2*this.spacing)/(this.w+this.spacing));
-    this.numFramesH = Math.floor((window.innerHeight-34-2*this.spacing)/(this.h+24+this.spacing));
-    console.log(this.numFramesW, this.numFramesH)
-    this.startX = (window.innerWidth - this.numFramesW*(this.w+this.spacing))/2 + this.spacing;
-    this.startY = (window.innerHeight-this.numFramesH*(this.h+24+this.spacing))/2;
-
+    this.w = 160;
+    this.h = this.w;
+    this.bufferX = 40; // buffer
+    this.bufferY = 20; // buffer
+    this.spacing = 20; // between elements
+    this.numFramesW = Math.floor((window.innerWidth-2*this.bufferX+this.spacing)/(this.w+this.spacing));
+    this.numFramesH = Math.floor((window.innerHeight-34-2*this.bufferY+this.spacing)/(this.h+24+this.spacing));
+    this.startX = (window.innerWidth - this.numFramesW*(this.w+this.spacing)+this.spacing)/2;
+    this.startY = 34+this.bufferY; //(window.innerHeight-this.numFramesH*(this.h+24+this.spacing)+this.spacing)/2;
+    
     this.state = {
       ogPositions : this.initOgPos(),
       positions: this.initPos(),
@@ -38,6 +39,7 @@ class Blinds extends React.Component {
 
   componentWillUnmount() {
     // this.props.userLeaveRoom("blind-spot");
+    clearInterval(this.blindInterval);
   }
 
   handleMouseMove = e => {
@@ -83,8 +85,6 @@ class Blinds extends React.Component {
   }
 
   getFrames = () => {
-    const w = 130;
-    const h = w;
     const {zIndicesFrames, ogPositions, positions, mx, my} = this.state;
     const imgW = (this.w+this.spacing)*4;
     const imgH = (this.h+24+this.spacing)*4;
@@ -98,8 +98,8 @@ class Blinds extends React.Component {
           z: zIndicesFrames[i],
           ogPos: ogPositions[i],
           pos: positions[i],
-          w: w,
-          h: h,
+          w: this.w,
+          h: this.h,
           id: i,
           imgW: imgW,
           imgH: imgH,
@@ -107,6 +107,7 @@ class Blinds extends React.Component {
           startY: this.startY,
           mx: mx,
           my: my,
+          title: this.getLetter(i),
           newFrameToTop: this.newFrameToTop,
           onDblClick: this.onDblClick,
           mode: this.state.blindMode
@@ -114,6 +115,21 @@ class Blinds extends React.Component {
         return <Window key={i} {...props} />
       })
     )
+  }
+
+  getLetter = (i) => {
+    const x = Math.floor(i/this.numFramesH);
+    const y = i%this.numFramesH;
+    const iPrime = x + y * this.numFramesW;
+
+    // const str = "blind eye";
+    // if (iPrime >= str.length) return "";
+    // return str.substring(iPrime, iPrime+1);
+    // if (iPrime === 0) return "blind";
+    // else if (iPrime === 1) return "eye";
+    if (i === 0) return "blind";
+    else if (i === 1) return "eye";
+    return "";
   }
 
   initOgPos = () => {

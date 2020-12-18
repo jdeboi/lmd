@@ -219,7 +219,7 @@ Frame.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   z: PropTypes.number,
-  height: PropTypes.number.isRequired,
+  height: PropTypes.number,
   width: PropTypes.number.isRequired,
   content: PropTypes.node.isRequired,
 

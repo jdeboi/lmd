@@ -8,6 +8,10 @@ export default function(props) {
         <div className="CheeseBar Bar" >
           <div>🧀🧀</div>
           <div>🧀🧀</div>
+          <div>🧀🧀</div>
+          <div>🧀🧀</div>
+          <div>🥖🥖</div>
+          <div>🥖🥖</div>
           <div>🥖🥖</div>
           <div>🥖🥖</div>
         </div>

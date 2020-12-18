@@ -1,6 +1,7 @@
 export const SETUSERROOM = 'SETUSERROOM';
 export const SETUSER = 'SETUSER';
 export const MOVEUSER = 'MOVEUSER';
+export const MOVEUSERROOM = 'MOVEUSERROOM';
 export const REGISTERUSER = 'REGISTERUSER';
 
 export const ADDWINE = 'ADDWINE';
@@ -35,6 +36,13 @@ export const moveUser = (x, y, wineLocation) => {
   return {
     type: MOVEUSER,
     payload: {x, y, wineLocation}
+  }
+}
+
+export const moveUserRoom = (x, y, exitLocation) => {
+  return {
+    type: MOVEUSERROOM,
+    payload: {x, y, exitLocation}
   }
 }
 

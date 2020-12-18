@@ -23,6 +23,15 @@
   // box-sizing: border-box;
   // border-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/mars/tile.png) 150 round;
 
+  .Frame {
+    .content {
+      .tank {
+        pointer-events: all;
+      }
+      
+    }
+  }
+
   .fullContent {
     width: 100%;
     height: 100%;

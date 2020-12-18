@@ -15,9 +15,9 @@ export default function MFADeets(props) {
           <div style={{fontSize: "14px", paddingBottom: "20px"}}>MFA Thesis Exhibition</div>
           <div style={{fontSize: "12px"}}>April 2021</div>
         </div>
-        <div className="welcome-buttons">
+        {/* <div className="welcome-buttons">
           <button className="standardButton highlightButton" onClick={props.nextStep}>next</button>
-        </div>
+        </div> */}
       </div>
 
     </div>

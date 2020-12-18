@@ -1,5 +1,9 @@
 .TrackLights {
 
+  .Frame {
+    pointer-events: all;
+  }
+  
   .barVert {
     display:flex;
     flex-direction: column;

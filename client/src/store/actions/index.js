@@ -17,7 +17,12 @@ export const TOGGLEUSERICONS = 'TOGGLEUSERICONS';
 
 export const SETUSERROOM = 'SETUSERROOM';
 
-
+////////////////////////////////
+export const resetApp = () => {
+  return {
+    type: 'RESETAPP'
+  }
+}
 
 ///////////// MAP
 export const toggleMap = () => {

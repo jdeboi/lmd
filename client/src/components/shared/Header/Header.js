@@ -1,7 +1,9 @@
 import React from 'react';
 import './Header.css';
 import FinderSubmenu from './FinderSubmenu';
-import { Link } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
+
+// import { Link } from 'react-router-dom';
 import Clock from './Clock';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ChatIcon from '@material-ui/icons/Chat';
@@ -84,16 +86,18 @@ class Header extends React.Component {
       // {title: "cookies", link:"/words", shortcut: "🍪"},
       { title: "credits", link: "/credits", shortcut: "" }
     ];
-    // console.log("page", this.props.currentPage);
-
+    const iconArrow = "fas fa-arrow-left";
+    const arrowClass = this.props.currentPage==="home page"?"hidden":"arrow expandable";
+    // const styB = {border: "1px solid white", borderRadius: 5, fontSize: 11, color: "white"}
     return (
 
       <header className="Header menuTheme">
         <ul className="left">
+          <li className={arrowClass} onClick={() => this.props.history.push("/")}><i className={iconArrow}></i></li>
           {/*<FinderSubmenu cursor={`cursor-${this.state.hand}`} dimensions={this.props.dimensions} title="" icon="fa fa-cube" specialClass="apple" listItems={hamburgerMenuItems} /> */}
           <FinderSubmenu dimensions={this.props.dimensions} title="" icon="fa fa-cube" specialClass="apple" listItems={hamburgerMenuItems} />
           <FinderSubmenu dimensions={this.props.dimensions} title="losing my dimension" icon="" specialClass="bold" listItems={finderMenuItems} />
-          {/* <li><span className="currentPage">{this.props.currentPage}</span></li>*/}
+          {/* <li><span className="currentPage">/{this.props.currentPage}</span></li> */}
           {/*<li className={`expandable`}><Link to="/"><span id="pageTitle">Losing My Dimension</span></Link></li>*/}
         </ul>
         {this.props.dimensions.device === "desktop" ? this.getRightMenus() : <div></div>}
@@ -139,8 +143,8 @@ class Header extends React.Component {
     let n = this.props.chatNotifications;
     if (n) {
       if (n > 10) 
-        return (<div className="notification"><span class="badge"><NotifyIcon/></span></div>);
-      return (<div className="notification"><span class="badge">{n}</span></div>);
+        return (<div className="notification"><span className="badge"><NotifyIcon/></span></div>);
+      return (<div className="notification"><span className="badge">{n}</span></div>);
     }
     return null;
   }
@@ -179,4 +183,4 @@ const mapDispatchToProps = () => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps())(Header);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps())(Header));

@@ -3,7 +3,8 @@ import './Welcome.css';
 
 import MFADeets from './components/MFADeets';
 import SignIn from '../SignIn/SignIn';
-import Instructions from './components/Instructions';
+// import Instructions from './components/Instructions';
+import FAQ from '../FAQ/FAQ';
 import { getEmojis } from './components/Helpers';
 import Glasses from './components/Glasses';
 
@@ -39,24 +40,31 @@ class Welcome extends React.Component {
 
 
   onHide() {
-    alert("nope");
+    alert("Sorry, please click through to the end of this dialog box.");
     // this.handleSubmit();
     // if (this.props.hasAvatar && this.state.user.userName != "") this.props.closeSignIn();
   }
 
   render() {
-    const w = 540;
-    const h = 400;
-
     const emojis = getEmojis();
     const content = this.getWelcomeStep(this.state.step);
+    const buttons = this.getButtons(this.state.step);
+    const x = (window.innerWidth - this.props.w) / 2;
+    const y = (window.innerHeight - this.props.h - 34 - 24) / 2;
     // const isHidden={!this.props.showSignIn}
+
+    const classN = "Welcome" + (this.props.showWelcome ? " GrayedOut" : "");
     return (
-      <div className="Welcome" style={{ display: this.props.showWelcome ? "block" : "none" }}>
+      <div className={classN} style={{ display: this.props.showWelcome ? "block" : "none" }}>
         <Frame title={this.state.title} isHidden={false} onHide={this.onHide} windowStyle={{ backgroundColor: "white" }} content={
-          content
+          <React.Fragment>
+            <div className="WelcomeContent">
+              {content}
+            </div>
+            {buttons}
+          </React.Fragment>
         }
-          width={w} height={h} x={(window.innerWidth - w) / 2} y={(window.innerHeight - h - 34 - 24) / 2} z={2000}
+          width={this.props.w} height={this.props.h} x={x} y={y} z={2000}
         />
       </div>
     );
@@ -65,10 +73,46 @@ class Welcome extends React.Component {
   }
 
   getWelcomeStep = (step) => {
-    if (step === 0) return <MFADeets nextStep={this.nextStep} />
-    else if (step === 1) return <SignIn {...this.props} nextStep={this.nextStep} prevStep={this.prevStep} isFrame={false} />;
-    else if (step === 2) return <Instructions prevStep={this.prevStep} nextStep={this.nextStep} />
-    else if (step == 3) return <Glasses prevStep={this.prevStep} closeWelcome={this.props.closeWelcome} />
+    if (step === 0)
+      return <MFADeets />
+    else if (step === 1)
+      return <SignIn {...this.props} setClick={click => this.clickSubmit = click} nextStep={this.nextStep} prevStep={this.prevStep} isFrame={false} />;
+    else if (step === 2)
+      return <FAQ />
+    else if (step == 3)
+      return <Glasses />
+    return null;
+  }
+
+  getButtons = (step) => {
+    if (step === 0)
+      return (
+        <div className="welcome-buttons">
+          <button className="standardButton primary" onClick={this.nextStep}>next</button>
+        </div>
+      );
+    else if (step === 1)
+      // https://stackoverflow.com/questions/37949981/call-child-method-from-parent
+      return (
+        <div className="welcome-buttons">
+          <button className="standardButton secondary" onClick={this.prevStep}>back</button>
+          <button className="standardButton primary" onClick={() => this.clickSubmit()}>next</button>
+        </div>
+      );
+    else if (step === 2)
+      return (
+        <div className="welcome-buttons">
+          <button className="standardButton secondary" onClick={this.prevStep}>back</button>
+          <button className="standardButton primary" onClick={this.nextStep}>next</button>
+        </div>
+      );
+    else if (step == 3)
+      return (
+        <div className="welcome-buttons">
+          <button className="standardButton secondary" onClick={this.prevStep}>back</button>
+          <button className="standardButton primary" onClick={this.props.closeWelcome}>finish</button>
+        </div>
+      );
     return null;
   }
 

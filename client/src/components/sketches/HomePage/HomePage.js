@@ -25,6 +25,8 @@ import Column from './components/Column';
 import Door from './components/Door/Door';
 import Pools from './components/Pools/Pools';
 
+// import './p5/components/Draggable/Draggable.css';
+
 import { initZIndicesIcons, initZIndicesFrames } from './components/Helpers';
 import { getNewZIndices } from '../../shared/Helpers/Helpers';
 
@@ -129,6 +131,7 @@ class HomePage extends React.Component {
         <Pools x={-user.x + this.state.OGW} y={-user.y + this.state.OGH} />
         <MiniMap users={users} user={user} x={50} y={50} z={50} wineLocation={wineLocation} />
         {/*Glasses />*/}
+        <div id="cards"></div>
       </React.Fragment>
     )
   }
@@ -295,6 +298,7 @@ class HomePage extends React.Component {
           users={users}
           roomCount={roomCount}
           userMove={(x, y) => this.props.moveUser(x, y, wineLocation)}
+          userTransition={(x, y) => this.props.transitionUser(x, y, wineLocation)}
           userNewRoom={this.props.userNewRoom}
           loadingDone={this.loadingDone}
           toggleOutside={this.props.toggleOutside}

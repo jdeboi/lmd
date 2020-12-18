@@ -41,10 +41,10 @@ export const rooms = [
 ];
 
 
-let xMin = -8;
+let xMin = -10;
 let xMax = 35;
 let yMin = -3;
-let yMax = 40;
+let yMax = 42;
 export const limits = [
     { x: xMin, y: yMin }, // outer limit
     { x: xMax, y: yMin },
@@ -53,8 +53,8 @@ export const limits = [
     { x: xMin, y: yMin }
 ];
 
-let startX = -8;
-let startY = 20;
+let startX = limits[0].x;
+let startY = 22;
 export const pools = [
     { x: startX, y: startY },
     { x: startX + 5, y: startY + 5 },
@@ -94,10 +94,10 @@ export const lights = [
 
 
 //// wine
-const wineBot0 = p5ToDomCoords(-3, 0);
+const cheeseBot = p5ToDomCoords(-8.5, 8); // cheese
 const wineBot1 = p5ToDomCoords(30, 17);
-const wineBot2 = p5ToDomCoords(30, 22);
-export const wineLocation = [{ x: wineBot0.x, y: wineBot0.y, w: 80, h: 150 }, { x: wineBot1.x, y: wineBot1.y, w: 80, h: 150 }, { x: wineBot2.x, y: wineBot2.y, w: 80, h: 150 }];
+const cocktailBot = p5ToDomCoords(30, 22);
+export const wineLocation = [{ x: cheeseBot.x, y: cheeseBot.y, w: 80, h: 250, flipped:true }, { x: wineBot1.x, y: wineBot1.y, w: 80, h: 150, flipped: false }, { x: cocktailBot.x, y: cocktailBot.y, w: 80, h: 150, flipped:false }];
 
 
 //// dance dance dance

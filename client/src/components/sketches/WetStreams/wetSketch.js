@@ -81,6 +81,11 @@ export default function sketch (p) {;
     // p.text(p.round(p.frameRate()), 50, 80);
 
   };
+
+  p.windowResized = () => {
+    p.resizeCanvas(p.windowWidth, p.windowHeight);
+  }
+
 };
 
 // The Nature of Code

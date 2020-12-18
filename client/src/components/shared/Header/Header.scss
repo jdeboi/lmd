@@ -54,7 +54,7 @@
   flex: 1 1 100%;
 
   .currentPage {
-    color: blue;
+    color: #335ef6dd; //$headerGradientEndC; // #fc03ad99;//
   }
 
   .header-avatar {
@@ -73,7 +73,7 @@
   .icon {
     font-size: 20px;
     line-height: $headerH;
-    
+
     svg {
       vertical-align: middle;
     }
@@ -96,6 +96,18 @@
   ul {
     margin: 0 5px;
     padding: 0 3px;
+
+    .hidden {
+      display: none;
+    }
+
+    .arrow.expandable {
+      color: $headerGradientEndC; //#ff0080;
+
+      &:hover {
+        color: white;
+      }
+    }
 
     li {
       display: inline-block;
@@ -329,14 +341,13 @@
       height: 20px;
       width: 20px;
       text-align: center;
-      line-height: 20px; 
+      line-height: 20px;
       // padding: 2px 2px;
       border-radius: 50%;
       background: red;
       color: white;
     }
   }
-  
 
   @-webkit-keyframes ClickMeGradient {
     0% {
