@@ -10,87 +10,135 @@
       }
     }
   }
+}
 
-  .welcome-buttons {
-    display: flex;
-    flex-direction: row;
-    vertical-align: middle;
-    justify-content: center;
+.SignInForm {
+  .userBar {
+    height: 38px;
+    align-self: flex-start;
 
-    button {
-      margin: 5px;
+    .avatar {
+      font-size: 36px;
+      height: 38px;
+      width: 38px;
+      padding-right: 15px;
+    }
+
+    input {
+      border-bottom: 2px solid black;
+      font-size: 14px;
+      width: 225px;
     }
   }
 
-  .SignInForm {
-    position: absolute;
-    height: 400px;
-    width: 540px;
-    // flex: 1;
-
-    .SignIn-Box {
-      padding: 20px;
-    }
-
-    .SignIn-Content {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      height: 360px;
-      align-items: center;
-      color: black;
-
-      .userBar {
-        display: flex;
-        height: 38px;
-        // flex: 0;
-        flex-direction: row;
-        align-self: flex-start;
-        padding-bottom: 20px;
-
-        .avatar {
-          font-size: 36px;
-          height: 38px;
-          width: 38px;
-          padding-right: 15px;
-        }
-
-        input {
-          flex: 1;
-          border-bottom: 2px solid black;
-          font-size: 14px;
-          width: 225px;
-        }
-      }
-
-      .emoji-list {
-        flex: 1;
-        height: 80px;
-        border: 2px solid black;
-        border-radius: 6px;
-        // height: 200px;
-        // width: 460px;
-        overflow: scroll;
-
-        button {
-          font-size: 18px;
-          width: 24px;
-          height: 24px;
-          padding: 2px;
-          border: none;
-        }
-      }
-
-      .submit {
-        flex: 0 0 34px;
-        // height: 90px;
-        // margin-top: auto;
-        padding-top: 20px;
-        // align-content: center;
-        // align-self: center;
-        // vertical-align:middle;
-        // height: 60px;
-      }
+  .emoji-list {
+    border: 2px solid black;
+    border-radius: 6px;
+   
+    button {
+      font-size: 18px;
+      width: 24px;
+      height: 24px;
+      padding: 2px;
+      border: none;
     }
   }
 }
+
+// .SignIn {
+//   position: absolute;
+
+//   .Frame {
+//     .window {
+//       background: white;
+
+//       .content {
+//         pointer-events: all;
+//       }
+//     }
+//   }
+
+//   // .welcome-buttons {
+//   //   display: flex;
+//   //   flex-direction: row;
+//   //   vertical-align: middle;
+//   //   justify-content: center;
+
+//   //   button {
+//   //     margin: 5px;
+//   //   }
+//   // }
+
+//   .SignInForm {
+//     position: absolute;
+//     // height: 400px;
+//     // width: 540px;
+//     width: 100%;
+//     // flex: 1;
+
+//     .SignIn-Box {
+//       padding: 20px;
+//     }
+
+//     .SignIn-Content {
+//       display: flex;
+//       flex-direction: column;
+//       width: 100%;
+//       height: 360px;
+//       align-items: center;
+//       color: black;
+
+//       .userBar {
+//         display: flex;
+//         height: 38px;
+//         // flex: 0;
+//         flex-direction: row;
+//         align-self: flex-start;
+//         padding-bottom: 20px;
+
+//         .avatar {
+//           font-size: 36px;
+//           height: 38px;
+//           width: 38px;
+//           padding-right: 15px;
+//         }
+
+//         input {
+//           flex: 1;
+//           border-bottom: 2px solid black;
+//           font-size: 14px;
+//           width: 225px;
+//         }
+//       }
+
+//       .emoji-list {
+//         flex: 1;
+//         height: 80px;
+//         border: 2px solid black;
+//         border-radius: 6px;
+//         // height: 200px;
+//         // width: 460px;
+//         overflow: scroll;
+
+//         button {
+//           font-size: 18px;
+//           width: 24px;
+//           height: 24px;
+//           padding: 2px;
+//           border: none;
+//         }
+//       }
+
+//       .submit {
+//         flex: 0 0 34px;
+//         // height: 90px;
+//         // margin-top: auto;
+//         padding-top: 20px;
+//         // align-content: center;
+//         // align-self: center;
+//         // vertical-align:middle;
+//         // height: 60px;
+//       }
+//     }
+//   }
+// }

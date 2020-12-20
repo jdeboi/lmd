@@ -3,7 +3,7 @@ import './Participants.css';
 import Frame from '../Frame/Frame';
 
 import { connect } from 'react-redux';
-import { hideUserIcons, toggleUserIcons, showChat } from '../../../store/actions/';
+import { hideUserIcons, toggleUserIcons, showChat } from '../../../store/actions/menuItems';
 import { setUserActiveChat, userHoverChatLeave, setUserHoverChat }  from '../../../store/actions/userActiveChat';
 
 class Participants extends React.Component {

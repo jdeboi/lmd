@@ -1,14 +1,18 @@
 import React from 'react';
 import './Welcome.css';
+import '../SignIn/SignIn.css';
+// import '../CenterModal/CenterModal.css';
 
+// store
+import { connect } from 'react-redux';
+
+// components
+import CenterModal from '../CenterModal/CenterModal';
 import MFADeets from './components/MFADeets';
 import SignIn from '../SignIn/SignIn';
-// import Instructions from './components/Instructions';
 import FAQ from '../FAQ/FAQ';
-import { getEmojis } from './components/Helpers';
 import Glasses from './components/Glasses';
 
-import Frame from '../Frame/Frame';
 
 class Welcome extends React.Component {
   // https://codepen.io/JohJakob/pen/YPxgwo
@@ -46,27 +50,20 @@ class Welcome extends React.Component {
   }
 
   render() {
-    const emojis = getEmojis();
+    const { ui, showWelcome } = this.props;
     const content = this.getWelcomeStep(this.state.step);
     const buttons = this.getButtons(this.state.step);
-    const x = (window.innerWidth - this.props.w) / 2;
-    const y = (window.innerHeight - this.props.h - 34 - 24) / 2;
-    // const isHidden={!this.props.showSignIn}
-
-    const classN = "Welcome" + (this.props.showWelcome ? " GrayedOut" : "");
     return (
-      <div className={classN} style={{ display: this.props.showWelcome ? "block" : "none" }}>
-        <Frame title={this.state.title} isHidden={false} onHide={this.onHide} windowStyle={{ backgroundColor: "white" }} content={
-          <React.Fragment>
-            <div className="WelcomeContent">
-              {content}
-            </div>
-            {buttons}
-          </React.Fragment>
-        }
-          width={this.props.w} height={this.props.h} x={x} y={y} z={2000}
-        />
-      </div>
+      <CenterModal
+        title={this.state.title}
+        isHidden={!showWelcome}
+        onHide={this.onHide}
+        width={ui.width}
+        height={ui.height}
+        classN="Welcome"
+        content={content}
+        buttons={buttons}
+      />
     );
 
 
@@ -74,7 +71,7 @@ class Welcome extends React.Component {
 
   getWelcomeStep = (step) => {
     if (step === 0)
-      return <MFADeets />
+      return <MFADeets width={this.props.ui.width} />
     else if (step === 1)
       return <SignIn {...this.props} setClick={click => this.clickSubmit = click} nextStep={this.nextStep} prevStep={this.prevStep} isFrame={false} />;
     else if (step === 2)
@@ -87,28 +84,28 @@ class Welcome extends React.Component {
   getButtons = (step) => {
     if (step === 0)
       return (
-        <div className="welcome-buttons">
+        <div className="center-buttons">
           <button className="standardButton primary" onClick={this.nextStep}>next</button>
         </div>
       );
     else if (step === 1)
       // https://stackoverflow.com/questions/37949981/call-child-method-from-parent
       return (
-        <div className="welcome-buttons">
+        <div className="center-buttons">
           <button className="standardButton secondary" onClick={this.prevStep}>back</button>
           <button className="standardButton primary" onClick={() => this.clickSubmit()}>next</button>
         </div>
       );
     else if (step === 2)
       return (
-        <div className="welcome-buttons">
+        <div className="center-buttons">
           <button className="standardButton secondary" onClick={this.prevStep}>back</button>
           <button className="standardButton primary" onClick={this.nextStep}>next</button>
         </div>
       );
     else if (step == 3)
       return (
-        <div className="welcome-buttons">
+        <div className="center-buttons">
           <button className="standardButton secondary" onClick={this.prevStep}>back</button>
           <button className="standardButton primary" onClick={this.props.closeWelcome}>finish</button>
         </div>
@@ -140,4 +137,16 @@ class Welcome extends React.Component {
 
 }
 
-export default Welcome;
+
+const mapStateToProps = (state) => {
+  return {
+    ui: state.ui
+  }
+}
+
+const mapDispatchToProps = () => {
+  return {
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps())(Welcome);

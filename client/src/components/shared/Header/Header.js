@@ -14,7 +14,7 @@ import UsersIcon from '@material-ui/icons/SupervisedUserCircle';
 
 // store
 import { connect } from 'react-redux';
-import { toggleMap, toggleFaq, toggleChat, toggleUserIcons } from '../../../store/actions/';
+import { toggleMap, toggleFaq, toggleChat, toggleUserIcons } from '../../../store/actions/menuItems';
 import { resetMessgeNotification } from '../../../store/actions/messages';
 
 /*
@@ -63,7 +63,7 @@ class Header extends React.Component {
   render() {
 
     const finderMenuItems = [
-      { title: "homepage", link: "/", shortcut: "&#x2318;0" },
+      { title: "gallery", link: "/", shortcut: "&#x2318;0" },
       { title: "macbook air", link: "/macbook-air", shortcut: "&#x2318;1" },
       { title: "wet streams", link: "/wet-streams", shortcut: "&#x2318;2" },
       { title: "hard drives on seashores", link: "/hard-drives-on-seashores", shortcut: "&#x2318;3" },
@@ -74,7 +74,7 @@ class Header extends React.Component {
       { title: "cloud confessional", link: "/cloud-confessional", shortcut: "&#x2318;8" },
       { title: "blind eye", link: "/blind-eye", shortcut: "&#x2318;9" },
       { title: "flush", link: "/flush", shortcut: "&#x2318;10" },
-      { title: "house view", link: "/house-view", shortcut: "&#x2318;11" },
+      { title: "home page", link: "/home-page", shortcut: "&#x2318;11" },
       // {title: "i got the feels", link:"/i-got-the-feels", shortcut: "&#x2318;8"},
       // {title: "losing my dimension", link:"/losing-my-dimension", shortcut: "&#x2318;9"},
     ];
@@ -95,14 +95,19 @@ class Header extends React.Component {
         <ul className="left">
           <li className={arrowClass} onClick={() => this.props.history.push("/")}><i className={iconArrow}></i></li>
           {/*<FinderSubmenu cursor={`cursor-${this.state.hand}`} dimensions={this.props.dimensions} title="" icon="fa fa-cube" specialClass="apple" listItems={hamburgerMenuItems} /> */}
-          <FinderSubmenu dimensions={this.props.dimensions} title="" icon="fa fa-cube" specialClass="apple" listItems={hamburgerMenuItems} />
-          <FinderSubmenu dimensions={this.props.dimensions} title="losing my dimension" icon="" specialClass="bold" listItems={finderMenuItems} />
+          <FinderSubmenu ui={this.props.ui} title="" icon="fa fa-cube" specialClass="apple" listItems={hamburgerMenuItems} />
+          <FinderSubmenu ui={this.props.ui} title="losing my dimension" icon="" specialClass="bold" listItems={finderMenuItems} />
           {/* <li><span className="currentPage">/{this.props.currentPage}</span></li> */}
           {/*<li className={`expandable`}><Link to="/"><span id="pageTitle">Losing My Dimension</span></Link></li>*/}
         </ul>
-        {this.props.dimensions.device === "desktop" ? this.getRightMenus() : <div></div>}
+        {this.isSimpleHeader() ? this.getMobileRightMenus() : this.getRightMenus()}
       </header>
     );
+  } 
+
+  isSimpleHeader() {
+    const {ui} = this.props;
+    return ui.isMobile || ui.size == "xsmall" || ui.size == "small";
   }
 
   chatClicked = () => {
@@ -110,6 +115,13 @@ class Header extends React.Component {
     this.props.toggleChat();
   }
 
+  getMobileRightMenus() {
+    return (
+      <ul className="right">
+        <li className="header-avatar expandable" onClick={this.props.avatarClicked}>{this.getAvatar()}</li>
+      </ul>
+    );
+  }
   getRightMenus() {
     //<button className="hamburger-button">
     var classChat = "expandable icon" + (this.props.chatIsHidden ? " closed" : " opened");
@@ -125,7 +137,7 @@ class Header extends React.Component {
     return (
       <ul className="right">
         <li className={classChat} onClick={this.chatClicked}><ChatIcon fontSize="inherit" />{this.getChatNotification()}</li>
-        <li className={classUserIcons} onClick={this.props.toggleUserIcons}><UsersIcon fontSize="inherit" /></li>
+        {/* <li className={classUserIcons} onClick={this.props.toggleUserIcons}><UsersIcon fontSize="inherit" /></li> */}
         <li className={classMap} onClick={this.props.toggleMap}><MapIcon fontSize="inherit" /></li>
         <li className={classFaq} onClick={this.props.toggleFaq}><HelpOutlineIcon fontSize="inherit" /></li>
 
@@ -168,7 +180,8 @@ const mapStateToProps = (state) => {
     faqIsHidden: state.faqIsHidden,
     mapIsHidden: state.mapIsHidden,
     userIconsIsHidden: state.userIconsIsHidden,
-    chatNotifications: state.chatNotifications
+    chatNotifications: state.chatNotifications,
+    ui: state.ui
   }
 }
 

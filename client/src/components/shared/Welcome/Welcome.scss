@@ -27,6 +27,8 @@
       height: 100%;
       border: 2px solid black;
       border-radius: 6px;
+
+      
     }
 
     .SignInForm {
@@ -146,7 +148,7 @@
     flex-direction: column;
 
     .MFA-txt {
-      flex: 1;
+      // flex: 1;
     }
 
     div a {

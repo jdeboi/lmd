@@ -4,7 +4,7 @@ import ToolTip from './ToolTip';
 
 // store
 import { connect } from 'react-redux';
-import { showChat } from '../../../../store/actions/';
+import { showChat } from '../../../../store/actions/menuItems';
 import { setUserActiveChat } from '../../../../store/actions/userActiveChat';
 
 class OtherAvatar extends React.Component {

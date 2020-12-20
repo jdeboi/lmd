@@ -56,11 +56,6 @@ class Frame extends React.Component {
     this.onStop();
   };
 
-  eventLogger = (e: MouseEvent, data: Object) => {
-    console.log('Event: ', e);
-    console.log('Data: ', data);
-  };
-
   toggleClosed = () => {
     // console.log("CLOSE")
     this.setState({

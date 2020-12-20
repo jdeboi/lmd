@@ -7,10 +7,9 @@ import Slider from '@material-ui/core/Slider';
 // import indigo from '@material-ui/core/colors/indigo';
 
 import ReactPlayer from 'react-player'
-// import mainVid from  "./assets/noframe.mp4";
-// import cloudsVid from  "./assets/clouds3d.mp4";
 
-// import Glasses from '../../shared/Glasses/Glasses';
+// store
+import { connect } from 'react-redux';
 
 class MacbookAir extends React.Component {
   // https://codepen.io/JohJakob/pen/YPxgwo
@@ -36,15 +35,10 @@ class MacbookAir extends React.Component {
 
   componentDidMount() {
     this.interval = setInterval(this.resetPlayer, 22000);
-    // this.props.userSetRoom("macbook-air");
-    console.log("macbook air mount");
-    // window.addEventListener("resize", this.updateDimensions);
   }
 
   componentWillUnmount() {
-    // window.removeEventListener("resize", this.updateDimensions.bind(this));
     clearInterval(this.interval);
-    // this.props.userLeaveRoom("macbook-air");
   }
 
   setSpeed(speed) {
@@ -55,15 +49,19 @@ class MacbookAir extends React.Component {
   getDimensions() {
     var headerH = 34;
     var toolbarH = 28;
-    var {windowWidth, device, windowHeight} = this.props.dimensions;
+    var ui = {...this.props.ui};
+    var windowWidth = ui.width;
+    var windowHeight = ui.height;
+    var isMobile = ui.isMobile;
+    var size = ui.size;
     // var {} = this.props.dimensions;
     windowHeight -= headerH;
 
     const originalDim = {w: 840, h: 540};
     const aspectRatio = originalDim.w/originalDim.h;
     let minSpacing = Math.min(windowWidth*.05, 50);//windowWidth*.05;
-    const windowAspectRatio = window.innerWidth/window.innerHeight;
-    if (device === "desktop") return getPortraitDimensions();
+    const windowAspectRatio = windowWidth/windowHeight;
+    if (size !== 'xsmall' && size !== 'small')  return getPortraitDimensions();
     // else if (availableHeight >= originalDim.h) return getPortraitDimensions();
     else if (windowAspectRatio < 1) return getPortraitDimensions();
     else return getLandscapeDimensions();
@@ -136,11 +134,8 @@ class MacbookAir extends React.Component {
 
 
   getMainWindow(windowDim) {
-    let dx = this.props.dimensions.flipped?-this.mainOG.x + windowDim.x: 0;
-    let dy =  this.props.dimensions.flipped?-this.mainOG.y + windowDim.y: 0;
-
-    if (this.props.dimensions.windowWidth <= 0 || windowDim.w <= 0) {
-      return (<div></div>);
+    if (this.props.ui.width <= 0 || windowDim.w <= 0) {
+      return null;
     }
     else {
       if (this.mainOG.x === 0) {
@@ -169,14 +164,8 @@ class MacbookAir extends React.Component {
 
   getSliderWindow(sliderDim) {
 
-    // let offsetMain = {
-    let dx = this.props.dimensions.flipped?100: 0;
-    let dy =  this.props.dimensions.flipped?400: 0;
-
-
-    // }
-    if (this.props.dimensions.windowWidth <= 0) {
-      return(<div></div>);
+    if (this.props.ui.width <= 0) {
+      return null;
     }
     else {
       return(
@@ -250,4 +239,20 @@ class MacbookAir extends React.Component {
     );
   }
 
-  export default MacbookAir;
+
+
+const mapStateToProps = (state) => {
+  return {
+    ui: state.ui
+  }
+}
+
+const mapDispatchToProps = () => {
+  return {
+   
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps())(MacbookAir);
+

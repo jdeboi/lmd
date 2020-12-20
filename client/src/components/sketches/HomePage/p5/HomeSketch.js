@@ -109,7 +109,7 @@ export default (props) => {
 
     props.loadingDone();
 
-    initDivs(p5);
+    // initDivs(p5);
   };
 
 
@@ -299,7 +299,7 @@ export default (props) => {
 
     // drawOuterBoundary(p5);
 
-    displayDivs();
+    // displayDivs();
 
     p5.pop();
 
@@ -327,7 +327,7 @@ export default (props) => {
     showMouseLoc(p5);
 
 
-    updateDivs();
+    // updateDivs();
     // updateUserEase(p5);
   };
 

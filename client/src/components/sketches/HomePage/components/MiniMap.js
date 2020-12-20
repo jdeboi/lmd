@@ -3,7 +3,7 @@ import Frame from '../../../shared/Frame/Frame';
 import AvatarMiniMap from './AvatarMiniMap';
 
 import { connect } from 'react-redux';
-import { hideMap, toggleMap } from '../../../../store/actions/';
+import { hideMap, toggleMap } from '../../../../store/actions/menuItems';
 
 
 class MiniMap extends React.Component {
@@ -11,6 +11,14 @@ class MiniMap extends React.Component {
   constructor(props) {
     super(props);
 
+  }
+
+  componentDidMount() {
+    const {size, isMobile} = this.props.ui;
+    
+    if (!isMobile && size !== "xsmall" && size !== "small") {
+      this.props.toggleMap();
+    }
   }
 
   onHide = () => {
@@ -61,7 +69,8 @@ class MiniMap extends React.Component {
 
 const mapStateToProps = (state) => {
  return {
-   mapIsHidden: state.mapIsHidden
+   mapIsHidden: state.mapIsHidden,
+   ui: state.ui
  }
 }
 

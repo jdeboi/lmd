@@ -8,9 +8,9 @@ import { messagesReducer, messageNotificationReducer } from './messages';
 import { mapReducer, faqReducer, chatReducer, userIconsReducer } from './menuItems';
 import { userReducer, userActiveChatReducer, userHoverChatReducer, userOutsideReducer } from './user';
 import { musicReducer } from './music';
+import { windowReducer} from './window';
 
 import Cookies from 'js-cookie';
-import socket from "../../components/shared/Socket/Socket";
 
 
 const allReducers = combineReducers({
@@ -24,7 +24,8 @@ const allReducers = combineReducers({
   userHoverChat: userHoverChatReducer,
   chatNotifications: messageNotificationReducer,
   currentSong: musicReducer,
-  outside: userOutsideReducer
+  outside: userOutsideReducer,
+  ui: windowReducer
 })
 
 // export default allReducers;
@@ -34,7 +35,6 @@ const allReducers = combineReducers({
 const rootReducer = (state, action) => {
 
   if (action.type === 'RESETAPP') {
-    console.log("RESETTTTT");
     Cookies.remove("hasAvatar");
     Cookies.remove("avatar");
     Cookies.remove("userName");

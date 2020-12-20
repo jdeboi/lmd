@@ -15,7 +15,8 @@ import Cookies from 'js-cookie';
 
 // store
 import { connect } from 'react-redux';
-import { setUserRoom, setUser, moveUser, setWine, resetWine } from '../store/actions/user';
+import { resizeApp } from '../store/actions';
+import { setUserRoom, setUser, moveUser, setWine } from '../store/actions/user';
 import { addMessage, addMessageNotification } from '../store/actions/messages';
 
 // sketches
@@ -56,6 +57,8 @@ import SignIn from '../components/shared/SignIn/SignIn';
 import Participants from '../components/shared/Participants/Participants';
 import Welcome from '../components/shared/Welcome/Welcome';
 import FAQFrame from '../components/shared/FAQ/FAQFrame';
+
+import MobileFooter from '../components/shared/Header/MobileFooter/MobileFooter';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import indigo from '@material-ui/core/colors/indigo';
@@ -132,7 +135,6 @@ class App extends React.Component {
     this.state = {
       cursor: 0,
       cursorID: 0,
-      dimensions: { windowWidth: window.innerWidth, windowHeight: window.innerHeight, device: "desktop", flipped: false, orientation: "landscape" },
       wOG: window.innerWidth,
       hOG: window.innerHeight,
       mx: 0,
@@ -169,14 +171,12 @@ class App extends React.Component {
       this.props.setUser(userName, avatar);
       this.props.setUserRoom(room);
       this.setState({ hasAvatar: true, showWelcome: false }); // false
-      console.log("HAS AVA");
     }
     else {
       this.setState({ hasAvatar: false, showWelcome: true });
     }
 
 
-    this.updateDeviceDimensions();
     window.addEventListener("resize", this.updateDeviceDimensions);
 
     this.unlisten = this.props.history.listen((location, action) => this.userSetRoom(location));
@@ -209,26 +209,8 @@ class App extends React.Component {
   }
 
   updateDeviceDimensions = () => {
-    var dimensions = {};
-    // width, height
-    dimensions.windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
-    dimensions.windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
-
-    // orientation and flipped
-    let ratio = this.state.wOG / this.state.hOG;
-    dimensions.flipped = false;
-    if (dimensions.windowWidth / dimensions.windowHeight !== ratio) dimensions.flipped = true;
-    dimensions.orientation = dimensions.windowWidth / dimensions.windowHeight > 1 ? "landscape" : "portrait";
-
-    // device type
-    let minD = Math.min(dimensions.windowWidth, dimensions.windowHeight);
-    // if (DEBUG) console.log("minD", minD, dimensions.windowWidth, dimensions.windowHeight);
-    dimensions.device = "";
-    if (minD < 450) dimensions.device = "mobile";
-    else if (minD < 700) dimensions.device = "tablet";
-    else dimensions.device = "desktop";
-
-    this.setState({ dimensions: dimensions });
+    // console.log("resizing");
+    this.props.resizeApp(window.innerWidth, window.innerHeight);
   }
 
   addClass = (classn) => {
@@ -357,66 +339,6 @@ class App extends React.Component {
     if (!this.state.showWelcome) this.setState({ showSignIn: true });
   }
 
-
-
-  // userSetActiveChat = (clickedUser) => {
-  //   // const mx = event.mx;
-  //   // const mouseX = mx-window.innerWidth;
-  //   var userActiveChat = null;
-  //   if (clickedUser) userActiveChat = {...clickedUser};
-  //   this.setState({userActiveChat, showSideBar: true});
-  //   // console.log("trying to set chat user", userActiveChat);
-  // }
-
-
-  // addUserMessage = (message) => {
-  //   // const user = {...this.state.user};
-  //   const messages = [...this.state.messages, message];
-  //   // user.messages = messages;
-  //   // var newUser = update(user, { messages:
-  //   //   {$push: [msg]}
-  //   // });
-  //
-  //   // if (DEBUG) console.log("USER UDPATE", newUser);
-  //   this.setState({messages});
-  // }
-
-  // userUpdated = (avatar, userName) => {
-  //   // const newUser = { ...this.state.user }
-  //   // newUser.userName = userName;
-  //   // newUser.avatar = avatar;
-  //   // if (DEBUG) console.log("USER UPDATE", newUser)
-  //   // this.setState({user: newUser});
-  //   this.props.setUser(avatar, userName);
-  // }
-
-  // userMove = (x, y) => {
-  //   // const user = {...this.state.user};
-  //   // user.x = x;
-  //   // user.y = y;
-  //   this.props.moveUser(x, y, wineLocation);
-  //
-  //   // this.setState({user});
-  //   // if (DEBUG) console.log("MOVE", user);
-  //   // socket.emit("setUser", this.props.user);
-  // }
-
-
-  // userSet = (userName, avatar) => {
-  //
-  //   // this.userUpdated(avatar, userName);
-  //
-  //   // const user = { ...this.state.user }
-  //   // user.userName = userName;
-  //   // user.avatar = avatar;
-  //   this.props.setUser(userName, avatar);
-  //   this.setState({hasAvatar:true, showSignIn:false});
-  //   // if (DEBUG) console.log("USER SET", user);
-  //
-  // }
-
-
-
   userNewRoom = (room) => {
     // alert("door!");
     this.props.history.push(room);
@@ -445,9 +367,6 @@ class App extends React.Component {
     rm = rm.replace(/-/g, ' ');
     return rm;
   }
-
-
-
 
   closeSignIn = () => {
     this.setState({ showSignIn: false })
@@ -481,30 +400,32 @@ class App extends React.Component {
   render() {
     // const counter = useSelector(state => state.counterReducer);
     // console.log(counter);
-    const { dimensions } = this.state;
-    // console.log("app", this.state.user.room);
+    const { ui } = this.props;
+
+    const welcomeW =  ui.width < 600 ? ui.width - 40 : 540;
+    const welcomeH =  ui.height < 500 ? ui.height - 40 - 34 : 400;
     return (
       <div className={this.getStringClasses()}>
         <MuiThemeProvider theme={theme}>
           {/* <CssBaseline />*/}
           <div className="App-Header">
             <div className="BackHeader"></div>
-            <Header dimensions={dimensions} currentPage={this.getRoomTitle()} toggleSideBar={this.toggleSideBar} user={this.props.user} userSet={this.userSet} avatarClicked={this.avatarClicked} />
+            <Header currentPage={this.getRoomTitle()} user={this.props.user} avatarClicked={this.avatarClicked} />
           </div>
           <div className="App-Content inner-outline" onMouseMove={this.handleMouseMove}>
             <Switch>
-              <Route exact path="/" render={() => (<HomePage dimensions={dimensions} users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} />)} />
-              <Route path="/macbook-air" render={() => (<MacbookAir dimensions={dimensions} />)} />
+              <Route exact path="/" render={() => (<HomePage users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} />)} />
+              <Route path="/macbook-air" render={() => (<MacbookAir />)} />
               <Route path="/jungle-gyms" render={() => (<JungleGyms />)} />
               <Route path="/hard-drives-on-seashores" render={() => (<HardDrives />)} />
-              <Route path="/wasted-days-are-days-wasted" render={() => (<Spacetimes dimensions={dimensions} />)} />
-              <Route path="/esc-to-mars" render={() => (<Mars addClass={this.addClass} removeClass={this.removeClass} dimensions={dimensions} />)} />
+              <Route path="/wasted-days-are-days-wasted" render={() => (<Spacetimes />)} />
+              <Route path="/esc-to-mars" render={() => (<Mars addClass={this.addClass} removeClass={this.removeClass} />)} />
               <Route path="/wet-streams" render={() => (<WetStreams />)} />
-              <Route path="/xfinity-depths" render={() => (<Loop dimensions={dimensions} />)} />
+              <Route path="/xfinity-depths" render={() => (<Loop />)} />
               <Route path="/cloud-confessional" render={() => (<WaveForms cursor={this.state.cursorID} />)} />
               <Route path="/confessions" render={() => (<Confessions />)} />
               <Route path="/flush" render={() => (<VorTech />)} />
-              <Route path="/house-view" render={() => (<Oogle />)} />
+              <Route path="/home-page" render={() => (<Oogle />)} />
               <Route path="/blind-eye" render={() => (<Blinds />)} />
 
               <Route path="/dig" render={() => (<Dig addClass={this.addClass} />)} />
@@ -518,15 +439,16 @@ class App extends React.Component {
             </Switch>
 
           </div>
-          {<FPSStats top={window.innerHeight - 55} left={10} />}
+          {<FPSStats top={window.innerHeight - 255} left={10} />}
           {/* <Exit /> */}
           {/* <SideBar room={this.state.user.room} user={this.state.user} users={this.state.users} usersChange={this.state.usersChange} showSideBar={this.state.showSideBar} handleDrawerClose={this.handleDrawerClose.bind(this)} messages={this.state.messages} addUserMessage={this.addUserMessage} userActiveChat={this.state.userActiveChat} userSetActiveChat={this.userSetActiveChat}  />*/}
           <Chat users={this.state.users} usersChange={this.state.usersChange} />
           <Participants users={this.state.users} />
-          <FAQFrame w={540} h={400} />
-          <SignIn w={540} h={400} hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} closeSignIn={this.closeSignIn} isFrame={true} />
-          <Welcome w={540} h={400} user={this.props.user} hasAvatar={this.state.hasAvatar} showWelcome={this.state.showWelcome} closeWelcome={this.closeWelcome} />
+          <FAQFrame w={welcomeW} h={welcomeH} />
+          <SignIn w={welcomeW} h={welcomeH} hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} closeSignIn={this.closeSignIn} isFrame={true} />
+          <Welcome w={welcomeW} h={welcomeH} user={this.props.user} hasAvatar={this.state.hasAvatar} showWelcome={this.state.showWelcome} closeWelcome={this.closeWelcome} />
           {/* <Dock showDock={this.state.showDock} /> */}
+          <MobileFooter currentPage={this.getRoomTitle()} user={this.props.user} avatarClicked={this.avatarClicked} />
         </MuiThemeProvider>
       </div>
     );
@@ -537,7 +459,8 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
+    ui: state.ui
   }
 }
 
@@ -548,7 +471,8 @@ const mapDispatchToProps = () => {
     moveUser,
     setWine,
     addMessage,
-    addMessageNotification
+    addMessageNotification,
+    resizeApp
   }
 }
 //

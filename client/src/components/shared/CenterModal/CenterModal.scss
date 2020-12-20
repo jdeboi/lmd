@@ -1,0 +1,41 @@
+.CenterModal {
+    .CenterModal-Container {
+        display: flex;
+        flex-direction: column;
+        pointer-events: all;
+    }
+
+    .flex1 {
+        flex: 1;
+        overflow: scroll;
+    }
+
+    .flexRow {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .flexPad {
+        margin-bottom: 15px;
+    }
+
+    .center-buttons {
+        display: flex;
+        flex-direction: row;
+        vertical-align: middle;
+        justify-content: center;
+
+        button {
+            margin: 5px;
+        }
+        // flex: 0;
+        // height: 50px;
+    }
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}

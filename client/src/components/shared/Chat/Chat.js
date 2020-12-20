@@ -5,13 +5,16 @@ import Messages from './Messages';
 // import IconButton from '@material-ui/core/IconButton';
 // import SendIcon from '@material-ui/icons/Send';
 import Frame from '../Frame/Frame';
+import CenterModal from '../CenterModal/CenterModal';
+import { getCenterModalDim } from '../CenterModal/Helper';
 
 import './Chat.css';
+import './ChatMobile.css';
 
 import socket from "../Socket/Socket";
 
 import { connect } from 'react-redux';
-import { hideChat, toggleChat } from '../../../store/actions/';
+import { hideChat, toggleChat } from '../../../store/actions/menuItems';
 import { addMessage, resetMessgeNotification} from '../../../store/actions/messages';
 import { addWine, addCocktail, addCheese } from '../../../store/actions/user';
 import { setUserActiveChat } from '../../../store/actions/userActiveChat';
@@ -62,7 +65,7 @@ class Chat extends React.Component {
   }
 
   sendToOne = (txt, socketId) => {
-    console.log("send to one", socketId, "msg:", txt);
+    // console.log("send to one", socketId, "msg:", txt);
     const { userActiveChat } = this.props;
     const message = { socketId: socketId, message: txt, time: new Date(), avatar: this.props.user.avatar };
     if (socket.connected) socket.emit('messageUser', message); //sending to individual socketid
@@ -70,14 +73,14 @@ class Chat extends React.Component {
   }
 
   sendToRoom = (txt) => {
-    console.log("send to room ", this.props.room)
+    // console.log("send to room ", this.props.room)
     const message = { room: this.props.room, message: txt, time: new Date(), avatar: this.props.user.avatar };
     if (socket.connected) socket.emit('messageRoom', message);
     this.props.addMessage({ to: "room", from: "me", message: txt, time: new Date() });
   }
 
   sendToAll = (txt) => {
-    console.log("send to all");
+    // console.log("send to all");
     const message = { message: txt, room: this.props.room, time: new Date(), avatar: this.props.user.avatar };
     if (socket.connected) socket.emit('messageAll', message);
     this.props.addMessage({ to: "all", from: "me", message: txt, time: new Date() });
@@ -289,6 +292,73 @@ class Chat extends React.Component {
   }
 
   render() {
+    const {ui} = this.props;
+    if (ui.isMobile || ui.size =="xsmall" || ui.size == "small") {
+      return this.getMobileFrame();
+    }
+    return this.getFrame();
+  }
+
+  onHide = () => {
+    this.props.hideChat();
+  }
+
+  getMobileFrame = () => {
+    const {w, h} = getCenterModalDim(this.props.ui.width, this.props.ui.height);
+    return (
+      <CenterModal
+      title="chat"
+      isHidden={this.props.chatIsHidden}
+      onHide={this.onHide}
+      width={this.props.ui.width}
+      height={this.props.ui.height}
+      classN="ChatMobile"
+      content={this.getMobileContent(w, h)}
+      buttons={this.getMobileButtons()}
+    />
+    );
+  }
+
+  getMobileContent = (w, h) => {
+    return (
+        <div className="Chat-messages" style={{ display: "flex", flexDirection: "column", height: h-38-40 }}>
+          <div className="Chat-form">
+            <div className="to-form">
+              <div className="to-div">To: </div>
+              <ComboBox {...this.props} setRecipient={this.setRecipient} w={w-40-40} />
+            </div>
+            <div className="Chat-send">
+              <div className="Chat-send-item">
+                <input
+                  label=""
+                  id="margin-dense"
+                  className={"standardInput form-item"}
+                  placeholder="type message here"
+                  value={this.state.textBox}
+                  onChange={this.handleTextBoxChange}
+                  onFocus={this.props.resetMessgeNotification}
+                  onKeyDown={this.handleKeyDown}
+                />
+              </div>
+            </div>
+          </div>
+
+          <Messages messages={this.props.messages} addUserMessage={this.props.addMessage} />
+        
+        </div>
+    );
+  }
+
+  getMobileButtons = () => {
+    return (
+      <div className="center-buttons chat-buttons">
+        <button className="standardButton secondary" onClick={this.onHide}>close</button>
+        <button className="standardButton primary" disabled={this.state.buttonDisabled} onClick={this.onSubmit}>send</button>
+      </div>
+    )
+  }
+
+  getFrame = () => {
     var users = this.props.users;
     if (!users) users = [];
     const { userHover } = this.state;
@@ -347,6 +417,7 @@ const mapStateToProps = (state) => {
     messages: state.messages,
     userActiveChat: state.userActiveChat,
     userHoverChat: state.userHoverChat,
+    ui: state.ui
   }
 }
 

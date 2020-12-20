@@ -68,8 +68,6 @@
     justify-content: center;
     display: flex;
     flex-direction: column; }
-    .Welcome .MFA-deets .MFA-txt {
-      flex: 1; }
     .Welcome .MFA-deets div a {
       text-decoration: none;
       color: black; }

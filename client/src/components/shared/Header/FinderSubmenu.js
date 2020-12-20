@@ -51,7 +51,7 @@ class FinderSubmenu extends React.PureComponent {
     // const cursor = this.props.cursor;
     const specialClass = this.props.specialClass;
     let ulSpecialClass = this.props.ulSpecialClass;
-    if (this.props.dimensions.device === "mobile") ulSpecialClass += " mobile";
+    if (this.props.ui.isMobile) ulSpecialClass += " mobile";
     const listItems = this.props.listItems;
 
     let style = {};
@@ -62,7 +62,7 @@ class FinderSubmenu extends React.PureComponent {
         <ul className={ulSpecialClass}>
           {listItems.map((item) => {
             return(
-              <ListItem key={item.title} dimensions={this.props.dimensions} shortcut={item.shortcut} title={item.title} link={item.link} callback={item.callback} />)}
+              <ListItem key={item.title} ui={this.props.ui} shortcut={item.shortcut} title={item.title} link={item.link} callback={item.callback} />)}
               )
             }  </ul>
           </div>

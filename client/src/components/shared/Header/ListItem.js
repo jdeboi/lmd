@@ -8,13 +8,10 @@ class ListItem extends React.PureComponent {
   }
 
   render() {
-    const {title, link, dimensions, callback} = this.props;
-    const shortcut = getShortcut(this.props.shortcut, dimensions.windowWidth);
-    let classn = (shortcut === '' || shortcut === null || dimensions.device === "mobile") ? 'noShortcut': 'shortcut';
+    const {title, link, ui, callback} = this.props;
+    const shortcut = getShortcut(this.props.shortcut, ui.width);
+    let classn = (shortcut === '' || shortcut === null || ui.isMobile) ? 'noShortcut': 'shortcut';
 
-    // if (dimensions.windowWidth < 500) {
-    //   classn += " lined";
-    // }
 
     if (link && link !== '') {
       return (

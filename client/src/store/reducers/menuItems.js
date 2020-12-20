@@ -1,7 +1,7 @@
-import { SHOWMAP, HIDEMAP, TOGGLEMAP, SHOWCHAT, HIDECHAT, TOGGLECHAT, SHOWUSERICONS, HIDEUSERICONS, TOGGLEUSERICONS, SHOWFAQ, HIDEFAQ, TOGGLEFAQ } from '../actions/';
+import { SHOWMAP, HIDEMAP, TOGGLEMAP, SHOWCHAT, HIDECHAT, TOGGLECHAT, SHOWUSERICONS, HIDEUSERICONS, TOGGLEUSERICONS, SHOWFAQ, HIDEFAQ, TOGGLEFAQ } from '../actions/menuItems';
 
 // reducer (check what to do with action)
-export const mapReducer = (state=false, action) => {
+export const mapReducer = (state=true, action) => {
   switch(action.type) {
     case SHOWMAP:
       return false;

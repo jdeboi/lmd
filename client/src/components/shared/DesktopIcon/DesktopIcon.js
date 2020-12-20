@@ -18,7 +18,6 @@ class DesktopIcon extends React.Component {
     }
 
     this.wrapper = React.createRef();
-    // this.onDblClick = this.onDblClick.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -98,7 +97,7 @@ class DesktopIcon extends React.Component {
             <div className="desktop-text">{this.props.title}</div>
           </div>
         </Draggable>
-        {!this.props.disableWindow?this.getFrame():<div></div>}
+        {this.props.disableWindow?null:this.getFrame()}
       </div>
     );
 
@@ -113,6 +112,9 @@ class DesktopIcon extends React.Component {
 
     )
   }
+  
 }
+
+
 
 export default DesktopIcon

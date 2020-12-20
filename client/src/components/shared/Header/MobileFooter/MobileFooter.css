@@ -1,0 +1,23 @@
+.MobileFooter {
+  position: fixed;
+  bottom: 0px;
+  height: 80px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: black;
+  color: white;
+  z-index: 2000;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch; }
+  .MobileFooter button {
+    color: white;
+    flex: 1;
+    font-size: 30px; }
+  .MobileFooter .disabled {
+    color: rgba(255, 255, 255, 0.4); }
+  .MobileFooter .opened {
+    color: white; }
+  .MobileFooter .closed {
+    color: rgba(255, 255, 255, 0.4); }
