@@ -28,11 +28,12 @@ class FAQFrame extends React.Component {
   }
 
   getButtons = () => {
-    return (
-      <div className="center-buttons">
-        <button className="standardButton primary" onClick={this.onHide}>close</button>
-      </div>
-    )
+    // return (
+    //   <div className="center-buttons">
+    //     <button className="standardButton primary" onClick={this.onHide}>close</button>
+    //   </div>
+    // )
+    return null;
   }
 
 }

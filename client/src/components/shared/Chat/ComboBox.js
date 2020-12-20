@@ -129,6 +129,12 @@ class ComboBox extends React.Component {
     const {inputValue} = this.state;
     const {userActiveChat, userHoverChat} = this.props;
 
+    let sty = {};
+    if (this.props.w) {
+      sty.width = this.props.w-10;
+    }
+    console.log(sty);
+
     return (
       
       <div className="AutoComplete">
@@ -151,8 +157,8 @@ class ComboBox extends React.Component {
           renderInput={(params) => {
             // console.log("PARAMS", params);
             return (
-              <div ref={params.InputProps.ref}>
-                <input className="autocomplete-input" style={{width: this.props.w-10}} type="text" placeholder="select recipient" {...params.inputProps} />
+              <div ref={params.InputProps.ref} >
+                <input className="autocomplete-input" style={sty} type="text" placeholder="select user" {...params.inputProps} />
               </div>
             )
           }}

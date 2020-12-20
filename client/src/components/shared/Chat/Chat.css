@@ -103,7 +103,6 @@ input.standardInputWhite {
           color: white;
           background-color: transparent; }
           .Chat .Chat-messages .Chat-form .to-form .AutoComplete div input {
-            flex: 1;
             background-color: transparent;
             padding: 5px;
             color: white;

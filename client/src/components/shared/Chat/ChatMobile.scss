@@ -18,6 +18,15 @@ $appLightBlue: #43909e;
         padding-top: 10px;
     }
 
+    .sendButton {
+        // margin-bottom: 10px;
+        background: black;
+        color: white;
+        border-radius: $borderRad;
+        height: 50px;
+        width: 50px;
+    }
+
     .Chat-messages {
         overflow: hidden;
         
@@ -121,6 +130,10 @@ $appLightBlue: #43909e;
             }
         }
 
+        .margR {
+            margin-right: 5px;
+        }
+
         .Chat-form {
             // flex: 0 0 auto;
             display: flex;
@@ -159,7 +172,7 @@ $appLightBlue: #43909e;
                             padding: 5px;
                             color: black;
                             height: 30px;
-                            font-size:14px;
+                            font-size:16px;
                             &:focused {
                                 color: black;
                             }
@@ -173,34 +186,38 @@ $appLightBlue: #43909e;
                 flex-direction: row;
                 padding: 5px 0 5px 0;
 
-                .form-item {
-                    // height: 30px;
-                }
-
-                .Chat-send-item {
-                    flex: 1;
-                    display: flex;
-                    // padding-right: 5px;
-
-                    input {
-                        flex: 1;
-                        // border: 2px solid $appBlue;
-                        // background-color: transparent;
-                    }
-                }
-
-                button {
-                    // border-radius: $borderRad;
-                    width: 60px;
-                    // border: 1px;
-
+                input {
+                    // flex: 1;
+                    width: 100%;
+                    font-size:16px;
+                    // border: 2px solid $appBlue;
                     // background-color: transparent;
-                    // border: 2px solid $appPink;
-
-                    // &:disabled {
-                    //   border: 1px solid gray;
-                    // }
                 }
+
+                // .form-item {
+                //     // height: 30px;
+                // }
+
+                // .Chat-send-item {
+                //     flex: 1;
+                //     display: flex;
+                //     // padding-right: 5px;
+
+                    
+                // }
+
+                // button {
+                //     // border-radius: $borderRad;
+                //     width: 60px;
+                //     // border: 1px;
+
+                //     // background-color: transparent;
+                //     // border: 2px solid $appPink;
+
+                //     // &:disabled {
+                //     //   border: 1px solid gray;
+                //     // }
+                // }
             }
         }
     }

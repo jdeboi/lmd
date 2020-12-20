@@ -3,7 +3,7 @@ import ComboBox from './ComboBox';
 import Messages from './Messages';
 // import Icon from '@material-ui/core/Icon';
 // import IconButton from '@material-ui/core/IconButton';
-// import SendIcon from '@material-ui/icons/Send';
+import SendIcon from '@material-ui/icons/Send';
 import Frame from '../Frame/Frame';
 import CenterModal from '../CenterModal/CenterModal';
 import { getCenterModalDim } from '../CenterModal/Helper';
@@ -297,6 +297,12 @@ class Chat extends React.Component {
       return this.getMobileFrame();
     }
     return this.getFrame();
+    // return (
+    //   <React.Fragment>
+    //   {this.getMobileFrame()}
+    //   {this.getFrame()}
+    //   </React.Fragment>
+    // )
   }
 
   onHide = () => {
@@ -321,29 +327,32 @@ class Chat extends React.Component {
 
   getMobileContent = (w, h) => {
     return (
-        <div className="Chat-messages" style={{ display: "flex", flexDirection: "column", height: h-38-40 }}>
+        <div className="Chat-messages" style={{ display: "flex", flexDirection: "column", height: h }}>
           <div className="Chat-form">
             <div className="to-form">
               <div className="to-div">To: </div>
-              <ComboBox {...this.props} setRecipient={this.setRecipient} w={w-40-40} />
+              <ComboBox {...this.props} setRecipient={this.setRecipient} w={w-40-40} /> 
             </div>
             <div className="Chat-send">
-              <div className="Chat-send-item">
+              <div className="Chat-send-item margR">
                 <input
                   label=""
                   id="margin-dense"
                   className={"standardInput form-item"}
-                  placeholder="type message here"
+                  placeholder="enter message"
                   value={this.state.textBox}
                   onChange={this.handleTextBoxChange}
                   onFocus={this.props.resetMessgeNotification}
                   onKeyDown={this.handleKeyDown}
+                  style={{width: w - 60-40-20}}
                 />
               </div>
+              <div className="Chat-send-item"><button className="sendButton" disabled={this.state.buttonDisabled} onClick={this.onSubmit}><SendIcon disabled={this.state.buttonDisabled} /></button></div>
             </div>
+            
           </div>
-
-          <Messages messages={this.props.messages} addUserMessage={this.props.addMessage} />
+          {/* <button className="sendButton standardButton primary">send</button> */}
+          <Messages isMobile={true} messages={this.props.messages} addUserMessage={this.props.addMessage} />
         
         </div>
     );
@@ -351,10 +360,11 @@ class Chat extends React.Component {
 
   getMobileButtons = () => {
     return (
-      <div className="center-buttons chat-buttons">
-        <button className="standardButton secondary" onClick={this.onHide}>close</button>
-        <button className="standardButton primary" disabled={this.state.buttonDisabled} onClick={this.onSubmit}>send</button>
-      </div>
+      null
+      // <div className="center-buttons chat-buttons">
+      //   {/* <button className="standardButton secondary" onClick={this.onHide}>close</button> */}
+      //   <button className="standardButton primary" disabled={this.state.buttonDisabled} onClick={this.onSubmit}>send</button>
+      // </div>
     )
   }
 
@@ -375,7 +385,7 @@ class Chat extends React.Component {
         <div className="Chat">
 
           <div className="Chat-messages" style={{ display: "flex", flexDirection: "column", height: h }}>
-            <Messages messages={this.props.messages} addUserMessage={this.props.addMessage} />
+            <Messages isMobile={false} messages={this.props.messages} addUserMessage={this.props.addMessage} />
             <div className="Chat-form">
               <div className="to-form">
                 <div className="to-div">To: </div>

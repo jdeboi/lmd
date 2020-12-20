@@ -42,6 +42,12 @@ input.standardInputWhite {
   font-size: 12px; }
   .ChatMobile .chat-buttons {
     padding-top: 10px; }
+  .ChatMobile .sendButton {
+    background: black;
+    color: white;
+    border-radius: 8px;
+    height: 50px;
+    width: 50px; }
   .ChatMobile .Chat-messages {
     overflow: hidden; }
     .ChatMobile .Chat-messages .Chat-messages-box {
@@ -97,6 +103,8 @@ input.standardInputWhite {
         justify-content: flex-start; }
         .ChatMobile .Chat-messages .Chat-messages-box .Chat-messages-inner-box .bubbleContainer.chat-from-other .message-deets {
           text-align: left; }
+    .ChatMobile .Chat-messages .margR {
+      margin-right: 5px; }
     .ChatMobile .Chat-messages .Chat-form {
       display: flex;
       flex-direction: column;
@@ -120,17 +128,13 @@ input.standardInputWhite {
             padding: 5px;
             color: black;
             height: 30px;
-            font-size: 14px; }
+            font-size: 16px; }
             .ChatMobile .Chat-messages .Chat-form .to-form .AutoComplete div input:focused {
               color: black; }
       .ChatMobile .Chat-messages .Chat-form .Chat-send {
         display: flex;
         flex-direction: row;
         padding: 5px 0 5px 0; }
-        .ChatMobile .Chat-messages .Chat-form .Chat-send .Chat-send-item {
-          flex: 1;
-          display: flex; }
-          .ChatMobile .Chat-messages .Chat-form .Chat-send .Chat-send-item input {
-            flex: 1; }
-        .ChatMobile .Chat-messages .Chat-form .Chat-send button {
-          width: 60px; }
+        .ChatMobile .Chat-messages .Chat-form .Chat-send input {
+          width: 100%;
+          font-size: 16px; }
