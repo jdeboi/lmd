@@ -5,7 +5,7 @@ store is created from reducers; it's what holds state
 
 import { combineReducers } from 'redux';
 import { messagesReducer, messageNotificationReducer } from './messages';
-import { mapReducer, faqReducer, chatReducer, userIconsReducer } from './menuItems';
+import { mapReducer, faqReducer, chatReducer, userIconsReducer, menuReducer } from './menuItems';
 import { userReducer, userActiveChatReducer, userHoverChatReducer, userOutsideReducer } from './user';
 import { musicReducer } from './music';
 import { windowReducer} from './window';
@@ -16,6 +16,7 @@ import Cookies from 'js-cookie';
 const allReducers = combineReducers({
   user: userReducer,
   messages: messagesReducer,
+  menu: menuReducer,
   mapIsHidden: mapReducer,
   faqIsHidden: faqReducer,
   chatIsHidden: chatReducer,

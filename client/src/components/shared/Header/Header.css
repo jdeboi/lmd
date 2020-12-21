@@ -109,7 +109,8 @@ input.standardInputWhite {
       display: inline-block;
       line-height: 30px;
       padding: 0 0.5em;
-      position: relative; }
+      position: relative;
+      box-sizing: border-box; }
       .Header ul li a {
         color: white; }
     .Header ul a {
@@ -143,7 +144,6 @@ input.standardInputWhite {
       left: 0px;
       margin: 0 !important;
       overflow: hidden;
-      padding: 0px 8px 0px 0px;
       position: absolute;
       top: 32px;
       width: auto;
@@ -183,6 +183,13 @@ input.standardInputWhite {
       display: inline-block;
       position: absolute;
       right: 25px; }
+  .Header .flexRow {
+    display: flex;
+    flex-direction: row; }
+    .Header .flexRow div {
+      padding-right: 5px; }
+  .Header .flex1 {
+    flex: 1; }
   .Header .tooltip {
     position: relative;
     display: inline-block;
@@ -269,22 +276,16 @@ input.standardInputWhite {
   100% {
     background-position: 0% 48%; } }
   @media screen and (max-width: 830px) {
-    .Header {
-      font-size: 14px; }
-      .Header .submenu ul {
-        font-size: 12px;
-        overflow-y: scroll;
-        overflow-x: hidden; } }
+    .Header .submenu ul {
+      font-size: 12px;
+      overflow-y: scroll;
+      overflow-x: hidden; } }
   @media screen and (max-width: 400px) {
-    .Header {
-      font-size: 12px; }
-      .Header .submenu ul {
-        font-size: 10px; } }
+    .Header .submenu ul {
+      font-size: 10px; } }
   @media screen and (max-width: 300px) {
-    .Header {
-      font-size: 10px; }
-      .Header .submenu ul {
-        font-size: 8px; } }
+    .Header .submenu ul {
+      font-size: 8px; } }
 
 .BackHeader {
   position: absolute;

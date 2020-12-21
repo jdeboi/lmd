@@ -1,11 +1,11 @@
 import React from 'react';
-import { getOtherUserLocation, showWine, showCheese, showCocktail, getDisToUser } from './Helpers';
-import ToolTip from './ToolTip';
+import { getOtherUserLocation, showWine, showCheese, showCocktail, getDisToUser } from '../../sketches/HomePage/components/Helpers';
+import ToolTip from '../../sketches/HomePage/components/ToolTip';
 
 // store
 import { connect } from 'react-redux';
-import { showChat } from '../../../../store/actions/menuItems';
-import { setUserActiveChat } from '../../../../store/actions/userActiveChat';
+import { showChat } from '../../../store/actions/menuItems';
+import { setUserActiveChat } from '../../../store/actions/userActiveChat';
 
 class OtherAvatar extends React.Component {
 
@@ -34,10 +34,16 @@ class OtherAvatar extends React.Component {
   render() {
     const { otherUser, userName, user, avatarW } = this.props;
     const { userHover } = this.state;
-    const loc = getOtherUserLocation(user, otherUser, avatarW);
+
+    // OG when only in homepage
+    // let loc = getOtherUserLocation(user, otherUser, avatarW);
+    // const sty = { top: loc.y, left: loc.x };
+    // const hidden = (otherUser.room !== "home-page");
+
+    const loc = user.room === "home-page"? getOtherUserLocation(user, otherUser, avatarW): {x: user.roomX, y: user.roomY};
     const sty = { top: loc.y, left: loc.x };
-    const hidden = (otherUser.room !== "home-page");
-    // console.log(otherUser, hidden);
+    const hidden = (otherUser.room !== user.room);
+
     const showWineEmoji = showWine(otherUser);
     const showCheeseEmoji = showCheese(otherUser);
     const showCocktailEmoji = showCocktail(otherUser);

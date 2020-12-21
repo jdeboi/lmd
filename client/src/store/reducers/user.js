@@ -54,8 +54,8 @@ export const userReducer = (state = initState, action) => {
       return user;
 
     case MOVEUSERROOM:
-      user.x = action.payload.x;
-      user.y = action.payload.y;
+      user.roomX = action.payload.x;
+      user.roomY = action.payload.y;
       // action.payload.exitLocation
       return user;
 

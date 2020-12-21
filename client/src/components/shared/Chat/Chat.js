@@ -14,7 +14,7 @@ import './ChatMobile.css';
 import socket from "../Socket/Socket";
 
 import { connect } from 'react-redux';
-import { hideChat, toggleChat } from '../../../store/actions/menuItems';
+import { setOneMenu, hideChat, toggleChat } from '../../../store/actions/menuItems';
 import { addMessage, resetMessgeNotification} from '../../../store/actions/messages';
 import { addWine, addCocktail, addCheese } from '../../../store/actions/user';
 import { setUserActiveChat } from '../../../store/actions/userActiveChat';
@@ -307,6 +307,7 @@ class Chat extends React.Component {
 
   onHide = () => {
     this.props.hideChat();
+    this.props.setOneMenu();
   }
 
   getMobileFrame = () => {
@@ -314,7 +315,7 @@ class Chat extends React.Component {
     return (
       <CenterModal
       title="chat"
-      isHidden={this.props.chatIsHidden}
+      isHidden={this.props.menu !== "chat"}
       onHide={this.onHide}
       width={this.props.ui.width}
       height={this.props.ui.height}
@@ -427,7 +428,8 @@ const mapStateToProps = (state) => {
     messages: state.messages,
     userActiveChat: state.userActiveChat,
     userHoverChat: state.userHoverChat,
-    ui: state.ui
+    ui: state.ui,
+    menu: state.menu
   }
 }
 
@@ -441,7 +443,8 @@ const mapDispatchToProps = () => {
     addMessage,
     setUserActiveChat,
     resetMessgeNotification,
-    setSong
+    setSong,
+    setOneMenu
   }
 }
 

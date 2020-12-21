@@ -133,7 +133,6 @@ class ComboBox extends React.Component {
     if (this.props.w) {
       sty.width = this.props.w-10;
     }
-    console.log(sty);
 
     return (
       

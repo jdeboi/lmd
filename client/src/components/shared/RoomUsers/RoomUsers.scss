@@ -1,0 +1,81 @@
+$emojiFontSize: 36px;
+
+
+.avatars {
+    position: absolute;
+    visibility: hidden;
+    font-size: $emojiFontSize;
+    top: 0;
+    left: 0;
+    // width: 100vw;
+    // height: 100vh;
+    pointer-events: none;
+    overflow: hidden;
+
+    .otherAvatars {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 10;
+
+        .otherAvatar {
+            position: absolute;
+            pointer-events: all;
+
+            .emoji {
+                // font-size: $emojiFontSize;
+                // height: 40px;
+                // width: 40px;
+            }
+
+            .tooltip {
+                background-color: rgba(255, 255, 255, 1);
+                padding: 2px;
+                border: 1px solid black;
+                border-radius: 4px;
+                font-size: 10px;
+            }
+        }
+    }
+
+    .userAvatar {
+        position: absolute;
+        pointer-events: all;
+    }
+
+    .avatar {
+        .emoji-addons {
+            position: relative;
+
+            .emoji-chat {
+                position: absolute;
+                top: -50px;
+                left: 28px;
+                font-size: $emojiFontSize;
+            }
+
+            .emoji-item {
+                position: absolute;
+                font-size: $emojiFontSize;
+            }
+            .emoji-wine {
+                top: -10px;
+                left: -20px;
+            }
+            .emoji-cocktail {
+                top: -10px;
+                left: 20px;
+            }
+            .emoji-bread {
+                top: -10px;
+                left: 0px;
+            }
+            .emoji-cheese {
+                top: 5px;
+                left: 0px;
+            }
+        }
+    }
+}

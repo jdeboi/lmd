@@ -39,10 +39,10 @@ export const moveUser = (x, y, wineLocation) => {
   }
 }
 
-export const moveUserRoom = (x, y, exitLocation) => {
+export const moveUserRoom = (x, y) => {
   return {
     type: MOVEUSERROOM,
-    payload: {x, y, exitLocation}
+    payload: {x, y}
   }
 }
 

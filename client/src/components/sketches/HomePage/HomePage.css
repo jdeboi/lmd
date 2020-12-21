@@ -82,54 +82,6 @@
         margin-left: -6px;
         width: 20px;
         height: 20px; }
-  .HomePage .avatars {
-    position: absolute;
-    font-size: 36px;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh; }
-    .HomePage .avatars .otherAvatars {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 10; }
-      .HomePage .avatars .otherAvatars .otherAvatar {
-        position: absolute;
-        pointer-events: all; }
-        .HomePage .avatars .otherAvatars .otherAvatar .tooltip {
-          background-color: white;
-          padding: 2px;
-          border: 1px solid black;
-          border-radius: 4px;
-          font-size: 10px; }
-    .HomePage .avatars .userAvatar {
-      position: absolute;
-      pointer-events: all; }
-    .HomePage .avatars .avatar .emoji-addons {
-      position: relative; }
-      .HomePage .avatars .avatar .emoji-addons .emoji-chat {
-        position: absolute;
-        top: -50px;
-        left: 28px;
-        font-size: 36px; }
-      .HomePage .avatars .avatar .emoji-addons .emoji-item {
-        position: absolute;
-        font-size: 36px; }
-      .HomePage .avatars .avatar .emoji-addons .emoji-wine {
-        top: -10px;
-        left: -20px; }
-      .HomePage .avatars .avatar .emoji-addons .emoji-cocktail {
-        top: -10px;
-        left: 20px; }
-      .HomePage .avatars .avatar .emoji-addons .emoji-bread {
-        top: -10px;
-        left: 0px; }
-      .HomePage .avatars .avatar .emoji-addons .emoji-cheese {
-        top: 5px;
-        left: 0px; }
   .HomePage .react-p5 {
     position: absolute;
     top: 0;

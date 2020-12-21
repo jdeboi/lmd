@@ -6,15 +6,6 @@ export default function (props) {
   const box = { x: 100, y: 100, w: 300, h: 100 };
   return (
     <div className="folders">
-      <DesktopIcon title={"statement"} x={props.x + 20} y={props.y} bounded={false} box={box} onDblClick={() => props.onDblClick(0)} newFrameToTop={() => props.newFrameToTop(0)} newIconToTop={() => props.newIconToTop(0)} zIcon={props.zIcons[0]} zFrame={props.zFrames[0]}
-        content={
-          <img src={window.AWS + "/waveforms/txt.png"} width={80} height={80} />
-        }
-        frameContent={
-          <div className="txt">about</div>
-        }
-      />
-  
       <DesktopIcon title={"statement"} x={props.x + 20} y={props.y} disableWindow={true} bounded={false} onDblClick={() => openInNewTab("https://www.instagram.com/jdeboi/")}
         content={
           <img src={window.AWS + "/waveforms/txt.png"} width={80} height={80} />

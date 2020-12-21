@@ -1,0 +1,49 @@
+.avatars {
+  position: absolute;
+  visibility: hidden;
+  font-size: 36px;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  overflow: hidden; }
+  .avatars .otherAvatars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10; }
+    .avatars .otherAvatars .otherAvatar {
+      position: absolute;
+      pointer-events: all; }
+      .avatars .otherAvatars .otherAvatar .tooltip {
+        background-color: white;
+        padding: 2px;
+        border: 1px solid black;
+        border-radius: 4px;
+        font-size: 10px; }
+  .avatars .userAvatar {
+    position: absolute;
+    pointer-events: all; }
+  .avatars .avatar .emoji-addons {
+    position: relative; }
+    .avatars .avatar .emoji-addons .emoji-chat {
+      position: absolute;
+      top: -50px;
+      left: 28px;
+      font-size: 36px; }
+    .avatars .avatar .emoji-addons .emoji-item {
+      position: absolute;
+      font-size: 36px; }
+    .avatars .avatar .emoji-addons .emoji-wine {
+      top: -10px;
+      left: -20px; }
+    .avatars .avatar .emoji-addons .emoji-cocktail {
+      top: -10px;
+      left: 20px; }
+    .avatars .avatar .emoji-addons .emoji-bread {
+      top: -10px;
+      left: 0px; }
+    .avatars .avatar .emoji-addons .emoji-cheese {
+      top: 5px;
+      left: 0px; }

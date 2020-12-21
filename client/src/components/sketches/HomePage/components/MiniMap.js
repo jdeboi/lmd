@@ -3,7 +3,7 @@ import Frame from '../../../shared/Frame/Frame';
 import AvatarMiniMap from './AvatarMiniMap';
 
 import { connect } from 'react-redux';
-import { hideMap, toggleMap } from '../../../../store/actions/menuItems';
+import { setOneMenu, hideMap, toggleMap } from '../../../../store/actions/menuItems';
 
 
 class MiniMap extends React.Component {
@@ -23,6 +23,7 @@ class MiniMap extends React.Component {
 
   onHide = () => {
     this.props.hideMap();
+    this.props.setOneMenu(null);
   }
 
   render() {
@@ -33,9 +34,11 @@ class MiniMap extends React.Component {
     const wine1 = {...wineLocation[1]};
     wine1.room="home-page";
 
+    let isHidden = this.props.ui.isMobile ? this.props.menu !== "map" : this.props.mapIsHidden;
+
     // if (otherUser.userName=="jdboi") console.log(otherUser.x, otherUser.y);
     return (
-      <Frame title="map" isHidden={this.props.mapIsHidden} onHide={this.onHide} bounded={true} windowStyle={{background: "rgba(255, 255, 255, .9)"}} content={
+      <Frame title="map" isHidden={isHidden} onHide={this.onHide} bounded={true} windowStyle={{background: "rgba(255, 255, 255, .9)"}} content={
           /*<video width={dimW-2} height={dimH} muted loop autoPlay><source src={videoDimURL} type="video/mp4"></source></video>*/
           <div className="MiniMap">
             <img src={window.AWS + "/homePage/miniMap.png"} width="100%" height="100%" />;
@@ -70,14 +73,16 @@ class MiniMap extends React.Component {
 const mapStateToProps = (state) => {
  return {
    mapIsHidden: state.mapIsHidden,
-   ui: state.ui
+   ui: state.ui,
+   menu: state.menu
  }
 }
 
 const mapDispatchToProps = () => {
  return {
    hideMap,
-   toggleMap
+   toggleMap,
+   setOneMenu
  }
 }
 

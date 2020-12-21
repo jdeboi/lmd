@@ -1,8 +1,10 @@
-import { SHOWMAP, HIDEMAP, TOGGLEMAP, SHOWCHAT, HIDECHAT, TOGGLECHAT, SHOWUSERICONS, HIDEUSERICONS, TOGGLEUSERICONS, SHOWFAQ, HIDEFAQ, TOGGLEFAQ } from '../actions/menuItems';
+import { SETONEMENU, HIDEMENUS, SHOWMAP, HIDEMAP, TOGGLEMAP, SHOWCHAT, HIDECHAT, TOGGLECHAT, SHOWUSERICONS, HIDEUSERICONS, TOGGLEUSERICONS, SHOWFAQ, HIDEFAQ, TOGGLEFAQ } from '../actions/menuItems';
 
 // reducer (check what to do with action)
 export const mapReducer = (state=true, action) => {
   switch(action.type) {
+    case HIDEMENUS:
+      return true;
     case SHOWMAP:
       return false;
     case HIDEMAP:
@@ -29,6 +31,8 @@ export const faqReducer = (state=true, action) => {
 
 export const userIconsReducer = (state=true, action) => {
   switch(action.type) {
+    case HIDEMENUS:
+      return true;
     case SHOWUSERICONS:
       return false;
     case HIDEUSERICONS:
@@ -43,6 +47,8 @@ export const userIconsReducer = (state=true, action) => {
 
 export const chatReducer = (state=true, action) => {
   switch(action.type) {
+    case HIDEMENUS:
+      return true;
     case SHOWCHAT:
       return false;
     case HIDECHAT:
@@ -54,3 +60,18 @@ export const chatReducer = (state=true, action) => {
   }
 }
 
+export const menuReducer = (state = null, action) => {
+  switch(action.type) {
+    case SETONEMENU:
+      const menu = action.payload.menu;
+      if (menu === null)
+        return null;
+      else if (state === null)
+        return menu;
+      else if (menu === state)
+        return null;
+      return menu;
+    default:
+      return state;
+  }
+}

@@ -20,18 +20,26 @@
 
 .backButton {
   position: absolute;
-  // height: 30px;
+  // height: 60px;
   // width: 60px;
   // background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/shared/exit_ai.png);
   // background-repeat: no-repeat;
   // background-size: contain;
 
+
   background-color: white;
   font-size: 12px;
-  padding: 10px;
+  // padding: 10px;
   // min-width: 100px;
   text-align: center;
   border: .14em solid black;
   box-shadow: 0px 0px 20px #000000;
   border-radius: 6px;
+
+  div {
+    height: 80px;
+    width: 80px;
+    background-size: cover;
+    background-image: url(/assets/s3-bucket/homePage/home.png);
+  }
 }

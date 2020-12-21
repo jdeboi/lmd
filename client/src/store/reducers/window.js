@@ -1,4 +1,4 @@
-import { RESIZEAPP } from '../actions';
+import { LOADINGAPP, DONELOADINGAPP, RESIZEAPP } from '../actions';
 
 let initW = typeof window === 'object' ? window.innerWidth : null;
 let initH = typeof window === 'object' ? window.innerHeight : null;
@@ -8,7 +8,8 @@ const initialState = {
     height: initH,
     isMobile: getIsMobile(),
     orientation: getOrientation(initW, initH),
-    size: getWindowSize(initW)
+    size: getWindowSize(initW),
+    loading: true
 };
 
 function getOrientation(w, h) {
@@ -37,13 +38,21 @@ export const windowReducer = (state = initialState, action) => {
 
     const window = { ...state };
     switch (action.type) {
-        
+
         case RESIZEAPP:
             window.width = action.payload.width;
             window.height = action.payload.height;
             window.orientation = getOrientation(window.width, window.height);
             window.isMobile = getIsMobile();
             window.size = getWindowSize(window.width);
+            return window;
+        
+        case LOADINGAPP:
+            window.loading = true;
+            return window;
+
+        case DONELOADINGAPP:
+            window.loading = false;
             return window;
         default:
             return state;

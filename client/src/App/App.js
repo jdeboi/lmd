@@ -15,7 +15,7 @@ import Cookies from 'js-cookie';
 
 // store
 import { connect } from 'react-redux';
-import { resizeApp } from '../store/actions';
+import { loadingApp, resizeApp } from '../store/actions';
 import { setUserRoom, setUser, moveUser, setWine } from '../store/actions/user';
 import { addMessage, addMessageNotification } from '../store/actions/messages';
 
@@ -59,12 +59,13 @@ import Welcome from '../components/shared/Welcome/Welcome';
 import FAQFrame from '../components/shared/FAQ/FAQFrame';
 
 import MobileFooter from '../components/shared/Header/MobileFooter/MobileFooter';
+import RoomUsers from '../components/shared/RoomUsers/RoomUsers';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import indigo from '@material-ui/core/colors/indigo';
 import pink from '@material-ui/core/colors/pink';
 import red from '@material-ui/core/colors/red';
-import CssBaseline from '@material-ui/core/CssBaseline';
+// import CssBaseline from '@material-ui/core/CssBaseline';
 
 
 import socket from "../components/shared/Socket/Socket";
@@ -73,7 +74,7 @@ import FPSStats from "react-fps-stats";
 
 import Exit from '../components/shared/Exit/Exit';
 
-import { userNearWine } from './Helpers/Boundaries';
+// import { userNearWine } from './Helpers/Boundaries';
 import { djLocation, wineLocation } from '../components/sketches/HomePage/constants';
 
 
@@ -346,6 +347,7 @@ class App extends React.Component {
   }
 
   userSetRoom = (location, action) => {
+    this.props.loadingApp();
     const nextRoom = this.getRoom(location.pathname);
     this.props.setUserRoom(nextRoom);
   }
@@ -440,10 +442,11 @@ class App extends React.Component {
 
           </div>
           {<FPSStats top={window.innerHeight - 255} left={10} />}
-          {/* <Exit /> */}
+          <Exit />
           {/* <SideBar room={this.state.user.room} user={this.state.user} users={this.state.users} usersChange={this.state.usersChange} showSideBar={this.state.showSideBar} handleDrawerClose={this.handleDrawerClose.bind(this)} messages={this.state.messages} addUserMessage={this.addUserMessage} userActiveChat={this.state.userActiveChat} userSetActiveChat={this.userSetActiveChat}  />*/}
           <Chat users={this.state.users} usersChange={this.state.usersChange} />
           <Participants users={this.state.users} />
+          <RoomUsers users={this.state.users} />
           <FAQFrame w={welcomeW} h={welcomeH} />
           <SignIn w={welcomeW} h={welcomeH} hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} closeSignIn={this.closeSignIn} isFrame={true} />
           <Welcome w={welcomeW} h={welcomeH} user={this.props.user} hasAvatar={this.state.hasAvatar} showWelcome={this.state.showWelcome} closeWelcome={this.closeWelcome} />
@@ -472,7 +475,8 @@ const mapDispatchToProps = () => {
     setWine,
     addMessage,
     addMessageNotification,
-    resizeApp
+    resizeApp,
+    loadingApp
   }
 }
 //

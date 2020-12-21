@@ -12,8 +12,12 @@
   position: absolute;
   background-color: white;
   font-size: 12px;
-  padding: 10px;
   text-align: center;
   border: .14em solid black;
   box-shadow: 0px 0px 20px #000000;
   border-radius: 6px; }
+  .backButton div {
+    height: 80px;
+    width: 80px;
+    background-size: cover;
+    background-image: url(/assets/s3-bucket/homePage/home.png); }

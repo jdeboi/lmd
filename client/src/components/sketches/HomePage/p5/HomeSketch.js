@@ -35,7 +35,7 @@ var isWalking = false;
 var userEase = { x: 0, y: 0 };
 var destination = { x: null, y: null, time: null };
 
-var user, roomCount;
+var user, roomCount, isMobile;
 
 var lastMouseMove = 0;
 
@@ -43,6 +43,7 @@ var divs = [];
 
 export default (props) => {
   user = props.user;
+  isMobile = props.isMobile;
   // const users = props.users;
   roomCount = props.roomCount;
 
@@ -69,7 +70,7 @@ export default (props) => {
   const setup = (p5, canvasParentRef) => {
     // use parent to render the canvas in this ref
     // (without that p5 will render the canvas outside of your component)
-    const cnv = p5.createCanvas(window.innerWidth, window.innerHeight);
+    const cnv = p5.createCanvas(p5.windowWidth, p5.windowHeight);
     cnv.parent(canvasParentRef);
     cnv.mousePressed(() => triggerMove(p5));
     // img = p5.loadImage("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/jungleGyms/wallpaper3.jpg",
@@ -322,9 +323,10 @@ export default (props) => {
     // p5.text(mx + " " + my, p5.mouseX, p5.mouseY);
 
     mouseStep();
-    showDestination(p5);
-    showUserEllipses(p5);
-    showMouseLoc(p5);
+
+    // showDestination(p5);
+    // showUserEllipses(p5);
+    // showMouseLoc(p5);
 
 
     // updateDivs();
@@ -1030,10 +1032,10 @@ export default (props) => {
 
   const triggerMove = (p5) => {
     if (!checkDivPress(user.x, user.y)) {
-      const dx = p5.mouseX > window.innerWidth / 2 ? 50 : -50;
-      const dy = p5.mouseY > window.innerHeight / 2 ? 50 : -50;
-      const mx = roundToMult2((p5.mouseX - window.innerWidth / 2) + dx, globalConfig.stepS);
-      const my = roundToMult2((p5.mouseY - window.innerHeight / 2) + dy, globalConfig.stepS);
+      const dx = p5.mouseX > p5.windowWidth / 2 ? 50 : -50;
+      const dy = p5.mouseY > p5.windowHeight / 2 ? 50 : -50;
+      const mx = roundToMult2((p5.mouseX - p5.windowWidth / 2) + dx, globalConfig.stepS);
+      const my = roundToMult2((p5.mouseY - p5.windowHeight / 2) + dy, globalConfig.stepS);
       if (!(mx === 0 && my === 0)) {
         const x = mx + user.x;
         const y = my + user.y;
@@ -1059,27 +1061,30 @@ export default (props) => {
   }
 
   const showMouseLoc = (p5) => {
-    if (p5.pmouseX !== p5.mouseX || p5.pmouseY !== p5.mouseY) {
-      lastMouseMove = new Date();
-    }
-    if (new Date() - lastMouseMove < 800) {
-      if (!p5.mouseIsPressed) { //!isWalking&& 
-        let sc = globalConfig.stepS;
-        let sw = 10;
-        const dx2 = p5.mouseX > window.innerWidth / 2 ? 50 : -50;
-        const dy2 = p5.mouseY > window.innerHeight / 2 ? 50 : -50;
-        const mx = roundToMult2((p5.mouseX - window.innerWidth / 2) + dx2, sc);
-        const my = roundToMult2((p5.mouseY - window.innerHeight / 2) + dy2, sc);
-        p5.noStroke();
-        p5.noFill();
-        p5.strokeWeight(sw / 2);
-        p5.stroke(20, 0, 50, 25);
-        // p5.rect(mx+window.innerWidth/2-50+sw, my+window.innerHeight/2-50+sw, sc-sw*2, sc-sw*2, 10);
-        p5.ellipse(mx + window.innerWidth / 2, my + window.innerHeight / 2, sc - sw * 2);
-        p5.ellipse(mx + window.innerWidth / 2, my + window.innerHeight / 2, sc - sw * 4);
-        p5.ellipse(mx + window.innerWidth / 2, my + window.innerHeight / 2, sc - sw * 6);
+    if (!isMobile) {
+      if (p5.pmouseX !== p5.mouseX || p5.pmouseY !== p5.mouseY) {
+        lastMouseMove = new Date();
+      }
+      if (new Date() - lastMouseMove < 800) {
+        if (!p5.mouseIsPressed) { //!isWalking&& 
+          let sc = globalConfig.stepS;
+          let sw = 10;
+          const dx2 = p5.mouseX > p5.windowWidth / 2 ? 50 : -50;
+          const dy2 = p5.mouseY > p5.windowHeight / 2 ? 50 : -50;
+          const mx = roundToMult2((p5.mouseX - p5.windowWidth / 2) + dx2, sc);
+          const my = roundToMult2((p5.mouseY - p5.windowHeight / 2) + dy2, sc);
+          p5.noStroke();
+          p5.noFill();
+          p5.strokeWeight(sw / 2);
+          p5.stroke(20, 0, 50, 25);
+          // p5.rect(mx+window.innerWidth/2-50+sw, my+window.innerHeight/2-50+sw, sc-sw*2, sc-sw*2, 10);
+          p5.ellipse(mx + p5.windowWidth / 2, my + p5.windowHeight / 2, sc - sw * 2);
+          p5.ellipse(mx + p5.windowWidth / 2, my + p5.windowHeight / 2, sc - sw * 4);
+          p5.ellipse(mx + p5.windowWidth / 2, my + p5.windowHeight / 2, sc - sw * 6);
+        }
       }
     }
+    
   }
 
   const showUserEllipses = (p5) => {
@@ -1094,8 +1099,8 @@ export default (props) => {
     // p5.ellipse(window.innerWidth/2, window.innerHeight/2, sc-sw*4);
     // p5.ellipse(window.innerWidth/2, window.innerHeight/2, sc-sw*6);
 
-    const x = destination.x + window.innerWidth / 2 - user.x;
-    const y = destination.y + window.innerHeight / 2 - user.y;
+    const x = destination.x + p5.windowWidth / 2 - user.x;
+    const y = destination.y + p5.windowHeight / 2 - user.y;
     const lineL = 20;
 
     
@@ -1116,8 +1121,8 @@ export default (props) => {
       p5.noFill();
       p5.strokeWeight(5);
       p5.stroke(20, 0, 50, 55);
-      const x = destination.x + window.innerWidth / 2 - user.x;
-      const y = destination.y + window.innerHeight / 2 - user.y;
+      const x = destination.x + p5.windowWidth / 2 - user.x;
+      const y = destination.y + p5.windowHeight / 2 - user.y;
       const lineL = 20;
       if (destination.x) {
         p5.line(x - lineL / 2, y - lineL / 2, x + lineL / 2, y + lineL / 2);
@@ -1137,6 +1142,7 @@ export default (props) => {
     return false;
   }
 
+  // TODO - probably a smarter way to determine best step...
   const getNextStep = () => {
     let steps = [[1, 0], [-1, 0], [0, 1], [0, -1]];
     let min = 1000000;

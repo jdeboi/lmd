@@ -10,6 +10,7 @@ import ReactPlayer from 'react-player'
 
 // store
 import { connect } from 'react-redux';
+import { doneLoadingApp } from '../../../store/actions/';
 
 class MacbookAir extends React.Component {
   // https://codepen.io/JohJakob/pen/YPxgwo
@@ -35,6 +36,7 @@ class MacbookAir extends React.Component {
 
   componentDidMount() {
     this.interval = setInterval(this.resetPlayer, 22000);
+    this.props.doneLoadingApp();
   }
 
   componentWillUnmount() {
@@ -249,7 +251,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = () => {
   return {
-   
+    doneLoadingApp
   }
 }
 

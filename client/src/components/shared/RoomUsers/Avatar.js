@@ -1,14 +1,22 @@
 
 import React from 'react';
-import { showWine, showCocktail, showCheese } from './Helpers';
+import { showWine, showCocktail, showCheese } from '../../sketches/HomePage/components/Helpers';
+import { connect } from 'react-redux';
 
 function Avatar(props) {
-  const { user, avatarW } = props;
+  const { user, avatarW, ui } = props;
   const showWineEmoji = showWine(user);
   const showCheeseEmoji = showCheese(user);
   const showCocktailEmoji = showCocktail(user);
+  const loc = { x: ui.width / 2 - avatarW / 2, y: ui.height / 2 + avatarW / 2};
+  
+  if (user.room !== "home-page") {
+    loc.x = user.roomX;
+    loc.y = user.roomY;
+  }
+
   return (
-    <div className="userAvatar avatar" style={{ top: window.innerHeight / 2 - avatarW / 2, left: window.innerWidth / 2 - avatarW / 2, zIndex: 10 }}>
+    <div className="userAvatar avatar" style={{top: loc.y, left: loc.x, zIndex: 10}}>
       <div>{user.avatar}</div>
       <div className="emoji-addons">
         <div className={"emoji-item emoji-wine" + (showWineEmoji ? "" : " hidden")}>🍷</div>
@@ -20,4 +28,18 @@ function Avatar(props) {
   )
 }
 
-export default Avatar;
+const mapStateToProps = (state) => {
+  return {
+    ui: state.ui,
+    user: state.user
+  }
+}
+
+const mapDispatchToProps = () => {
+  return {
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps())(Avatar);
+

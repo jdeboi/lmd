@@ -81,26 +81,29 @@ class Header extends React.Component {
 
     // phone shortcut: "&#128222"
     const hamburgerMenuItems = [
-      { title: "about", link: "/about", shortcut: "" },
-      { title: "contact", link: "/contact", shortcut: "" },
+      { title: "artist bio", link: "/about", shortcut: "" },
+      { title: "statement", link: "/about", shortcut: "" },
+      { title: "thesis", link: "/about", shortcut: "" },
       // {title: "cookies", link:"/words", shortcut: "🍪"},
       { title: "credits", link: "/credits", shortcut: "" }
     ];
     const iconArrow = "fas fa-arrow-left";
     const arrowClass = this.props.currentPage==="home page"?"hidden":"arrow expandable";
     // const styB = {border: "1px solid white", borderRadius: 5, fontSize: 11, color: "white"}
+    
+    const homeIcon = this.props.ui.isMobile?"fas fa-bars":"fa fa-cube";
     return (
 
       <header className="Header menuTheme">
         <ul className="left">
-          <li className={arrowClass} onClick={() => this.props.history.push("/")}><i className={iconArrow}></i></li>
+          {/* <li className={arrowClass} onClick={() => this.props.history.push("/")}><i className={iconArrow}></i></li> */}
           {/*<FinderSubmenu cursor={`cursor-${this.state.hand}`} dimensions={this.props.dimensions} title="" icon="fa fa-cube" specialClass="apple" listItems={hamburgerMenuItems} /> */}
-          <FinderSubmenu ui={this.props.ui} title="" icon="fa fa-cube" specialClass="apple" listItems={hamburgerMenuItems} />
+          <FinderSubmenu ui={this.props.ui} title="" icon={homeIcon} specialClass="apple" listItems={hamburgerMenuItems} />
           <FinderSubmenu ui={this.props.ui} title="losing my dimension" icon="" specialClass="bold" listItems={finderMenuItems} />
           {/* <li><span className="currentPage">/{this.props.currentPage}</span></li> */}
           {/*<li className={`expandable`}><Link to="/"><span id="pageTitle">Losing My Dimension</span></Link></li>*/}
         </ul>
-        {this.isSimpleHeader() ? this.getMobileRightMenus() : this.getRightMenus()}
+        {this.isSimpleHeader() ? null : this.getRightMenus()}
       </header>
     );
   } 

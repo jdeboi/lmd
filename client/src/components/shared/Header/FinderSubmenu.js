@@ -51,12 +51,16 @@ class FinderSubmenu extends React.PureComponent {
     // const cursor = this.props.cursor;
     const specialClass = this.props.specialClass;
     let ulSpecialClass = this.props.ulSpecialClass;
-    if (this.props.ui.isMobile) ulSpecialClass += " mobile";
+    if (this.props.ui.isMobile || this.props.ui.size === "xsmall") 
+      ulSpecialClass += " mobile";
     const listItems = this.props.listItems;
 
-    let style = {};
+    let classN = this.props.ui.isMobile ? "" : "expandable"; 
+    classN += specialClass ? (" " + specialClass): "";
+    classN += this.state.isVisible ? ' selected': '';
+    
     return (
-      <li className={`expandable ${specialClass} ${this.state.isVisible ? 'selected': ''}`} onClick={this.toggleHidden} ref={this.setWrapperRef}><span id="pageTitle">{title}</span>
+      <li className={classN} onClick={this.toggleHidden} ref={this.setWrapperRef}><span id="pageTitle">{title}</span>
       {icon}
       <div className={`submenu ${this.state.isVisible ? 'visible': ''}`}>
         <ul className={ulSpecialClass}>

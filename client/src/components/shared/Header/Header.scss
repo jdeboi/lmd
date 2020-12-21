@@ -114,6 +114,8 @@
       line-height: $headerH;
       padding: 0 0.5em;
       position: relative;
+      box-sizing: border-box;
+
 
       a {
         color: white;
@@ -166,7 +168,7 @@
       left: 0px;
       margin: 0 !important;
       overflow: hidden;
-      padding: 0px 8px 0px 0px;
+      // padding: 0px 8px 0px 0px;
       position: absolute;
       top: 32px;
       width: auto;
@@ -258,6 +260,19 @@
       position: absolute;
       right: 25px;
     }
+  }
+
+  .flexRow {
+    display: flex;
+    flex-direction: row;
+
+    div {
+      padding-right: 5px
+    }
+  }
+
+  .flex1 {
+    flex: 1;
   }
 
   /* Tooltip container */
@@ -384,7 +399,7 @@
   }
 
   @media screen and (max-width: 830px) {
-    font-size: $fontSize-tablet-1;
+    // font-size: $fontSize-tablet-1;
     .submenu ul {
       font-size: $fontSize-tablet-2;
       overflow-y: scroll;
@@ -393,14 +408,14 @@
   }
 
   @media screen and (max-width: 400px) {
-    font-size: $fontSize-mobile-1;
+    // font-size: $fontSize-mobile-1;
     .submenu ul {
       font-size: $fontSize-mobile-2;
     }
   }
 
   @media screen and (max-width: 300px) {
-    font-size: $fontSize-mobile-2;
+    // font-size: $fontSize-mobile-2;
     .submenu ul {
       font-size: $fontSize-mobile-3;
     }

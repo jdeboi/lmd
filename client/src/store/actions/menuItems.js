@@ -1,4 +1,7 @@
 // action types
+export const HIDEMENUS = 'HIDEMENUS';
+export const SETONEMENU = 'SETONEMENU';
+
 export const SHOWMAP = 'SHOWMAP';
 export const HIDEMAP = 'HIDEMAP';
 export const TOGGLEMAP = 'TOGGLEMAP';
@@ -15,6 +18,18 @@ export const SHOWUSERICONS = 'SHOWUSERICONS';
 export const HIDEUSERICONS = 'HIDEUSERICONS';
 export const TOGGLEUSERICONS = 'TOGGLEUSERICONS';
 
+export const hideMenus = () => {
+  return {
+    type: HIDEMENUS
+  }
+}
+
+export const setOneMenu = (menu) => {
+  return {
+    type: SETONEMENU,
+    payload: {menu}
+  }
+} 
 
 ///////////// MAP
 export const toggleMap = () => {

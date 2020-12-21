@@ -3,20 +3,22 @@ import FAQ from './FAQ';
 import CenterModal from '../CenterModal/CenterModal';
 
 import { connect } from 'react-redux';
-import { hideFaq, toggleFaq } from '../../../store/actions/menuItems';
+import { setOneMenu, hideFaq, toggleFaq } from '../../../store/actions/menuItems';
 
 
 class FAQFrame extends React.Component {
 
   onHide = () => {
     this.props.hideFaq();
+    this.props.setOneMenu(null);
   }
 
   render() {
+    let isHidden = this.props.ui.isMobile ? this.props.menu !== "faq" : this.props.faqIsHidden;
     return (
       <CenterModal
         title="FAQ"
-        isHidden={this.props.faqIsHidden}
+        isHidden={isHidden}
         onHide={this.onHide}
         width={this.props.ui.width}
         height={this.props.ui.height}
@@ -41,14 +43,16 @@ class FAQFrame extends React.Component {
 const mapStateToProps = (state) => {
   return {
     faqIsHidden: state.faqIsHidden,
-    ui: state.ui
+    ui: state.ui,
+    menu: state.menu
   }
 }
 
 const mapDispatchToProps = () => {
   return {
     hideFaq,
-    toggleFaq
+    toggleFaq,
+    setOneMenu
   }
 }
 

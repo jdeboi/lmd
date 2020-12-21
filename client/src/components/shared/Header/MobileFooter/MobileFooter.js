@@ -10,7 +10,7 @@ import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
 // store
 import { connect } from 'react-redux';
-import { toggleMap, toggleFaq, toggleChat, toggleUserIcons } from '../../../../store/actions/menuItems';
+import { setOneMenu, toggleMap, toggleFaq, toggleChat, toggleUserIcons } from '../../../../store/actions/menuItems';
 import { resetMessgeNotification } from '../../../../store/actions/messages';
 
 
@@ -18,22 +18,28 @@ class MobileFooter extends React.Component {
 
     //
     render() {
-        var classChat = "icon" + (this.props.chatIsHidden ? " closed" : " opened");
+        var classChat = "icon" + (this.props.menu === "chat" ? " opened" : " closed");
         if (this.props.chatNotifications) classChat += " notify";
+        
         var classMap = "icon";
         if (this.props.user.room === "home-page") {
-            classMap += (this.props.mapIsHidden ? " closed" : " opened");
+            classMap += (this.props.menu === "map" ? " opened" : " closed");
         }
         else classMap += " closed disabled";
-        const classFaq = "icon" + (this.props.faqIsHidden ? " closed" : " opened");
+        
+        const classFaq = "icon" + (this.props.menu === "faq" ? " opened" : " closed");
         // const classUserIcons = "expandable icon" + (this.props.userIconsIsHidden ? " closed" : " opened");
 
+        const classUser = "icon" + (this.props.menu === "user" ? " opened" : " closed");
+
+        // const sty = {top: this.props.ui.height-60};
         if (this.hasFooter()) {
             return (
                 <div className="MobileFooter">
-                    <button className={classMap} onClick={this.props.toggleMap}><MapIcon fontSize="inherit" /></button>
+                    {this.props.user.room === "home-page"?<button className={classMap} onClick={() => this.props.setOneMenu("map")}><MapIcon fontSize="inherit" /></button>:null}
                     <button className={classChat} onClick={this.chatClicked}><ChatIcon fontSize="inherit" />{this.getChatNotification()}</button>
-                    <button className={classFaq} onClick={this.props.toggleFaq}><HelpOutlineIcon fontSize="inherit" /></button>
+                    <button className={classFaq} onClick={() => this.props.setOneMenu("faq")}><HelpOutlineIcon fontSize="inherit" /></button>
+                    <button className={classUser} onClick={() => this.props.setOneMenu("user")}><AccountCircleIcon fontSize="inherit" /></button>
                 </div>
             )
         }
@@ -47,7 +53,7 @@ class MobileFooter extends React.Component {
 
     chatClicked = () => {
         this.props.resetMessgeNotification();
-        this.props.toggleChat();
+        this.props.setOneMenu("chat");
     }
 
     getChatNotification = () => {
@@ -81,7 +87,8 @@ const mapStateToProps = (state) => {
         mapIsHidden: state.mapIsHidden,
         userIconsIsHidden: state.userIconsIsHidden,
         chatNotifications: state.chatNotifications,
-        ui: state.ui
+        ui: state.ui,
+        menu: state.menu
     }
 }
 
@@ -91,7 +98,8 @@ const mapDispatchToProps = () => {
         toggleFaq,
         toggleChat,
         resetMessgeNotification,
-        toggleUserIcons
+        toggleUserIcons,
+        setOneMenu
     }
 }
 
