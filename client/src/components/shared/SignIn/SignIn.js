@@ -38,6 +38,7 @@ class SignIn extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     const update = (
       (nextProps.showSignIn !== this.props.showSignIn)
+      || (nextProps.menu !== this.props.menu)
       || (nextState.localUserName !== this.state.localUserName)
       || (nextState.localAvatar !== this.state.localAvatar)
       || (nextProps.hasAvatar !== this.props.hasAvatar)
@@ -129,13 +130,15 @@ class SignIn extends React.Component {
   }
 
   getFrame = () => {
+    const {ui, menu, showSignIn} = this.props;
+    const isHidden = ui.isMobile? menu !== "user" : !showSignIn;
+    console.log(isHidden);
     return (
       <CenterModal
         title="avatar"
-        isHidden={!this.props.showSignIn}
+        isHidden={isHidden}
         onHide={this.onHide}
-        width={this.props.ui.width}
-        height={this.props.ui.height}
+        ui={ui}
         classN="SignIn"
         content={this.getForm()}
         buttons={this.getButtons()}
@@ -151,7 +154,7 @@ class SignIn extends React.Component {
       <React.Fragment>
         <div className="userBar flexItem flexPad flexRow">
           <div className="avatar">{localAvatar}</div>
-          <input onChange={this.setUserName} value={localUserName} placeholder="enter user name" inputprops={{ 'aria-label': 'user name field' }} />
+          <input onChange={this.setUserName} value={localUserName} placeholder="enter username" inputprops={{ 'aria-label': 'user name field' }} />
         </div>
         <div className="emoji-list flexItem flexPad flex1">
           {
@@ -193,7 +196,8 @@ class SignIn extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
-    ui: state.ui
+    ui: state.ui,
+    menu: state.menu
   }
 }
 

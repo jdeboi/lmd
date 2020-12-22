@@ -311,14 +311,13 @@ class Chat extends React.Component {
   }
 
   getMobileFrame = () => {
-    const {w, h} = getCenterModalDim(this.props.ui.width, this.props.ui.height);
+    const {w, h} = getCenterModalDim(this.props.ui);
     return (
       <CenterModal
       title="chat"
       isHidden={this.props.menu !== "chat"}
       onHide={this.onHide}
-      width={this.props.ui.width}
-      height={this.props.ui.height}
+      ui={this.props.ui}
       classN="ChatMobile"
       content={this.getMobileContent(w, h)}
       buttons={this.getMobileButtons()}
@@ -327,6 +326,7 @@ class Chat extends React.Component {
   }
 
   getMobileContent = (w, h) => {
+    const inputW = w - 60-40-20;
     return (
         <div className="Chat-messages" style={{ display: "flex", flexDirection: "column", height: h }}>
           <div className="Chat-form">
@@ -345,7 +345,7 @@ class Chat extends React.Component {
                   onChange={this.handleTextBoxChange}
                   onFocus={this.props.resetMessgeNotification}
                   onKeyDown={this.handleKeyDown}
-                  style={{width: w - 60-40-20}}
+                  style={{width: inputW}}
                 />
               </div>
               <div className="Chat-send-item"><button className="sendButton" disabled={this.state.buttonDisabled} onClick={this.onSubmit}><SendIcon disabled={this.state.buttonDisabled} /></button></div>
@@ -370,16 +370,18 @@ class Chat extends React.Component {
   }
 
   getFrame = () => {
-    var users = this.props.users;
-    if (!users) users = [];
+    const {ui} = this.props;
+    var users = [];
+    if (this.props.users) {
+      users = this.props.users;
+    }
     const { userHover } = this.state;
-
-    const { classes } = this.props;
 
     // headerH+bufferH*2+cbarH + usersH
     const bufferH = 30;
     const y = 34 + bufferH * 2 + 24 + 120
-    const h = window.innerHeight - y - 24 - 30;
+    const h = ui.height - y - 24 - 30;
+
     return (
       <Frame title="chat" bounded={true} isHidden={this.props.chatIsHidden} onHide={this.props.hideChat} windowStyle={{ background: "rgba(0, 0, 0, .9)" }} content={
 
@@ -412,7 +414,7 @@ class Chat extends React.Component {
           </div>
         </div>
       }
-        width={300} height={h} x={window.innerWidth - 330} y={y} z={1000}
+        width={300} height={h} x={ui.width - 320} y={y} z={1000}
       />
     );
   }

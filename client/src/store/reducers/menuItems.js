@@ -64,7 +64,7 @@ export const menuReducer = (state = null, action) => {
   switch(action.type) {
     case SETONEMENU:
       const menu = action.payload.menu;
-      if (menu === null)
+      if (!menu)
         return null;
       else if (state === null)
         return menu;

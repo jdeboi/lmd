@@ -20,8 +20,7 @@ class FAQFrame extends React.Component {
         title="FAQ"
         isHidden={isHidden}
         onHide={this.onHide}
-        width={this.props.ui.width}
-        height={this.props.ui.height}
+        ui={this.props.ui}
         classN="FAQ"
         content={<FAQ />}
         buttons={this.getButtons()}

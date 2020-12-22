@@ -1,17 +1,32 @@
 .MobileFooter {
     position: fixed;
+    background-color: black;
+    color: white;
+    z-index: 2000;
+
     bottom: 0px;
     height: 60px;
     left: 0;
     right: 0;
     width: 100%;
-    background-color: black;
-    color: white;
-    z-index: 2000;
-
+    
     display: flex;
     flex-direction: row;
     align-items: stretch;
+
+    &.landscape {
+        // top: 20px;
+        height: 100%;
+        left: 0;
+        width: 60px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+
+        .top {
+            margin-top: 30px;
+        }
+    }
 
     button {
         color: white;

@@ -1,16 +1,25 @@
 .MobileFooter {
   position: fixed;
+  background-color: black;
+  color: white;
+  z-index: 2000;
   bottom: 0px;
   height: 60px;
   left: 0;
   right: 0;
   width: 100%;
-  background-color: black;
-  color: white;
-  z-index: 2000;
   display: flex;
   flex-direction: row;
   align-items: stretch; }
+  .MobileFooter.landscape {
+    height: 100%;
+    left: 0;
+    width: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; }
+    .MobileFooter.landscape .top {
+      margin-top: 30px; }
   .MobileFooter button {
     color: white;
     flex: 1;

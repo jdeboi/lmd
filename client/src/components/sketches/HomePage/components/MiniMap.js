@@ -27,7 +27,7 @@ class MiniMap extends React.Component {
   }
 
   render() {
-    const {users, user, x, y, z, wineLocation} = this.props;
+    const {users, user, x, y, wineLocation} = this.props;
 
     const wine0 = {...wineLocation[0]};
     wine0.room="home-page";

@@ -11,13 +11,14 @@ interface CenterModalProps {
   width: number,
   height: number,
   isHidden: boolean,
+  ui: any,
   onHide(): any
 }
 
-export default function CenterModal({ title, classN, width, height, isHidden, content, buttons, onHide }: CenterModalProps) {
+export default function CenterModal({ title, classN, ui, isHidden, content, buttons, onHide }: CenterModalProps) {
 
   let zInd =1000;
-  const {w, h , x, y} = getCenterModalDim(width, height);
+  const {w, h , x, y} = getCenterModalDim(ui);
 
   const classT = (!isHidden ? " GrayedOut" : "");
 

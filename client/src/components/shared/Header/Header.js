@@ -121,7 +121,7 @@ class Header extends React.Component {
   getMobileRightMenus() {
     return (
       <ul className="right">
-        <li className="header-avatar expandable" onClick={this.props.avatarClicked}>{this.getAvatar()}</li>
+        <li className="header-avatar" onClick={this.props.avatarClicked}>{this.getAvatar()}</li>
       </ul>
     );
   }

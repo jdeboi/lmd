@@ -18,24 +18,35 @@ class MobileFooter extends React.Component {
 
     //
     render() {
-        var classChat = "icon" + (this.props.menu === "chat" ? " opened" : " closed");
-        if (this.props.chatNotifications) classChat += " notify";
+        const {ui, menu, chatNotifications, user}  = this.props;
+        var footerClass = "MobileFooter" + (ui.orientation === "landscape"?" landscape":"");
         
+        ////////// CHAT CLASS
+        var classChat = "icon" + (menu === "chat" ? " opened" : " closed");
+        if (chatNotifications) classChat += " notify";
+        if (user.room !== "home-page") {
+            classChat += " top";
+        }
+        
+        ////////// MAP CLASS
         var classMap = "icon";
-        if (this.props.user.room === "home-page") {
-            classMap += (this.props.menu === "map" ? " opened" : " closed");
+        if (user.room === "home-page") {
+            classMap += (menu === "map" ? " opened" : " closed");
+            classMap += " top";
         }
         else classMap += " closed disabled";
         
-        const classFaq = "icon" + (this.props.menu === "faq" ? " opened" : " closed");
+        ////////// FAQ CLASS
+        const classFaq = "icon" + (menu === "faq" ? " opened" : " closed");
         // const classUserIcons = "expandable icon" + (this.props.userIconsIsHidden ? " closed" : " opened");
-
-        const classUser = "icon" + (this.props.menu === "user" ? " opened" : " closed");
+        
+        ////////// USER CLASS
+        const classUser = "icon" + (menu === "user" ? " opened" : " closed");
 
         // const sty = {top: this.props.ui.height-60};
         if (this.hasFooter()) {
             return (
-                <div className="MobileFooter">
+                <div className={footerClass}>
                     {this.props.user.room === "home-page"?<button className={classMap} onClick={() => this.props.setOneMenu("map")}><MapIcon fontSize="inherit" /></button>:null}
                     <button className={classChat} onClick={this.chatClicked}><ChatIcon fontSize="inherit" />{this.getChatNotification()}</button>
                     <button className={classFaq} onClick={() => this.props.setOneMenu("faq")}><HelpOutlineIcon fontSize="inherit" /></button>
@@ -46,7 +57,7 @@ class MobileFooter extends React.Component {
         return null;
     }
 
-    hasFooter() {
+    hasFooter = () => {
         const { ui } = this.props;
         return ui.isMobile || ui.size == "xsmall" || ui.size == "small";
     }

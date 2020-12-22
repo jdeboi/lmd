@@ -58,8 +58,7 @@ class Welcome extends React.Component {
         title={this.state.title}
         isHidden={!showWelcome}
         onHide={this.onHide}
-        width={ui.width}
-        height={ui.height}
+        ui={ui}
         classN="Welcome"
         content={content}
         buttons={buttons}
