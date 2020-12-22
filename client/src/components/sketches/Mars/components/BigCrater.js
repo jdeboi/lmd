@@ -10,7 +10,7 @@ export default function(props) {
   return (
     <Frame title="esc to mars" content={
       <div className="bigCrater" style={{height: `${h}px`, backgroundSize: `${w}px ${h}px`}}>
-      <video className="poolVid" key={poolVid} style={{height: `${h}px`, width: `${w}px`}} autoPlay muted loop>
+      <video playsinline className="poolVid" key={poolVid} style={{height: `${h}px`, width: `${w}px`}} autoPlay muted loop>
       <source src={poolVid} type="video/mp4" ></source>
       Your browser does not support HTML5 video.
       </video>

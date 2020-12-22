@@ -14,9 +14,9 @@ class MiniMap extends React.Component {
   }
 
   componentDidMount() {
-    const {size, isMobile} = this.props.ui;
+    const {hasFooter, isMobile} = this.props.ui;
     
-    if (!isMobile && size !== "xsmall" && size !== "small") {
+    if (!isMobile && !hasFooter) {
       this.props.toggleMap();
     }
   }
@@ -27,14 +27,14 @@ class MiniMap extends React.Component {
   }
 
   render() {
-    const {users, user, x, y, wineLocation} = this.props;
+    const {users, user, x, y, wineLocation, ui} = this.props;
 
     const wine0 = {...wineLocation[0]};
     wine0.room="home-page";
     const wine1 = {...wineLocation[1]};
     wine1.room="home-page";
 
-    let isHidden = this.props.ui.isMobile ? this.props.menu !== "map" : this.props.mapIsHidden;
+    let isHidden = (ui.isMobile || ui.hasFooter) ? this.props.menu !== "map" : this.props.mapIsHidden;
 
     // if (otherUser.userName=="jdboi") console.log(otherUser.x, otherUser.y);
     return (

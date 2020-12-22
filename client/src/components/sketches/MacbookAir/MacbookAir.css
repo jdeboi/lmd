@@ -5,7 +5,8 @@
   height: 100%;
   overflow: hidden; }
   .MacbookAir .Frame .content .sliderBox {
-    pointer-events: all; }
+    pointer-events: all;
+    box-sizing: border-box; }
   .MacbookAir .react-player {
     position: absolute;
     top: 0;
@@ -30,14 +31,27 @@
     position: fixed;
     min-width: 100%;
     min-height: 100%; }
-  .MacbookAir .emoji-slider {
-    height: 55px;
-    width: 55px; }
-    .MacbookAir .emoji-slider div {
-      height: 100%;
-      width: 100%;
-      background-size: cover; }
-    .MacbookAir .emoji-slider .cloud-emoji {
-      background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/macbookAir/cloud.png); }
-    .MacbookAir .emoji-slider .gust-emoji {
-      background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/macbookAir/gust.png); }
+  .MacbookAir .emoji-slider .emoji {
+    height: 45px;
+    width: 45px;
+    background-size: cover; }
+  .MacbookAir .emoji-slider-vert {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; }
+    .MacbookAir .emoji-slider-vert .slider {
+      flex: 1; }
+  .MacbookAir .emoji-slider-horiz {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch; }
+    .MacbookAir .emoji-slider-horiz .slider {
+      flex: 1; }
+    .MacbookAir .emoji-slider-horiz .left {
+      margin-right: 5px; }
+  .MacbookAir .top {
+    margin-bottom: 15px; }
+  .MacbookAir .cloud-emoji {
+    background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/macbookAir/cloud.png); }
+  .MacbookAir .gust-emoji {
+    background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/macbookAir/gust.png); }

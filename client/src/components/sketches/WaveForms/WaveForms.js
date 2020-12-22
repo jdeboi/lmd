@@ -140,7 +140,7 @@ class WaveForms extends React.Component {
           <Frame className="stairway" title="cloud confessional" content={
             /*<video width={dimW-2} height={dimH} muted loop autoPlay><source src={videoDimURL} type="video/mp4"></source></video>*/
             <div>
-              <video autoPlay muted loop
+              <video autoPlay muted loop playsinline
                 ref={video => { this.videoMain = video; }}
                 className={"react-player mainContent"}
                 width={this.dimW}

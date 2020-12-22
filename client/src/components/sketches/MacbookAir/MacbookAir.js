@@ -18,13 +18,13 @@ class MacbookAir extends React.Component {
     super(props);
 
     this.state = {
-      videoSpeed : 1.0,
+      videoSpeed: 1.0,
 
 
     }
 
-    this.sliderOG= {x: 0, y: 0};
-    this.mainOG= {x: 0, y: 0};
+    this.sliderOG = { x: 0, y: 0 };
+    this.mainOG = { x: 0, y: 0 };
 
     this.cloudsRef = React.createRef();
 
@@ -45,91 +45,95 @@ class MacbookAir extends React.Component {
 
   setSpeed(speed) {
     this.cloudsRef.current.playbackRate = speed;
-    this.setState({videoSpeed: speed});
+    this.setState({ videoSpeed: speed });
   }
 
   getDimensions() {
     var headerH = 34;
     var toolbarH = 28;
-    var ui = {...this.props.ui};
+    var ui = { ...this.props.ui };
     var windowWidth = ui.width;
     var windowHeight = ui.height;
-    var isMobile = ui.isMobile;
-    var size = ui.size;
+    var aspectRatio = ui.width / ui.height;
     // var {} = this.props.dimensions;
+    var minSpacing = 20;
     windowHeight -= headerH;
 
-    const originalDim = {w: 840, h: 540};
-    const aspectRatio = originalDim.w/originalDim.h;
-    let minSpacing = Math.min(windowWidth*.05, 50);//windowWidth*.05;
-    const windowAspectRatio = windowWidth/windowHeight;
-    if (size !== 'xsmall' && size !== 'small')  return getPortraitDimensions();
-    // else if (availableHeight >= originalDim.h) return getPortraitDimensions();
-    else if (windowAspectRatio < 1) return getPortraitDimensions();
-    else return getLandscapeDimensions();
+    const originalDim = { w: 840, h: 540 };
+
+    if (ui.hasFooter && ui.orientation === "landscape")
+      return getLandscapeDimensions();
+    return getPortraitDimensions();
 
 
     function getLandscapeDimensions() {
-      windowHeight-=toolbarH;
-      let windowDim = {w: originalDim.w, h: originalDim.h, x:0, y: 0};
-      let sliderDim = {w: 80, h: windowDim.h, x: 0, y: 0, vertical:true};
-      let availableHeight = windowHeight-minSpacing*2;
-      let availableWidth = windowWidth - minSpacing*3 - sliderDim.w; // width of slider
-      const windowAspectRatio = availableWidth/availableHeight;
+      let minSpacingX = 120;
+      let minSpacingY = 40;
+      let minSpacingMiddle = 20;
+      windowHeight -= toolbarH;
+      let windowDim = { w: originalDim.w, h: originalDim.h, x: 0, y: 0 };
+      let sliderDim = { w: 80, h: windowDim.h, x: 0, y: 0, vertical: true };
+      let availableHeight = windowHeight - minSpacingY * 2;
+      let availableWidth = windowWidth - minSpacingX * 2 - minSpacingMiddle - sliderDim.w; // width of slider
+      const windowAspectRatio = availableWidth / availableHeight;
+      
       // should we max out the height or width in the available space?
+      // in this case, there's more available width than the original image; 
+      // max out height
       if (windowAspectRatio > aspectRatio) {
-        // max device height out
         windowDim.h = availableHeight;
-        windowDim.w = originalDim.w * windowDim.h/originalDim.h;
+        windowDim.w = originalDim.w * windowDim.h / originalDim.h;
       } else {
         // max device height width
         windowDim.w = availableWidth;
-        windowDim.h = originalDim.h * windowDim.w/originalDim.w;
+        windowDim.h = originalDim.h * windowDim.w / originalDim.w;
       }
-      let spacingFinal = (windowHeight-windowDim.h)/2;
-      windowDim.x = (windowWidth - windowDim.w-sliderDim.w)/3;
+      let spacingFinal = (windowHeight - windowDim.h) / 2;
+      windowDim.x = (windowWidth - windowDim.w - sliderDim.w - minSpacingMiddle) / 2;
       windowDim.y = spacingFinal; //(windowHeight - windowDim.h - 21 - 30)/2-5;
 
       // slider
       sliderDim.h = windowDim.h;
       let remainingSpace = windowWidth - windowDim.w - windowDim.x;
-      let buffer = (remainingSpace - sliderDim.w)/2;
-      sliderDim.x = windowDim.w + windowDim.x + buffer;
+      // let buffer = (remainingSpace - sliderDim.w) / 2;
+      sliderDim.x = windowDim.w + windowDim.x + minSpacingMiddle;
       sliderDim.y = windowDim.y;//(windowHeight-30- sliderDim.h-21)/2;
 
       return [windowDim, sliderDim];
     }
+
     function getPortraitDimensions() {
-      windowHeight-= 2*toolbarH;
-      let sliderDim = {w: 250, h: 64, x: 0, y: 0, vertical:false};
+      windowHeight -= 2 * toolbarH;
+      minSpacing = 20;
+      let sliderDim = { w: 250, h: 64, x: 0, y: 0, vertical: false };
       // let availableHeight = windowHeight-60-85-minSpacing*3;
-      let availableHeight = windowHeight-sliderDim.h-minSpacing*3;
-      let availableWidth = windowWidth - minSpacing*2;
-      let windowAspectRatio = availableWidth/availableHeight;
+      let availableHeight = windowHeight - sliderDim.h - minSpacing * 3 - 36;
+      if (ui.hasFooter) availableHeight -= 60;
+      let availableWidth = windowWidth - minSpacing * 2;
+      let windowAspectRatio = availableWidth / availableHeight;
 
-      let windowDim = {w: originalDim.w, h: originalDim.h, x:0, y: 0};
-
-      if (windowAspectRatio > aspectRatio) {
+      let windowDim = { w: originalDim.w, h: originalDim.h, x: 0, y: 0 };
+      
+      if (windowAspectRatio < aspectRatio) {
         // max device height out
         windowDim.h = Math.min(availableHeight, originalDim.h);
-        windowDim.w = Math.min(originalDim.w * windowDim.h/originalDim.h, originalDim.w);
+        windowDim.w = Math.min(originalDim.w * windowDim.h / originalDim.h, originalDim.w);
       } else {
         // max device height width
         windowDim.w = Math.min(availableWidth, originalDim.w);
-        windowDim.h = Math.min(originalDim.h * windowDim.w/originalDim.w, originalDim.h);
+        windowDim.h = Math.min(originalDim.h * windowDim.w / originalDim.w, originalDim.h);
       }
 
-      let spacingFinal = (windowHeight-sliderDim.h-windowDim.h)/3;
+      let spacingFinal = (windowHeight - sliderDim.h - windowDim.h) / 3;
       // console.log(sliderDim.h, sliderspacingFinal)
-      windowDim.x = windowWidth/2 - windowDim.w/2-2;
+      windowDim.x = windowWidth / 2 - windowDim.w / 2 - 2;
       windowDim.y = spacingFinal;//(windowHeight - windowDim.h)/4;
 
       // slider
-      sliderDim.x = (windowWidth - sliderDim.w)/2;
+      sliderDim.x = (windowWidth - sliderDim.w) / 2;
       // let remainingSpace = windowHeight - windowDim.h - windowDim.y;
       // let buffer = (remainingSpace - sliderDim.h - 21)/2;
       sliderDim.y = windowDim.y + windowDim.h + toolbarH + spacingFinal;
-
       return [windowDim, sliderDim];
     }
   }
@@ -146,20 +150,21 @@ class MacbookAir extends React.Component {
       }
       return (
         <Frame title="macbook air" content={
-            /*<video width={dimW-2} height={dimH} muted loop autoPlay><source src={videoDimURL} type="video/mp4"></source></video>*/
-            <ReactPlayer
-              className={"react-player mainContent"}
-              playing
-              muted
-              loop
-              width={windowDim.w}
-              height={windowDim.h}
-              url={window.AWS + "/macbookAir/noframe.mp4"}
-              playbackRate={this.state.videoSpeed}
-              />
-          }
-          width={windowDim.w+2} height={windowDim.h} x={windowDim.x} y={windowDim.y} px={windowDim.x} py={windowDim.y}
+          /*<video width={dimW-2} height={dimH} muted loop autoPlay><source src={videoDimURL} type="video/mp4"></source></video>*/
+          <ReactPlayer
+            className={"react-player mainContent"}
+            playing
+            muted
+            loop
+            width={windowDim.w}
+            height={windowDim.h}
+            playsinline
+            url={window.AWS + "/macbookAir/noframe.mp4"}
+            playbackRate={this.state.videoSpeed}
           />
+        }
+          width={windowDim.w + 2} height={windowDim.h} x={windowDim.x} y={windowDim.y} px={windowDim.x} py={windowDim.y}
+        />
       )
     }
   }
@@ -170,10 +175,14 @@ class MacbookAir extends React.Component {
       return null;
     }
     else {
-      return(
-        <Frame title="" icon="&#58160;" content={<div className="sliderBox"><ContinuousSlider callback={this.setSpeed} orientation={sliderDim.w<200?"vertical":"horizontal"} /></div>}
+      return (
+        <Frame title="" icon="&#58160;" content={
+          <div className="sliderBox">
+            {sliderDim.w < 200 ? <ContinuousSliderVert callback={this.setSpeed} h={sliderDim.h} w={sliderDim.w} /> : <ContinuousSliderHoriz callback={this.setSpeed} w={sliderDim.w} h={sliderDim.h} />}
+          </div>
+        }
           width={sliderDim.w} height={sliderDim.h} x={sliderDim.x} y={sliderDim.y} px={sliderDim.x} py={sliderDim.y}
-          />
+        />
       );
     }
 
@@ -187,59 +196,64 @@ class MacbookAir extends React.Component {
 
     return (
       <div className="MacbookAir Sketch">
-          {/*<ReactPlayer
-            className={"react-player backgroundCover"}
-            playing
-            muted
-            loop
-            width="100%"
-            height="100%"
-            url={cloudsVid}
-            playbackRate={this.state.videoSpeed}
-            />*/}
-            <video ref={this.cloudsRef} autoPlay muted loop className="backgroundCover">
-              <source src={window.AWS + "/macbookAir/clouds3d.mp4"} type="video/mp4" ></source>
+        <video ref={this.cloudsRef} autoPlay muted playsinline loop className="backgroundCover">
+          <source src={window.AWS + "/macbookAir/clouds3d.mp4"} type="video/mp4" ></source>
               Your browser does not support HTML5 video.
             </video>
-            {this.getMainWindow(windowDim)}
-            {this.getSliderWindow(sliderDim)}
-          {/*Glasses />*/}
-        </div>
-      );
-    }
-
-  }
-
-
-  function ContinuousSlider(props) {
-    // const classes = useStyles();
-    const [value, setValue] = React.useState(1.0);
-
-    const handleChange = (event, newValue) => {
-      setValue(newValue);
-      props.callback(newValue);
-    };
-
-    let style = {};
-    style.height = props.orientation==="vertical"?"80px":"auto";
-    style.width = props.orientation==="vertical"?"auto":"100px";
-
-    return (
-      <div className="Slider">
-        <Grid container spacing={2}>
-          <Grid item className="emoji-slider">
-            <div className="cloud-emoji" aria-label="cloud"></div>
-          </Grid>
-          <Grid item xs>
-            <Slider value={value} onChange={handleChange} orientation={props.orientation} style={style} color='primary' aria-labelledby="continuous-slider" step={0.1} min={0.0} max={2.0} defaultValue={1.0} />
-          </Grid>
-          <Grid item className="emoji-slider">
-            <div className="gust-emoji" aria-label="dashing away"></div>
-          </Grid>
-        </Grid>
+        {this.getMainWindow(windowDim)}
+        {this.getSliderWindow(sliderDim)}
+        {/*Glasses />*/}
       </div>
     );
   }
+
+}
+
+
+function ContinuousSliderVert(props) {
+  // const classes = useStyles();
+  const [value, setValue] = React.useState(1.0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    props.callback(newValue);
+  };
+
+  let style = {};
+  style.height = props.h-12*2;
+  style.width = "auto";
+  let sliderStyle = {width: style.width, height: style.height-105}
+  return (
+    <div item className="emoji-slider-vert emoji-slider" style={style}>
+      <div className="emoji gust-emoji top" aria-label="dashing away"></div>
+      <div className="slider"><Slider value={value} onChange={handleChange} orientation={"vertical"} style={sliderStyle} color='primary' aria-labelledby="continuous-slider" step={0.1} min={0.0} max={2.0} defaultValue={1.0} /></div>
+
+      <div className="emoji cloud-emoji" aria-label="cloud"></div>
+    </div>
+  );
+}
+
+function ContinuousSliderHoriz(props) {
+  // const classes = useStyles();
+  const [value, setValue] = React.useState(1.0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    props.callback(newValue);
+  };
+
+  let style = {};
+  style.height = "auto";
+  style.width = "100px";
+
+  return (
+    <div item className="emoji-slider emoji-slider-horiz" style={{height:props.h, width: props.w}}>
+      <div className="cloud-emoji emoji left" aria-label="cloud"></div>
+      <Slider value={value} onChange={handleChange} orientation={"horizontal"} style={style} color='primary' aria-labelledby="continuous-slider" step={0.1} min={0.0} max={2.0} defaultValue={1.0} />
+      <div className="gust-emoji emoji" aria-label="dashing away"></div>
+    </div>
+  );
+}
 
 
 

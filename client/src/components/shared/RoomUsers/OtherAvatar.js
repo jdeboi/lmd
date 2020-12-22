@@ -4,7 +4,7 @@ import ToolTip from '../../sketches/HomePage/components/ToolTip';
 
 // store
 import { connect } from 'react-redux';
-import { showChat } from '../../../store/actions/menuItems';
+import { setOneMenu, showChat } from '../../../store/actions/menuItems';
 import { setUserActiveChat } from '../../../store/actions/userActiveChat';
 
 class OtherAvatar extends React.Component {
@@ -29,6 +29,7 @@ class OtherAvatar extends React.Component {
   userClick = (otherUser) => {
     this.props.setUserActiveChat(otherUser);
     this.props.showChat();
+    this.props.setOneMenu("chat");
   }
 
   render() {
@@ -77,7 +78,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = () => {
   return {
     setUserActiveChat,
-    showChat
+    showChat,
+    setOneMenu
   }
 }
 

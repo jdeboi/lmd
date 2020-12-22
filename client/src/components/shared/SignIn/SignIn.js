@@ -39,6 +39,7 @@ class SignIn extends React.Component {
     const update = (
       (nextProps.showSignIn !== this.props.showSignIn)
       || (nextProps.menu !== this.props.menu)
+      || (nextProps.ui.orientation !== this.props.ui.orientation)
       || (nextState.localUserName !== this.state.localUserName)
       || (nextState.localAvatar !== this.state.localAvatar)
       || (nextProps.hasAvatar !== this.props.hasAvatar)
@@ -131,8 +132,7 @@ class SignIn extends React.Component {
 
   getFrame = () => {
     const {ui, menu, showSignIn} = this.props;
-    const isHidden = ui.isMobile? menu !== "user" : !showSignIn;
-    console.log(isHidden);
+    const isHidden = (ui.isMobile || ui.hasFooter) ? menu !== "user" : !showSignIn;
     return (
       <CenterModal
         title="avatar"

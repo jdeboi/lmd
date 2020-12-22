@@ -12,8 +12,10 @@
   flex-direction: row;
   align-items: stretch; }
   .MobileFooter.landscape {
+    position: fixed;
     height: 100%;
-    left: 0;
+    right: 0px;
+    left: auto;
     width: 60px;
     display: flex;
     flex-direction: column;

@@ -20,10 +20,11 @@ class Exit extends React.Component {
   // }
 
   render() {
-    if (this.props.user.room === "home-page")
+    const {user, ui} = this.props;
+    if (user.room === "home-page")
       return null;
-    const y = 60;
-    const x = 30; //this.props.ui.width - 110;
+    const y = 50;
+    const x = 20; //this.props.ui.width - 110;
     const box = { w: 10, h: 10, x: 10, y: 10 };
     // const iconArrow = "fas fa-arrow-circle-left";
     // const iconArrow = "fas fa-arrow-left";
@@ -31,13 +32,16 @@ class Exit extends React.Component {
     // const icon = "fas fa-home";
     // 
     // const icon = "fas fa-door-open";
+    var imgW = 60;
+    if (ui.hasFooter)
+      imgW = 44;
     return (
       //  <button className="backButton" style={{left: x, top: y}}><i class={iconArrow}></i></button>
       // <Link className="backButton" style={{left: x, top: y}} to="/"><div /></Link>
       <DesktopIcon title={"gallery"} x={x} y={y} bounded={false} box={box} onDblClick={this.onDblClick}
         content={
-          <img src={window.AWS + "/shared/homeicon.png"} width={60} height={60} />
-        }
+          <img src={window.AWS + "/shared/homeicon.png"} width={imgW} height={imgW} />
+        } frameContent={<div></div>}
       />
     )
   }

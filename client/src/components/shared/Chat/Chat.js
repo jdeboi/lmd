@@ -293,7 +293,7 @@ class Chat extends React.Component {
 
   render() {
     const {ui} = this.props;
-    if (ui.isMobile || ui.size =="xsmall" || ui.size == "small") {
+    if (ui.isMobile || ui.hasFooter) {
       return this.getMobileFrame();
     }
     return this.getFrame();

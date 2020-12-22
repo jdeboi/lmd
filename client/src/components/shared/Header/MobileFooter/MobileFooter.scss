@@ -15,9 +15,11 @@
     align-items: stretch;
 
     &.landscape {
+        position: fixed;
         // top: 20px;
         height: 100%;
-        left: 0;
+        right: 0px;
+        left: auto;
         width: 60px;
         display: flex;
         flex-direction: column;

@@ -269,11 +269,11 @@ class JungleGyms extends React.Component {
     return (
       <div className="JungleGyms Sketch">
         <div className="threeCanvas" ref={ref => (this.mount = ref)} />
-        <video crossOrigin="anonymous" ref={ref => (this.videoGym = ref)} autoPlay muted loop className="gym" >
+        <video playsinline crossOrigin="anonymous" ref={ref => (this.videoGym = ref)} autoPlay muted loop className="gym" >
           <source src={gymUrl} type="video/mp4" ></source>
           Your browser does not support HTML5 video.
         </video>
-        <video crossOrigin="anonymous" ref={ref => (this.videoSwings = ref)} autoPlay muted loop className="gym" >
+        <video playsinline crossOrigin="anonymous" ref={ref => (this.videoSwings = ref)} autoPlay muted loop className="gym" >
           <source src={window.AWS + "/jungleGyms/swings.mp4"} type="video/mp4" ></source>
           Your browser does not support HTML5 video.
         </video>

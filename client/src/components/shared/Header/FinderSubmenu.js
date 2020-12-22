@@ -51,7 +51,7 @@ class FinderSubmenu extends React.PureComponent {
     // const cursor = this.props.cursor;
     const specialClass = this.props.specialClass;
     let ulSpecialClass = this.props.ulSpecialClass;
-    if (this.props.ui.isMobile || this.props.ui.size === "xsmall") 
+    if (this.props.ui.isMobile || this.props.ui.hasFooter) 
       ulSpecialClass += " mobile";
     const listItems = this.props.listItems;
 

@@ -102,7 +102,7 @@ class HomePage extends React.Component {
       return (
         <div className="backgroundCover"><div className="loading">LOADING</div></div>
       );
-      const xMini = ui.isMobile && ui.orientation === "landscape" ? 80 : 20;
+      // const xMini = ui.isMobile && ui.orientation === "landscape" ? 80 : 20;
     return (
       <React.Fragment>
         {/*  <Welcome w={500} h={400} z={1} x={-250-user.x+ ui.width/2} y={-320-user.y+ ui.height/2} />*/}
@@ -117,7 +117,7 @@ class HomePage extends React.Component {
         <Folders x={540 - user.x + ui.width/2} y={0 - user.y + ui.height/2} zIcons={zIndicesIcons} zFrames={zIndicesFrames} onDblClick={this.onDblClick} newFrameToTop={this.newFrameToTop} newIconToTop={this.newIconToTop} />
         {/* {this.getAvatars()} */}
         <Pools x={-user.x + ui.width/2} y={-user.y + ui.height/2} />
-        <MiniMap users={users} user={user} x={xMini} y={20} wineLocation={wineLocation} />
+        <MiniMap users={users} user={user} x={20} y={20} wineLocation={wineLocation} />
         {/*Glasses />*/}
         <div id="cards"></div>
       </React.Fragment>

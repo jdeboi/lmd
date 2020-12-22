@@ -9,8 +9,13 @@ const initialState = {
     isMobile: getIsMobile(),
     orientation: getOrientation(initW, initH),
     size: getWindowSize(initW),
+    hasFooter: getHasFooter(initW, initH),
     loading: true
 };
+
+function getHasFooter(w, h) {
+    return (w < 788 || h < 600);
+}
 
 function getOrientation(w, h) {
     return w > h ? "landscape" : "portrait";
@@ -23,9 +28,11 @@ function getIsMobile() {
 function getWindowSize(w) {
     if (!w)
         return 'medium';
+    else if (w < 340) 
+        return 'xxsmal';
     else if (w < 480)
         return 'xsmall';
-    else if (w < 768)
+    else if (w < 788)
         return 'small';
     else if (w < 992)
         return 'medium';
@@ -45,6 +52,7 @@ export const windowReducer = (state = initialState, action) => {
             window.orientation = getOrientation(window.width, window.height);
             window.isMobile = getIsMobile();
             window.size = getWindowSize(window.width);
+            window.hasFooter = getHasFooter(window.width, window.height);
             return window;
         
         case LOADINGAPP:

@@ -74,7 +74,7 @@ class Windows extends React.Component {
         <Frame title="b2" x={800} y={400} width={300} height={263} windowStyle={sty} onDrag={this.onDrag1} content={
             <div className="windowDiv">
               // <div className="background2 background" style={styWind2}></div>
-              <video id="video" style={{width:"100%", height:"100%"}} >
+              <video id="video" playsinline style={{width:"100%", height:"100%"}} >
                 <source src={window.AWS + "/macbookAir/clouds3d.mp4"} type="video/mp4" ></source>
                 Your browser does not support HTML5 video.
               </video>

@@ -89,3 +89,7 @@
     width: 100vw;
     height: 100vh;
     pointer-events: all; }
+
+@media only screen and (max-width: 400px) {
+  .HomePage .loading {
+    font-size: 30px; } }

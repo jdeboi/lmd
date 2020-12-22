@@ -1,21 +1,23 @@
-const padding = 20;
-const heading = 36; // top header
-const barH = 24; // frame h
+const padding = 15;
+const heading = 34; // top header
+const barH = 26; // frame h
 const barBot = 60; // mobile footer / landscape menu
+const minW = 540;
+const minH = 400;
 
 export function getCenterModalDim(ui) {
     const { width, height, isMobile, orientation, size } = ui;
 
 
-    if (isMobile) {
+    if (width < (minW + padding*2) || height < (minH+padding*2 + barH + heading)) {
         if (orientation === "portrait")
-            return getPortraitMobile(width, height);
-        return getLandscapeMobile(width, height);
+            return getPortraitSmall(width, height);
+        return getLandscapeSmall(width, height);
     }
 
     else {
-        let w = 540;
-        let h = 400;
+        let w = minW;
+        let h = minH;
         let y = (height - h - barH) / 2;
 
 
@@ -36,15 +38,16 @@ export function getCenterModalDim(ui) {
 
 }
 
-function getLandscapeMobile(width, height) {
+function getLandscapeSmall(width, height) {
     const w = width - padding * 2 - barBot; // 60 = width of menu on left
-    const h = height - padding * 2 - heading - barH;
-    const x = barBot + padding;
-    const y = padding + heading;
+    const h = height - padding - heading - barH;
+    // const x = barBot + padding;
+    const x = padding;
+    const y = heading;
     return { w, h, x, y };
 }
 
-function getPortraitMobile(width, height) {
+function getPortraitSmall(width, height) {
     const w = width - padding * 2; // 60 = width of menu on left
     const h = height - padding * 2 - barBot - barH - heading;
     const x = padding;

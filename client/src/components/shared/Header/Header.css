@@ -281,11 +281,15 @@ input.standardInputWhite {
       overflow-y: scroll;
       overflow-x: hidden; } }
   @media screen and (max-width: 400px) {
-    .Header .submenu ul {
-      font-size: 10px; } }
-  @media screen and (max-width: 300px) {
-    .Header .submenu ul {
-      font-size: 8px; } }
+    .Header {
+      font-size: 14px; }
+      .Header .submenu ul {
+        font-size: 12px; } }
+  @media screen and (max-width: 340px) {
+    .Header {
+      font-size: 12px; }
+      .Header .submenu ul {
+        font-size: 8px; } }
 
 .BackHeader {
   position: absolute;

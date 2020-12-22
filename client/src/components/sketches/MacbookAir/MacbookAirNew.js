@@ -232,7 +232,7 @@ class MacbookAir extends React.Component {
           url={cloudsVid}
           playbackRate={this.state.videoSpeed}
           />*/}
-          <video ref={this.cloudsRef} autoPlay muted loop className="backgroundCover">
+          <video ref={this.cloudsRef} autoPlay muted playsinline loop className="backgroundCover">
             <source src={window.AWS + "/macbookAir/clouds3d.mp4"} type="video/mp4" ></source>
             Your browser does not support HTML5 video.
           </video>

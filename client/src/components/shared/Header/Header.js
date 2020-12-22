@@ -110,7 +110,7 @@ class Header extends React.Component {
 
   isSimpleHeader() {
     const {ui} = this.props;
-    return ui.isMobile || ui.size == "xsmall" || ui.size == "small";
+    return (ui.isMobile || ui.hasFooter) ;
   }
 
   chatClicked = () => {

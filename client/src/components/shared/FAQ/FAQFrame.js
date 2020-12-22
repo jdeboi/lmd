@@ -14,7 +14,8 @@ class FAQFrame extends React.Component {
   }
 
   render() {
-    let isHidden = this.props.ui.isMobile ? this.props.menu !== "faq" : this.props.faqIsHidden;
+    const {ui} = this.props;
+    let isHidden = (ui.isMobile || ui.hasFooter) ? this.props.menu !== "faq" : this.props.faqIsHidden;
     return (
       <CenterModal
         title="FAQ"

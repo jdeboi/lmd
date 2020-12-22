@@ -408,16 +408,16 @@
   }
 
   @media screen and (max-width: 400px) {
-    // font-size: $fontSize-mobile-1;
+    font-size: $fontSize-mobile-2;
     .submenu ul {
-      font-size: $fontSize-mobile-2;
+      font-size: $fontSize-mobile-3;
     }
   }
 
-  @media screen and (max-width: 300px) {
-    // font-size: $fontSize-mobile-2;
+  @media screen and (max-width: 340px) {
+    font-size: $fontSize-mobile-3;
     .submenu ul {
-      font-size: $fontSize-mobile-3;
+      font-size: $fontSize-mobile-4;
     }
   }
 }

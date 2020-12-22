@@ -9,6 +9,7 @@
     .content {
       .sliderBox {
         pointer-events: all;
+        box-sizing: border-box;
       }
       
     }
@@ -51,23 +52,58 @@
   .emoji-slider{
     // font-size: 35px;
     // line-height: 28px;
-
-    height: 55px;
-    width: 55px;
+   
+   
   
 
-    div {
-      height: 100%;
-      width: 100%;
+    .emoji {
+      // height: 100%;
+      // width: 100%;
+      height: 45px;
+      width: 45px;
       background-size: cover;
     }
-    .cloud-emoji {
-      background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/macbookAir/cloud.png);
+   
+  }
+
+  .emoji-slider-vert {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    // width: 100%;
+
+    .slider {
+      flex: 1;
     }
 
-    .gust-emoji {
-      background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/macbookAir/gust.png);
+    
+  }
 
+  .emoji-slider-horiz {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+
+    .slider {
+      flex: 1;
     }
+
+    .left {
+      margin-right: 5px;
+    }
+
+  }
+
+  .top {
+    margin-bottom: 15px;
+  }
+
+  .cloud-emoji {
+    background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/macbookAir/cloud.png);
+  }
+  
+  .gust-emoji {
+    background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/macbookAir/gust.png);
+  
   }
 }
