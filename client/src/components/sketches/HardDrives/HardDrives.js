@@ -6,6 +6,8 @@ import BabylonScene from '../../shared/Babylon.jsx'; // import the component abo
 import { WaterMaterial } from 'babylonjs-materials';
 import 'babylonjs-loaders';
 
+import { connect } from 'react-redux';
+
 import Frame from '../../shared/Frame/Frame';
 // import Glasses from '../../shared/Glasses/Glasses';
 
@@ -33,37 +35,15 @@ class HardDrives extends React.Component {
 
     this.state = {
       island : "https://www.google.com/maps/embed?pb=!4v1591730465198!6m8!1m7!1sCAoSLEFGMVFpcFBTYW9SYVFBMmR0QjhoeTVaSUs5R3lQaGJBNVB5dVhFQ2o0UVdW!2m2!1d-17.3611139!2d177.1339841!3f99.14217177224654!4f16.212409154729073!5f0.5970117501821992",
-      windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight,
       urlIndex: 0,
 
     }
-
-    this.svFrame = {};
-    const f = .8;
-    this.svFrame.w = 600*f;
-    this.svFrame.h = 450*.8*f;
-    this.svFrame.x = (window.innerWidth - this.svFrame.w)*.3;
-    this.svFrame.y = (window.innerHeight - this.svFrame.h-30)*.4;
-
-    this.controller = {};
-    this.controller.w = 250;// 350;
-    this.controller.h = 60;
-    // let bottomRemaining = window.innerHeight - (this.svFrame.y + this.svFrame.h);
-    this.controller.y = this.svFrame.h + this.svFrame.y + 30; //this.svFrame.y + this.svFrame.h + (bottomRemaining-(this.controller.h+20))/2;
-    this.controller.x =  (window.innerWidth - this.controller.w)/2;
-
     this.onRender = this.onRender.bind(this);
 
   }
 
 
   componentDidMount() {
-    this.updateDimensions();
-
-    window.addEventListener("resize", this.updateDimensions.bind(this));
-    // this.props.userSetRoom("hard-drives");
-
 
     // console.log("Thanks to Jarlan Perez for the lime: https://poly.google.com/view/4Ddq9357jQ-");
     console.log("https://poly.google.com/view/3NwnG7YRk7A")
@@ -71,12 +51,6 @@ class HardDrives extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.updateDimensions.bind(this));
-    // this.props.userLeaveRoom("hard-drives");
-  }
-
-  updateDimensions() {
-    this.setState({ windowWidth: window.innerWidth, windowHeight: window.innerHeight });
   }
 
   onSceneReady(scene) {
@@ -159,20 +133,61 @@ class HardDrives extends React.Component {
   }
 
   render() {
+    const {ui } = this.props;
+    const svFrame = {};
+    const f = .8;
+    const ogW = 600 *f;
+    const ogH = 450 * .8 * f;
+    svFrame.w = ogW;
+    svFrame.h = ogH;
+    svFrame.x = (ui.width - svFrame.w)*.3;
+    svFrame.y = (ui.height - svFrame.h-30)*.4;
+  
+    if (ui.hasFooter || ui.isMobile) {
+      if (ui.orientation === "portrait") {
+        let wTemp = ui.width - 40;
+        if (wTemp < ogW) {
+          svFrame.w = wTemp; // Math.min(ui.width-40, ogW);
+          svFrame.h = svFrame.h * (svFrame.w/ogW);
+          svFrame.y = 20; //ui.headerH + 50;
+          svFrame.x = 18;
+        }
+        else {
+          svFrame.x = (ui.width - svFrame.w - 4) / 2;
+          
+        }
+        svFrame.y = ui.height/2 - svFrame.h*.8;
+      }
+      else {
+        const factor = ui.height/500;
+
+        if (factor <1 ) {
+          svFrame.h *= ui.height/500;
+          svFrame.w *= ui.height/500;
+          svFrame.y = 10; //ui.headerH + 20;
+          svFrame.x = 50;
+        }
+        
+      }
+    }
+
+    const title = (ui.isMobile || ui.hasFooter) ? "": "hard drives on seashores";
+
     return (
       <div className="HardDrives Sketch">
         <BabylonScene antialias onSceneReady={this.onSceneReady} onRender={this.onRender} id='babylon-canvas' />
 
-        <Frame title="hard drives on seashores" content={
-            <iframe title="island view" src={this.state.island} width={this.svFrame.w} height={this.svFrame.h} frameBorder="0" allowFullScreen="" aria-hidden="false" tabIndex="0"></iframe>
+        <Frame title={title} content={
+            <iframe title="island view" src={this.state.island} width={svFrame.w} height={svFrame.h} frameBorder="0" allowFullScreen="" aria-hidden="false" tabIndex="0"></iframe>
           }
-          width={this.svFrame.w} height={this.svFrame.h} x={this.svFrame.x} y={this.svFrame.y}
+          width={svFrame.w} height={svFrame.h} x={svFrame.x} y={svFrame.y}
           />
         <Birds />
        {/*Glasses />*/}
       </div>
     )
   }
+
 
 }
 
@@ -226,15 +241,6 @@ function addBottles(scene, water) {
 
     var bottle = meshes[1];
     var diam = 280;
-    // bottle.rotation.y = Math.random()*Math.PI*2;
-    // bottle.rotation.x = Math.PI;
-    // bottle.rotation.z = (-.3+Math.random()*.6);
-    // bottle.position.y = 2//Math.abs((Math.sin(((x / 0.05) + time * water.waveSpeed)) * water.waveHeight * water.windDirection.x * 5.0) + (Math.cos(((z / 0.05) +  time * water.waveSpeed)) * water.waveHeight * water.windDirection.y * 5.0));
-    // bottle.position.x = Math.random()*diam-diam/2;
-    // bottle.position.z = Math.random()*diam-diam/2;
-    // bottle.scaling = new Vector3(.15, .15, .15);
-    // bottles.push(bottle);
-
     container.addAllToScene();  // Adds all elements to the scene
     water.addToRenderList(bottle);
 
@@ -337,4 +343,17 @@ function addPalms(scene) {
 }
 
 
-export default HardDrives;
+const mapStateToProps = (state) => {
+  return {
+    ui: state.ui
+  }
+}
+
+const mapDispatchToProps = () => {
+  return {
+    // doneLoadingApp
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps())(HardDrives);

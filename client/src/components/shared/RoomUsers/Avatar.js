@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { showWine, showCocktail, showCheese } from '../../sketches/HomePage/components/Helpers';
+import { showWine, showCocktail, showCheese } from '../../sketches/Gallery/components/Helpers';
 import { connect } from 'react-redux';
 
 function Avatar(props) {
@@ -10,7 +10,7 @@ function Avatar(props) {
   const showCocktailEmoji = showCocktail(user);
   const loc = { x: ui.width / 2 - avatarW / 2, y: ui.height / 2 + avatarW / 2};
   
-  if (user.room !== "home-page") {
+  if (user.room !== "gallery") {
     loc.x = user.roomX;
     loc.y = user.roomY;
   }

@@ -2,7 +2,7 @@ import React from 'react';
 import Frame from '../../shared/Frame/Frame';
 import './MacbookAir.css';
 
-import Grid from '@material-ui/core/Grid';
+// import Grid from '@material-ui/core/Grid';
 import Slider from '@material-ui/core/Slider';
 // import indigo from '@material-ui/core/colors/indigo';
 
@@ -140,7 +140,8 @@ class MacbookAir extends React.Component {
 
 
   getMainWindow(windowDim) {
-    if (this.props.ui.width <= 0 || windowDim.w <= 0) {
+    const {ui } = this.props;
+    if (ui.width <= 0 || windowDim.w <= 0) {
       return null;
     }
     else {
@@ -148,8 +149,10 @@ class MacbookAir extends React.Component {
         this.mainOG.x = windowDim.x;
         this.mainOG.y = windowDim.y;
       }
+
+      const title= (ui.isMobile || ui.hasFooter)?"":"macbook air";
       return (
-        <Frame title="macbook air" content={
+        <Frame title={title} content={
           /*<video width={dimW-2} height={dimH} muted loop autoPlay><source src={videoDimURL} type="video/mp4"></source></video>*/
           <ReactPlayer
             className={"react-player mainContent"}
@@ -158,7 +161,7 @@ class MacbookAir extends React.Component {
             loop
             width={windowDim.w}
             height={windowDim.h}
-            playsinline
+            playsInline
             url={window.AWS + "/macbookAir/noframe.mp4"}
             playbackRate={this.state.videoSpeed}
           />
@@ -178,7 +181,8 @@ class MacbookAir extends React.Component {
       return (
         <Frame title="" icon="&#58160;" content={
           <div className="sliderBox">
-            {sliderDim.w < 200 ? <ContinuousSliderVert callback={this.setSpeed} h={sliderDim.h} w={sliderDim.w} /> : <ContinuousSliderHoriz callback={this.setSpeed} w={sliderDim.w} h={sliderDim.h} />}
+            {sliderDim.w < 200 ? 
+            <ContinuousSliderVert callback={this.setSpeed} h={sliderDim.h} w={sliderDim.w} /> : <ContinuousSliderHoriz callback={this.setSpeed} w={sliderDim.w} h={sliderDim.h} />}
           </div>
         }
           width={sliderDim.w} height={sliderDim.h} x={sliderDim.x} y={sliderDim.y} px={sliderDim.x} py={sliderDim.y}
@@ -196,7 +200,7 @@ class MacbookAir extends React.Component {
 
     return (
       <div className="MacbookAir Sketch">
-        <video ref={this.cloudsRef} autoPlay muted playsinline loop className="backgroundCover">
+        <video ref={this.cloudsRef} autoPlay muted playsInline loop className="backgroundCover">
           <source src={window.AWS + "/macbookAir/clouds3d.mp4"} type="video/mp4" ></source>
               Your browser does not support HTML5 video.
             </video>
@@ -224,7 +228,7 @@ function ContinuousSliderVert(props) {
   style.width = "auto";
   let sliderStyle = {width: style.width, height: style.height-105}
   return (
-    <div item className="emoji-slider-vert emoji-slider" style={style}>
+    <div className="emoji-slider-vert emoji-slider" style={style}>
       <div className="emoji gust-emoji top" aria-label="dashing away"></div>
       <div className="slider"><Slider value={value} onChange={handleChange} orientation={"vertical"} style={sliderStyle} color='primary' aria-labelledby="continuous-slider" step={0.1} min={0.0} max={2.0} defaultValue={1.0} /></div>
 
@@ -244,12 +248,12 @@ function ContinuousSliderHoriz(props) {
 
   let style = {};
   style.height = "auto";
-  style.width = "100px";
+  style.width = 100;
 
   return (
-    <div item className="emoji-slider emoji-slider-horiz" style={{height:props.h, width: props.w}}>
+    <div className="emoji-slider emoji-slider-horiz" style={{height:"auto", width: props.w}}>
       <div className="cloud-emoji emoji left" aria-label="cloud"></div>
-      <Slider value={value} onChange={handleChange} orientation={"horizontal"} style={style} color='primary' aria-labelledby="continuous-slider" step={0.1} min={0.0} max={2.0} defaultValue={1.0} />
+      <Slider value={value} onChange={handleChange} orientation="horizontal" style={style} color='primary' aria-labelledby="continuous-slider" step={0.1} min={0.0} max={2.0} defaultValue={1.0} />
       <div className="gust-emoji emoji" aria-label="dashing away"></div>
     </div>
   );

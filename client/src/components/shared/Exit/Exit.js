@@ -21,9 +21,9 @@ class Exit extends React.Component {
 
   render() {
     const {user, ui} = this.props;
-    if (user.room === "home-page")
+    if (user.room === "gallery")
       return null;
-    const y = 50;
+    const y = 75;
     const x = 20; //this.props.ui.width - 110;
     const box = { w: 10, h: 10, x: 10, y: 10 };
     // const iconArrow = "fas fa-arrow-circle-left";

@@ -20,7 +20,7 @@ import { addWine, addCocktail, addCheese } from '../../../store/actions/user';
 import { setUserActiveChat } from '../../../store/actions/userActiveChat';
 import { setSong } from '../../../store/actions/music';
 
-import { wineLocation } from '../../sketches/HomePage/constants';
+import { wineLocation } from '../../sketches/Gallery/constants';
 
 class Chat extends React.Component {
 
@@ -315,6 +315,7 @@ class Chat extends React.Component {
     return (
       <CenterModal
       title="chat"
+      z={1000}
       isHidden={this.props.menu !== "chat"}
       onHide={this.onHide}
       ui={this.props.ui}

@@ -18,6 +18,10 @@ export const SHOWUSERICONS = 'SHOWUSERICONS';
 export const HIDEUSERICONS = 'HIDEUSERICONS';
 export const TOGGLEUSERICONS = 'TOGGLEUSERICONS';
 
+export const SHOWVOLUME = 'SHOWVOLUME';
+export const HIDEVOLUME = 'HIDEVOLUME';
+export const TOGGLEVOLUMEMENU = 'TOGGLEVOLUMEMENU';
+
 export const hideMenus = () => {
   return {
     type: HIDEMENUS
@@ -105,5 +109,26 @@ export const showUserIcons = () => {
 export const hideUserIcons = () => {
   return {
     type: HIDEUSERICONS
+  }
+}
+
+////////////// VOLUME
+
+
+export const showVolume = () => {
+  return {
+    type: SHOWVOLUME
+  }
+}
+
+export const hideVolume = () => {
+  return {
+    type: HIDEVOLUME
+  }
+}
+
+export const toggleVolumeMenu = () => {
+  return {
+    type: TOGGLEVOLUMEMENU
   }
 }

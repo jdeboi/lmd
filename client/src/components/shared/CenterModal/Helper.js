@@ -1,5 +1,5 @@
 const padding = 15;
-const heading = 34; // top header
+const heading = 60; // top header
 const barH = 26; // frame h
 const barBot = 60; // mobile footer / landscape menu
 const minW = 540;

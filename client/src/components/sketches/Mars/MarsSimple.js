@@ -176,7 +176,7 @@ class Mars extends React.Component {
       <div className="Mars Sketch">
         <Frame title="mars esc" content={
             <div className="bigCrater" style={{height: `${pool.h}px`, backgroundSize: `${pool.w}px ${pool.h}px`}}>
-              <video playsinline key={this.state.poolVid} style={{height: `${pool.h}px`, width: `${pool.w}px`}} autoPlay muted loop>
+              <video playsInline key={this.state.poolVid} style={{height: `${pool.h}px`, width: `${pool.w}px`}} autoPlay muted loop>
                 <source src={this.state.poolVid} type="video/mp4" ></source>
                 Your browser does not support HTML5 video.
               </video>

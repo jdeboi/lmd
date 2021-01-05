@@ -12,7 +12,7 @@ class Spacetimes extends React.Component {
     this.startTime = 0;
 
     this.state = {
-      currentFrame : 14,
+      currentFrame: 14,
       increasing: true,
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
@@ -52,12 +52,12 @@ class Spacetimes extends React.Component {
 
   setText() {
 
-    var wordIndex = Math.floor((this.state.currentFrame+1)/2);
-    if (wordIndex >= this.words.length) wordIndex = this.words.length-1;
-    else if(wordIndex < 0) wordIndex = 0;
+    var wordIndex = Math.floor((this.state.currentFrame + 1) / 2);
+    if (wordIndex >= this.words.length) wordIndex = this.words.length - 1;
+    else if (wordIndex < 0) wordIndex = 0;
     var word = this.words[wordIndex];
     if (word) word = word.toUpperCase();
-    this.setState({currentText : word});
+    this.setState({ currentText: word });
   }
 
   setFrame() {
@@ -72,24 +72,24 @@ class Spacetimes extends React.Component {
       fr++;
       if (fr > this.gridNum) {
         fr = this.gridNum;
-        this.setState({increasing: false});
+        this.setState({ increasing: false });
       }
     } else {
       fr--;
       if (fr < -2) {
         fr = -1;
-        this.setState({increasing: true});
+        this.setState({ increasing: true });
       }
     }
-    this.setState({currentFrame: fr});
+    this.setState({ currentFrame: fr });
     this.setText();
     // }
 
   }
 
   render() {
-    const {windowWidth, windowHeight} = this.state;
-    var fs = windowWidth/10;
+    const { windowWidth, windowHeight } = this.state;
+    var fs = windowWidth / 10;
     if (fs > 180) fs = 180;
 
     var grids = [];
@@ -97,29 +97,43 @@ class Spacetimes extends React.Component {
       grids.push(i);
     }
 
+    const bkImg = window.AWS + "/three/3D/alps.jpg";
+    const bkStyle = {};
+    // bkStyle.backgroundImage = 'url(' + bkImg + ')';
+
     return (
-      <div className="Spacetimes Sketch">
-        { <div className="palindrome" style={{visibility: "visible", fontSize: fs}}>{this.state.currentText}</div>}
+      <div className="Spacetimes Sketch" style={bkStyle}>
+        { <div className="palindrome" style={{ visibility: "visible", fontSize: fs }}>{this.state.currentText}</div>}
 
 
-          {grids.map((i) => {
-            let factor = windowWidth/1000;
-            if (factor > 1) factor = 1;
-            else if (factor < .8) factor = .5;
-            const val = (980 - 100*i)*factor;
-            const x = windowWidth/2-val/2;
-            const y = (windowHeight-this.heightBuffer)/2-val/2;
-            let title = this.words[(7-i)%(this.words.length-1)];
+        {grids.map((i) => {
+          let factor = windowWidth / 1000;
+          if (factor > 1) factor = 1;
+          else if (factor < .8) factor = .5;
+          const val = (980 - 100 * i) * factor;
+          const x = windowWidth / 2 - val / 2;
+          const y = (windowHeight - this.heightBuffer) / 2 - val / 2;
+          let title = this.words[(7 - i) % (this.words.length - 1)];
 
-            // console.log(windowHeight, y, val);
-            if (val < 150) title = "...";
+          // console.log(windowHeight, y, val);
+          if (val < 150) title = "...";
 
-            return (<GridFrame title={title} isMinimized={false} isHidden={this.state.currentFrame < i ? true : false}
-              dimW={val} dimH={val} key={i} src={ window.AWS+"/spacetimes/parrot.png"} dimX={x} dimY={y} />);
+          return (<GridFrame
+            title={title}
+            isMinimized={false}
+            isHidden={this.state.currentFrame < i ? true : false}
+            dimW={val}
+            dimH={val}
+            key={i}
+            // src={bkImg}
+            src={ window.AWS+"/spacetimes/parrot.png"}
+            dimX={x}
+            dimY={y}
+          />);
 
-            }
+        }
 
-          )}
+        )}
       </div>
     );
   }
@@ -137,14 +151,14 @@ function GridFrame(props) {
       content={
         <img
           className={"grid-img"}
-          width={props.dimW+"px"}
-          height={props.dimW+"px"}
+          width={props.dimW + "px"}
+          height={props.dimW + "px"}
           src={props.src}
           alt="3d grid background"
-          />
+        />
       }
       width={props.dimW} height={props.dimW} x={props.dimX} y={props.dimY}
-      />
+    />
   )
 
 }

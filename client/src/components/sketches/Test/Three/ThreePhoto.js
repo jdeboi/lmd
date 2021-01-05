@@ -101,7 +101,7 @@ class Three extends Component {
   render() {
     return (
       <div className="Three" ref={ref => (this.mount = ref)}>
-      <video playsinline style={{display: "none"}} ref={this.video} autoPlay muted loop>
+      <video playsInline style={{display: "none"}} ref={this.video} autoPlay muted loop>
         <source src={anaglyphVid} type="video/mp4" ></source>
         Your browser does not support HTML5 video.
       </video>

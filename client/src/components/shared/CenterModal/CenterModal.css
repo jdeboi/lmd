@@ -31,6 +31,10 @@
   .CenterModal .center-buttons button {
     margin: 5px; }
 
+@media only screen and (max-width: 350px) {
+  .CenterModal button.standardButton {
+    min-width: 120px; } }
+
 .center {
   display: block;
   margin-left: auto;

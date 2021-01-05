@@ -18,7 +18,7 @@ import { connect } from 'react-redux';
 import { incrementCount, decrementCount } from '../store/actions/';
 
 // sketches
-import HomePage from '../components/sketches/HomePage/HomePage';
+import HomePage from '../components/sketches/Gallery/HomePage';
 import MacbookAir from '../components/sketches/MacbookAir/MacbookAir';
 import JungleGyms from '../components/sketches/JungleGyms/JungleGyms';
 import HardDrives from '../components/sketches/HardDrives/HardDrives';
@@ -139,7 +139,7 @@ class App extends React.Component {
       showDock: true,
       sessionID: null,
       usersChange: false,
-      user: {avatar:"😀", userName:"", room:"home-page", x: 0, y: 0, hasWine: null, needsWine: false},
+      user: {avatar:"😀", userName:"", room:"gallery", x: 0, y: 0, hasWine: null, needsWine: false},
       users: null,
       userActiveChat: null,
       messages: [],
@@ -314,9 +314,9 @@ class App extends React.Component {
   }
 
   addBots = () => {
-    const wineBot0 = {x: this.wineLocation[0].x +120, y: this.wineLocation[0].y+50, avatar: "🤖", room:"home-page", userName:"wineBot", id:0};
-    const wineBot1 = {x: this.wineLocation[1].x +120, y: this.wineLocation[1].y+50, avatar: "🤖", room:"home-page", userName:"wineBot", id:1};
-    const dj = {x: this.djLocation.x, y: this.djLocation.y, room:"home-page", avatar: "🤖", userName:"DJ", id: 2};
+    const wineBot0 = {x: this.wineLocation[0].x +120, y: this.wineLocation[0].y+50, avatar: "🤖", room:"gallery", userName:"wineBot", id:0};
+    const wineBot1 = {x: this.wineLocation[1].x +120, y: this.wineLocation[1].y+50, avatar: "🤖", room:"gallery", userName:"wineBot", id:1};
+    const dj = {x: this.djLocation.x, y: this.djLocation.y, room:"gallery", avatar: "🤖", userName:"DJ", id: 2};
     // const hostBot = {x: 300, y: 600, avatar: "🤖", room:"home", userName:"hostBot", id:1}
     socket.emit("setBot", wineBot0);
     socket.emit("setBot", wineBot1);
@@ -447,10 +447,10 @@ class App extends React.Component {
   getRoom = (path=this.props.location.pathname) => {
     var rm = path.substring(1, path.length);
 
-    if (rm == "") rm = "home-page";
+    if (rm == "") rm = "gallery";
     else if (rm == "confessions") rm = "cloud-confessional";
 
-    const pages = ["home-page","macbook-air", "wet-streams","hard-drives-on-seashores","blind-spot","cloud-confessional", "xfinity-depths", "esc-to-mars", "jungle-gyms"];
+    const pages = ["gallery","macbook-air", "wet-streams","hard-drives-on-seashores","blind-spot","cloud-confessional", "xfinity-depths", "esc-to-mars", "jungle-gyms"];
     if (!pages.includes(rm)) rm = "";
 
     return rm;

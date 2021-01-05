@@ -1,24 +1,44 @@
-import { INCREMENTSONG, DECREMENTSONG, SETSONG } from '../actions/music';
+import { UNMUTEVOLUME, MUTEVOLUME, TOGGLEVOLUME, SETVOLUME, INCREMENTSONG, DECREMENTSONG, SETSONG } from '../actions/music';
+
+const initState = {
+    currentSong: 0,
+    isMuted: false,
+    volume: .5
+}
 
 const NUM_SONGS = 3;
 
-export const musicReducer = (state = 0, action) => {
-    let s = 0;
+export const musicReducer = (state = initState, action) => {
+    const music = { ...state };
     switch (action.type) {
+        case MUTEVOLUME:
+            music.isMuted = true;
+            return music;
+        case UNMUTEVOLUME:
+            music.isMuted = false;
+            return music;
+        case TOGGLEVOLUME:
+            music.isMuted = !music.isMuted;
+            return music;
+        case SETVOLUME:
+            music.volume = action.payload.volume;
+            return music;
         case INCREMENTSONG:
-            s = state + 1;
-            s %= NUM_SONGS;
-            return s;
+            music.currentSong += 1;
+            music.currentSong %= NUM_SONGS;
+            return music;
         case SETSONG:
             const song = action.payload.song;
-            if (song >= 0 && song < NUM_SONGS)
-                return song;
+            if (song >= 0 && song < NUM_SONGS) {
+                music.currentSong = song;
+                return music;
+            }
             return state;
         case DECREMENTSONG:
-            s = state - 1;
-            if (s < 0)
-                s = NUM_SONGS - 1;
-            return s;
+            music.currentSong -= 1;
+            if (music.currentSong < 0)
+                music.currentSong = NUM_SONGS - 1;
+            return music;
         default:
             return state;
     }

@@ -11,13 +11,14 @@ interface CenterModalProps {
   width: number,
   height: number,
   isHidden: boolean,
+  z: number,
   ui: any,
   onHide(): any
 }
 
-export default function CenterModal({ title, classN, ui, isHidden, content, buttons, onHide }: CenterModalProps) {
+export default function CenterModal({ title, classN, ui, z, isHidden, content, buttons, onHide }: CenterModalProps) {
 
-  let zInd =1000;
+  
   const {w, h , x, y} = getCenterModalDim(ui);
 
   const classT = (!isHidden ? " GrayedOut" : "");
@@ -25,7 +26,7 @@ export default function CenterModal({ title, classN, ui, isHidden, content, butt
 
   return (
     <React.Fragment>
-    <div className={classT} style={{ visibility: (isHidden ? "hidden" : "visible"), zIndex: zInd }} />
+    <div className={classT} style={{ visibility: (isHidden ? "hidden" : "visible"), zIndex: z }} />
       <Frame title={title} isHidden={isHidden} bounded={true} onHide={onHide} windowStyle={{ background: "white" }} content={
         <div className={classN + " CenterModal SignInForm"} style={{ width: w, height: h }}>
           <div className="CenterModal-Container" style={{ padding: 20, width: w - 40, height: h - 40 }}>
@@ -34,7 +35,7 @@ export default function CenterModal({ title, classN, ui, isHidden, content, butt
           </div>
         </div>
       }
-        width={w} height={h} x={x} y={y} z={zInd + 1}
+        width={w} height={h} x={x} y={y} z={z + 1}
       />
     </React.Fragment>
   );

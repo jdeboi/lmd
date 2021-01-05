@@ -74,6 +74,8 @@ input.standardInputWhite {
     display: flex;
     flex-flow: column;
     align-items: stretch; }
+    .App .App-Header.mobile {
+      height: 60px; }
   .App .App-Content {
     flex: 1 1 auto;
     display: flex;
@@ -141,7 +143,7 @@ input.standardInputWhite {
 
 @font-face {
   font-family: notoEmojiFont;
-  src: url(/assets/s3-bucket/homePage/NotoColorEmoji.ttf); }
+  src: url(/assets/s3-bucket/gallery/NotoColorEmoji.ttf); }
 
 @font-face {
   font-family: consoleFont;

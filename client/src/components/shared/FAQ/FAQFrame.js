@@ -19,6 +19,7 @@ class FAQFrame extends React.Component {
     return (
       <CenterModal
         title="FAQ"
+        z={1000}
         isHidden={isHidden}
         onHide={this.onHide}
         ui={this.props.ui}

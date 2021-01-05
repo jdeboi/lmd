@@ -5,7 +5,7 @@ import Frame from '../../shared/Frame/Frame';
 import './WaveForms.css';
 import ReactPlayer from 'react-player'
 
-import ReactAudioPlayer from 'react-audio-player';
+// import ReactAudioPlayer from 'src/components/sketches/Gallery/node_modules/react-audio-player';
 
 import {getRandomNum, getNewZIndices} from '../../shared/Helpers/Helpers';
 import {getTweetContent, initConfessions, initZIndicesIcons, initZIndicesFrames} from './components/Helpers';

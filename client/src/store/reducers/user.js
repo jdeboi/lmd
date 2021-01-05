@@ -4,10 +4,10 @@ import { SETUSERACTIVECHAT, SETUSERHOVERCHAT, USERHOVERCHATLEAVE } from '../acti
 import Cookies from 'js-cookie';
 import socket from "../../components/shared/Socket/Socket";
 
-import { globalConfig } from '../../components/sketches/HomePage/constants';
+import { globalConfig } from '../../components/sketches/Gallery/constants';
 
 // reducer (check what to do with action)
-const initState = { avatar: "😀", userName: "", room: "home-page", roomX: 0, roomY: 0, x: globalConfig.stepS / 2, y: globalConfig.stepS / 2, hasWine: null, needsWine: false, hasCheese: null, needsCheese: false, hasCocktail: null, needsCocktail: false };
+const initState = { avatar: "😀", userName: "", room: "gallery", roomX: 0, roomY: 0, x: globalConfig.stepS / 2, y: globalConfig.stepS / 2, hasWine: null, needsWine: false, hasCheese: null, needsCheese: false, hasCocktail: null, needsCocktail: false };
 
 export const userReducer = (state = initState, action) => {
   const user = { ...state };
@@ -144,7 +144,7 @@ function userNearBar(user, location) {
 }
 
 
-export const userActiveChatReducer = (state = null, action) => {
+export const userActiveChatReducer = (state = {userName: "Everyone", avatar: "👥"}, action) => {
   switch (action.type) {
     case SETUSERACTIVECHAT:
       const user = { ...action.payload.user };

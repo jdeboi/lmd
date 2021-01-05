@@ -1,14 +1,12 @@
 import React from 'react';
 import "./WetStreams.css";
 
-///////////////////// other components
-import Frame from '../../shared/Frame/Frame';
-
 ///////////////////// p5.js
 import P5Wrapper from 'react-p5-wrapper';
 import sketch from './wetSketch';
 
 import Shower from './components/Shower';
+import { connect } from 'react-redux';
 
 // import {getNewZIndices} from '../../shared/Helpers/Helpers';
 // import Stair from './Stair';
@@ -20,30 +18,18 @@ class WetStreams extends React.Component {
   constructor(props) {
     super(props);
 
-    this.startW = window.innerWidth;
-    this.startH = window.innerHeight;
-
     // this.spacing = 15;
     // const availH = window.innerHeight -34 -2*26-3*this.spacing;
-    const dim = 300; //Math.max(availH/2, 300);
+    // const dim = 300; //Math.max(availH/2, 300);
     this.spacing = 15; //(window.innerHeight -30 -2*26-dim*2)/3;
     this.state = {
-      windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight,
-      showerFrame: {
-        w: dim,
-        h: dim,
-        x: (window.innerWidth-dim*3 - this.spacing*2)/2,
-        y: Math.max((window.innerHeight -34 -2*26-dim*2-this.spacing)/2, this.spacing)
-
-      },
       deltaPositions: [
-        {x: 0, y: 0},
-        {x: 0, y: 0},
-        {x: 0, y: 0},
-        {x: 0, y: 0},
-        {x: 0, y: 0},
-        {x: 0, y: 0}
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+        { x: 0, y: 0 }
       ],
       playingStreams: [true, true, true, true, true, true],
       isMinimized: [false, false, false, false, false, false],
@@ -54,32 +40,32 @@ class WetStreams extends React.Component {
 
 
   componentDidMount() {
-    this.updateDimensions();
-    window.addEventListener("resize", this.updateDimensions.bind(this));
+    // this.updateDimensions();
+    // window.addEventListener("resize", this.updateDimensions.bind(this));
     this.interval = setInterval(this.playStreamReset, 4000);
     // this.props.userSetRoom("wet-streams");
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.updateDimensions.bind(this));
+    // window.removeEventListener("resize", this.updateDimensions.bind(this));
     clearInterval(this.interval);
     // this.props.userLeaveRoom("wet-streams");
   }
 
-  updateDimensions() {
-    let showerFrame = {...this.state.showerFrame};
-    showerFrame.x = (window.innerWidth-showerFrame.w*3 - this.spacing*2)/2
-    showerFrame.y = Math.max((window.innerHeight -34 -2*26-showerFrame.h*2-this.spacing)/2, this.spacing)
+  // updateDimensions() {
+  //   let showerFrame = {...this.state.showerFrame};
+  //   showerFrame.x = (window.innerWidth-showerFrame.w*3 - this.spacing*2)/2
+  //   showerFrame.y = Math.max((window.innerHeight -34 -2*26-showerFrame.h*2-this.spacing)/2, this.spacing)
 
-    this.setState({ showerFrame, windowWidth: window.innerWidth, windowHeight: window.innerHeight });
-  }
+  //   this.setState({ showerFrame, windowWidth: window.innerWidth, windowHeight: window.innerHeight });
+  // }
 
   playStreamReset = () => {
     const playingStreams = [...this.state.playingStreams];
     for (let i = 0; i < playingStreams.length; i++) {
-      playingStreams[i] = Math.random()>.4;
+      playingStreams[i] = Math.random() > .4;
     }
-    this.setState({playingStreams})
+    this.setState({ playingStreams })
   }
 
   // newFrameToTop = (id) => {
@@ -91,22 +77,22 @@ class WetStreams extends React.Component {
   onMinimized = (id) => {
     let dps = [...this.state.isMinimized];
     dps[id] = !dps[id];
-    this.setState({isMinimized:dps});
+    this.setState({ isMinimized: dps });
   }
 
   onClosed = (id) => {
     let dps = [...this.state.isClosed];
     dps[id] = true;
-    this.setState({isClosed:dps});
+    this.setState({ isClosed: dps });
   }
 
   onMaximized = (id) => {
     let dps = [...this.state.deltaPositions];
-    let dp = {...dps[id]};
+    let dp = { ...dps[id] };
     dp.x = 0;
     dp.y = 0;
     dps[id] = dp;
-    this.setState({deltaPositions:dps});
+    this.setState({ deltaPositions: dps });
   }
 
 
@@ -116,7 +102,7 @@ class WetStreams extends React.Component {
     // 1. Make a shallow copy of the items
     let dps = [...this.state.deltaPositions];
     // 2. Make a shallow copy of the item you want to mutate
-    let dp = {...dps[index]};
+    let dp = { ...dps[index] };
     // 3. Replace the property you're intested in
     dp.x += dx;
     dp.y += dy;
@@ -124,22 +110,64 @@ class WetStreams extends React.Component {
     dps[index] = dp;
     // 5. Set the state to our new copy
     // this.newFrameToTop(index);
-    this.setState({deltaPositions:dps});
+    this.setState({ deltaPositions: dps });
   };
 
 
   render() {
-    let {windowWidth, windowHeight, showerFrame, playingStreams, deltaPositions, isMinimized, isClosed} = this.state;
-
-    let origins = [];
-    for (let i = 0; i < 3; i++) {
-      origins[i] = {x: showerFrame.x + i*(showerFrame.w + this.spacing), y: showerFrame.y};
-      origins[i+3] = {x: showerFrame.x + i*(showerFrame.w + this.spacing), y: showerFrame.y + showerFrame.h + this.spacing + 26};
+    let { playingStreams, deltaPositions, isMinimized, isClosed } = this.state;
+    const { ui } = this.props;
+    let dim = 300;
+    if (ui.hasFooter || ui.isMobile) {
+      if (ui.orientation === "portrait") {
+        let dimW = (ui.width - this.spacing * 3)/2;
+        let dimH = (ui.height - 3* (this.spacing + ui.toolbarH) - this.spacing - 2*ui.headerH)/3;
+        dim  = Math.min(dimW, dimH);
+      }
+      else {
+        let dimW = (ui.width - this.spacing * 4 - 60)/3;
+        let dimH = (ui.height - 2* (this.spacing + ui.toolbarH) - this.spacing - ui.headerH)/2;
+        dim  = Math.min(dimW, dimH);
+      }
+     
     }
+    const showerFrame = {
+      w: dim,
+      h: dim
+    };
+    let origins = [];
+
+    if ((ui.isMobile || ui.hasFooter) && ui.orientation === "portrait") {
+      showerFrame.x = (ui.width - this.spacing - 2*dim) / 2; // space = dim = space = dim = space
+      // console.log(dim, 165*2+this.spacing*3, ui.width)
+      // header = space = dim+tool = space = dim+tool = space = dim+tool = space = footer
+      showerFrame.y = (ui.height - ui.headerH*2 - 3*(dim + this.spacing+ui.toolbarH) - this.spacing)/2 + 15;
+      for (let i = 0; i < 2; i++) {
+        origins[i] = { x: showerFrame.x + i * (showerFrame.w + this.spacing), y: showerFrame.y };
+        origins[2+i] = { x: showerFrame.x + i * (showerFrame.w + this.spacing), y: showerFrame.y + showerFrame.h + this.spacing + ui.toolbarH };
+        origins[4+i] = { x: showerFrame.x + i * (showerFrame.w + this.spacing), y: showerFrame.y + (showerFrame.h + this.spacing + ui.toolbarH)*2 };
+      }
+    }
+    else {
+      showerFrame.x = (ui.width - 3 * (dim + this.spacing) - this.spacing) / 2;
+      showerFrame.y = Math.max((ui.height - ui.headerH - 2 * ui.toolbarH - dim * 2 - this.spacing) / 2, this.spacing);
+      
+      if ((ui.isMobile || ui.hasFooter) && ui.orientation === "landscape" ) {
+        // showerFrame.x = this.spacing;
+        showerFrame.y = (ui.height - ui.headerH - 2*(dim +ui.toolbarH) - this.spacing)/2;
+      }
+      for (let i = 0; i < 3; i++) {
+        origins[i] = { x: showerFrame.x + i * (showerFrame.w + this.spacing), y: showerFrame.y };
+        origins[i + 3] = { x: showerFrame.x + i * (showerFrame.w + this.spacing), y: showerFrame.y + showerFrame.h + this.spacing + ui.toolbarH };
+      }
+    }
+
+   
+    
 
     const showWater = [];
     for (let i = 0; i < playingStreams.length; i++) {
-      showWater[i] = playingStreams[i]&&!isMinimized[i]&&!isClosed[i];
+      showWater[i] = playingStreams[i] && !isMinimized[i] && !isClosed[i];
     }
 
 
@@ -148,28 +176,29 @@ class WetStreams extends React.Component {
 
         {origins.map((origin, i) => {
           const props = {
-            isPlaying:playingStreams[i]&&!isMinimized[i],
-            x:origin.x,
-            y:origin.y,
+            isPlaying: playingStreams[i] && !isMinimized[i],
+            x: origin.x,
+            y: origin.y,
             // z: zIndices[i],
-            w:showerFrame.w,
-            h:showerFrame.h,
-            id:i,
+            w: showerFrame.w,
+            h: showerFrame.h,
+            id: i,
+            dim: dim,
             handleDrag: this.handleDrag,
             onMaximized: this.onMaximized,
             onMinimized: this.onMinimized,
             onClosed: this.onClosed
           }
-          return <Shower key={i} {...props}  />
+          return <Shower key={i} {...props} />
         })};
 
 
         <P5Wrapper className="p5sketch" sketch={sketch}
           origins={origins}
-          scaler={showerFrame.w/400}
+          scaler={showerFrame.w / 400}
           deltas={deltaPositions}
           isPlaying={showWater}
-          />
+        />
 
         {/* <Glasses /> */}
       </div>
@@ -181,4 +210,19 @@ class WetStreams extends React.Component {
 
 
 
-export default WetStreams;
+const mapStateToProps = (state) => {
+  return {
+    ui: state.ui
+  }
+}
+
+const mapDispatchToProps = () => {
+  return {
+    // doneLoadingApp
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps())(WetStreams);
+
+

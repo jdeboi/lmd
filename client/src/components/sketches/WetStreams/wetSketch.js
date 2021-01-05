@@ -6,6 +6,7 @@ export default function sketch (p) {;
   let ps = [];
   let percent = 0;
   let emojiS = 34;
+  let scaler = 1;
 
   let velocities = [
     {velX: {min: -.8, max:5}, velY: {min: -.5, max:0}},
@@ -28,6 +29,8 @@ export default function sketch (p) {;
 
   p.myCustomRedrawAccordingToNewPropsHandler = function (props) {
     if (props.origins) {
+      scaler = props.scaler; //p.constrain(props.scaler, .5, 1.0);
+
       if (ps.length === 0) {
         for (let i = 0; i < props.origins.length; i++) {
           let offsetX = offsets[i].x * props.scaler;
@@ -58,7 +61,8 @@ export default function sketch (p) {;
       emojisTransparent[i] = p.createGraphics(emojiS, emojiS);
       emojisTransparent[i].clear();
       emojisTransparent[i].tint(255, p.map(i, -1, 4,0,255));
-      emojisTransparent[i].image(emoji, 0, 0, emojiS, emojiS);
+      let imgSc = p.constrain(scaler, .4, 1);
+      emojisTransparent[i].image(emoji, 0, 0, emojiS*imgSc, emojiS*imgSc);
     }
   }
 
@@ -68,7 +72,7 @@ export default function sketch (p) {;
     p.clear();
     if (ps.length > 0) {
       ps.forEach((sys) => {
-        sys.run(percent);
+        sys.run(percent, scaler);
       })
     }
 
@@ -112,9 +116,9 @@ function Particle(p, origin, id, velX, velY, deg) {
   this.id = id;
   this.launched = false;
 
-  this.run = function(percent, origin) {
+  this.run = function(percent, origin, scaler) {
     this.update(percent, origin);
-    this.display(percent);
+    this.display(percent, scaler);
   }
 
   // Method to update position
@@ -157,7 +161,7 @@ function Particle(p, origin, id, velX, velY, deg) {
 
 
   // Method to display
-  this.display = function(percent) {
+  this.display = function(percent, scaler) {
     if(this.launched) {
       this.p5.noStroke();
       let alpha = this.p5.map(this.lifespan, 0, 60, 255, 0);
@@ -172,8 +176,7 @@ function Particle(p, origin, id, velX, velY, deg) {
       index = this.p5.floor(index);
       if (emoji && emojisTransparent[index]) {
         // this.p5.image(emoji, 0, -24, 30, 30);
-
-        this.p5.image(emojisTransparent[index], 0, -24);
+        this.p5.image(emojisTransparent[index], 0, -22*scaler);
       }
       // this.p5.noTint();
       this.p5.pop();
@@ -256,11 +259,11 @@ function ParticleSystem(p, position, velX, velY, deg, isPlaying) {
     this.particles.push(new Particle(this.p5, this.origin, id, this.velX, this.velY, this.deg));
   }
 
-  this.run = function(percent) {
+  this.run = function(percent, scaler) {
     // if (this.percent > 100) this.percent = 100;
     // this.percent = this.p5.mouseX/10; //this.p5.map(this.p5.mouseX, 0, window.innerWidth, 0, 100);
     this.particles.forEach((particle) => {
-      particle.run(percent, this.origin);
+      particle.run(percent, this.origin, scaler);
     });
     if (this.isPlaying) {
       this.launchParticle();

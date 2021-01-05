@@ -8,31 +8,31 @@ export default function FAQ(props) {
       <div className="instruction">
       <div className="faqImg"><img src="https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/shared/placeholder_200.jpg" /></div>
         <div className="instruction-txt">
-          <h3>Moving</h3>
-          <p>Press the arrow keys to move around the scene</p>
+          <h3>Move</h3>
+          <p>Press arrow keys or click on tiles</p>
         </div>
       </div>
       <div className="instruction">
       <div className="faqImg"><img src="https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/shared/placeholder_200.jpg" /></div>
         <div className="instruction-txt">
-          <h3>Chatting</h3>
-          <p>Click a user to begin a chat</p>
-        </div>
-      </div>
-
-      <div className="instruction">
-      <div className="faqImg"><img src="https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/shared/placeholder_200.jpg" /></div>
-        <div className="instruction-txt">
-          <h3>Getting info</h3>
-          <p>Click the info button to bring up this guide</p>
+          <h3>Chat</h3>
+          <p>Click a user to begin a chat or select from user dropdown</p>
         </div>
       </div>
 
       <div className="instruction">
       <div className="faqImg"><img src="https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/shared/placeholder_200.jpg" /></div>
         <div className="instruction-txt">
-          <h3>Mini Map</h3>
-          <p>Click the map button to bring up the mini map</p>
+          <h3>Info</h3>
+          <p>Click the info icon to bring up this guide</p>
+        </div>
+      </div>
+
+      <div className="instruction">
+      <div className="faqImg"><img src="https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/shared/placeholder_200.jpg" /></div>
+        <div className="instruction-txt">
+          <h3>Map</h3>
+          <p>Click the map icon to bring up the mini map</p>
         </div>
       </div>
       <div className="instruction">

@@ -1,0 +1,12 @@
+.VolumeBar .content {
+  pointer-events: all; }
+  .VolumeBar .content .volume-slider {
+    display: flex;
+    flex-direction: row; }
+    .VolumeBar .content .volume-slider button {
+      width: 40px;
+      height: 40px;
+      color: white;
+      top: 0; }
+    .VolumeBar .content .volume-slider .MuiSlider-root {
+      margin-left: 10px; }

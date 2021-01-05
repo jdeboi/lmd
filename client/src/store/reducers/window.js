@@ -2,6 +2,9 @@ import { LOADINGAPP, DONELOADINGAPP, RESIZEAPP } from '../actions';
 
 let initW = typeof window === 'object' ? window.innerWidth : null;
 let initH = typeof window === 'object' ? window.innerHeight : null;
+const footerMobileH = 60;
+const headerMobileH = 60;
+const headerH = 34;
 
 const initialState = {
     width: initW,
@@ -10,7 +13,11 @@ const initialState = {
     orientation: getOrientation(initW, initH),
     size: getWindowSize(initW),
     hasFooter: getHasFooter(initW, initH),
-    loading: true
+    loading: true,
+    headerH: getHeaderH(initW, initH),
+    toolbarH: 26,
+    contentW: getContentW(initW, initH),
+    contentH: getContentH(initW, initH)
 };
 
 function getHasFooter(w, h) {
@@ -41,6 +48,30 @@ function getWindowSize(w) {
     return 'xlarge';
 }
 
+function getContentW(w, h) {
+    if (getHasFooter(w, h) || getIsMobile(w, h)) {
+        if (getOrientation(w, h) === "portrait" ) {
+            return w;
+        }
+        return w - footerMobileH; // right hand menu
+    }
+    return w;
+}
+
+function getContentH(w, h) {
+    if (getHasFooter(w, h) || getIsMobile(w, h)) {
+        if (getOrientation(w, h) === "portrait" ) {
+            return h - footerMobileH - headerMobileH;
+        }
+        return h - headerMobileH;
+    }
+    return h - headerH;
+}
+
+function getHeaderH (w, h) {
+    return (getHasFooter(w, h) || getIsMobile())? headerMobileH : headerH;
+}
+
 export const windowReducer = (state = initialState, action) => {
 
     const window = { ...state };
@@ -53,6 +84,9 @@ export const windowReducer = (state = initialState, action) => {
             window.isMobile = getIsMobile();
             window.size = getWindowSize(window.width);
             window.hasFooter = getHasFooter(window.width, window.height);
+            window.headerH = getHeaderH(window.width, window.height);
+            window.contentW =  getContentW(window.width, window.height);
+            window.contentH = getContentH(window.width, window.height);
             return window;
         
         case LOADINGAPP:

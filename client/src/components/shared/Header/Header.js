@@ -1,21 +1,30 @@
 import React from 'react';
 import './Header.css';
-import FinderSubmenu from './FinderSubmenu';
-import { withRouter } from "react-router-dom";
+import FinderSubmenu from './components/FinderSubmenu';
+import { withRouter, Link } from "react-router-dom";
 
-// import { Link } from 'react-router-dom';
-import Clock from './Clock';
+// components
+import Clock from './components/Clock';
+// import Volume from '../Volume/VolumeMute';
+
+// icons
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ChatIcon from '@material-ui/icons/Chat';
 import NotifyIcon from '@material-ui/icons/Notifications'
 import MapIcon from '@material-ui/icons/Room';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
-import UsersIcon from '@material-ui/icons/SupervisedUserCircle';
+// import Volume from '@material-ui/icons/VolumeMute';
+import VolumeUp from '@material-ui/icons/VolumeUp';
+import VolumeOff from '@material-ui/icons/VolumeOff';
+import VolumeDown from '@material-ui/icons/VolumeDown';
+
+// import UsersIcon from '@material-ui/icons/SupervisedUserCircle';
 
 // store
 import { connect } from 'react-redux';
-import { toggleMap, toggleFaq, toggleChat, toggleUserIcons } from '../../../store/actions/menuItems';
+import { toggleMap, toggleFaq, toggleChat, toggleUserIcons, toggleVolumeMenu } from '../../../store/actions/menuItems';
 import { resetMessgeNotification } from '../../../store/actions/messages';
+import { toggleVolume } from '../../../store/actions/music';
 
 /*
 React.PureComponent’s shouldComponentUpdate() only shallowly compares
@@ -33,7 +42,8 @@ class Header extends React.Component {
 
     this.state = {
       currentTimeString: 0,
-      showSideBar: true
+      showSideBar: true,
+      volumeMuted: false
     }
 
     this.getRightMenus = this.getRightMenus.bind(this);
@@ -63,12 +73,14 @@ class Header extends React.Component {
   render() {
 
     const finderMenuItems = [
-      { title: "gallery", link: "/", shortcut: "&#x2318;0" },
+      // { title: "about", link: "/about", shortcut: "", classN: "about" },
+      // { title: "spacer" },
+      { title: "gallery", link: "/", shortcut: "&#x2318;0", classN: "gallery" },
       { title: "macbook air", link: "/macbook-air", shortcut: "&#x2318;1" },
       { title: "wet streams", link: "/wet-streams", shortcut: "&#x2318;2" },
       { title: "hard drives on seashores", link: "/hard-drives-on-seashores", shortcut: "&#x2318;3" },
       { title: "jungle gyms", link: "/jungle-gyms", shortcut: "&#x2318;4" },
-      { title: "wasted days are days wasted", link: "/wasted-days-are-days-wasted", shortcut: "&#x2318;5" },
+      { title: "wasted days", link: "/wasted-days", shortcut: "&#x2318;5" },
       { title: "esc to mars", link: "/esc-to-mars", shortcut: "&#x2318;6" },
       { title: "xfinity depths", link: "/xfinity-depths", shortcut: "&#x2318;7" },
       { title: "cloud confessional", link: "/cloud-confessional", shortcut: "&#x2318;8" },
@@ -88,34 +100,49 @@ class Header extends React.Component {
       { title: "credits", link: "/credits", shortcut: "" }
     ];
     const iconArrow = "fas fa-arrow-left";
-    const arrowClass = this.props.currentPage==="home page"?"hidden":"arrow expandable";
+    const arrowClass = this.props.currentPage === "home page" ? "hidden" : "arrow expandable";
     // const styB = {border: "1px solid white", borderRadius: 5, fontSize: 11, color: "white"}
-    
-    const homeIcon = this.props.ui.isMobile?"fas fa-bars":"fa fa-cube";
+
+    // const homeIcon = this.props.ui.isMobile?"fas fa-bars":"fa fa-cube";
+    const homeIcon = "fas fa-bars";
+    const headerClass = "Header menuTheme" + (this.isSimpleHeader() ? " mobile" : "");
+
+    const mainTitle = this.props.currentPage === "gallery"?"losing my dimension":this.props.currentPage;
     return (
 
-      <header className="Header menuTheme">
+      <header className={headerClass}>
         <ul className="left">
           {/* <li className={arrowClass} onClick={() => this.props.history.push("/")}><i className={iconArrow}></i></li> */}
           {/*<FinderSubmenu cursor={`cursor-${this.state.hand}`} dimensions={this.props.dimensions} title="" icon="fa fa-cube" specialClass="apple" listItems={hamburgerMenuItems} /> */}
-          <FinderSubmenu ui={this.props.ui} title="" icon={homeIcon} specialClass="apple" listItems={hamburgerMenuItems} />
-          <FinderSubmenu ui={this.props.ui} title="losing my dimension" icon="" specialClass="bold" listItems={finderMenuItems} />
+          <FinderSubmenu ui={this.props.ui} title="" currentPage={this.props.currentPage} icon={homeIcon} specialClass="apple bold" listItems={hamburgerMenuItems} />
+          <FinderSubmenu ui={this.props.ui} currentPage={this.props.currentPage} title={mainTitle} icon="" specialClass="bold" listItems={finderMenuItems} />
+
+          {/* <li className={`expandable`}><Link to="/"><span id="pageTitle">Losing My Dimension</span></Link></li> */}
           {/* <li><span className="currentPage">/{this.props.currentPage}</span></li> */}
-          {/*<li className={`expandable`}><Link to="/"><span id="pageTitle">Losing My Dimension</span></Link></li>*/}
         </ul>
         {this.isSimpleHeader() ? null : this.getRightMenus()}
       </header>
     );
-  } 
+  }
+
+  toggleVolume = () => {
+    this.setState(prevState => ({
+      volumeMuted: !prevState.volumeMuted
+    }));
+  }
 
   isSimpleHeader() {
-    const {ui} = this.props;
-    return (ui.isMobile || ui.hasFooter) ;
+    const { ui } = this.props;
+    return (ui.isMobile || ui.hasFooter);
   }
 
   chatClicked = () => {
     this.props.resetMessgeNotification();
     this.props.toggleChat();
+  }
+
+  volumeClicked = () => {
+    this.props.toggleVolumeMenu();
   }
 
   getMobileRightMenus() {
@@ -127,38 +154,95 @@ class Header extends React.Component {
   }
   getRightMenus() {
     //<button className="hamburger-button">
-    var classChat = "expandable icon" + (this.props.chatIsHidden ? " closed" : " opened");
-    if (this.props.chatNotifications) classChat += " notify";
-    var classMap = "icon";
-    if (this.props.user.room === "home-page") {
-      classMap += (this.props.mapIsHidden ? " closed" : " opened");
-      classMap += " expandable";
-    }
-    else classMap += " closed disabled";
-    const classFaq = "expandable icon" + (this.props.faqIsHidden ? " closed" : " opened");
-    const classUserIcons = "expandable icon" + (this.props.userIconsIsHidden ? " closed" : " opened");
+    // const classUserIcons = "expandable icon" + (this.props.userIconsIsHidden ? " closed" : " opened");
     return (
       <ul className="right">
-        <li className={classChat} onClick={this.chatClicked}><ChatIcon fontSize="inherit" />{this.getChatNotification()}</li>
+        {this.getChatLi()}
         {/* <li className={classUserIcons} onClick={this.props.toggleUserIcons}><UsersIcon fontSize="inherit" /></li> */}
-        <li className={classMap} onClick={this.props.toggleMap}><MapIcon fontSize="inherit" /></li>
-        <li className={classFaq} onClick={this.props.toggleFaq}><HelpOutlineIcon fontSize="inherit" /></li>
-
+        {this.getMapLi()}
+        {this.getFaqLi()}
+        {this.getVolumeLi()}
         <li></li>
         <li><Clock /></li>
         <li></li>
-        <li className="header-avatar expandable" onClick={this.props.avatarClicked}>{this.getAvatar()}</li>
-
+        {this.getAvatarLi()}
         {/* <li className="expandable hamburger" onClick={this.props.toggleSideBar}><i className="fas fa-bars"></i></li>*/}
       </ul>
     );
   }
 
+  getVolumeLi = () => {
+    const classVol = "expandable icon" + (this.props.volumeIsHidden ? " closed" : " opened");
+    return (
+      <li className={classVol} onClick={this.props.toggleVolumeMenu}>
+        {/* <Volume isMuted={this.props.music.isMuted} /> */}
+        {this.getVolumeIcon()}
+      </li>
+    )
+  }
+
+  getVolumeIcon = () => {
+    const { music } = this.props;
+    if (music.isMuted || music.volume == 0)
+      return <VolumeOff />
+    // else if (music.volume < .5)
+    //   return <VolumeDown />
+    return <VolumeUp />
+  }
+
+  getAvatarLi = () => {
+    return (
+      <li className="header-avatar expandable" onClick={this.props.avatarClicked}>
+        {this.getAvatar()}
+      </li>
+    )
+  }
+
+  getFaqLi = () => {
+    const classFaq = "expandable icon" + (this.props.faqIsHidden ? " closed" : " opened");
+
+    return (
+      <li className={classFaq} onClick={this.props.toggleFaq}>
+        <HelpOutlineIcon fontSize="inherit" />
+      </li>
+    )
+  }
+
+  getMapLi = () => {
+    var classMap = "icon";
+    const isHome = this.props.user.room === "gallery";
+    if (isHome) {
+      classMap += (this.props.mapIsHidden ? " closed" : " opened");
+      classMap += " expandable";
+    }
+    else classMap += " closed disabled";
+
+    if (!isHome)
+      return null;
+    return (
+      <li className={classMap} onClick={this.props.toggleMap} >
+        <MapIcon fontSize="inherit" />
+      </li >
+    )
+  }
+
+  getChatLi = () => {
+    var classChat = "expandable icon" + (this.props.chatIsHidden ? " closed" : " opened");
+    if (this.props.chatNotifications)
+      classChat += " notify";
+    return (
+      <li className={classChat} onClick={this.chatClicked}>
+        <ChatIcon fontSize="inherit" />
+        {this.getChatNotification()}
+      </li>
+    )
+  }
+
   getChatNotification = () => {
     let n = this.props.chatNotifications;
     if (n) {
-      if (n > 10) 
-        return (<div className="notification"><span className="badge"><NotifyIcon/></span></div>);
+      if (n > 10)
+        return (<div className="notification"><span className="badge"><NotifyIcon /></span></div>);
       return (<div className="notification"><span className="badge">{n}</span></div>);
     }
     return null;
@@ -182,8 +266,10 @@ const mapStateToProps = (state) => {
     chatIsHidden: state.chatIsHidden,
     faqIsHidden: state.faqIsHidden,
     mapIsHidden: state.mapIsHidden,
+    volumeIsHidden: state.volumeIsHidden,
     userIconsIsHidden: state.userIconsIsHidden,
     chatNotifications: state.chatNotifications,
+    music: state.music,
     ui: state.ui
   }
 }
@@ -193,8 +279,11 @@ const mapDispatchToProps = () => {
     toggleMap,
     toggleFaq,
     toggleChat,
+    toggleVolumeMenu,
     resetMessgeNotification,
-    toggleUserIcons
+    toggleUserIcons,
+    toggleVolume,
+
   }
 }
 

@@ -59,6 +59,7 @@ class Welcome extends React.Component {
         isHidden={!showWelcome}
         onHide={this.onHide}
         ui={ui}
+        z={2500}
         classN="Welcome"
         content={content}
         buttons={buttons}

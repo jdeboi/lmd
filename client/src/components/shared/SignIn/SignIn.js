@@ -136,6 +136,7 @@ class SignIn extends React.Component {
     return (
       <CenterModal
         title="avatar"
+        z={1000}
         isHidden={isHidden}
         onHide={this.onHide}
         ui={ui}
@@ -148,13 +149,14 @@ class SignIn extends React.Component {
 
   getForm = () => {
     let { localAvatar, localUserName } = this.state;
+    const {ui} = this.props;
     const emojis = getEmojis();
-
+    let inputW = ui.width < 350? 190 : 225;
     return (
       <React.Fragment>
         <div className="userBar flexItem flexPad flexRow">
           <div className="avatar">{localAvatar}</div>
-          <input onChange={this.setUserName} value={localUserName} placeholder="enter username" inputprops={{ 'aria-label': 'user name field' }} />
+          <input style={{width: inputW}} onChange={this.setUserName} value={localUserName} placeholder="username" inputprops={{ 'aria-label': 'user name field' }} />
         </div>
         <div className="emoji-list flexItem flexPad flex1">
           {

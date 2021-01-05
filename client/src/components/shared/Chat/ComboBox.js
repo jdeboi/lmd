@@ -142,10 +142,11 @@ class ComboBox extends React.Component {
           className="autocomplete"
           value={userActiveChat}
           onChange={(event, newValue) => {
-            this.setValue(newValue);
+            if (newValue) this.setValue(newValue);
           }}
           inputValue={inputValue}
           onInputChange={(event, newInputValue) => {
+            
             this.setInputValue(newInputValue);
           }}
           onFocus={this.props.resetMessgeNotification}

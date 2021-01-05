@@ -1,4 +1,11 @@
-import { SETONEMENU, HIDEMENUS, SHOWMAP, HIDEMAP, TOGGLEMAP, SHOWCHAT, HIDECHAT, TOGGLECHAT, SHOWUSERICONS, HIDEUSERICONS, TOGGLEUSERICONS, SHOWFAQ, HIDEFAQ, TOGGLEFAQ } from '../actions/menuItems';
+import { 
+  SETONEMENU, HIDEMENUS, 
+  SHOWMAP, HIDEMAP, TOGGLEMAP, 
+  SHOWCHAT, HIDECHAT, TOGGLECHAT, 
+  SHOWUSERICONS, HIDEUSERICONS, TOGGLEUSERICONS, 
+  SHOWFAQ, HIDEFAQ, TOGGLEFAQ, 
+  SHOWVOLUME, HIDEVOLUME, TOGGLEVOLUMEMENU,
+} from '../actions/menuItems';
 
 // reducer (check what to do with action)
 export const mapReducer = (state=true, action) => {
@@ -54,6 +61,21 @@ export const chatReducer = (state=true, action) => {
     case HIDECHAT:
       return true;
     case TOGGLECHAT:
+      return !state;
+    default:
+      return state;
+  }
+}
+
+export const volumeReducer = (state=true, action) => {
+  switch(action.type) {
+    case HIDEMENUS:
+      return true;
+    case SHOWVOLUME:
+      return false;
+    case HIDEVOLUME:
+      return true;
+    case TOGGLEVOLUMEMENU:
       return !state;
     default:
       return state;

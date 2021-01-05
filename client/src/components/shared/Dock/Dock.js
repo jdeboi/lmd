@@ -39,7 +39,7 @@ class Dock extends React.Component {
                 <em>
                   <span>Home Page</span>
                 </em>
-                <img src="/assets/s3-bucket/homePage/home.png" />
+                <img src="/assets/s3-bucket/gallery/home.png" />
               </div>
             </li>
             <li id="chat">
@@ -47,7 +47,7 @@ class Dock extends React.Component {
                 <em>
                   <span>Chat</span>
                 </em>
-                <img src="/assets/s3-bucket/homePage/messages-icon.png" />
+                <img src="/assets/s3-bucket/gallery/messages-icon.png" />
               </div>
             </li>
             <li id="codepen">
@@ -55,7 +55,7 @@ class Dock extends React.Component {
                 <em>
                   <span>Mini Map</span>
                 </em>
-                <img src="/assets/s3-bucket/homePage/maps-icon.png" />
+                <img src="/assets/s3-bucket/gallery/maps-icon.png" />
               </a>
             </li>
             <li id="reason">
@@ -63,7 +63,7 @@ class Dock extends React.Component {
                 <em>
                   <span>Info</span>
                 </em>
-                <img src="/assets/s3-bucket/homePage/info2.png" />
+                <img src="/assets/s3-bucket/gallery/info2.png" />
               </a>
             </li>
           </ul>

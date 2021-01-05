@@ -29,15 +29,15 @@ class RoomUsers extends React.Component {
         const { users, user, ui } = this.props;
         const avatarW = 34;
         const isVisible = !ui.loading;
-        const isHomePage = user.room === "home-page";
+        const isGallery = user.room === "gallery";
         return (
             <div className="avatars"
                 onClick={this.handleEvent}
                 style={{
-                    display: isHomePage ? "block": "none",
+                    display: isGallery ? "block": "none",
                     width: ui.width,
                     height: ui.height,
-                    pointerEvents: "none", //isHomePage ? "none" : "all",
+                    pointerEvents: "none", //isGallery ? "none" : "all",
                     visibility: (isVisible ? "visible" : "hidden")
                 }}>
                 <OtherAvatars users={users} avatarW={avatarW} />
@@ -49,7 +49,7 @@ class RoomUsers extends React.Component {
 
     handleEvent = (event) => {
 
-        if (this.props.user.room !== "home-page") {
+        if (this.props.user.room !== "gallery") {
             const isWalking = true;
             const destination = { x: event.clientX, y: event.clientY };
             this.setState({ destination, isWalking })

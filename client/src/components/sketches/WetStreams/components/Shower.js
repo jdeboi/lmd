@@ -14,13 +14,13 @@ class Shower extends React.Component {
 
 
   render() {
-    const {isPlaying, x, y, z, w, h, id, newFrameToTop, handleDrag, onMaximized, onMinimized, onClosed} = this.props;
+    const {isPlaying, dim, x, y, z, w, h, id, newFrameToTop, handleDrag, onMaximized, onMinimized, onClosed} = this.props;
 
     let imgs = [7, 1, 3, 4, 8, 10];
     let img = imgs[id];
     let imgSrc = window.AWS+"/wetStreams/showerHeads/" + img + ".png";
     let title = "";
-    if (id === 1) title = "wet streams";
+    if (id === 1 && dim > 300) title = "wet streams";
     let classn = id===5?"showerhead flippedX":"showerhead";
 
     return (

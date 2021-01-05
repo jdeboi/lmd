@@ -46,7 +46,7 @@
 
   .App-Header {
     flex: 0 0 auto;
-    height: 34px;
+    height: $headerH;
 
     /* The above is shorthand for:
     flex-grow: 0,
@@ -57,6 +57,10 @@
     display: flex;
     flex-flow: column;
     align-items: stretch;
+
+    &.mobile {
+      height: $headerMobileH;
+    }
   }
 
   .App-Content {
@@ -191,7 +195,7 @@
 
 @font-face {
   font-family: notoEmojiFont;
-  src: url(/assets/s3-bucket/homePage/NotoColorEmoji.ttf);
+  src: url(/assets/s3-bucket/gallery/NotoColorEmoji.ttf);
 }
 
 @font-face {

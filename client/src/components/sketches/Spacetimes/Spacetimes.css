@@ -5,14 +5,12 @@
   height: 100%;
   overflow: hidden;
   position: relative;
-  background: #22c1c3;
   background: linear-gradient(0deg, #22c1c3 0%, #fdbb2d 100%);
-  /* background-color: black; */
   /* background-image: url("/images/space/2000.png");
-  background-size:     cover;
-  background-repeat:   no-repeat;
-  background-position: center center;
-  background-repeat: repeat; */ }
+  background-repeat: repeat; */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center; }
   .Spacetimes .bird {
     background-image: url("https://media.giphy.com/media/l3Uchq9s6Hx0aK8F2/giphy.gif");
     background-size: cover;

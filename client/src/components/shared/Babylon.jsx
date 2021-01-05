@@ -41,6 +41,6 @@ export default (props) => {
   }, [reactCanvas])
 
   return (
-    <canvas ref={reactCanvas} {...rest} />
+    <canvas touch-action="none" id="renderCanvas" tabIndex="1" ref={reactCanvas} {...rest} />
   );
 }
