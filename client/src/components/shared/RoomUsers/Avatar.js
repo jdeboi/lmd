@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { showWine, showCocktail, showCheese } from '../../sketches/Gallery/components/Helpers';
+import { showWine, showCocktail, showCheese } from '../../sketches/Gallery/MiniMap/Helpers';
 import { connect } from 'react-redux';
 
 function Avatar(props) {

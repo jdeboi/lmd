@@ -1,8 +1,8 @@
 import React from 'react';
 import "./Gallery.css";
 
-import Sketch from './p5/HomeSketch';
-import MiniMap from './componentsOld/MiniMap';
+import Sketch from './p5/GallerySketch';
+import MiniMap from './MiniMap/MiniMap';
 import { wineLocation, djLocation } from './constants';
 
 // store

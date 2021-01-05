@@ -1,6 +1,6 @@
 import React from 'react';
-import { getOtherUserLocation, showWine, showCheese, showCocktail, getDisToUser } from '../../sketches/Gallery/components/Helpers';
-import ToolTip from '../../sketches/Gallery/components/ToolTip';
+import { getOtherUserLocation, showWine, showCheese, showCocktail, getDisToUser } from '../../sketches/Gallery/MiniMap/Helpers';
+// import ToolTip from './ToolTip';
 
 // store
 import { connect } from 'react-redux';
@@ -55,7 +55,7 @@ class OtherAvatar extends React.Component {
           <div className={"emoji-item emoji-cheese" + (showCheeseEmoji ? "" : " hidden")}>🧀</div>
           <div className={"emoji-chat" + (showChatBubble ? "" : " hidden")} >💬</div>
         </div>
-        <ToolTip userName={otherUser.userName} userHover={userHover} />
+        {/* <ToolTip userName={otherUser.userName} userHover={userHover} /> */}
       </div>
     )
 

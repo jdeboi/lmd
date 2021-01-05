@@ -18,6 +18,11 @@ export const roomConfig = {
     start: .1,
     end: .8
 }
+export const p5ToWorldCoords = (x, y) => {
+    let xx = (x) * globalConfig.scaler;
+    let yy = (y) * globalConfig.scaler;
+    return { x: xx, y: yy }
+}
 
 export const p5ToDomCoords = (x, y) => {
     let xx = (x + globalConfig.x) * globalConfig.scaler;

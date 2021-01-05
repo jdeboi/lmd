@@ -1,15 +1,15 @@
-import { 
-  SETONEMENU, HIDEMENUS, 
-  SHOWMAP, HIDEMAP, TOGGLEMAP, 
-  SHOWCHAT, HIDECHAT, TOGGLECHAT, 
-  SHOWUSERICONS, HIDEUSERICONS, TOGGLEUSERICONS, 
-  SHOWFAQ, HIDEFAQ, TOGGLEFAQ, 
+import {
+  SETONEMENU, HIDEMENUS,
+  SHOWMAP, HIDEMAP, TOGGLEMAP,
+  SHOWCHAT, HIDECHAT, TOGGLECHAT,
+  SHOWUSERICONS, HIDEUSERICONS, TOGGLEUSERICONS,
+  SHOWFAQ, HIDEFAQ, TOGGLEFAQ,
   SHOWVOLUME, HIDEVOLUME, TOGGLEVOLUMEMENU,
 } from '../actions/menuItems';
 
 // reducer (check what to do with action)
-export const mapReducer = (state=true, action) => {
-  switch(action.type) {
+export const mapReducer = (state = true, action) => {
+  switch (action.type) {
     case HIDEMENUS:
       return true;
     case SHOWMAP:
@@ -23,8 +23,8 @@ export const mapReducer = (state=true, action) => {
   }
 }
 
-export const faqReducer = (state=true, action) => {
-  switch(action.type) {
+export const faqReducer = (state = true, action) => {
+  switch (action.type) {
     case SHOWFAQ:
       return false;
     case HIDEFAQ:
@@ -36,8 +36,8 @@ export const faqReducer = (state=true, action) => {
   }
 }
 
-export const userIconsReducer = (state=true, action) => {
-  switch(action.type) {
+export const userIconsReducer = (state = true, action) => {
+  switch (action.type) {
     case HIDEMENUS:
       return true;
     case SHOWUSERICONS:
@@ -52,8 +52,8 @@ export const userIconsReducer = (state=true, action) => {
 }
 
 
-export const chatReducer = (state=true, action) => {
-  switch(action.type) {
+export const chatReducer = (state = true, action) => {
+  switch (action.type) {
     case HIDEMENUS:
       return true;
     case SHOWCHAT:
@@ -67,8 +67,8 @@ export const chatReducer = (state=true, action) => {
   }
 }
 
-export const volumeReducer = (state=true, action) => {
-  switch(action.type) {
+export const volumeReducer = (state = true, action) => {
+  switch (action.type) {
     case HIDEMENUS:
       return true;
     case SHOWVOLUME:
@@ -83,7 +83,9 @@ export const volumeReducer = (state=true, action) => {
 }
 
 export const menuReducer = (state = null, action) => {
-  switch(action.type) {
+  switch (action.type) {
+   
+
     case SETONEMENU:
       const menu = action.payload.menu;
       if (!menu)

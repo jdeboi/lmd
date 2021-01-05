@@ -37,7 +37,10 @@ class Chat extends React.Component {
       cocktailBotJustAsked: false,
       djJustAsked : 0
     }
+    // this.nameInput = React.createRef();
   }
+
+ 
 
   handleTextBoxChange = (event) => {
     const textBox = event.target.value;
@@ -326,6 +329,15 @@ class Chat extends React.Component {
     );
   }
 
+  getIsHidden = (props) => {
+    const {ui, menu, chatIsHidden} = props;
+    console.log(menu)
+    if (ui.isMobile || ui.hasFooter) {
+      return menu !== "chat";
+    }
+    return chatIsHidden;
+  }
+
   getMobileContent = (w, h) => {
     const inputW = w - 60-40-20;
     return (
@@ -406,6 +418,7 @@ class Chat extends React.Component {
                     onChange={this.handleTextBoxChange}
                     onFocus={this.props.resetMessgeNotification}
                     onKeyDown={this.handleKeyDown}
+                    ref={(input) => { this.textInput = input; }} 
                   />
                 </div>
                 {/* <button className="standardButton form-item blueOutline" disabled={this.state.buttonDisabled} onClick={this.onSubmit}><SendIcon disabled={this.state.buttonDisabled} /></button>*/}
@@ -418,6 +431,13 @@ class Chat extends React.Component {
         width={300} height={h} x={ui.width - 320} y={y} z={1000}
       />
     );
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.getIsHidden(prevProps) && !this.getIsHidden(this.props)) {
+      console.log("FOCUS")
+      this.textInput.focus();
+    }
   }
 
 }

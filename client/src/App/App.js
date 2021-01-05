@@ -21,7 +21,7 @@ import { setUserRoom, setUser, moveUser, setWine } from '../store/actions/user';
 import { addMessage, addMessageNotification } from '../store/actions/messages';
 
 // sketches
-import Gallery from '../components/sketches/Gallery/Gallery';
+import Gallery from '../components/sketches/Gallery/Canned/GalleryOG';
 import MacbookAir from '../components/sketches/MacbookAir/MacbookAir';
 import JungleGyms from '../components/sketches/JungleGyms/JungleGyms';
 import HardDrives from '../components/sketches/HardDrives/HardDrives';

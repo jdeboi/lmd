@@ -61,7 +61,7 @@ export function drawUser(user, p5) {
     p5.translate(p5.windowWidth / 2, p5.windowHeight / 2);
     p5.text(user.avatar, -17, 17);
 
-   
+    p5.translate(0, 16);
     if (user.hasCheese) {
         drawCheese(p5);
     }

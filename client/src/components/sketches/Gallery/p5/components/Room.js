@@ -30,7 +30,6 @@ export default class Room {
 
     this.p5.push();
 
-    // this.p5.scale(globalConfig.scaler, globalConfig.scaler);
     var x = (this.x + this.w / 2) * globalConfig.scaler;
     var y = (this.y + this.h / 2) * globalConfig.scaler;
     this.p5.translate(x, y);
@@ -38,27 +37,22 @@ export default class Room {
 
 
     this.p5.push();
-    // let rad = deg/180*p5.PI;
-    // this.p5.rotate(rad);
-    // p5.translate(-w*p5.cos(rad), -h*p5.sin(rad));
 
     x = -this.w / 2 * globalConfig.scaler;
     y = -this.h / 2 * globalConfig.scaler;
     var w = this.w * globalConfig.scaler;
     var h = this.h * globalConfig.scaler;
 
-    // if (roomTextures[0] && this.dir === "up") this.p5.image(roomTex, x, y, w, h);
     if (roomTextures[0] && this.dir === "bottom") this.p5.image(roomTextures[0], x, y, w, h);
     else if (roomTextures[1] && this.dir === "right") this.p5.image(roomTextures[1], x, y, w, h);
     else if (roomTextures[2]) this.p5.image(roomTextures[2], x, y, w, h);
 
-    // draw watching icon
-    // if (roomCount) {
-    var count = 0;
-    if (roomCount) count = roomCount[this.title];
-    this.drawEye(eyeIcon, count);
+   
+    // var count = 0;
+    // if (roomCount) count = roomCount[this.title];
+    // this.drawEye(eyeIcon, count);
 
-    this.drawTitle();
+    // this.drawTitle();
 
 
     this.p5.pop();

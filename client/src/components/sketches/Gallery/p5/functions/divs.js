@@ -4,9 +4,25 @@ import ShadowDraggable from '../components/Draggable/ShadowDraggable';
 import Door from "../components/Door";
 import Light from '../components/Light';
 import Bar from '../components/Bar';
+import RoomLabel from '../components/RoomLabel';
 
 import { globalConfig } from '../../constants';
 
+
+export const addRoomLabelDivs = (roomLabels, divs, eyeIcon, p5) => {
+    for (let i = 0; i < 13; i++) {
+        let roomL = new RoomLabel(p5, i, eyeIcon);
+        roomLabels.push(roomL);
+        divs.push(roomL);
+      }
+}
+
+export const displayRoomLabelDivs = (dogica, roomCount, userX, userY, roomLabels) => {
+    for (const rl of roomLabels) {
+        rl.display(dogica, roomCount);
+        rl.displayToolBar(userX, userY);
+    }
+}
 
 export const addDoorDivs = (doors, divs, doorImgs, p5) => {
     let numDoors = 4;
@@ -118,7 +134,7 @@ export const displayColumnDivs = (userX, userY, columns) => {
 export function displayDivs(userX, userY, divs) {
 
     //
-    for (let i = 7; i < divs.length - 3; i++) {
+    for (let i = 7; i < divs.length - 3 - 13; i++) {
         divs[i].display(userX, userY);
         divs[i].displayToolBar(userX, userY);
     }

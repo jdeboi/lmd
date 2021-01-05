@@ -2,7 +2,7 @@ import Draggable from './Draggable/Draggable';
 import { domCoordsToP5World, mouseToWorld } from '../../constants';
 
 
-export default class Door extends Draggable {
+export default class Folder extends Draggable {
 
     constructor(p5, id, x, y, label, link, img) {
         super(id, x, y, 80, 80, p5, img);
