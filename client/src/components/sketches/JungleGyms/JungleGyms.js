@@ -278,7 +278,7 @@ class JungleGyms extends React.Component {
           Your browser does not support HTML5 video.
         </video>
 
-       { this.getControlsFrame()}
+       {/* { this.getControlsFrame()} */}
         {/*Glasses />*/}
       </div>
     )

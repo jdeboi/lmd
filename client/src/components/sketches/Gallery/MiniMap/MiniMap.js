@@ -23,7 +23,7 @@ class MiniMap extends React.Component {
 
   onHide = () => {
     this.props.hideMap();
-    this.props.setOneMenu(null);
+    // this.props.setOneMenu(null);
   }
 
   render() {

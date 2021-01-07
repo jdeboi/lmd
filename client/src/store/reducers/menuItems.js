@@ -84,7 +84,42 @@ export const volumeReducer = (state = true, action) => {
 
 export const menuReducer = (state = null, action) => {
   switch (action.type) {
-   
+
+    case HIDEMENUS:
+      return null;
+
+    case SHOWCHAT:
+      if (state === "chat")
+        return null;
+      return "chat";
+    case HIDECHAT:
+      return null;
+    case TOGGLECHAT:
+      if (state === "chat")
+        return null;
+      return "chat";
+
+    case SHOWFAQ:
+      if (state === "faq")
+        return null;
+      return "faq";
+    case HIDEFAQ:
+      return null;
+    case TOGGLEFAQ:
+      if (state === "faq")
+        return null;
+      return "faq";
+
+    case SHOWMAP:
+      if (state === "map")
+        return null;
+      return "map";
+    case HIDEMAP:
+      return null;
+    case TOGGLEMAP:
+      if (state === "map")
+        return null;
+      return "map";
 
     case SETONEMENU:
       const menu = action.payload.menu;

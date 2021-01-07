@@ -10,7 +10,7 @@ import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
 // store
 import { connect } from 'react-redux';
-import { setOneMenu, toggleMap, toggleFaq, toggleChat, toggleUserIcons } from '../../../../store/actions/menuItems';
+import { showMap, showFaq, showChat, setOneMenu, toggleMap, toggleFaq, toggleChat, toggleUserIcons } from '../../../../store/actions/menuItems';
 import { resetMessgeNotification } from '../../../../store/actions/messages';
 
 
@@ -74,7 +74,7 @@ class MobileFooter extends React.Component {
         // const classUserIcons = "expandable icon" + (this.props.userIconsIsHidden ? " closed" : " opened");
 
         return (
-            <button className={classFaq} onClick={() => this.props.setOneMenu("faq")}><HelpOutlineIcon fontSize="inherit" /></button>
+            <button className={classFaq} onClick={() => this.props.showFaq()}><HelpOutlineIcon fontSize="inherit" /></button>
         )
     }
 
@@ -89,7 +89,7 @@ class MobileFooter extends React.Component {
         else classMap += " closed disabled";
 
         return (
-            <button className={classMap} onClick={() => this.props.setOneMenu("map")}><MapIcon fontSize="inherit" /></button>
+            <button className={classMap} onClick={() => this.props.showMap()}><MapIcon fontSize="inherit" /></button>
         )
     }
 
@@ -114,7 +114,8 @@ class MobileFooter extends React.Component {
 
     chatClicked = () => {
         this.props.resetMessgeNotification();
-        this.props.setOneMenu("chat");
+        // this.props.setOneMenu("chat");
+        this.props.showChat();
     }
 
     getChatNotification = () => {
@@ -160,7 +161,10 @@ const mapDispatchToProps = () => {
         toggleChat,
         resetMessgeNotification,
         toggleUserIcons,
-        setOneMenu
+        setOneMenu,
+        showFaq,
+        showChat,
+        showMap
     }
 }
 

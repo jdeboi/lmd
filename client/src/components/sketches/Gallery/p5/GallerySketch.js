@@ -8,9 +8,9 @@ import { drawWalls, drawRooms } from './functions/building';
 import { displayDancers, updateDucks } from './functions/emojis';
 import { reachedDestination, getNextStep, showMouseLoc, showUserEllipses, showDestination, mouseDidMove, drawTextLoc } from './functions/destination';
 import { drawUser, drawUsers, checkUserClicked, seeUserClicked } from './functions/users';
-import { poolBoundaryCrossing, drawPools, drawGrassPatch, drawShrubPatch } from './functions/pools';
-import {  displayRoomLabelDivs, addDoorDivs, addLightDivs, addColumnDivs, addTreeDivs, addBarDivs, addOakDivs, addFolderDivs, displayDoorDivs, displayLightDivs, displayColumnDivs, displayDivs, endDivDrag, updateDivs, checkDivPress, displayFolderDivs, checkFolderDivsDouble, addRoomLabelDivs } from './functions/divs';
-
+import { drawPlantRow, drawGrassPatch } from './functions/garden';
+import { addSwingDivs, displaySwingDivs, displayOakDivs, displayTreeDivs, displayBarDivs, displayTrashDivs, checkTrashDivsDouble, addTrashDivs, displayRoomLabelDivs, addDoorDivs, addLightDivs, addColumnDivs, addTreeDivs, addBarDivs, addOakDivs, addFolderDivs, displayDoorDivs, displayLightDivs, displayColumnDivs, displayDivs, endDivDrag, updateDivs, checkDivPress, displayFolderDivs, checkFolderDivsDouble, addRoomLabelDivs } from './functions/divs';
+import TreeSlider from './components/TreeSlider';
 
 // COMPONENTS
 import Wall from "./components/Wall";
@@ -32,29 +32,36 @@ var roomTextures = [];
 var eyeIcon;
 var doors = [];
 var doorImgs = [];
-var lights = [];
+// var lights = [];
 var lightImgs = [];
-var columns = [];
+// var columns = [];
 var floorTex;
-var folders = [];
-var roomLabels = [];
+// var folders = [];
+// var roomLabels = [];
+// var ivies = [];
+// var poolImg;
 
-var garden;
-var grass0;
-var grass1;
+// var trashCans = [];
+var trashFiles =[];
+var flowerRow;
+// var garden;
+// var grass0;
+// var grass1;
 var shrub;
+var treeSlider;
 
 // EMOJIS
 var ducks = [];
 var duckImg;
 var dancers = [];
 var dancerImgs = [];
+var baby;
 
 
 var dogica;
 
 // DRAGGABLE
-var divs = [];
+var divs = {};
 var columns = [];
 var tree, columnGif, oakImg, txtFile, instaImg;
 
@@ -123,7 +130,7 @@ export default (props) => {
 
     tree = p5.loadImage(url + "grass/tree.png");
     // columnGif = p5.loadImage(url + "column.gif");
-    columnGif = p5.loadGif(url + "column.gif");
+    columnGif = p5.loadGif("/assets/column.gif"); //url + "column.gif");
 
     duckImg = p5.loadImage(url + "duck.png");
     dancerImgs[0] = p5.loadImage(url + "dancers/dancer0.png");
@@ -131,10 +138,12 @@ export default (props) => {
     dancerImgs[2] = p5.loadImage(url + "dancers/dancer2.png");
 
 
-    // poolImg = p5.loadImage(url + "grass/200.png"); 
-    shrub = p5.loadImage(url + "grass/shrub_sm.jpg");
-    grass0 = p5.loadImage("/assets/s3-bucket/homePage/grass/test/200_fern.png");
-    grass1 = p5.loadImage("/assets/s3-bucket/homePage/grass/test/400.png");
+    // poolImg = p5.loadImage(url + "waves.gif"); 
+    shrub = p5.loadImage("/assets/s3-bucket/homePage/grass/ivory.png");
+    // grass0 = p5.loadImage("/assets/s3-bucket/homePage/grass/test/200_fern.png");
+    // grass1 = p5.loadImage("/assets/s3-bucket/homePage/grass/test/400.png");
+    flowerRow = p5.loadImage("/assets/s3-bucket/homePage/grass/test/cac3.png")
+
     // shrub = p5.loadImage("/assets/s3-bucket/homePage/grass/test/200_fern.png");
     oakImg = p5.loadImage(url + "grass/oak.png");
     dogica = p5.loadFont(url + "fonts/dogica.ttf");
@@ -142,6 +151,13 @@ export default (props) => {
     txtFile = p5.loadImage("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/waveforms/txt.png");
     instaImg = p5.loadImage(url + "instagram.png");
     // garden = new Garden(p5);
+
+    trashFiles[0] = p5.loadImage("/assets/s3-bucket/homePage/trash/fullrec.png")
+    trashFiles[3] = p5.loadImage("/assets/s3-bucket/homePage/trash/trash0.png")
+    trashFiles[2] = p5.loadImage("/assets/s3-bucket/homePage/trash/trash1.png")
+    trashFiles[1] = p5.loadImage("/assets/s3-bucket/homePage/trash/trash2.png")
+
+    baby = p5.loadImage("/assets/s3-bucket/homePage/swing/baby.png");
   }
 
 
@@ -151,6 +167,15 @@ export default (props) => {
     const cnv = p5.createCanvas(p5.windowWidth, p5.windowHeight);
     cnv.parent(canvasParentRef);
     cnv.mousePressed(() => triggerMove(props.setUserActive, p5));
+
+    let sc = globalConfig.scaler;
+    // ivies = [[]]
+    // for (let x = 0; x < 5; x++) {
+    //   for (let y = 0; y < 5; y++) {
+    //     ivies[y][x] = p5.shrub.get(x * sc, y * sc, sc, sc);
+    //   }
+    // }
+
 
     for (let i = 0; i < 2; i++) {
       walls.push(new Wall(p5, i, globalConfig));
@@ -172,6 +197,8 @@ export default (props) => {
 
 
     initDivs(p5);
+    treeSlider = new TreeSlider(31, 40, 2);
+   
 
     stepTo = { x: user.x, y: user.y };
 
@@ -185,19 +212,24 @@ export default (props) => {
 
   const initDivs = (p5) => {
 
-   
-
-    addDoorDivs(doors, divs, doorImgs, p5);
-    addLightDivs(lights, divs, lightImgs, p5);
-    addColumnDivs(columns, divs, columnGif, lightImgs[3], p5);
-    addTreeDivs(divs, tree, p5);
 
     addOakDivs(divs, oakImg, p5);
+    addDoorDivs(divs, doors, doorImgs, p5);
+    addLightDivs(divs, lightImgs, p5);
+    addColumnDivs(divs, columnGif, lightImgs[3], p5);
+    addTreeDivs(divs, tree, p5);
+
 
     addBarDivs(divs, lightImgs[3], p5);
+    
+    addTrashDivs(divs, trashFiles, lightImgs[3], p5);
 
-    addFolderDivs(divs, folders, instaImg, txtFile, p5);
-    addRoomLabelDivs(roomLabels, divs, eyeIcon, p5);
+
+    addFolderDivs(divs, instaImg, txtFile, p5);
+    addRoomLabelDivs(divs, eyeIcon, p5);
+
+    addSwingDivs(divs, baby, null, p5);
+   
   }
 
 
@@ -255,24 +287,36 @@ export default (props) => {
 
     // drawPools(poolImg, p5);
 
-    drawGrassPatch(grass0, grass1, p5);
-    drawShrubPatch(shrub, p5);
+    
 
     drawAllFloors(floorTex, p5);
+    drawGrassPatch(shrub, shrub, p5);
 
+    drawPlantRow(-5, 17, 1, 1, flowerRow, p5);
+    drawPlantRow(0, 22, 1, 1, flowerRow, p5);
+    drawPlantRow(5, 27, 1, 1, flowerRow, p5);
+
+    drawPlantRow(20, 21, 1, 1, flowerRow, p5);
+    drawPlantRow(27, 15, 1, 1, flowerRow, p5);
+
+    // drawPlantRow(-10, -3, 9, 1, flowerRow, p5);
+    // drawShrubPatch(shrub, p5);
 
     drawWalls(walls, p5);
     drawRooms(rooms, roomTextures, eyeIcon, roomCount, p5);
-
+    displayRoomLabelDivs(dogica, roomCount, userEase.x, userEase.y, divs);
+    
     // drawOuterBoundary(p5);
 
     // garden.display(p5);
-    displayDivs(userEase.x, userEase.y, divs);
-    displayRoomLabelDivs(dogica, roomCount, userEase.x, userEase.y, roomLabels);
+
+    
     displayDancers(dancers);
     updateDucks(user.hasCheese, userEase.x, userEase.y, ducks);
+    displayOakDivs(userEase.x, userEase.y, divs);
 
-    drawUsers(userEase, users, dogica, p5);
+    p5.textFont(dogica, 10);
+    displaySwingDivs(userEase.x, userEase.y, divs);
 
     // seeUserClicked(userEase, users, p5)
 
@@ -284,16 +328,18 @@ export default (props) => {
     // drawTextLoc(p5);
     mouseStep();
     showTarget(p5);
+
     drawOverTarget(p5);
 
     drawUser(user, p5);
-
     drawOverUser(p5);
 
     updateDivs(userEase, users, doors, divs);
+    treeSlider.update(p5);
     updateUserEase(p5);
 
   };
+  
 
   const drawOverTarget = (p5) => {
     p5.push();
@@ -301,10 +347,18 @@ export default (props) => {
     p5.translate(-userEase.x, -userEase.y);
     p5.translate(globalConfig.x * globalConfig.scaler, globalConfig.y * globalConfig.scaler)
 
-    displayFolderDivs(dogica, folders);
+    // p5.textFont(dogica, 12);
+    // displayFolderDivs(divs);
+    // displayTrashDivs(userEase.x, userEase.y, divs);
+    
+  
+    drawUsers(userEase, users, dogica, p5);
+    
 
     p5.pop();
   }
+
+
 
   const drawOverUser = (p5) => {
     p5.push();
@@ -312,11 +366,20 @@ export default (props) => {
     p5.translate(-userEase.x, -userEase.y);
     p5.translate(globalConfig.x * globalConfig.scaler, globalConfig.y * globalConfig.scaler)
 
-
-    displayLightDivs(userEase.x, userEase.y, lights);
-    displayColumnDivs(userEase.x, userEase.y, columns);
-    displayDoorDivs(userEase.x, userEase.y,doors);
-
+    // displayDivs(userEase.x, userEase.y, divs);
+    displayDoorDivs(userEase.x, userEase.y, divs);
+    displayBarDivs(userEase.x, userEase.y, divs);
+    displayTreeDivs(userEase.x, userEase.y, treeSlider.getValue(p5), divs);
+ 
+    displayLightDivs(userEase.x, userEase.y, divs);
+    displayColumnDivs(userEase.x, userEase.y, divs);
+    
+    p5.textFont(dogica, 12);
+    displayFolderDivs(divs);
+    displayTrashDivs(userEase.x, userEase.y, divs);
+    
+    
+    treeSlider.display(p5);
 
     p5.pop();
   }
@@ -342,7 +405,7 @@ export default (props) => {
     const roomDoorEntry = roomDoorEntryCrossing(rooms, prevStep, userStep);
     const roomDoor = roomDoorCrossing(rooms, prevStep, userStep);
     const roomDoorB = roomDoorBoundary(rooms, prevStep, userStep);
-    const poolB = poolBoundaryCrossing(userStep);
+    // const poolB = poolBoundaryCrossing(userStep);
     // check if entering a room door
     // check if crossing into outside
     // check crossed an inside boundary
@@ -355,9 +418,9 @@ export default (props) => {
       isWalking = false;
       // console.log("entering room", roomDoor);
     }
-    else if (poolB) {
-      isWalking = false;
-    }
+    // else if (poolB) {
+    //   isWalking = false;
+    // }
     else if (outsideDoor) {
       // props.userMove(userStep.x, userStep.y);
       stepTo = { x: userStep.x, y: userStep.y };
@@ -410,8 +473,11 @@ export default (props) => {
       setUserActive(userClicked);
       return;
     }
+    else if (treeSlider.checkDragging(userEase.x, userEase.y, p5))
+      return;
     else if (checkDivPress(userEase.x, user.y, divs))
       return;
+
     else {
       const dx = p5.mouseX > p5.windowWidth / 2 ? 50 : -50;
       const dy = p5.mouseY > p5.windowHeight / 2 ? 50 : -50;
@@ -459,6 +525,7 @@ export default (props) => {
 
   const mouseReleased = (p5) => {
     endDivDrag(divs);
+    treeSlider.endDrag();
   }
 
   const windowResized = (p5) => {
@@ -467,7 +534,8 @@ export default (props) => {
 
   const doubleClicked = (p5) => {
     // console.log("db");
-    checkFolderDivsDouble(userEase.x, userEase.y, folders);
+    checkFolderDivsDouble(userEase.x, userEase.y, divs);
+    checkTrashDivsDouble(userEase.x, userEase.y, divs);
   }
 
   return <Sketch preload={preload} setup={setup} draw={draw} windowResized={windowResized} keyPressed={keyPressed} mouseReleased={mouseReleased} doubleClicked={doubleClicked} />;

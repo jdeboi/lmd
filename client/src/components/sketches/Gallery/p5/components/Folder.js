@@ -6,7 +6,6 @@ export default class Folder extends Draggable {
 
     constructor(p5, id, x, y, label, link, img) {
         super(id, x, y, 80, 80, p5, img);
-
         let point = domCoordsToP5World(x, y);
         this.x = point.x;
         this.y = point.y;
@@ -18,19 +17,18 @@ export default class Folder extends Draggable {
 
 
 
-    display(dogica) {
+    display() {
         this.p5.push();
         this.p5.translate(this.x, this.y);
         this.p5.image(this.img, 0, 0, this.w, this.h);
-        this.drawLabel(dogica);
+        this.drawLabel();
         this.p5.pop();
     }
 
-    drawLabel(dogica) {
+    drawLabel() {
 
         this.p5.push()
 
-        this.p5.textFont(dogica, 12);
         this.tw = this.p5.textWidth(this.label);
         this.p5.translate(this.w / 2 - this.tw / 2, this.h + 16);
 

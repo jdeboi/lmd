@@ -14,7 +14,7 @@ export default class Draggable {
     this.offsetX = 0;
     this.offsetY = 0;
     this.toolbarH = 25;
-    this.opacity = p5.map(this.id, 0, 20, 0, 1);
+    // this.opacity = p5.map(this.id, 0, 20, 0, 1);
     this.startDrag = { x: 0, y: 0 };
     this.startDragCoords = { x: 0, y: 0 };
 
@@ -35,7 +35,21 @@ export default class Draggable {
     this.maxButton = new Button(xp + sp * 2, yp, p5);
 
     this.content = content;
+    // this.mask;
+    // this.initMask();
+  }
 
+  initMask() {
+    this.mask = this.p5.createGraphics(this.w, this.h+this.barH);
+    this.mask.background(0);
+    this.mask.fill(255);
+    this.mask.noStroke();
+    // this.mask.rect(0, 0, this.w, this.h, this.bRad, this.bRad);
+    this.mask.ellipse(this.w/2, this.h/2, 50, 50);
+    if (this.content && this.content.width > 0) {
+   
+      this.content.mask(this.mask);
+    }
   }
 
   display(userX, userY) {
@@ -94,6 +108,8 @@ export default class Draggable {
   }
 
   checkButtons(userX, userY) {
+    if (this.closed) 
+      return false;
     let mouse = mouseToWorld({x: userX, y: userY}, this.p5);
     mouse.x -= this.x;
     mouse.y -= this.y;
@@ -113,6 +129,8 @@ export default class Draggable {
   }
 
   checkDragging(userX, userY) {
+    if (this.closed) 
+      return false;
     let mouse = mouseToWorld({x: userX, y: userY}, this.p5);
     // console.log(mx, my, userX, userY, this.x, this.y);
     if (this.overToolBar(mouse.x, mouse.y)) {
@@ -155,6 +173,12 @@ export default class Draggable {
   toggleCloseWindow(div) {
     this.locked = !this.locked;
     this.closeWindow(div);
+  }
+
+  openWindow() {
+    this.closed = false;
+    this.minimized = false;
+    this.locked = false; // ? what does this do
   }
 
   closeWindow() {

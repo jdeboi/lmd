@@ -1,10 +1,12 @@
 import Draggable from './Draggable/Draggable';
+// import ShadowDraggable from './Draggable/ShadowDraggable'
 import { rooms, p5ToWorldCoords, globalConfig } from '../../constants';
 
 export default class RoomLabel extends Draggable {
 
     constructor(p5, id, eyeIcon) {
-        super(id, 0, 0, 200, 80, p5, null);
+        super(id, 0, 0, 160, 80, p5, null);
+        // super(id, 0, 0, 160, 80, p5, null, shadow);
 
         this.eyeIcon = eyeIcon;
         // this.heartIcon = heartIcon;
@@ -38,7 +40,7 @@ export default class RoomLabel extends Draggable {
         this.p5.translate(0, this.barH);
         this.p5.push();
 
-        this.p5.textFont(dogica, 13);
+        this.p5.textFont(dogica, 11);
 
         this.p5.translate(15, 25);
         this.displayLabel();
@@ -83,7 +85,7 @@ export default class RoomLabel extends Draggable {
         /// eye count
         this.p5.fill(0);
         this.p5.noStroke();
-        this.p5.textSize(12);
+        this.p5.textSize(11);
         this.p5.text(count, 25, 20);
 
 

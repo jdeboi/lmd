@@ -171,7 +171,7 @@ class HardDrives extends React.Component {
       }
     }
 
-    const title = (ui.isMobile || ui.hasFooter) ? "": "hard drives on seashores";
+    const title = "";// (ui.isMobile || ui.hasFooter) ? "": "hard drives on seashores";
 
     return (
       <div className="HardDrives Sketch">

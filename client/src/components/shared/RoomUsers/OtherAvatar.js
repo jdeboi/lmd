@@ -29,7 +29,7 @@ class OtherAvatar extends React.Component {
   userClick = (otherUser) => {
     this.props.setUserActiveChat(otherUser);
     this.props.showChat();
-    this.props.setOneMenu("chat");
+    // this.props.setOneMenu("chat");
   }
 
   render() {

@@ -35,9 +35,10 @@ class Chat extends React.Component {
       wineBotJustAsked: false,
       cheeseBotJustAsked: false,
       cocktailBotJustAsked: false,
+      hostBotJustAsked: false,
       djJustAsked : 0
     }
-    // this.nameInput = React.createRef();
+    this.textInput = React.createRef();
   }
 
  
@@ -97,7 +98,10 @@ class Chat extends React.Component {
   // wb: "hi, would you like some wine? I only understand yes and no."
 
   sendToHostBot = (txt) => {
-
+    const message = { to: "hostBot", from: "me", message: txt, time: new Date() };
+    // console.log("MESSAGE", message);
+    this.props.addMessage(message);
+    setTimeout(() => this.hostBotRespond(txt), 1000);
   }
 
   sendToCocktailBot = (txt) => {
@@ -148,6 +152,31 @@ class Chat extends React.Component {
       }
       this.props.addMessage({ to: "me", from: "wineBot", message: phrase, time: new Date(), avatar: userActiveChat.avatar });
       this.setState({ wineBotJustAsked: false });
+    }
+  }
+
+  hostBotRespond = (txt) => {
+    // console.log("winebot responding!");
+    const hostBotJustAsked = this.state.hostBotJustAsked;
+    const { userActiveChat } = this.props;
+    if (!hostBotJustAsked) {
+      const phrase = "hi, welcome to Jenna's MFA thesis show, Losing My Dimension!";
+      this.props.addMessage({ to: "me", from: "hostBot", message: phrase, time: new Date(), avatar: userActiveChat.avatar });
+      this.setState({ hostBotJustAsked: true });
+    }
+    else {
+      // const lc = txt.toLowerCase();
+      // let phrase = "";
+      // if (lc === "y" || lc.indexOf("yes") > -1) {
+      //   phrase = "Stop by the bar to pick up your glass.";
+      //   this.props.addCocktail(wineLocation[2]);
+      // }
+      // else {
+      //   phrase = "Cool, I don't drink either.";
+      // }
+      let phrase = "sorry, I'm not a very smart bot."
+      this.props.addMessage({ to: "me", from: "hostBot", message: phrase, time: new Date(), avatar: userActiveChat.avatar });
+      this.setState({ hostBotJustAsked: false });
     }
   }
 
@@ -296,6 +325,7 @@ class Chat extends React.Component {
 
   render() {
     const {ui} = this.props;
+    // console.log(menu)
     if (ui.isMobile || ui.hasFooter) {
       return this.getMobileFrame();
     }
@@ -310,7 +340,7 @@ class Chat extends React.Component {
 
   onHide = () => {
     this.props.hideChat();
-    this.props.setOneMenu();
+    // this.props.setOneMenu();
   }
 
   getMobileFrame = () => {
@@ -331,7 +361,7 @@ class Chat extends React.Component {
 
   getIsHidden = (props) => {
     const {ui, menu, chatIsHidden} = props;
-    console.log(menu)
+    
     if (ui.isMobile || ui.hasFooter) {
       return menu !== "chat";
     }
@@ -435,8 +465,11 @@ class Chat extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.getIsHidden(prevProps) && !this.getIsHidden(this.props)) {
-      console.log("FOCUS")
-      this.textInput.focus();
+      // console.log("FOCUS", this.textInput)
+      if (this.textInput) 
+        this.textInput.focus();
+      // else
+      //   console.log("nope")
     }
   }
 

@@ -67,13 +67,6 @@ class Volume extends React.Component {
                     <VolumeOff />
                 </button>
             );
-        else if (music.volume < .5) {
-            return (
-                <button onClick={toggleVolume} >
-                    <VolumeDown />
-                </button>
-            )
-        }
         return (
             <button onClick={toggleVolume} >
                 <VolumeUp />

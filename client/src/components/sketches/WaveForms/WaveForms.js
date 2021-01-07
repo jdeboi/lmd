@@ -137,7 +137,7 @@ class WaveForms extends React.Component {
     return (
       <div className="WaveForms Sketch">
         <div className="confessions-form">
-          <Frame className="stairway" title="cloud confessional" content={
+          <Frame className="stairway" title="" content={
             /*<video width={dimW-2} height={dimH} muted loop autoPlay><source src={videoDimURL} type="video/mp4"></source></video>*/
             <div>
               <video autoPlay muted loop playsInline

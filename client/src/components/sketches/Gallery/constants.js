@@ -132,7 +132,7 @@ export const lights = [
 
 //// wine
 const cheeseBot = p5ToDomCoords(-8.5, 5); // cheese
-const wineBot1 = p5ToDomCoords(30, 17);
+const wineBot1 = p5ToDomCoords(30, 19);
 const cocktailBot = p5ToDomCoords(32, 0);
 export const wineLocation = [{ x: cheeseBot.x, y: cheeseBot.y, w: 80, h: 250, flipped:true }, { x: wineBot1.x, y: wineBot1.y, w: 80, h: 150, flipped: false }, { x: cocktailBot.x, y: cocktailBot.y, w: 80, h: 150, flipped:false }];
 
@@ -141,6 +141,6 @@ export const wineLocation = [{ x: cheeseBot.x, y: cheeseBot.y, w: 80, h: 250, fl
 const danceFloorP5 = { x: 24-3, y: -1, w: 10, h: 5 };
 export const danceFloor = { x: globalConfig.scaler * danceFloorP5.x, y: globalConfig.scaler * danceFloorP5.y, w: globalConfig.scaler * danceFloorP5.w, h: globalConfig.scaler * danceFloorP5.h };
 export const djLocation = p5ToDomCoords(danceFloorP5.x + 3.5, danceFloorP5.y-1);
-
+export const hostBotLocation = p5ToDomCoords(15, 20);
 
 export const ok = {};

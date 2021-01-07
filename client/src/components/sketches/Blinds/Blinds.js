@@ -107,7 +107,7 @@ class Blinds extends React.Component {
           startY: this.startY,
           mx: mx,
           my: my,
-          title: this.getLetter(i),
+          title: "", // this.getLetter(i),
           newFrameToTop: this.newFrameToTop,
           onDblClick: this.onDblClick,
           mode: this.state.blindMode

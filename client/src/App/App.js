@@ -21,7 +21,7 @@ import { setUserRoom, setUser, moveUser, setWine } from '../store/actions/user';
 import { addMessage, addMessageNotification } from '../store/actions/messages';
 
 // sketches
-import Gallery from '../components/sketches/Gallery/Canned/GalleryOG';
+import Gallery from '../components/sketches/Gallery/Gallery';
 import MacbookAir from '../components/sketches/MacbookAir/MacbookAir';
 import JungleGyms from '../components/sketches/JungleGyms/JungleGyms';
 import HardDrives from '../components/sketches/HardDrives/HardDrives';
@@ -77,7 +77,7 @@ import FPSStats from "react-fps-stats";
 import Exit from '../components/shared/Exit/Exit';
 
 // import { userNearWine } from './Helpers/Boundaries';
-import { djLocation, wineLocation } from '../components/sketches/Gallery/constants';
+import { djLocation, wineLocation, hostBotLocation } from '../components/sketches/Gallery/constants';
 
 
 
@@ -200,7 +200,7 @@ class App extends React.Component {
   pageChange = (location) => {
     this.props.loadingApp();
     this.props.hideMenus();
-    this.props.setOneMenu(null);
+    // this.props.setOneMenu(null);
     this.userSetRoom(location)
   }
 
@@ -292,16 +292,16 @@ class App extends React.Component {
   }
 
   addBots = () => {
+    const hostBot = {x: hostBotLocation.x, y:  hostBotLocation.y, room: "gallery", avatar: "😷", userName: "hostBot", id: 4};
     const cheeseBot = { x: wineLocation[0].x - 100, y: wineLocation[0].y + 50, avatar: "🤖", room: "gallery", userName: "cheeseBot", id: 0 };
     const wineBot = { x: wineLocation[1].x + 120, y: wineLocation[1].y + 50, avatar: "🤖", room: "gallery", userName: "wineBot", id: 1 };
     const cocktailBot = { x: wineLocation[2].x + 120, y: wineLocation[2].y + 50, avatar: "🤖", room: "gallery", userName: "cocktailBot", id: 2 };
     const dj = { x: djLocation.x+100, y: djLocation.y-30, room: "gallery", avatar: "🎧", userName: "DJ", id: 3 };
-    // const hostBot = {x: 300, y: 600, avatar: "🤖", room:"home", userName:"hostBot", id:1}
     socket.emit("setBot", cheeseBot);
     socket.emit("setBot", wineBot);
     socket.emit("setBot", cocktailBot);
     socket.emit("setBot", dj);
-    // socket.emit("setBot", hostBot);
+    socket.emit("setBot", hostBot);
   }
 
 
@@ -364,7 +364,7 @@ class App extends React.Component {
     if (rm == "") rm = "gallery";
     else if (rm == "confessions") rm = "cloud-confessional";
 
-    const pages = ["gallery", "macbook-air", "wet-streams", "hard-drives-on-seashores", "blind-eye", "cloud-confessional", "xfinity-depths", "esc-to-mars", "jungle-gyms", "wasted-days"];
+    const pages = ["gallery", "macbook-air", "wet-streams", "hard-drives-on-seashores", "blind-eye", "cloud-confessional", "xfinity-depths", "esc-to-mars", "jungle-gyms", "flush", "home-page", "wasted-days"];
     if (!pages.includes(rm)) rm = "";
 
     return rm;

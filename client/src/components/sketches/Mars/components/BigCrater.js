@@ -8,7 +8,7 @@ export default function(props) {
   const {w, h, x, y, poolVid} = props;
 
   return (
-    <Frame title="esc to mars" content={
+    <Frame title="" content={
       <div className="bigCrater" style={{height: `${h}px`, backgroundSize: `${w}px ${h}px`}}>
       <video playsInline className="poolVid" key={poolVid} style={{height: `${h}px`, width: `${w}px`}} autoPlay muted loop>
       <source src={poolVid} type="video/mp4" ></source>

@@ -150,7 +150,7 @@ class MacbookAir extends React.Component {
         this.mainOG.y = windowDim.y;
       }
 
-      const title= (ui.isMobile || ui.hasFooter)?"":"macbook air";
+      const title= "";//(ui.isMobile || ui.hasFooter)?"":"macbook air";
       return (
         <Frame title={title} content={
           /*<video width={dimW-2} height={dimH} muted loop autoPlay><source src={videoDimURL} type="video/mp4"></source></video>*/

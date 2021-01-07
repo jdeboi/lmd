@@ -10,7 +10,7 @@ class FAQFrame extends React.Component {
 
   onHide = () => {
     this.props.hideFaq();
-    this.props.setOneMenu(null);
+    // this.props.setOneMenu(null);
   }
 
   render() {

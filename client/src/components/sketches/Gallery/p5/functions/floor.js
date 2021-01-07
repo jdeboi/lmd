@@ -29,43 +29,15 @@ export const drawAllFloors = (floorTex, p5) => {
     drawFloor(0, 22, 5, 10, false, false, globalConfig.scaler, p5);
     drawFloor(5, 27, 5, 10, false, false, globalConfig.scaler, p5);
 
-    // drawFloor(limits[0].x, 12, 3, 8, false, false, globalConfig.scaler, p5);
-    // drawFloor(limits[0].x+3, 17, 5, 3, false, false, globalConfig.scaler, p5); // left column
-    // drawFloor(-3, 20, 3, 5, false, false, globalConfig.scaler, p5);
-    // drawFloor(0, 22, 5, 3, false, false, globalConfig.scaler, p5);
-    // drawFloor(2, 25, 3, 5, false, false, globalConfig.scaler, p5);
-    // drawFloor(5, 27, 5, 3, false, false, globalConfig.scaler, p5);
-    // drawFloor(7, 30, 3, 5, false, false, globalConfig.scaler, p5);
 
-    // connect right side corner
-    // drawFloor(25, 25, 3, 5, false, false, globalConfig.scaler, p5);
-    // drawFloor(23, 27, 3, 3, false, false, globalConfig.scaler, p5);
-    // drawFloor(22, 28, 1, 1, false, false, globalConfig.scaler, p5);
-    // drawFloor(21, 29, 2, 1, false, false, globalConfig.scaler, p5);
-    // drawFloor(26, 24, 2, 1, false, false, globalConfig.scaler, p5);
-    // drawFloor(27, 23, 1, 1, false, false, globalConfig.scaler, p5);
 
     // stairsBig
-    drawFloor(pools[0].x, pools[0].y, 5, 5, false, false, globalConfig.scaler * 5, p5);
-    drawFloor(pools[1].x, pools[1].y, 5, 5, false, false, globalConfig.scaler * 5, p5);
-    drawFloor(pools[2].x, pools[2].y, 5, 5, false, false, globalConfig.scaler * 5, p5);
-    drawFloor(pools[2].x+5, pools[2].y+5, 5, 5, false, false, globalConfig.scaler * 5, p5);
+    // drawFloor(pools[0].x, pools[0].y, 5, 5, false, false, globalConfig.scaler * 5, p5);
+    // drawFloor(pools[1].x, pools[1].y, 5, 5, false, false, globalConfig.scaler * 5, p5);
+    // drawFloor(pools[2].x, pools[2].y, 5, 5, false, false, globalConfig.scaler * 5, p5);
+    // drawFloor(pools[2].x+5, pools[2].y+5, 5, 5, false, false, globalConfig.scaler * 5, p5);
     p5.noStroke();
-    // drawSpaceFloor(pools[0].x, pools[0].y, 5, 5, p5);
-    // drawSpaceFloor(pools[1].x, pools[1].y, 5, 5, p5);
-    // drawSpaceFloor(pools[2].x, pools[2].y, 5, 5, p5);
-
-    // drawFloor(-8, 35, 15, 5, true, false, globalConfig.scaler*5, p5); // bottom row
-    // drawFloor(-8, 30, 10, 5, true, false, globalConfig.scaler*5, p5);
-    // drawFloor(-8, 25, 5, 5, true, false, globalConfig.scaler*5, p5);
-
-
-    // drawFloor(25, 30, 5, 5, true, false, globalConfig.scaler*5, p5);
-    // drawFloor(30, 30, 5, 5, true, false, globalConfig.scaler*5, p5);
-    // drawFloor(25, 35, 5, 5, true, false, globalConfig.scaler*5, p5);
-    // drawFloor(30, 35, 5, 5, true, false, globalConfig.scaler*5, p5);
-
-    // drawFloor(5, 27, 5, 5, false, false, globalConfig.scaler, p5);
+    
 
     // top left
     p5.noStroke();
