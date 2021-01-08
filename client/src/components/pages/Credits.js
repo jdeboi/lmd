@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import './Pages.css';
 
+// "Parasol Open Close" by Sungebob is licensed under Creative Commons Attribution. https://skfb.ly/6USQZ To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/. umbrella
 function Credits() {
   return (
     <div className="Page">

@@ -293,7 +293,7 @@ class App extends React.Component {
 
   addBots = () => {
     const hostBot = {x: hostBotLocation.x, y:  hostBotLocation.y, room: "gallery", avatar: "😷", userName: "hostBot", id: 4};
-    const cheeseBot = { x: wineLocation[0].x - 100, y: wineLocation[0].y + 50, avatar: "🤖", room: "gallery", userName: "cheeseBot", id: 0 };
+    const cheeseBot = { x: wineLocation[0].x - 100, y: wineLocation[0].y + 80, avatar: "🤖", room: "gallery", userName: "cheeseBot", id: 0 };
     const wineBot = { x: wineLocation[1].x + 120, y: wineLocation[1].y + 50, avatar: "🤖", room: "gallery", userName: "wineBot", id: 1 };
     const cocktailBot = { x: wineLocation[2].x + 120, y: wineLocation[2].y + 50, avatar: "🤖", room: "gallery", userName: "cocktailBot", id: 2 };
     const dj = { x: djLocation.x+100, y: djLocation.y-30, room: "gallery", avatar: "🎧", userName: "DJ", id: 3 };

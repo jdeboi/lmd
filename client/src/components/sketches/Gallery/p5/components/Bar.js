@@ -42,40 +42,19 @@ export default class Bar extends Draggable {
     displayContent(userX, userY) {
         this.p5.push();
 
-        
-        // if (this.isFlipped) {
-            // shadow / glow
-            this.displayShadow();
 
-            this.displaySolidBack(this.p5.color(255));
-            this.p5.translate(0, this.barH);
+        // shadow / glow
+        this.displayShadow();
 
-            this.p5.push();
-            // this.p5.scale(-1, 1);
-            this.p5.translate(5, 40);
-            this.displayBarContents();
+        this.displaySolidBack(this.p5.color(255));
+        this.p5.translate(0, this.barH);
 
-            this.p5.pop();
-        // }
-        // else {
+        this.p5.push();
+        // this.p5.scale(-1, 1);
+        this.p5.translate(5, 40);
+        this.displayBarContents();
 
-        //     // shadow / glow
-        //     this.p5.push();
-        //     this.p5.translate(0, this.barH);
-        //     this.p5.scale(-1, 1);
-        //     this.p5.image(this.shadow, -backW + 20, backY, backW, backH);
-        //     this.p5.pop();
-
-        //     this.displaySolidBack(this.p5.color(255));
-        //     this.p5.translate(0, this.barH);
-
-        //     this.p5.textFont('times', 40);
-
-        //     this.displayBarContents();
-
-        //     this.p5.pop();
-        // }
-
+        this.p5.pop();
 
 
         this.p5.pop();

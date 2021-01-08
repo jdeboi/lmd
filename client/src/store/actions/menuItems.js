@@ -31,9 +31,9 @@ export const hideMenus = () => {
 export const setOneMenu = (menu) => {
   return {
     type: SETONEMENU,
-    payload: {menu}
+    payload: { menu }
   }
-} 
+}
 
 ///////////// MAP
 export const toggleMap = () => {

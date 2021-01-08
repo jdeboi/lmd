@@ -131,7 +131,7 @@ export const lights = [
 
 
 //// wine
-const cheeseBot = p5ToDomCoords(-8.5, 5); // cheese
+const cheeseBot = p5ToDomCoords(-8, 5); // cheese
 const wineBot1 = p5ToDomCoords(30, 19);
 const cocktailBot = p5ToDomCoords(32, 0);
 export const wineLocation = [{ x: cheeseBot.x, y: cheeseBot.y, w: 80, h: 250, flipped:true }, { x: wineBot1.x, y: wineBot1.y, w: 80, h: 150, flipped: false }, { x: cocktailBot.x, y: cocktailBot.y, w: 80, h: 150, flipped:false }];

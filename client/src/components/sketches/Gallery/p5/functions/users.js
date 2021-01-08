@@ -4,7 +4,6 @@ import { globalConfig, mouseToWorld, domCoordsToP5World } from "../../constants"
 
 export function checkUserClicked(userEase, users, p5) {
 
-
     for (const otherUser of users) {
         if (otherUser.room === "gallery") {
 
@@ -16,7 +15,6 @@ export function checkUserClicked(userEase, users, p5) {
             let d = p5.dist(mouse.x, mouse.y, userWorld.x, userWorld.y);
             let dChat = p5.dist(mouse.x, mouse.y, userChat.x, userChat.y);
 
-            // if (otherUser.userName === "cocktailBot") console.log(d, mx, my, otherUser.x, otherUser.y)
             if (d < 20 || dChat < 20) {
                 return otherUser;
             }

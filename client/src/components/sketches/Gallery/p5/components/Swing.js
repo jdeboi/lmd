@@ -52,7 +52,7 @@ export default class Swing extends Draggable {
         this.p5.rotate(-this.angle);
         this.displayChain();
         
-        this.p5.image(this.content, -18,  this.armLength-20, 30, 30);
+        this.p5.image(this.content, -16,  this.armLength-23, 30, 30);
         this.displaySeat();
 
         this.p5.pop();
@@ -80,6 +80,8 @@ export default class Swing extends Draggable {
     }
 
     updateSwing() {
+        //https://www.khanacademy.org/computing/computer-programming/programming-natural-simulations/programming-oscillations/a/trig-and-forces-the-pendulum
+
         // Arbitrary constant
         var gravity = 0.06;
         let damping = .95;
@@ -98,7 +100,7 @@ export default class Swing extends Draggable {
     }
 
     swingPushed() {
-        this.aVelocity += .1;
+        this.aVelocity -= .1;
     }
 
 
@@ -115,7 +117,6 @@ export default class Swing extends Draggable {
         let mouse = mouseToWorld({ x: userX, y: userY }, this.p5);
         mouse.x -= this.x;
         mouse.y -= this.y;
-        console.log("???")
         if (this.button.mouseOver(mouse.x, mouse.y)) {
 
             this.swingPushed();

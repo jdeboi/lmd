@@ -33,6 +33,8 @@ export default class Duck {
             var seekForce = this.seek(this.p5.createVector(userWorld.x, userWorld.y));
             separateForce.mult(2);
             seekForce.mult(1);
+
+            var mx = userWorld.x;
         }
         else {
             const startX = globalConfig.scaler* (limits[0].x + 10);

@@ -1,55 +1,56 @@
 import React from "react";
 import Sketch from "react-p5";
+
+//////////////
 // HELPERS
 import { doorCrossing, roomDoorCrossing, roomDoorEntryCrossing, roomDoorBoundary, roomBoundary, wallBoundary } from './functions/crossing';
 import { roundToMult2 } from './functions/round';
 import { drawAllFloors } from './functions/floor';
 import { drawWalls, drawRooms } from './functions/building';
 import { displayDancers, updateDucks } from './functions/emojis';
-import { reachedDestination, getNextStep, showMouseLoc, showUserEllipses, showDestination, mouseDidMove, drawTextLoc } from './functions/destination';
-import { drawUser, drawUsers, checkUserClicked, seeUserClicked } from './functions/users';
+import { reachedDestination, getNextStep, showMouseLoc, showUserEllipses, showDestination, mouseDidMove } from './functions/destination';
+import { drawUser, drawUsers, checkUserClicked } from './functions/users';
 import { drawPlantRow, drawGrassPatch } from './functions/garden';
-import { addSwingDivs, displaySwingDivs, displayOakDivs, displayTreeDivs, displayBarDivs, displayTrashDivs, checkTrashDivsDouble, addTrashDivs, displayRoomLabelDivs, addDoorDivs, addLightDivs, addColumnDivs, addTreeDivs, addBarDivs, addOakDivs, addFolderDivs, displayDoorDivs, displayLightDivs, displayColumnDivs, displayDivs, endDivDrag, updateDivs, checkDivPress, displayFolderDivs, checkFolderDivsDouble, addRoomLabelDivs } from './functions/divs';
+import { addTableDivs, displayTableDivs, addSwingDivs, displaySwingDivs, displayOakDivs, displayTreeDivs, displayBarDivs, displayTrashDivs, checkTrashDivsDouble, addTrashDivs, displayRoomLabelDivs, addDoorDivs, addLightDivs, addColumnDivs, addTreeDivs, addBarDivs, addOakDivs, addFolderDivs, displayDoorDivs, displayLightDivs, displayColumnDivs, displayDivs, endDivDrag, updateDivs, checkDivPress, displayFolderDivs, checkFolderDivsDouble, addRoomLabelDivs } from './functions/divs';
 import TreeSlider from './components/TreeSlider';
 
+//////////////
 // COMPONENTS
 import Wall from "./components/Wall";
 import Room from "./components/Room";
-
-
-// import Garden from './components/Garden';
 import Duck from './components/Duck';
 import Dancer from './components/Dancer';
-
-
 // import MiniMap from "./components/MiniMap";
+
+
+//////////////
+// CONFIG
 import { globalConfig } from "../constants";
 
-// BUILDING
+//////////////
+// BUILDING 
 var walls = [];
 var rooms = [];
 var roomTextures = [];
 var eyeIcon;
 var doors = [];
 var doorImgs = [];
-// var lights = [];
-var lightImgs = [];
-// var columns = [];
 var floorTex;
-// var folders = [];
-// var roomLabels = [];
-// var ivies = [];
-// var poolImg;
+var lightImgs = [];
+var tableImgs = [];
+var trashFiles = [];
+var columnGif;
 
-// var trashCans = [];
-var trashFiles =[];
-var flowerRow;
-// var garden;
-// var grass0;
-// var grass1;
-var shrub;
+//////////////
+// PLANTS 
+var flowerRow, ivory, tree, oakImg;
 var treeSlider;
 
+//////////////
+// ICONS
+var txtFile, instaImg;
+
+//////////////
 // EMOJIS
 var ducks = [];
 var duckImg;
@@ -57,27 +58,17 @@ var dancers = [];
 var dancerImgs = [];
 var baby;
 
-
+//////////////
+// FONT
 var dogica;
 
-// DRAGGABLE
+//////////////
+// DRAGGABLE DIVS
 var divs = {};
-var columns = [];
-var tree, columnGif, oakImg, txtFile, instaImg;
 
 // var miniMap;
 
-
-var palm;
-var cloud;
-// var stairs, stairsBig;
-// var horizPlant, shrub;
-// var grasses = [];
-
-
-
-
-
+//////////////
 // MOVEMENT
 var isWalking = false;
 var stepTo = { x: 0, y: 0 };
@@ -85,36 +76,22 @@ var userEase = { x: 0, y: 0 };
 var destination = { x: null, y: null, time: null };
 var lastMouseMove = 0;
 
+//////////////
+// PROPS
 var user, users, roomCount, isMobile;
-
-
-
 
 
 export default (props) => {
   user = props.user;
   users = props.users;
   isMobile = props.isMobile;
-  // const users = props.users;
   roomCount = props.roomCount;
 
   const preload = (p5) => {
     const url = "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/gallery/";
 
-
-    // stairs = p5.loadImage(url + "grass/stairs.png");
-    // stairsBig = p5.loadImage(url + "grass/stairsbig.png");
-    // shrub = p5.loadImage(url + "grass/shrub_sm.jpg");
-    // horizPlant = p5.loadImage(url + "grass/seamless_shrub.jpg");
-    // grasses[0] = p5.loadImage(url + "grass/100.png");
-    // grasses[1] = p5.loadImage(url + "grass/200.png");
-    // grasses[2] = p5.loadImage(url + "grass/400.png");
-    // grasses[3] = p5.loadImage(url + "grass/1000.png");
-
-
-    // palm = p5.loadImage(url + "grass/palm.png");
-    // cloud = p5.loadImage(url + "cloud.png");
-
+    //////////////
+    // building textures
     floorTex = p5.loadImage(url + "concrete-512.jpg");
     doorImgs[0] = p5.loadImage(url + "door/frame2.png");
     doorImgs[1] = p5.loadImage(url + "door/leftdoor2.png");
@@ -123,44 +100,53 @@ export default (props) => {
     roomTextures[2] = p5.loadImage(url + "rooms/left.png");
     eyeIcon = p5.loadImage(url + "eye.png")
 
-    lightImgs[0] = p5.loadImage(url + "tracklights/tracklights_vert.jpg");
-    lightImgs[1] = p5.loadImage("/assets/s3-bucket/homePage/light_shadow.png");
-    lightImgs[2] = p5.loadImage(url + "tracklights/tracklights_dark_vert.jpg");
-    lightImgs[3] = p5.loadImage("/assets/s3-bucket/homePage/black_shadow.png");
-
-    tree = p5.loadImage(url + "grass/tree.png");
-    // columnGif = p5.loadImage(url + "column.gif");
-    columnGif = p5.loadGif("/assets/column.gif"); //url + "column.gif");
-
+    //////////////
+    // emojis
     duckImg = p5.loadImage(url + "duck.png");
     dancerImgs[0] = p5.loadImage(url + "dancers/dancer0.png");
     dancerImgs[1] = p5.loadImage(url + "dancers/dancer1.png");
     dancerImgs[2] = p5.loadImage(url + "dancers/dancer2.png");
+    baby = p5.loadImage(url + "swing/baby.png");
 
-
-    // poolImg = p5.loadImage(url + "waves.gif"); 
-    shrub = p5.loadImage("/assets/s3-bucket/homePage/grass/ivory.png");
-    // grass0 = p5.loadImage("/assets/s3-bucket/homePage/grass/test/200_fern.png");
-    // grass1 = p5.loadImage("/assets/s3-bucket/homePage/grass/test/400.png");
-    flowerRow = p5.loadImage("/assets/s3-bucket/homePage/grass/test/cac3.png")
-
-    // shrub = p5.loadImage("/assets/s3-bucket/homePage/grass/test/200_fern.png");
+    //////////////
+    // plants
+    tree = p5.loadImage(url + "grass/tree.png");
+    ivory = p5.loadImage(url + "grass/ivory.png");
+    flowerRow = p5.loadImage(url + "grass/cac3.png")
     oakImg = p5.loadImage(url + "grass/oak.png");
-    dogica = p5.loadFont(url + "fonts/dogica.ttf");
 
+    //////////////
+    // folder icons
     txtFile = p5.loadImage("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/waveforms/txt.png");
     instaImg = p5.loadImage(url + "instagram.png");
-    // garden = new Garden(p5);
+    trashFiles[0] = p5.loadImage(url + "trash/fullrec.png")
+    trashFiles[3] = p5.loadImage(url + "trash/trash0.png")
+    trashFiles[2] = p5.loadImage(url + "trash/trash1.png")
+    trashFiles[1] = p5.loadImage(url + "trash/trash2.png")
 
-    trashFiles[0] = p5.loadImage("/assets/s3-bucket/homePage/trash/fullrec.png")
-    trashFiles[3] = p5.loadImage("/assets/s3-bucket/homePage/trash/trash0.png")
-    trashFiles[2] = p5.loadImage("/assets/s3-bucket/homePage/trash/trash1.png")
-    trashFiles[1] = p5.loadImage("/assets/s3-bucket/homePage/trash/trash2.png")
+    //////////////
+    // tables
+    tableImgs[0] = p5.loadImage(url + "table/um_open.png")
+    tableImgs[1] = p5.loadImage(url + "table/um_closed.png")
 
-    baby = p5.loadImage("/assets/s3-bucket/homePage/swing/baby.png");
+    //////////////
+    // lights
+    lightImgs[0] = p5.loadImage(url + "tracklights/tracklights_vert.jpg");
+    lightImgs[1] = p5.loadImage(url + "tracklights/light_shadow.png");
+    lightImgs[2] = p5.loadImage(url + "tracklights/tracklights_dark_vert.jpg");
+    lightImgs[3] = p5.loadImage(url + "tracklights/black_shadow.png");
+
+    // columnGif = p5.loadImage(url + "column.gif");
+    columnGif = p5.loadGif("/assets/column.gif"); //not sure why this one has a cors issue
+
+    // font
+    dogica = p5.loadFont(url + "fonts/dogica.ttf");
+
   }
 
-
+  ////////////////////////////////////////////////////////////////////////
+  // INITIALIZE
+  ////////////////////////////////////////////////////////////////////////
   const setup = (p5, canvasParentRef) => {
     // use parent to render the canvas in this ref
     // (without that p5 will render the canvas outside of your component)
@@ -168,105 +154,53 @@ export default (props) => {
     cnv.parent(canvasParentRef);
     cnv.mousePressed(() => triggerMove(props.setUserActive, p5));
 
-    let sc = globalConfig.scaler;
-    // ivies = [[]]
-    // for (let x = 0; x < 5; x++) {
-    //   for (let y = 0; y < 5; y++) {
-    //     ivies[y][x] = p5.shrub.get(x * sc, y * sc, sc, sc);
-    //   }
-    // }
+    initBuilding(p5);
+    initEmojis(p5);
+    initDivs(p5);
+    treeSlider = new TreeSlider(31, 40, 2);
+    // miniMap = new MiniMap(p5, 50, p5.windowHeight - 200 - 80, 200, 200);
+    stepTo = { x: user.x, y: user.y };
+    p5.textFont(dogica, 14);
+    p5.frameRate(20);
 
+    props.loadingDone();
+  };
 
+  const initEmojis = (p5) => {
+    for (let i = 0; i < 8; i++) {
+      ducks.push(new Duck(p5, 300, 2200, duckImg));
+    }
+    dancers[0] = new Dancer(p5, dancerImgs[0], 10, 160, false);
+    dancers[1] = new Dancer(p5, dancerImgs[1], 200, 380, false);
+    dancers[2] = new Dancer(p5, dancerImgs[2], 300, 150, true);
+  }
+
+  const initBuilding = (p5) => {
     for (let i = 0; i < 2; i++) {
       walls.push(new Wall(p5, i, globalConfig));
     }
     for (let i = 0; i < 13; i++) {
       rooms.push(new Room(p5, i));
     }
-
-    for (let i = 0; i < 5; i++) {
-      ducks.push(new Duck(p5, 300, 2200, duckImg));
-    }
-
-    dancers[0] = new Dancer(p5, dancerImgs[0], 10, 160, false);
-    dancers[1] = new Dancer(p5, dancerImgs[1], 200, 380, false);
-    dancers[2] = new Dancer(p5, dancerImgs[2], 300, 150, true);
-
-
-    // miniMap = new MiniMap(p5, 50, p5.windowHeight - 200 - 80, 200, 200);
-
-
-    initDivs(p5);
-    treeSlider = new TreeSlider(31, 40, 2);
-   
-
-    stepTo = { x: user.x, y: user.y };
-
-    p5.frameRate(20);
-    props.loadingDone();
-
-    p5.textFont(dogica, 14);
-
-  };
-
+  }
 
   const initDivs = (p5) => {
-
-
     addOakDivs(divs, oakImg, p5);
     addDoorDivs(divs, doors, doorImgs, p5);
     addLightDivs(divs, lightImgs, p5);
     addColumnDivs(divs, columnGif, lightImgs[3], p5);
     addTreeDivs(divs, tree, p5);
-
-
+    addTableDivs(divs, tableImgs, p5);
     addBarDivs(divs, lightImgs[3], p5);
-    
     addTrashDivs(divs, trashFiles, lightImgs[3], p5);
-
-
     addFolderDivs(divs, instaImg, txtFile, p5);
     addRoomLabelDivs(divs, eyeIcon, p5);
-
     addSwingDivs(divs, baby, null, p5);
-   
   }
 
-
-
-
-
-
-
-
-  const drawTest = (p5) => {
-    p5.clear();
-
-    // NOTE: Do not use setState in the draw function or in functions that are executed
-    // in the draw function...
-    // please use normal variables or class properties for these purposes
-    p5.push();
-    p5.translate(p5.windowWidth / 2, p5.windowHeight / 2);
-
-    p5.push();
-    // p5.translate(-user.x, -user.y);
-    p5.translate(-userEase.x, -userEase.y);
-
-    // if (img) p5.image(img, 0, 0);
-
-    p5.push();
-    p5.translate(globalConfig.x * globalConfig.scaler, globalConfig.y * globalConfig.scaler)
-
-    p5.rect(0, 0, 2000, 1000);
-
-    p5.pop();
-    p5.pop();
-    p5.pop();
-
-    mouseStep();
-    updateUserEase(p5);
-  }
-
+  ////////////////////////////////////////////////////////////////////////
+  // DRAW
+  ////////////////////////////////////////////////////////////////////////
   const draw = (p5) => {
     p5.clear();
 
@@ -277,44 +211,40 @@ export default (props) => {
     p5.translate(p5.windowWidth / 2, p5.windowHeight / 2);
 
     p5.push();
-    // p5.translate(-user.x, -user.y);
     p5.translate(-userEase.x, -userEase.y);
 
-    // if (img) p5.image(img, 0, 0);
 
     p5.push();
     p5.translate(globalConfig.x * globalConfig.scaler, globalConfig.y * globalConfig.scaler)
 
-    // drawPools(poolImg, p5);
-
-    
-
+    //////////////
+    // floors
     drawAllFloors(floorTex, p5);
-    drawGrassPatch(shrub, shrub, p5);
 
+    //////////////
+    // plants
+    drawGrassPatch(ivory, ivory, p5);
     drawPlantRow(-5, 17, 1, 1, flowerRow, p5);
     drawPlantRow(0, 22, 1, 1, flowerRow, p5);
     drawPlantRow(5, 27, 1, 1, flowerRow, p5);
-
     drawPlantRow(20, 21, 1, 1, flowerRow, p5);
     drawPlantRow(27, 15, 1, 1, flowerRow, p5);
 
-    // drawPlantRow(-10, -3, 9, 1, flowerRow, p5);
-    // drawShrubPatch(shrub, p5);
-
+    //////////////
+    // building
     drawWalls(walls, p5);
     drawRooms(rooms, roomTextures, eyeIcon, roomCount, p5);
     displayRoomLabelDivs(dogica, roomCount, userEase.x, userEase.y, divs);
-    
-    // drawOuterBoundary(p5);
 
-    // garden.display(p5);
-
-    
+    //////////////
+    // emojis
     displayDancers(dancers);
     updateDucks(user.hasCheese, userEase.x, userEase.y, ducks);
-    displayOakDivs(userEase.x, userEase.y, divs);
 
+    //////////////
+    // draggable
+    displayOakDivs(userEase.x, userEase.y, divs);
+    displayTableDivs(userEase.x, userEase.y, divs);
     p5.textFont(dogica, 10);
     displaySwingDivs(userEase.x, userEase.y, divs);
 
@@ -324,22 +254,25 @@ export default (props) => {
     p5.pop();
     p5.pop();
 
-
-    // drawTextLoc(p5);
+    //////////////
+    // step visualization
     mouseStep();
     showTarget(p5);
 
+    //////////////
+    // drawing
     drawOverTarget(p5);
-
     drawUser(user, p5);
     drawOverUser(p5);
 
+    //////////////
+    // updating
     updateDivs(userEase, users, doors, divs);
     treeSlider.update(p5);
     updateUserEase(p5);
 
   };
-  
+
 
   const drawOverTarget = (p5) => {
     p5.push();
@@ -347,13 +280,7 @@ export default (props) => {
     p5.translate(-userEase.x, -userEase.y);
     p5.translate(globalConfig.x * globalConfig.scaler, globalConfig.y * globalConfig.scaler)
 
-    // p5.textFont(dogica, 12);
-    // displayFolderDivs(divs);
-    // displayTrashDivs(userEase.x, userEase.y, divs);
-    
-  
     drawUsers(userEase, users, dogica, p5);
-    
 
     p5.pop();
   }
@@ -366,23 +293,21 @@ export default (props) => {
     p5.translate(-userEase.x, -userEase.y);
     p5.translate(globalConfig.x * globalConfig.scaler, globalConfig.y * globalConfig.scaler)
 
-    // displayDivs(userEase.x, userEase.y, divs);
     displayDoorDivs(userEase.x, userEase.y, divs);
     displayBarDivs(userEase.x, userEase.y, divs);
     displayTreeDivs(userEase.x, userEase.y, treeSlider.getValue(p5), divs);
- 
     displayLightDivs(userEase.x, userEase.y, divs);
     displayColumnDivs(userEase.x, userEase.y, divs);
-    
+
     p5.textFont(dogica, 12);
     displayFolderDivs(divs);
     displayTrashDivs(userEase.x, userEase.y, divs);
-    
-    
+
     treeSlider.display(p5);
 
     p5.pop();
   }
+
   ////////////////////////////////////////////////////////////////////////
   // MOVEMENT
   ////////////////////////////////////////////////////////////////////////

@@ -9,6 +9,7 @@ import RoomLabel from '../components/RoomLabel';
 import Trash from '../components/Trash';
 import TrashFolder from '../components/TrashFolder';
 import Swing from '../components/Swing';
+import Table from '../components/Table';
 
 import { globalConfig } from '../../constants';
 
@@ -86,7 +87,7 @@ export const addTrashDivs = (divs, trashFiles, shadow, p5) => {
     let labels = [
         { x0: 18 * sc, y0: 27.5 * sc },
         { x0: 30 * sc, y0: 22.5 * sc },
-        { x0: -8.5 * sc, y0: 3 * sc }
+        { x0: -8 * sc, y0: 3 * sc }
     ];
 
     for (let i = 0; i < 3; i++) {
@@ -136,6 +137,20 @@ export const addSwingDivs = (divs, baby, chain, p5) => {
     divs.swings.push(new Swing(0, -4.1, 36.8, 100, 190, p5, baby, chain));
 }
 
+export const addTableDivs = (divs, tableImgs, p5) => {
+    let sc = globalConfig.scaler;
+    divs.tables = [];
+    let tables = [
+        {x: -9, y: -2.25},
+        {x: -4, y: -2.25},
+        {x: -4, y: 2.75}
+    ];
+    for (let i = 0; i < 3; i++) {
+        let {x, y} = tables[i];
+        let table = new Table(i, x, y, sc*3, sc*3, p5, tableImgs[0], tableImgs[1]);
+        divs.tables.push(table);
+    }
+}
 
 export const addBarDivs = (divs, lightImg, p5) => {
     divs.bars = [];
@@ -232,6 +247,13 @@ export const displayOakDivs = (userX, userY, divs) => {
     for (const oak of divs.oaks) {
         oak.display(userX, userY);
         oak.displayToolBar(userX, userY);
+    }
+}
+
+export const displayTableDivs = (userX, userY, divs) => {
+    for (const table of divs.tables) {
+        table.display(userX, userY);
+        table.displayToolBar(userX, userY);
     }
 }
 
