@@ -33,6 +33,7 @@ import Confessions from '../components/sketches/Confessional/Confessions';
 import Loop from '../components/sketches/Loop/Loop';
 import Flush from '../components/sketches/Flush/Flush';
 import Oogle from '../components/sketches/Oogle/Oogle';
+import Yosemite from '../components/sketches/Yosemite/Yosemite';
 
 // under construction
 // import Altar from '../components/sketches/Test/Altar/Altar';
@@ -45,7 +46,6 @@ import Dig from '../components/sketches/Test/Dig/Dig';
 import Blinds from '../components/sketches/Blinds/Blinds';
 // import ClickMe from '../components/sketches/Test/ClickMe/ClickMe';
 import MoonLight from '../components/sketches/Test/MoonLight/MoonLight';
-import Yosemite from '../components/sketches/Test/Yosemite/Yosemite';
 
 // pages
 import About from '../components/pages/About';
@@ -364,8 +364,8 @@ class App extends React.Component {
     if (rm == "") rm = "gallery";
     else if (rm == "confessions") rm = "cloud-confessional";
 
-    const pages = ["gallery", "macbook-air", "wet-streams", "hard-drives-on-seashores", "blind-eye", "cloud-confessional", "xfinity-depths", "esc-to-mars", "jungle-gyms", "flush", "home-page", "wasted-days"];
-    const pages2 = ["statement", "thesis", "bio", "about"];
+    const pages = ["gallery", "macbook-air", "wet-streams", "hard-drives-on-seashores", "blind-eye", "cloud-confessional", "xfinity-depths", "esc-to-mars", "jungle-gyms", "flush", "home-page", "wasted-days", "yosemite"];
+    const pages2 = ["statement", "thesis", "bio", "about", "credits"];
     if (!pages.includes(rm) && !pages2.includes(rm)) rm = "";
 
     return rm;
@@ -436,10 +436,10 @@ class App extends React.Component {
               <Route path="/flush" render={() => (<Flush />)} />
               <Route path="/home-page" render={() => (<Oogle />)} />
               <Route path="/blind-eye" render={() => (<Blinds />)} />
+              <Route path="/yosemite" component={Yosemite} />
 
               <Route path="/dig" render={() => (<Dig addClass={this.addClass} />)} />
               {<Route path="/moon-light" component={MoonLight} />}
-              <Route path="/yosemite" component={Yosemite} />
               {/*<Route  path="/three" component={Three} />*/}
              
               <Route path="/about" render={() => (<About ui={this.props.ui} />)} />

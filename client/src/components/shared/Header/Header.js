@@ -97,7 +97,7 @@ class Header extends React.Component {
 
   getMainTitle = () => {
     let title = "losing my dimension";
-    if (this.props.ui.width < 445) 
+    if (this.props.currentPage !== "gallery" && this.props.ui.width < 445) 
       title = <span className="xxsmallLogo">losing my<br></br>dimension</span>;
     return title;//"losing my dimension";
     // return this.props.currentPage; // === "gallery"?"losing my dimension":this.props.currentPage;
@@ -149,6 +149,7 @@ class Header extends React.Component {
       { title: "blind eye", link: "/blind-eye", shortcut: "&#x2318;9" },
       { title: "flush", link: "/flush", shortcut: "&#x2318;10" },
       { title: "home page", link: "/home-page", shortcut: "&#x2318;11" },
+      { title: "yosemite", link: "/yosemite", shortcut: "&#x2318;12" },
       // {title: "i got the feels", link:"/i-got-the-feels", shortcut: "&#x2318;8"},
       // {title: "losing my dimension", link:"/losing-my-dimension", shortcut: "&#x2318;9"},
     ];

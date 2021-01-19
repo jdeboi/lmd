@@ -1,5 +1,5 @@
 import React from 'react';
-import Frame from '../../../shared/Frame/Frame';
+import Frame from '../../shared/Frame/Frame';
 import './Yosemite.css';
 
 class Yosemite extends React.Component {

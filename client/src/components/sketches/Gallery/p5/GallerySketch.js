@@ -283,7 +283,8 @@ export default (props) => {
     p5.translate(-userEase.x, -userEase.y);
     p5.translate(globalConfig.x * globalConfig.scaler, globalConfig.y * globalConfig.scaler)
 
-    drawUsers(userEase, users, dogica, p5);
+    if (users)
+      drawUsers(userEase, users, dogica, p5);
 
     p5.pop();
   }

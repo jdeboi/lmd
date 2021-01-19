@@ -49,7 +49,9 @@ function getLandscapeSmall(width, height, isRelative) {
     const h = height - padding - heading - barH;
     // const x = barBot + padding;
     const x = padding;
-    const y = heading;
+    let y = padding/2;
+    if (!isRelative)
+        y += heading;
     return { w, h, x, y };
 }
 

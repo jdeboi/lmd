@@ -20,17 +20,17 @@ const ClientManager = require('./websockets/ClientManager');
 io.on('connection', ClientManager);
 
 
-const TweetFinder = require('./TweetFinder');
+const TweetFinder = require('./scripts/TweetFinder');
 
 
 app.post('/api/post/critique', cors(), async (req, res, next) => {
   try {
-    fs.readFile('./critiques.json', function (err, data) {
+    fs.readFile('./data/critiques.json', function (err, data) {
       var json = JSON.parse(data)
       const crit = req.body;
       // crit.time = new Date();
       json.push(crit);
-      fs.writeFile('./critiques.json', JSON.stringify(json), 'utf-8', function (err) {
+      fs.writeFile('./data/critiques.json', JSON.stringify(json), 'utf-8', function (err) {
         if (err) throw err
         console.log('ADDED CRIT', crit);
         io.emit("critique", crit);
@@ -47,7 +47,7 @@ app.get('/api/get/critiques/:room', cors(), async (req, res, next) => {
   try {
     const room = req.params.room;
     console.log("GET ROOM CRITS", room);
-    fs.readFile('critiques.json', function (err, data) {
+    fs.readFile('./data/critiques.json', function (err, data) {
       const json = JSON.parse(data)
       const crits = json.filter(crit => crit.room == room);
       res.json(crits);

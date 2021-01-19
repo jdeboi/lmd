@@ -1,29 +1,12 @@
-images to deal with
+# Losing My Dimension
 
-# test production locally
-npm run build
-npm install -g serve
-serve -s build
+[Live Site](https://losing-my-dimension.herokuapp.com/)
 
-socketIo
-https://github.com/justadudewhohacks/websocket-chat
-
-created using:
-
-https://medium.com/@chloechong.us/how-to-deploy-a-create-react-app-with-an-express-backend-to-heroku-32decfee6d18
-
-e.g.
-heroku config:set GITHUB_USERNAME=joesmith
-
-env variable
-https://devcenter.heroku.com/articles/heroku-local
-
-
-basically have to reinstall node if ec2 restarts unless you create AMI
-https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-up-node-on-ec2-instance.html
-
-cross origin on videos
-https://github.com/ml5js/ml5-library/issues/217
-
-heroku local with nodemon
-nodemon --exec "heroku local" --signal SIGTERM
+Tulane University MFA Thesis Exhibition  
+April 2021  
+Jenna deBoisblanc  
+[jdeboi.com](https://jdeboi.com)  
+  
+  
+## Tech Stack
+This is a MERN stack that uses javascript the libraries p5.js, Babylon.js, Three.js, paper.js, and others.

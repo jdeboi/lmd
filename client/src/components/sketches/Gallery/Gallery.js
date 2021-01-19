@@ -89,7 +89,7 @@ class Gallery extends React.Component {
     // const { zIndicesIcons, zIndicesFrames } = this.state;
     if (ui.loading)
       return (
-        <LoadingPage />
+        <LoadingPage ui={ui} />
       );
     return (
       <React.Fragment>

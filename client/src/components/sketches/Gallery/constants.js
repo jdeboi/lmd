@@ -56,7 +56,7 @@ export const domCoordsToP5World = (x, y) => {
 }
 
 export const rooms = [
-    { id: "B", title: "bathroom", label: "bathroom", x: -5, y: 12, rot: -90, dir: "right", about: "go pee" },
+    
     { id: 0, title: "gift-shop", label: "gift shop", x: 20, y: 22, rot: 90, dir: "left", about: "buy something!" },
     { id: 1, title: "macbook-air", label: "macbook air", x: 5, y: 22, rot: -90, dir: "right", about: "interior/exterior spaces online" },
     { id: 2, title: "wet-streams", label: "wet streams", x: 12, y: 13, rot: 0, dir: "bottom", about: "thinking about internet sexuality, online homemaking" },
@@ -70,6 +70,7 @@ export const rooms = [
     // {id: 9, title: "tbd", x: 20, y: 0, rot: 0, dir: "bottom"},
     { id: 10, title: "flush", label: "flush", x: 27, y: 5, rot: 90, dir: "left", about: "thinking about internet vortexes, blackholes, shitholes..." },
     { id: 11, title: "home-page", label: "home page", x: 27, y: 10, rot: 90, dir: "left", about: "thinking about digital privacy, digital/analog movement" },
+    { id: 12, title: "yosemite", label: "yosemite", x: -5, y: 12, rot: -90, dir: "right", about: "thinking about digital environmental idealism vs real world, anthropomorphic ecosystem collaps" },
 ];
 
 
