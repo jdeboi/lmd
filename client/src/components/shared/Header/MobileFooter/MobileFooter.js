@@ -28,7 +28,7 @@ class MobileFooter extends React.Component {
         if (this.hasFooter()) {
             return (
                 <div className={footerClass}>
-                    {this.props.user.room === "gallery" ? this.getMapButton() : null} 
+                    {this.props.user.room === "gallery" ? this.getMapButton() : null}
                     {/* this.getGalleryButton()} */}
                     {this.getChatButton()}
                     {this.getFAQButton()}

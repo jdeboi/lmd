@@ -150,16 +150,19 @@ export default (props) => {
   const setup = (p5, canvasParentRef) => {
     // use parent to render the canvas in this ref
     // (without that p5 will render the canvas outside of your component)
-    const cnv = p5.createCanvas(p5.windowWidth, p5.windowHeight);
-    cnv.parent(canvasParentRef);
-    cnv.mousePressed(() => triggerMove(props.setUserActive, p5));
-
+    
     initBuilding(p5);
     initEmojis(p5);
     initDivs(p5);
     treeSlider = new TreeSlider(31, 40, 2);
     // miniMap = new MiniMap(p5, 50, p5.windowHeight - 200 - 80, 200, 200);
     stepTo = { x: user.x, y: user.y };
+    
+    
+    const cnv = p5.createCanvas(p5.windowWidth, p5.windowHeight);
+    cnv.parent(canvasParentRef);
+    cnv.mousePressed(() => triggerMove(props.setUserActive, p5));
+
     p5.textFont(dogica, 14);
     p5.frameRate(20);
 
@@ -450,7 +453,7 @@ export default (props) => {
 
   const mouseReleased = (p5) => {
     endDivDrag(divs);
-    treeSlider.endDrag();
+    if (treeSlider) treeSlider.endDrag();
   }
 
   const windowResized = (p5) => {

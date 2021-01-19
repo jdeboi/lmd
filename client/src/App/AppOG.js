@@ -22,13 +22,13 @@ import HomePage from '../components/sketches/Gallery/HomePage';
 import MacbookAir from '../components/sketches/MacbookAir/MacbookAir';
 import JungleGyms from '../components/sketches/JungleGyms/JungleGyms';
 import HardDrives from '../components/sketches/HardDrives/HardDrives';
-import Spacetimes from '../components/sketches/Spacetimes/Spacetimes';
+import Spacetimes from '../components/sketches/Wasted/Wasted';
 import Mars from '../components/sketches/Mars/Mars';
 import WetStreams from '../components/sketches/WetStreams/WetStreams';
-import WaveForms from '../components/sketches/WaveForms/WaveForms';
-import Confessions from '../components/sketches/WaveForms/Confessions';
+import WaveForms from '../components/sketches/Confessional/Confessional';
+import Confessions from '../components/sketches/Confessional/Confessions';
 import Loop from '../components/sketches/Loop/Loop';
-import VorTech from '../components/sketches/VorTech/VorTech';
+import VorTech from '../components/sketches/Flush/Flush';
 import Oogle from '../components/sketches/Oogle/Oogle';
 
 // under construction

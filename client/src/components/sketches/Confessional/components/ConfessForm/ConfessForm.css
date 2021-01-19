@@ -1,0 +1,129 @@
+button.standardButton {
+  font-size: 12px;
+  padding: 10px;
+  min-width: 140px;
+  text-align: center;
+  color: black;
+  border-radius: 6px;
+  border: 2px solid black;
+  color: white;
+  transition: all 0.2s ease-in-out; }
+  button.standardButton:hover {
+    transform: scale(1.05); }
+  button.standardButton.primary {
+    background: black;
+    color: white; }
+  button.standardButton.secondary {
+    background-color: white;
+    color: black;
+    border: 2px solid black; }
+
+input.standardInput {
+  font-size: 12px;
+  padding: 15px 10px;
+  text-align: left;
+  border: 2px solid black;
+  color: black;
+  border-radius: 6px; }
+
+input.standardInputWhite {
+  font-size: 12px;
+  padding: 15px 10px;
+  text-align: left;
+  border: 2px solid white;
+  color: white;
+  border-radius: 6px; }
+
+.confessional {
+  font-size: 12px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3em; }
+  .confessional .txt-box {
+    padding-bottom: 10px; }
+    .confessional .txt-box .multitext {
+      padding: 10px;
+      box-sizing: border-box; }
+      .confessional .txt-box .multitext textarea {
+        height: 40px;
+        width: 100%;
+        color: white; }
+  .confessional input {
+    padding: 10px;
+    width: 150px;
+    color: white; }
+  .confessional .lineSp {
+    padding-bottom: 10px; }
+  .confessional .line0 {
+    display: flex;
+    flex-direction: row; }
+    .confessional .line0 .text-line0 {
+      padding: 0px 20px 20px 0; }
+  .confessional .text-line2 {
+    padding-bottom: 5px; }
+  .confessional .MuiSelect-selectMenu {
+    min-height: 14px; }
+  .confessional .MuiInputLabel-outlined.MuiInputLabel-shrink {
+    color: #00000066; }
+  .confessional .MuiOutlinedInput-multiline,
+  .confessional .MuiOutlinedInput-inputMarginDense {
+    background-color: rgba(0, 0, 50, 0.1);
+    color: #00000066;
+    max-height: 80px; }
+  .confessional .confessional-time {
+    display: flex;
+    flex-direction: row; }
+    .confessional .confessional-time .MuiSelect-selectMenu {
+      height: 14px; }
+    .confessional .confessional-time .field {
+      flex: 1 1 auto;
+      padding: 0px 5px 0px 5px;
+      min-width: 150px; }
+
+.confessional-frame .confessional {
+  color: white;
+  width: 370px; }
+  .confessional-frame .confessional button {
+    height: 36px;
+    width: 100%;
+    background-color: rgba(0, 0, 50, 0.2); }
+
+.confessional-modal .CenterModal-Container {
+  display: flex;
+  flex-direction: column;
+  overflow: scroll; }
+
+.confessional-modal .confessional {
+  color: #6666cc;
+  padding: 0px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  line-height: 1.5em; }
+  .confessional-modal .confessional .lineSp {
+    margin-bottom: 10px; }
+  .confessional-modal .confessional select,
+  .confessional-modal .confessional input,
+  .confessional-modal .confessional textarea {
+    color: #111199; }
+  .confessional-modal .confessional ::placeholder {
+    color: #aaaadd; }
+  .confessional-modal .confessional .txt-box .multitext textarea {
+    color: #111199; }
+  .confessional-modal .confessional select {
+    height: 46px;
+    padding: 10px; }
+  .confessional-modal .confessional input {
+    width: 100px; }
+  .confessional-modal .confessional .txt-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column; }
+    .confessional-modal .confessional .txt-box .multitext {
+      flex: 1;
+      display: flex;
+      flex-direction: column; }
+      .confessional-modal .confessional .txt-box .multitext textarea {
+        flex: 1; }

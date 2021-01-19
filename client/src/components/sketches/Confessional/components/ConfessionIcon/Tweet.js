@@ -1,7 +1,7 @@
 import React from 'react';
 import { faRetweet } from "@fortawesome/free-solid-svg-icons";
 import { faComment, faHeart } from "@fortawesome/free-regular-svg-icons";
-import { faTwitter } from "@fortawesome/free-brands-svg-icons";
+// import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class Tweet extends React.Component {

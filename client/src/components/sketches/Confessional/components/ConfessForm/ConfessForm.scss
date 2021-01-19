@@ -1,0 +1,165 @@
+@import "../../../../../styles/constants.scss";
+
+.confessional {
+    font-size: 12px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3em;
+
+    .txt-box {
+        padding-bottom: 10px;
+
+        .multitext {
+            padding: 10px;
+            box-sizing: border-box;
+
+            textarea {
+                height: 40px;
+                width: 100%;
+                color: white;
+            }
+        }
+    }
+
+    input {
+        padding: 10px;
+        width: 150px;
+        color: white;
+    }
+
+    .lineSp {
+        padding-bottom: 10px;
+    }
+
+    .line0 {
+        display: flex;
+        flex-direction: row;
+
+        .text-line0 {
+            padding: 0px 20px 20px 0;
+        }
+    }
+
+    // .line1 {
+    //     padding: 10px 0 20px 0;
+    // }
+    .text-line2 {
+        padding-bottom: 5px;
+    }
+
+    .MuiSelect-selectMenu {
+        min-height: 14px;
+    }
+
+    .MuiInputLabel-outlined.MuiInputLabel-shrink {
+        // color: $tweetColPrimary;
+        color: #00000066;
+    }
+
+    .MuiOutlinedInput-multiline,
+    .MuiOutlinedInput-inputMarginDense {
+        background-color: rgba(0, 0, 50, 0.1);
+        // color: $tweetColPrimary;
+        color: #00000066;
+        // border-color: white;
+        max-height: 80px;
+    }
+    .confessional-time {
+        display: flex;
+        flex-direction: row;
+
+        .MuiSelect-selectMenu {
+            height: 14px;
+        }
+
+        .field {
+            flex: 1 1 auto;
+            // width: 150px;
+            padding: 0px 5px 0px 5px;
+            min-width: 150px;
+        }
+    }
+}
+
+.confessional-frame {
+    .confessional {
+        color: white;
+        width: 400px-30px;
+     
+
+        button {
+            height: 36px;
+            width: 100%;
+            // color: white;
+            // color: #00000066;
+            // border-color: white;
+            background-color: rgba(0, 0, 50, 0.2);
+        }
+    }
+}
+
+.confessional-modal {
+    .CenterModal-Container {
+        display: flex;
+        flex-direction: column;
+
+        overflow: scroll;
+    }
+
+    .confessional {
+        color: $tweetColPrimary;
+        padding: 0px;
+
+        .lineSp {
+            margin-bottom: 10px;
+        }
+        select,
+        input,
+        textarea {
+            color: $tweetColTertiary;
+        }
+        ::placeholder {
+            color: $tweetColSecondary;
+        }
+        .txt-box {
+            .multitext {
+                textarea {
+                    color: $tweetColTertiary;
+                }
+            }
+        }
+
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+
+        font-size: 16px;
+        line-height: 1.5em;
+
+        select {
+            height: 46px;
+            padding: 10px;
+        }
+        input {
+            width: 100px;
+        }
+
+        
+        .txt-box {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            .multitext {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                textarea {
+                    flex: 1;
+                }
+            }
+        }
+
+        
+    }
+}

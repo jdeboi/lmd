@@ -9,15 +9,6 @@
     /* #6c6c6c; */
     background: transparent;
     position: absolute; }
-  .Gallery .loading {
-    position: absolute;
-    top: 45%;
-    width: 100%;
-    font-size: 50px;
-    text-align: center;
-    color: white;
-    vertical-align: middle;
-    font-weight: normal; }
   .Gallery .Frame {
     pointer-events: none; }
     .Gallery .Frame .titlebar {

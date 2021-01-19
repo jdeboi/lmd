@@ -10,7 +10,7 @@ class Emojis extends React.Component {
   render() {
     const {emojis} = this.props;
     return (
-      <div className="emojis">
+      <div className="confession-emojis">
       {emojis?this.getEmojis():<div></div>}
       </div>
     );

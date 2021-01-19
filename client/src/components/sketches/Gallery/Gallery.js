@@ -4,6 +4,7 @@ import "./Gallery.css";
 import Sketch from './p5/GallerySketch';
 import MiniMap from './MiniMap/MiniMap';
 import { wineLocation, djLocation } from './constants';
+import LoadingPage from '../../shared/LoadingPage/LoadingPage';
 
 // store
 import { connect } from 'react-redux';
@@ -32,6 +33,7 @@ class Gallery extends React.Component {
 
     this.state = {
       keyDown: false,
+      numEllipses: 0,
       // zIndex: [3, 4, 5, 6],
       // zIndicesIcons: initZIndicesIcons(),
       // zIndicesFrames: initZIndicesFrames(),
@@ -42,7 +44,17 @@ class Gallery extends React.Component {
   }
 
   componentDidMount() {
+    this.loadingInterval = setInterval(this.cycleEllipses, 300);
     // window.addEventListener("resize", this.handleResize);
+  }
+
+  componentWillUnmount() {
+    if (this.loadingInterval)
+      clearInterval(this.loadingInterval);
+  }
+
+  cycleEllipses = () => {
+    this.setState({ numEllipses: (this.state.numEllipses + 1) % 4 })
   }
 
   // newFrameToTop = (id) => {
@@ -69,6 +81,7 @@ class Gallery extends React.Component {
 
   loadingDone = () => {
     this.props.doneLoadingApp();
+    clearInterval(this.loadingInterval);
   }
 
   getHomeComponents = () => {
@@ -76,7 +89,7 @@ class Gallery extends React.Component {
     // const { zIndicesIcons, zIndicesFrames } = this.state;
     if (ui.loading)
       return (
-        <div className="backgroundCover"><div className="loading">LOADING</div></div>
+        <LoadingPage />
       );
     return (
       <React.Fragment>
@@ -85,6 +98,11 @@ class Gallery extends React.Component {
 
       </React.Fragment>
     )
+  }
+
+  getEllipses = () => {
+    const str = "...";
+    return str.substring(0, this.state.numEllipses);
   }
 
   getVolume = () => {

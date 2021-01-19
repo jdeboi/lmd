@@ -60,6 +60,7 @@ class Welcome extends React.Component {
         onHide={this.onHide}
         ui={ui}
         z={2500}
+        isRelative={false}
         classN="Welcome"
         content={content}
         buttons={buttons}

@@ -14,17 +14,19 @@ class ListItem extends React.PureComponent {
     let classn = classN;
     classn += (shortcut === '' || shortcut === null) ? ' noShortcut': ' shortcut';
 
-
-    if (link && link !== '') {
+    if (title === "thesis") {
       return (
-        <Link to={link}>
-        <li key={title} className={classn}>{this.getMenuItem(title, shortcut)}</li>
-        </Link>
+        <li className={classn}><a href={"/thesis.pdf"} target="_blank">thesis</a></li>
+      )
+    }
+    else if (link && link !== '') {
+      return (
+          <li className={classn}><Link to={link}>{this.getMenuItem(title, shortcut)}</Link></li>
       );
     }
 
     return (
-      <li key={title} className={classn} onClick={callback} shortcut={shortcut}>{title}</li>
+      <li className={classn} onClick={callback} shortcut={shortcut}>{title}</li>
     );
   }
 

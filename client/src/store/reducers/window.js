@@ -21,7 +21,8 @@ const initialState = {
 };
 
 function getHasFooter(w, h) {
-    return (w < 788 || h < 600);
+    //788
+    return (w < 817 || h < 600);
 }
 
 function getOrientation(w, h) {
@@ -36,7 +37,7 @@ function getWindowSize(w) {
     if (!w)
         return 'medium';
     else if (w < 340) 
-        return 'xxsmal';
+        return 'xxsmall';
     else if (w < 480)
         return 'xsmall';
     else if (w < 788)

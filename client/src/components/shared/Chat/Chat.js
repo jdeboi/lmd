@@ -18,7 +18,7 @@ import { setOneMenu, hideChat, toggleChat } from '../../../store/actions/menuIte
 import { addMessage, resetMessgeNotification} from '../../../store/actions/messages';
 import { addWine, addCocktail, addCheese } from '../../../store/actions/user';
 import { setUserActiveChat } from '../../../store/actions/userActiveChat';
-import { setSong } from '../../../store/actions/music';
+import { setRandomSong, setSong } from '../../../store/actions/music';
 
 import { wineLocation } from '../../sketches/Gallery/constants';
 
@@ -240,7 +240,7 @@ class Chat extends React.Component {
       const lc = txt.toLowerCase();
       phrase = "";
       if (lc === "y" || lc.indexOf("yes") > -1) {
-        phrase = "Type 1 for R&B, 2 for Mariah, or 3 for surprise";
+        phrase = "Type 1 to get funky, 2 for something jazzy, or 3 for a surprise";
         this.setState({ djJustAsked: 2 });
       }
       else {
@@ -250,9 +250,13 @@ class Chat extends React.Component {
       this.props.addMessage({ to: "me", from: "DJ", message: phrase, time: new Date(), avatar: userActiveChat.avatar });
     }
     else {
-      if (txt == 1 || txt == 2 || txt == 3) {
+      if (txt == 1 || txt == 2) {
         phrase = "good pick.";
         this.props.setSong(txt);
+      }
+      else if (txt == 3) {
+        phrase = "good pick.";
+        this.props.setRandomSong();
       }
       else {
         phrase = "sorry, I'm a man of simple integers.";
@@ -344,7 +348,7 @@ class Chat extends React.Component {
   }
 
   getMobileFrame = () => {
-    const {w, h} = getCenterModalDim(this.props.ui);
+    const {w, h} = getCenterModalDim(this.props.ui, false);
     return (
       <CenterModal
       title="chat"
@@ -352,6 +356,7 @@ class Chat extends React.Component {
       isHidden={this.props.menu !== "chat"}
       onHide={this.onHide}
       ui={this.props.ui}
+      isRelative={false}
       classN="ChatMobile"
       content={this.getMobileContent(w, h)}
       buttons={this.getMobileButtons()}
@@ -463,15 +468,15 @@ class Chat extends React.Component {
     );
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.getIsHidden(prevProps) && !this.getIsHidden(this.props)) {
-      // console.log("FOCUS", this.textInput)
-      if (this.textInput) 
-        this.textInput.focus();
-      // else
-      //   console.log("nope")
-    }
-  }
+//   componentDidUpdate(prevProps, prevState) {
+//     if (this.getIsHidden(prevProps) && !this.getIsHidden(this.props)) {
+//       // console.log("FOCUS", this.textInput)
+//       // if (this.textInput) 
+//         // this.textInput.focus();
+//       // else
+//       //   console.log("nope")
+//     }
+//   }
 
 }
 
@@ -500,6 +505,7 @@ const mapDispatchToProps = () => {
     setUserActiveChat,
     resetMessgeNotification,
     setSong,
+    setRandomSong,
     setOneMenu
   }
 }

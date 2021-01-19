@@ -1,4 +1,4 @@
-import { UNMUTEVOLUME, MUTEVOLUME, TOGGLEVOLUME, SETVOLUME, INCREMENTSONG, DECREMENTSONG, SETSONG } from '../actions/music';
+import { UNMUTEVOLUME, MUTEVOLUME, TOGGLEVOLUME, SETVOLUME, INCREMENTSONG, DECREMENTSONG, SETSONG, SETRANDOMSONG } from '../actions/music';
 
 const initState = {
     currentSong: 0,
@@ -39,6 +39,12 @@ export const musicReducer = (state = initState, action) => {
             if (music.currentSong < 0)
                 music.currentSong = NUM_SONGS - 1;
             return music;
+        case SETRANDOMSONG:
+            let numSongs = 6;
+            let current =  music.currentSong;
+            let r = Math.floor(Math.random()*(numSongs - 2)+1);
+            music.currentSong = (current + r) % numSongs;
+           return music;
         default:
             return state;
     }

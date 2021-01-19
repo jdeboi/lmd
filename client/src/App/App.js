@@ -25,13 +25,13 @@ import Gallery from '../components/sketches/Gallery/Gallery';
 import MacbookAir from '../components/sketches/MacbookAir/MacbookAir';
 import JungleGyms from '../components/sketches/JungleGyms/JungleGyms';
 import HardDrives from '../components/sketches/HardDrives/HardDrives';
-import Spacetimes from '../components/sketches/Spacetimes/Spacetimes';
+import Wasted from '../components/sketches/Wasted/Wasted';
 import Mars from '../components/sketches/Mars/Mars';
 import WetStreams from '../components/sketches/WetStreams/WetStreams';
-import WaveForms from '../components/sketches/WaveForms/WaveForms';
-import Confessions from '../components/sketches/WaveForms/Confessions';
+import Confessional from '../components/sketches/Confessional/Confessional';
+import Confessions from '../components/sketches/Confessional/Confessions';
 import Loop from '../components/sketches/Loop/Loop';
-import VorTech from '../components/sketches/VorTech/VorTech';
+import Flush from '../components/sketches/Flush/Flush';
 import Oogle from '../components/sketches/Oogle/Oogle';
 
 // under construction
@@ -40,28 +40,28 @@ import Oogle from '../components/sketches/Oogle/Oogle';
 // import Three from '../components/sketches/Test/Three/Three';
 // import Dimension from '../components/sketches/Dimension/Dimension';
 
-import Dinner from '../components/sketches/Test/Dinner/Dinner';
+// import Dinner from '../components/sketches/Test/Dinner/Dinner';
 import Dig from '../components/sketches/Test/Dig/Dig';
 import Blinds from '../components/sketches/Blinds/Blinds';
-import ClickMe from '../components/sketches/Test/ClickMe/ClickMe';
+// import ClickMe from '../components/sketches/Test/ClickMe/ClickMe';
 import MoonLight from '../components/sketches/Test/MoonLight/MoonLight';
 import Yosemite from '../components/sketches/Test/Yosemite/Yosemite';
 
 // pages
 import About from '../components/pages/About';
+import Statement from '../components/pages/Statement';
 import Credits from '../components/pages/Credits';
-import Contact from '../components/pages/Contact';
 import NotFound from '../components/pages/NotFound';
 
 // menu frames
 import SignIn from '../components/shared/SignIn/SignIn';
-import Participants from '../components/shared/Participants/Participants';
+// import Participants from '../components/shared/Participants/Participants';
 import Welcome from '../components/shared/Welcome/Welcome';
 import FAQFrame from '../components/shared/FAQ/FAQFrame';
 import Volume from '../components/shared/Volume/Volume';
 
 import MobileFooter from '../components/shared/Header/MobileFooter/MobileFooter';
-import RoomUsers from '../components/shared/RoomUsers/RoomUsers';
+// import RoomUsers from '../components/shared/RoomUsers/RoomUsers';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import indigo from '@material-ui/core/colors/indigo';
@@ -365,7 +365,8 @@ class App extends React.Component {
     else if (rm == "confessions") rm = "cloud-confessional";
 
     const pages = ["gallery", "macbook-air", "wet-streams", "hard-drives-on-seashores", "blind-eye", "cloud-confessional", "xfinity-depths", "esc-to-mars", "jungle-gyms", "flush", "home-page", "wasted-days"];
-    if (!pages.includes(rm)) rm = "";
+    const pages2 = ["statement", "thesis", "bio", "about"];
+    if (!pages.includes(rm) && !pages2.includes(rm)) rm = "";
 
     return rm;
   }
@@ -426,13 +427,13 @@ class App extends React.Component {
               <Route path="/macbook-air" render={() => (<MacbookAir />)} />
               <Route path="/jungle-gyms" render={() => (<JungleGyms />)} />
               <Route path="/hard-drives-on-seashores" render={() => (<HardDrives />)} />
-              <Route path="/wasted-days" render={() => (<Spacetimes />)} />
+              <Route path="/wasted-days" render={() => (<Wasted />)} />
               <Route path="/esc-to-mars" render={() => (<Mars addClass={this.addClass} removeClass={this.removeClass} />)} />
               <Route path="/wet-streams" render={() => (<WetStreams />)} />
               <Route path="/xfinity-depths" render={() => (<Loop />)} />
-              <Route path="/cloud-confessional" render={() => (<WaveForms cursor={this.state.cursorID} />)} />
+              <Route path="/cloud-confessional" render={() => (<Confessional cursor={this.state.cursorID} />)} />
               <Route path="/confessions" render={() => (<Confessions />)} />
-              <Route path="/flush" render={() => (<VorTech />)} />
+              <Route path="/flush" render={() => (<Flush />)} />
               <Route path="/home-page" render={() => (<Oogle />)} />
               <Route path="/blind-eye" render={() => (<Blinds />)} />
 
@@ -440,15 +441,17 @@ class App extends React.Component {
               {<Route path="/moon-light" component={MoonLight} />}
               <Route path="/yosemite" component={Yosemite} />
               {/*<Route  path="/three" component={Three} />*/}
-              <Route path="/credits" render={() => (<Credits />)} />
-              <Route path="/about" render={() => (<About />)} />
-              <Route path="/contact" render={() => (<Contact />)} />
+             
+              <Route path="/about" render={() => (<About ui={this.props.ui} />)} />
+              <Route path="/statement" render={() => (<Statement ui={this.props.ui} />)} />
+              <Route path="/credits" render={() => (<Credits ui={this.props.ui} />)} />
+
               <Route component={NotFound} />
             </Switch>
 
           </div>
           {<FPSStats top={window.innerHeight - 255} left={10} />}
-          <Exit />
+          {/* <Exit /> */}
           {/* <SideBar room={this.state.user.room} user={this.state.user} users={this.state.users} usersChange={this.state.usersChange} showSideBar={this.state.showSideBar} handleDrawerClose={this.handleDrawerClose.bind(this)} messages={this.state.messages} addUserMessage={this.addUserMessage} userActiveChat={this.state.userActiveChat} userSetActiveChat={this.userSetActiveChat}  />*/}
           <Chat users={this.state.users} usersChange={this.state.usersChange} />
           {/* <Participants users={this.state.users} /> */}

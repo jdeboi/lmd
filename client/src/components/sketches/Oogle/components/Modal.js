@@ -60,6 +60,7 @@ class Modal extends React.Component {
                 ui={this.props.ui}
                 classN="home-modal"
                 content={content}
+                isRelative={true}
                 buttons={this.getButtons()}
                 z={1000}
             />

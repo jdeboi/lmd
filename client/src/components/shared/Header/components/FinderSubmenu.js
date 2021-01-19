@@ -66,15 +66,15 @@ class FinderSubmenu extends React.PureComponent {
         <ul className={ulSpecialClass}>
           {listItems.map((item, i) => {
             const classN = item.classN?item.classN:"";
-            if(item.title === "spacer") {
-              if (this.getMobile()) 
-                return null;
-              return (
-                <li className="spacer" key={i} />
-              )
-            }
+            // if(item.title === "spacer") {
+            //   if (this.getMobile()) 
+            //     return null;
+            //   return (
+            //     <li className="spacer" key={i} />
+            //   )
+            // }
             return(
-              <ListItem key={item.title} ui={this.props.ui} shortcut={item.shortcut} title={item.title} link={item.link} callback={item.callback} classN={classN} />)}
+              <ListItem key={i} ui={this.props.ui} shortcut={item.shortcut} title={item.title} link={item.link} callback={item.callback} classN={classN} />)}
               )
             }  </ul>
           </div>

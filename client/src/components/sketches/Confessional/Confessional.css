@@ -1,0 +1,101 @@
+button.standardButton {
+  font-size: 12px;
+  padding: 10px;
+  min-width: 140px;
+  text-align: center;
+  color: black;
+  border-radius: 6px;
+  border: 2px solid black;
+  color: white;
+  transition: all 0.2s ease-in-out; }
+  button.standardButton:hover {
+    transform: scale(1.05); }
+  button.standardButton.primary {
+    background: black;
+    color: white; }
+  button.standardButton.secondary {
+    background-color: white;
+    color: black;
+    border: 2px solid black; }
+
+input.standardInput {
+  font-size: 12px;
+  padding: 15px 10px;
+  text-align: left;
+  border: 2px solid black;
+  color: black;
+  border-radius: 6px; }
+
+input.standardInputWhite {
+  font-size: 12px;
+  padding: 15px 10px;
+  text-align: left;
+  border: 2px solid white;
+  color: white;
+  border-radius: 6px; }
+
+.Confessional {
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/waveforms/sky4.jpg);
+  background-size: cover; }
+  .Confessional .confess-button-primary {
+    border-color: #1e03fc42;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f1eeff), color-stop(100%, #1e03fc42));
+    color: #6666cc; }
+  .Confessional .confess-button-secondary {
+    border-color: #1e03fc42;
+    background: white;
+    color: #6666cc; }
+  .Confessional .Frame .window {
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: -40px -40px 40px #ffffff;
+    /* #6c6c6c; */
+    border: 2px solid #1e03fc42; }
+  .Confessional .Frame .circleButton {
+    background: #1e03fc42;
+    color: #1e03fc42; }
+    .Confessional .Frame .circleButton:hover {
+      background: #1e03fc42; }
+  .Confessional .Frame .innerC {
+    background: white; }
+    .Confessional .Frame .innerC:hover {
+      background: #1e03fc42; }
+  .Confessional .Frame .titlebar {
+    color: white;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f1eeff), color-stop(100%, #1e03fc42));
+    border-bottom: 2px solid #1e03fc42; }
+  .Confessional .react-player {
+    position: absolute;
+    top: 0;
+    margin: auto;
+    z-index: -100;
+    overflow: hidden; }
+  .Confessional .mainContent {
+    /* made titlebar position relative to fit this under without padding */
+    /* padding-top: 22px; */
+    z-index: 10;
+    pointer-events: none; }
+  .Confessional .waveCover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(45, 25, 255, 0.1); }
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%; }
+  50% {
+    background-position: 100% 50%; }
+  100% {
+    background-position: 0% 50%; } }
+  .Confessional .prayer {
+    color: white;
+    padding: 20px; }
+  .Confessional .confessional-box {
+    border: 1px solid #1e03fc42;
+    border-radius: 8px;
+    color: white; }

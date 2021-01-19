@@ -1,0 +1,161 @@
+@import "../../../../../styles/constants.scss";
+
+
+
+.confession-txt {
+  padding: 10px 15px 10px 15px;
+  color: $tweetColPrimary;
+  background: rgba(255,255,255, .3);
+}
+
+.DesktopIcon {
+  opacity: .8;
+}
+.DesktopIcon .desktop-text {
+  box-shadow: -40px -40px 40px $pearlyGradientStartC;
+  font-size: 18px;
+  font-family: monospace;
+
+  // text-shadow: 2px 2px $tweetColPrimary;
+  // text-shadow: 1px 1px $pearlyGradientStartC;
+  text-shadow: none;
+}
+
+.tweet {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  // font-family: consoleFont, sans-serif;
+  font-family: "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  line-height: 16px;
+  // background-color: rgba(255, 255, 255, .6);
+
+  hr {
+    border: 1px solid $tweetColHr;
+  }
+
+  .tweet-top {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    height: 50px;
+    padding-bottom: 5px;
+
+    .tweeter-icon {
+      flex: 0 0 auto;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+
+      div {
+        margin: 0 auto;
+        height: 100%;
+        width: auto;
+        // background-image: url(https://img.icons8.com/material/4ac144/256/user-male.png);
+        // background-repeat: no-repeat;
+      }
+    }
+
+    .tweeter {
+      // width: 200px;
+      flex: 1 1 auto;
+      padding-top: 10px;
+      padding-left: 10px;
+      align-items: center;
+
+      div a {
+        text-decoration: none;
+
+        &:hover {
+          // color: $tweetColHover;
+          text-decoration: underline;
+        }
+      }
+
+      .person a {
+        color: $tweetColPrimary;
+        // width: 100px;
+        font-size: 18px;
+      }
+
+      .tweet-handle a {
+        color: $tweetColSecondary;
+        // width: 100px;
+        font-size: 14px;
+      }
+
+      .tweet-handle {
+        // padding-left: 10px;
+      }
+    }
+
+    .tweet-time {
+      // padding-left: 5px;
+      font-size: 20px;
+    }
+
+    .twitter-icon {
+      width: 30px;
+      flex: 0 0 auto;
+      font-size: 24px;
+      color: white;
+
+      &:hover {
+        color: $tweetColHover;
+      }
+    }
+  }
+
+  // .tweet-time {
+  //   color: $tweetColSecondary;
+  // }
+
+  .tweet-content {
+    color: $tweetColPrimary;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 20px;
+    padding-bottom: 5px;
+
+    span {
+      vertical-align: baseline;
+    }
+
+    a {
+      color: $tweetColTertiary;
+      font-weight: normal;
+      text-decoration: none;
+      outline: 0 none;
+
+      &:hover {
+        // color: $tweetColHover;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .tweet-metrics {
+    font-size: 14px;
+    color: $tweetColPrimary;
+    display: flex;
+    flex-direction: row;
+    // align-items: center;
+    justify-content: center;
+    align-items: stretch;
+
+    div {
+      flex: 1 1 auto;
+      text-align: center;
+      line-height: 20px;
+      // vertical-align: middle;
+
+      span {
+        padding-left: 5px;
+        text-align: center;
+        vertical-align: middle;
+      }
+    }
+  }
+}

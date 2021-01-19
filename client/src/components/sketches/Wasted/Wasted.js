@@ -1,10 +1,13 @@
 import React from 'react';
 import Frame from '../../shared/Frame/Frame';
 // import FrameSimple from '../../shared/Frame/FrameSimple';
-import './Spacetimes.css';
+import './Wasted.css';
 
+// store
+import { connect } from 'react-redux';
+// import { doneLoadingApp } from '../../../store/actions/';
 
-class Spacetimes extends React.Component {
+class Wasted extends React.Component {
   // https://codepen.io/JohJakob/pen/YPxgwo
   constructor(props) {
     super(props);
@@ -14,8 +17,6 @@ class Spacetimes extends React.Component {
     this.state = {
       currentFrame: 14,
       increasing: true,
-      windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight,
       currentText: "wasted"
     }
 
@@ -31,27 +32,15 @@ class Spacetimes extends React.Component {
 
 
   componentDidMount() {
-    this.updateDimensions();
     this.startTime = new Date();
-    window.addEventListener("resize", this.updateDimensions.bind(this));
-
     this.intervalFrames = setInterval(this.setFrame, 200);
-
-    // this.props.userSetRoom("wasted-days-are-days-wasted");
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.updateDimensions.bind(this));
     clearInterval(this.intervalFrames);
-    // this.props.userLeaveRoom("wasted-days");
-  }
-
-  updateDimensions() {
-    this.setState({ windowWidth: window.innerWidth, windowHeight: window.innerHeight });
   }
 
   setText() {
-
     var wordIndex = Math.floor((this.state.currentFrame + 1) / 2);
     if (wordIndex >= this.words.length) wordIndex = this.words.length - 1;
     else if (wordIndex < 0) wordIndex = 0;
@@ -61,12 +50,6 @@ class Spacetimes extends React.Component {
   }
 
   setFrame() {
-    // if (new Date() - this.startTime > 4000) {
-    //   let r =  Math.floor(Math.random()*8);
-    //   this.setState({currentFrame: r});
-    //   console.log(r);
-    // }
-    // else {
     var fr = this.state.currentFrame;
     if (this.state.increasing) {
       fr++;
@@ -83,13 +66,11 @@ class Spacetimes extends React.Component {
     }
     this.setState({ currentFrame: fr });
     this.setText();
-    // }
-
   }
 
   render() {
-    const { windowWidth, windowHeight } = this.state;
-    var fs = windowWidth / 10;
+    const { ui } = this.props;
+    var fs = ui.width / 10;
     if (fs > 180) fs = 180;
 
     var grids = [];
@@ -97,7 +78,7 @@ class Spacetimes extends React.Component {
       grids.push(i);
     }
 
-    const bkImg = window.AWS + "/three/3D/alps.jpg";
+    // const bkImg = window.AWS + "/three/3D/alps.jpg";
     const bkStyle = {};
     // bkStyle.backgroundImage = 'url(' + bkImg + ')';
 
@@ -107,12 +88,12 @@ class Spacetimes extends React.Component {
 
 
         {grids.map((i) => {
-          let factor = windowWidth / 1000;
+          let factor = ui.width / 1000;
           if (factor > 1) factor = 1;
           else if (factor < .8) factor = .5;
           const val = (980 - 100 * i) * factor;
-          const x = windowWidth / 2 - val / 2;
-          const y = (windowHeight - this.heightBuffer) / 2 - val / 2;
+          const x = ui.width / 2 - val / 2;
+          const y = (ui.height - this.heightBuffer) / 2 - val / 2;
           let title = this.words[(7 - i) % (this.words.length - 1)];
 
           // console.log(windowHeight, y, val);
@@ -141,9 +122,6 @@ class Spacetimes extends React.Component {
 }
 
 function GridFrame(props) {
-  // if (props.dimX <= 0) {
-  //   return (<div></div>)
-  // }
   return (
     <Frame title={props.title}
       isMinimized={props.isMinimized}
@@ -164,5 +142,17 @@ function GridFrame(props) {
 }
 
 
+const mapStateToProps = (state) => {
+  return {
+    ui: state.ui
+  }
+}
 
-export default Spacetimes;
+const mapDispatchToProps = () => {
+  return {
+    // doneLoadingApp
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps())(Wasted);

@@ -92,8 +92,26 @@ input.standardInputWhite {
       line-height: 60px; }
     .Header.mobile .submenu ul {
       top: 58px; }
+    .Header.mobile .right .submenu ul {
+      width: 140px;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 0px;
+      transform: translate(-95px, 0px); }
     .Header.mobile .apple {
       font-size: 26px; }
+    .Header.mobile .arrow {
+      font-size: 22px; }
+    .Header.mobile .arrow.expandable {
+      padding: 0px;
+      padding-left: 4px;
+      padding-right: 4px; }
+    .Header.mobile span.xxsmallLogo {
+      line-height: 16px;
+      padding: 0px;
+      position: absolute;
+      top: -22px;
+      height: 60px;
+      vertical-align: middle; }
   .Header .currentPage {
     color: #335ef6dd; }
   .Header .disabled {

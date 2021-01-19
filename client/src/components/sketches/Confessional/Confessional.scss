@@ -1,0 +1,126 @@
+@import "../../../styles/constants.scss";
+
+
+
+.Confessional {
+  top:0;
+  left:0;
+  overflow: hidden;
+  background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/waveforms/sky4.jpg);
+  background-size: cover;
+  // background-size: 250px 180px;
+
+
+
+  .confess-button-primary {
+    border-color: $pearlyGradientEndC;
+    background: $pearlyGradient;
+    color: $tweetColPrimary;
+  }
+
+  .confess-button-secondary {
+    border-color: $pearlyGradientEndC;
+    background: white;
+    color: $tweetColPrimary;
+  }
+
+  .Frame {
+
+    .window {
+      background: rgba(255, 255, 255, .7);
+      box-shadow: -40px -40px 40px #ffffff; /* #6c6c6c; */
+      border: $borderH solid $pearlyGradientEndC;
+    }
+
+    .circleButton {
+      background: $buttonCol;
+      color: $buttonCol;
+
+      &:hover {
+        background: $buttonCol;
+      }
+    }
+
+    .innerC {
+      background: white;
+
+      &:hover {
+        background: $buttonCol;
+      }
+    }
+
+    .titlebar {
+      color: white;
+      background: $pearlyGradient;
+      border-bottom: $borderH solid $pearlyGradientEndC;
+    }
+  }
+
+
+
+  .react-player {
+    position: absolute;
+    top: 0;
+    margin: auto;
+    z-index:-100;
+    overflow: hidden;
+  }
+
+  .mainContent {
+    /* made titlebar position relative to fit this under without padding */
+    /* padding-top: 22px; */
+    z-index:10;
+    pointer-events: none;
+  }
+
+
+
+  .waveCover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(45, 25, 255, .1);
+    // background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    // background-size: 400% 400%;
+    // animation: gradient 15s ease infinite;
+  }
+
+ 
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+
+ 
+
+  .prayer {
+    color: white;
+    padding: 20px;
+    // background: white;
+    // border: 4px solid limegreen;
+    // box-sizing: border-box;
+    // box-shadow: -40px -40px 40px #ffffff; /* #6c6c6c; */
+
+  }
+
+
+  .confessional-box {
+    border: 1px solid $pearlyGradientEndC;
+    border-radius: $borderRad;
+    color: white;
+    // padding: 10px 20px;
+  }
+
+ 
+
+}

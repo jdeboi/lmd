@@ -1,0 +1,77 @@
+@import "../../../../../styles/constants.scss";
+
+
+
+.confession-bottomBar {
+  width: 100%;
+  height: 60px;
+  position: fixed;
+  bottom: 0px;
+  background: $pearlyGradient;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+
+  button {
+    margin-top: 5px;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    background: transparent;
+  }
+
+  .bar-vid {
+    flex: 1 1 auto;
+    color: white;
+
+    button {
+      color: $tweetColPrimary;
+    }
+  }
+
+  .bar-emojis {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    button {
+      img {
+        width: 35px;
+        height: 35px;
+      }
+
+      flex: 0 0 auto;
+    }
+  }
+
+  .bar-good-bad {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+    img {
+      width: 35px;
+      height: 35px;
+    }
+
+    flex: 0 0 auto;
+  }
+}
+
+.confession-emojis {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+  img {
+    position: absolute;
+    height: 50px;
+    width: 50px;
+  }
+}

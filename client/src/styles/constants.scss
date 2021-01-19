@@ -37,6 +37,17 @@ $fontSize-mobile-4: 8px;
 
 $appBlue: #335ef6;
 
+$pearlyGradientStartC: #f1eeff;
+$pearlyGradientEndC: #1e03fc42;
+$pearlyGradient: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $pearlyGradientStartC), color-stop(100%, $pearlyGradientEndC));
+$buttonCol: $pearlyGradientEndC;
+
+$tweetColPrimary: #6666cc;
+$tweetColSecondary: #aaaadd; //#000011;
+$tweetColTertiary: #111199;
+$tweetColHover: #aaaaff;
+$tweetColHr: #aaaadd88;
+
 button.standardButton {
   font-size: $fontSize-desktop-3;
   padding: 10px;

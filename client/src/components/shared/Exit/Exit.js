@@ -20,7 +20,7 @@ class Exit extends React.Component {
   // }
 
   render() {
-    const {user, ui} = this.props;
+    const { user, ui } = this.props;
     if (user.room === "gallery")
       return null;
     const y = 75;

@@ -6,26 +6,30 @@ export const SETVOLUME = 'SETVOLUME';
 export const INCREMENTSONG = 'INCREMENTSONG';
 export const DECREMENTSONG = 'DECREMENTSONG';
 export const SETSONG = 'SETSONG';
-
+export const SETRANDOMSONG = 'SETRANDOMSONG';
 
 //////////////// volume
 export const unmuteVolume = () => {
-    return { type: UNMUTEVOLUME};
+    return { type: UNMUTEVOLUME };
 }
 
 export const toggleVolume = () => {
-    return { type: TOGGLEVOLUME};
+    return { type: TOGGLEVOLUME };
 }
 
 export const muteVolume = () => {
-    return { type: MUTEVOLUME};
+    return { type: MUTEVOLUME };
 }
 
 export const setVolume = (vol) => {
-    return { type: SETVOLUME, payload: {volume: vol}};
+    return { type: SETVOLUME, payload: { volume: vol } };
 }
 
 //////////////// current song
+export const setRandomSong = () => {
+    return { type: SETRANDOMSONG };
+}
+
 export const incrementSong = () => {
     return { type: INCREMENTSONG };
 }

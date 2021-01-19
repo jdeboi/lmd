@@ -26,6 +26,7 @@ import { toggleMap, toggleFaq, toggleChat, toggleUserIcons, toggleVolumeMenu } f
 import { resetMessgeNotification } from '../../../store/actions/messages';
 import { toggleVolume } from '../../../store/actions/music';
 
+
 /*
 React.PureComponent’s shouldComponentUpdate() only shallowly compares
 the objects. If these contain complex data structures, it may produce
@@ -46,10 +47,6 @@ class Header extends React.Component {
       volumeMuted: false
     }
 
-    this.getRightMenus = this.getRightMenus.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-    this.getAvatar = this.getAvatar.bind(this);
-
   }
 
   // shouldComponentUpdate(nextProps) {
@@ -65,13 +62,78 @@ class Header extends React.Component {
   // }
 
 
-  handleClick(id) {
+  handleClick = (id) => {
     // console.log(id);
   }
 
 
   render() {
 
+
+
+    // phone shortcut: "&#128222"
+
+    // const styB = {border: "1px solid white", borderRadius: 5, fontSize: 11, color: "white"}
+
+
+    if (this.isSimpleHeader()) {
+      if (this.props.ui.orientation === "landscape") 
+        return this.getMobileHeaderLandscape();
+      return this.getMobileHeaderPortrait();
+    }
+     
+    return this.getDesktopHeader();
+  }
+
+  getArrowIconLi = () => {
+    const iconArrow = "fas fa-arrow-left";
+    const iconHouse = "fas fa-home";
+    // const iconArrow = "fas fa-arrow-circle-left";
+    const arrowClass = this.props.currentPage === "gallery" ? "hidden" : "arrow expandable";
+    return (
+      <li className={arrowClass} onClick={() => this.props.history.push("/")}><i className={iconArrow}></i><i className={iconHouse}></i></li>
+    )
+  }
+
+  getMainTitle = () => {
+    let title = "losing my dimension";
+    if (this.props.ui.width < 445) 
+      title = <span className="xxsmallLogo">losing my<br></br>dimension</span>;
+    return title;//"losing my dimension";
+    // return this.props.currentPage; // === "gallery"?"losing my dimension":this.props.currentPage;
+  }
+
+  getHamburgerSub = () => {
+    // const homeIcon = this.props.ui.isMobile?"fas fa-bars":"fa fa-cube";
+    const homeIcon = "fas fa-bars";
+    const hamburgerMenuItems = [
+      { title: "about", link: "/about", shortcut: "" },
+      { title: "statement", link: "/statement", shortcut: "" },
+      { title: "thesis", link: "/thesis", shortcut: "" },
+      
+      // {title: "cookies", link:"/words", shortcut: "🍪"},
+      { title: "credits", link: "/credits", shortcut: "" }
+    ];
+
+    return (
+      <FinderSubmenu ui={this.props.ui} title="" currentPage={this.props.currentPage} icon={homeIcon} specialClass="apple bold" listItems={hamburgerMenuItems} />
+    )
+  }
+
+  getMainTitleLi = () => {
+    const sty1 = { fontSize: 9, color: "white", height: 20, padding: 0, margin: 0 }
+    const sty2 = { fontSize: 12, color: "blue", height: 20, padding: 0, margin: 0 }
+    return (
+      <li>
+        <div style={{ display: "flex", flexDirection: "column", height: 60 }}>
+          <div style={sty1}>losing my dimension</div>
+          <div style={sty2}>{this.props.currentPage}</div>
+        </div>
+      </li>
+    )
+  }
+
+  getMainMenuSub = () => {
     const finderMenuItems = [
       // { title: "about", link: "/about", shortcut: "", classN: "about" },
       // { title: "spacer" },
@@ -90,40 +152,78 @@ class Header extends React.Component {
       // {title: "i got the feels", link:"/i-got-the-feels", shortcut: "&#x2318;8"},
       // {title: "losing my dimension", link:"/losing-my-dimension", shortcut: "&#x2318;9"},
     ];
-
-    // phone shortcut: "&#128222"
-    const hamburgerMenuItems = [
-      { title: "artist bio", link: "/about", shortcut: "" },
-      { title: "statement", link: "/about", shortcut: "" },
-      { title: "thesis", link: "/about", shortcut: "" },
-      // {title: "cookies", link:"/words", shortcut: "🍪"},
-      { title: "credits", link: "/credits", shortcut: "" }
-    ];
-    const iconArrow = "fas fa-arrow-left";
-    const arrowClass = this.props.currentPage === "home page" ? "hidden" : "arrow expandable";
-    // const styB = {border: "1px solid white", borderRadius: 5, fontSize: 11, color: "white"}
-
-    // const homeIcon = this.props.ui.isMobile?"fas fa-bars":"fa fa-cube";
-    const homeIcon = "fas fa-bars";
-    const headerClass = "Header menuTheme" + (this.isSimpleHeader() ? " mobile" : "");
-
-    const mainTitle = this.props.currentPage === "gallery"?"losing my dimension":this.props.currentPage;
+    
     return (
+      
+      <FinderSubmenu ui={this.props.ui} currentPage={this.props.currentPage} title={this.getMainTitle()} icon="" specialClass="bold" listItems={finderMenuItems} />
+    )
+  }
 
+  getDesktopHeader = () => {
+
+    const headerClass = "Header menuTheme";
+
+    return (
       <header className={headerClass}>
         <ul className="left">
-          {/* <li className={arrowClass} onClick={() => this.props.history.push("/")}><i className={iconArrow}></i></li> */}
+          {this.getArrowIconLi()}
           {/*<FinderSubmenu cursor={`cursor-${this.state.hand}`} dimensions={this.props.dimensions} title="" icon="fa fa-cube" specialClass="apple" listItems={hamburgerMenuItems} /> */}
-          <FinderSubmenu ui={this.props.ui} title="" currentPage={this.props.currentPage} icon={homeIcon} specialClass="apple bold" listItems={hamburgerMenuItems} />
-          <FinderSubmenu ui={this.props.ui} currentPage={this.props.currentPage} title={mainTitle} icon="" specialClass="bold" listItems={finderMenuItems} />
-
+          {this.getHamburgerSub()}
+          {this.getMainMenuSub()}
           {/* <li className={`expandable`}><Link to="/"><span id="pageTitle">Losing My Dimension</span></Link></li> */}
           {/* <li><span className="currentPage">/{this.props.currentPage}</span></li> */}
         </ul>
-        {this.isSimpleHeader() ? null : this.getRightMenus()}
+        <ul className="right">
+          {this.getChatLi()}
+          {/* <li className={classUserIcons} onClick={this.props.toggleUserIcons}><UsersIcon fontSize="inherit" /></li> */}
+          {this.getMapLi()}
+          {this.getFaqLi()}
+          {this.getVolumeLi()}
+          <li></li>
+          <li><Clock /></li>
+          <li></li>
+          {this.getAvatarLi()}
+          {/* <li className="expandable hamburger" onClick={this.props.toggleSideBar}><i className="fas fa-bars"></i></li>*/}
+        </ul>
       </header>
-    );
+    )
   }
+
+  getMobileHeaderLandscape = () => {
+
+    const headerClass = "Header menuTheme mobile";
+
+    return (
+      <header className={headerClass}>
+        <ul className="left">
+          {this.getArrowIconLi()}
+          {this.getHamburgerSub()}
+          {this.getMainMenuSub()}
+          
+          {/* {this.getMainTitleLi()} */}
+        </ul>
+      </header>
+    )
+  }
+
+  getMobileHeaderPortrait = () => {
+
+    const headerClass = "Header menuTheme mobile";
+
+    return (
+      <header className={headerClass}>
+        <ul className="left">
+          {this.getArrowIconLi()}
+          {this.getMainMenuSub()}
+          {/* {this.getMainTitleLi()} */}
+        </ul>
+        <ul className="right">
+          {this.getHamburgerSub()}
+        </ul>
+      </header>
+    )
+  }
+
 
   toggleVolume = () => {
     this.setState(prevState => ({
@@ -152,24 +252,7 @@ class Header extends React.Component {
       </ul>
     );
   }
-  getRightMenus() {
-    //<button className="hamburger-button">
-    // const classUserIcons = "expandable icon" + (this.props.userIconsIsHidden ? " closed" : " opened");
-    return (
-      <ul className="right">
-        {this.getChatLi()}
-        {/* <li className={classUserIcons} onClick={this.props.toggleUserIcons}><UsersIcon fontSize="inherit" /></li> */}
-        {this.getMapLi()}
-        {this.getFaqLi()}
-        {this.getVolumeLi()}
-        <li></li>
-        <li><Clock /></li>
-        <li></li>
-        {this.getAvatarLi()}
-        {/* <li className="expandable hamburger" onClick={this.props.toggleSideBar}><i className="fas fa-bars"></i></li>*/}
-      </ul>
-    );
-  }
+
 
   getVolumeLi = () => {
     const classVol = "expandable icon" + (this.props.volumeIsHidden ? " closed" : " opened");

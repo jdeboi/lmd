@@ -1,19 +1,30 @@
 .Page {
   color: white;
   width: 100%;
-  height: 100%;
-  line-height: 140%; }
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  line-height: 140%;
+  background-image: url("./assets/wallpaper3.jpg");
+  background-repeat: repeat;
+  background-size: 350px 250px;
+  overflow: scroll; }
   .Page a {
     color: cyan; }
   .Page h1 {
-    font-size: 40px;
+    font-size: 34px;
     padding: 20px 0 20px 0;
     line-height: 60px; }
   .Page h2 {
-    font-size: 20px;
+    font-size: 24px;
     padding: 10px 0 10px 0;
-    line-height: 40px; }
+    line-height: 24px; }
+  .Page h3 {
+    font-size: 18px;
+    line-height: 24px; }
   .Page p {
+    font-size: 12px;
+    line-height: 20px;
     padding: 15px 0 15px 0; }
   .Page ul {
     margin-left: 0;
@@ -21,15 +32,37 @@
     .Page ul li {
       padding: 5px 0 5px 0; }
   .Page .container {
-    padding: 50px;
-    width: 100%;
-    height: 400px;
+    flex: 1;
+    padding-top: 50px;
+    padding-bottom: 70px;
+    width: 87%;
+    max-width: 900px;
+    margin: auto;
     box-sizing: border-box; }
-  .Page .Credits h1 {
-    margin-left: -5px; }
-  .Page .About, .Page .Credits, .Page .Contact {
-    width: 100%;
-    height: 100%;
-    background-image: url("./assets/wallpaper3.jpg");
-    background-repeat: repeat;
-    background-size: 350px 250px; }
+
+.Page.xxsmall .container {
+  padding: 15px;
+  padding-bottom: 70px;
+  width: 100%; }
+
+.Page.xxsmall h1 {
+  font-size: 24px;
+  padding: 20px 0 20px 0;
+  line-height: 40px; }
+
+.Page.xxsmall h2 {
+  font-size: 20px;
+  padding: 10px 0 10px 0;
+  line-height: 24px; }
+
+.Page.xxsmall h3 {
+  font-size: 18px;
+  line-height: 24px; }
+
+.Page.xxsmall p {
+  font-size: 12px;
+  line-height: 20px;
+  padding: 15px 0 15px 0; }
+
+.Page.landscape .container {
+  padding-right: 40px; }

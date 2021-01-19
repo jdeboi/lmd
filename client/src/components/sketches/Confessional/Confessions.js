@@ -2,14 +2,14 @@ import React from 'react';
 import Frame from '../../shared/Frame/Frame';
 
 // import FrameSimple from '../../shared/Frame/FrameSimple';
-import './WaveForms.css';
+import './Confessional.css';
 import ReactPlayer from 'react-player'
 
 // import ReactAudioPlayer from 'src/components/sketches/Gallery/node_modules/react-audio-player';
 
 import {getRandomNum, getNewZIndices} from '../../shared/Helpers/Helpers';
 import {getTweetContent, initConfessions, initZIndicesIcons, initZIndicesFrames} from './components/Helpers';
-import Confession from './components/Confession';
+import Confession from './components/ConfessionIcon/Confession';
 // import mainVid from  "./assets/waves2_lines.mp4";
 // import dove from  "./assets/dove_t.gif";
 // import shellSound from "./assets/shell_sound.wav";
@@ -136,7 +136,7 @@ class Confessions extends React.Component {
     const {confessions, tweets, time, zIndicesIcons, zIndicesFrames} = this.state;
 
     return (
-      <div className="WaveForms Sketch">
+      <div className="Confessional Sketch">
         {
           confessions.map((confession, i) => {
             const props = {

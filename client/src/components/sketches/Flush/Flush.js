@@ -1,6 +1,6 @@
 import React from 'react';
 import Frame from '../../shared/Frame/Frame';
-import './VorTech.css';
+import './Flush.css';
 
 import { connect } from 'react-redux';
 
@@ -19,7 +19,7 @@ var isStopping = false;
 var handleDown = false;
 var vidTex;
 
-class VorTech extends React.Component {
+class Flush extends React.Component {
   // https://codepen.io/JohJakob/pen/YPxgwo
   constructor(props) {
     super(props);
@@ -164,5 +164,5 @@ const mapDispatchToProps = () => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps())(VorTech);
+export default connect(mapStateToProps, mapDispatchToProps())(Flush);
 

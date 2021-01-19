@@ -74,3 +74,51 @@ export function getTweetContent(string) {
       let processed = processString(config)(string);
       return processed;
     }
+
+
+function getMostEngagement(mode, tweets) {
+  let max = 0;
+  let id = 0;
+  let maxId = 0;
+
+  for (const tweet of tweets) {
+    let likes = tweet.public_metrics.like_count;
+    let rts = tweet.public_metrics.retweet_count;
+    let replies = tweet.public_metrics.reply_count;
+    let metrics = [likes, rts, replies];
+
+    if (metrics[mode] > max) {
+      max = likes;
+      maxId = id;
+    }
+    id++;
+  }
+  return maxId;
+}
+
+function mapVal(val, in_min, in_max, out_min, out_max) {
+  return (val - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+function getTweetTime(tweet_created_at) {
+  // const dateToFormat = new Date('1976-04-19T12:59-0500');
+  // const created_time = isoStringToDate(tweet_created_at);
+  // var timeDiff = new Date() - created_time;
+  // timeDiff /= 1000;
+  // var seconds = Math.round(timeDiff);
+  // console.log(created_time, timeDiff, seconds);
+  // return seconds + "s";
+  return "5s";
+}
+
+function isoStringToDate(s) {
+  var b = s.split(/[-t:+]/ig);
+  return new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5]));
+}
+
+// function urlify(text) {
+//   var urlRegex = /(https?:\/\/[^\s]+)/g;
+//   return text.replace(urlRegex, function(url) {
+//     return '<a href="' + url + '">' + url + '</a>';
+//   })
+// }

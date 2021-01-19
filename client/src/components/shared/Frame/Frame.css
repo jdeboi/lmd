@@ -5,7 +5,7 @@
   margin-bottom: -33px;
   font-size: 16px;
   pointer-events: none; }
-  .Frame input, .Frame button {
+  .Frame input, .Frame button, .Frame select, .Frame textarea {
     pointer-events: all; }
   .Frame span {
     line-height: 8px;
