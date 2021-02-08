@@ -47,6 +47,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.3",
     "react-scroll-wheel-handler": "^1.1.5",
+    "react-tooltip": "^4.2.13",
     "react-twitter-embed": "^3.0.3",
     "react-webcam": "^5.2.0",
     "redux": "^4.0.5",

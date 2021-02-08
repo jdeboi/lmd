@@ -9,9 +9,16 @@
   left:0;
   min-height: 100%;
 
-  .content {
-    color: white;
+  .Frame {
+    .window {
+      .content {
+        color: white;
+        pointer-events: all;
+      }
+    }
+    
   }
+  
 
 
 }

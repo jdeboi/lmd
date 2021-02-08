@@ -78,6 +78,8 @@
     .submenu {
       ul {
         top: 58px;
+        // top: 47px;
+        // position: absolute;
       }
     }
 
@@ -106,12 +108,19 @@
     }
 
     span.xxsmallLogo {
-      line-height: 16px;
-      padding: 0px;
-      position: absolute;
-      top: -22px;
+      // line-height: 16px;
+      // padding: 0px;
+      // // position: absolute;
+      // top: -22px;
+      // height: 60px;
+      // vertical-align: middle;
+    }
+
+    .xxsmall {
+      line-height: 60px;
       height: 60px;
-      vertical-align: middle;
+      // position: absolute;
+      // top:16px;
     }
   }
 

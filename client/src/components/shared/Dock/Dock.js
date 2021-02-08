@@ -39,33 +39,10 @@ class Dock extends React.Component {
                 <em>
                   <span>Home Page</span>
                 </em>
-                <img src="/assets/s3-bucket/gallery/home.png" />
+                <img src={window.AWS + "/clickMe/eraser.png"} />
               </div>
             </li>
-            <li id="chat">
-              <div onClick={this.openChat}>
-                <em>
-                  <span>Chat</span>
-                </em>
-                <img src="/assets/s3-bucket/gallery/messages-icon.png" />
-              </div>
-            </li>
-            <li id="codepen">
-              <a href="#codepen">
-                <em>
-                  <span>Mini Map</span>
-                </em>
-                <img src="/assets/s3-bucket/gallery/maps-icon.png" />
-              </a>
-            </li>
-            <li id="reason">
-              <a href="#reason">
-                <em>
-                  <span>Info</span>
-                </em>
-                <img src="/assets/s3-bucket/gallery/info2.png" />
-              </a>
-            </li>
+            
           </ul>
         </div>
       </div>

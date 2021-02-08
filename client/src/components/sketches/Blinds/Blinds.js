@@ -1,172 +1,227 @@
 import React from 'react';
-import './Blinds.css';
+import "./Blinds.css";
 
-import Frame from '../../shared/Frame/Frame';
-import Window from './Window';
+import Sketch from './p5/BlindsSketch';
 
-import {getNewZIndices} from '../../shared/Helpers/Helpers';
+// store
+import { connect } from 'react-redux';
+import { doneLoadingApp } from '../../../store/actions';
+
+import * as THREE from "three";
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
+// import { AnaglyphEffect } from 'three/examples/jsm/effects/AnaglyphEffect';
+import { MapControls, OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { Line2 } from 'three/examples/jsm/lines/Line2.js';
+import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js';
+import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js';
+import { Wireframe } from 'three/examples/jsm/lines/Wireframe.js';
+import { WireframeGeometry2 } from 'three/examples/jsm/lines/WireframeGeometry2.js';
+
+var AnaglyphEffect = require('../../shared/3D/AnaglyphEffect')(THREE);
+
 
 class Blinds extends React.Component {
-  // https://codepen.io/JohJakob/pen/YPxgwo
+
+
   constructor(props) {
     super(props);
 
-    this.w = 160;
-    this.h = this.w;
-    this.bufferX = 40; // buffer
-    this.bufferY = 20; // buffer
-    this.spacing = 20; // between elements
-    this.numFramesW = Math.floor((window.innerWidth-2*this.bufferX+this.spacing)/(this.w+this.spacing));
-    this.numFramesH = Math.floor((window.innerHeight-34-2*this.bufferY+this.spacing)/(this.h+24+this.spacing));
-    this.startX = (window.innerWidth - this.numFramesW*(this.w+this.spacing)+this.spacing)/2;
-    this.startY = 34+this.bufferY; //(window.innerHeight-this.numFramesH*(this.h+24+this.spacing)+this.spacing)/2;
-    
-    this.state = {
-      ogPositions : this.initOgPos(),
-      positions: this.initPos(),
-      zIndicesFrames: initZIndices(),
-      blindMode: 0,
-      mx: 0,
-      my: 0
-    }
+    this.mount = React.createRef();
   }
 
 
   componentDidMount() {
-    this.blindInterval = setInterval(this.changeBlindMode, 8000);
-    // this.props.userSetRoom("blind-spot");
+
+    this.scene = new THREE.Scene();
+    this.columns = [];
+    this.hercules = [];
+
+    this.initCamera();
+    this.initRenderer(this.mount);
+    this.initControls();
+    this.initLights();
+    this.initFloor();
+    this.initSkybox();
+    this.initStatues();
+    this.initEffect();
+
+    window.addEventListener('resize', this.onWindowResize, false);
+
+    this.startAnimationLoop();
   }
 
   componentWillUnmount() {
-    // this.props.userLeaveRoom("blind-spot");
-    clearInterval(this.blindInterval);
+    window.removeEventListener('resize', this.onWindowResize);
+    window.cancelAnimationFrame(this.requestID);
+    this.controls.dispose();
   }
 
-  handleMouseMove = e => {
-    this.setState({
-      mx: e.clientX,
-      my: e.clientY
+  initCamera = () => {
+
+    // CAMERA
+    var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
+    var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 20000;
+    this.camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
+    this.scene.add(this.camera);
+    this.scene.fog = new THREE.FogExp2(0xccddbb, 0.002);//efd1b5
+    this.camera.position.set(0, 150, 400);
+    this.camera.lookAt(this.scene.position);
+
+  }
+
+
+  initRenderer = (mount) => {
+    this.renderer = new THREE.WebGLRenderer();
+    this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    mount.appendChild(this.renderer.domElement);
+    // renderer.setClearColor(0xffff00, 1);
+  }
+
+  initControls = () => {
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+  }
+
+  initLights = () => {
+    // LIGHT
+    var light = new THREE.PointLight(0xffffff);
+    light.position.set(-100, 200, 100);
+    this.scene.add(light);
+  }
+
+  initFloor = () => {
+    // FLOOR
+    var floorTexture = new THREE.ImageUtils.loadTexture('/assets/s3-bucket/blinds/wallpaper/blkmar.jpg');
+    floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
+    floorTexture.repeat.set(4, 4);
+    this.floorMaterial = new THREE.MeshBasicMaterial({ map: floorTexture, side: THREE.BackSide });
+    var floorGeometry = new THREE.PlaneGeometry(1000, 1500, 10, 10);
+    var floor = new THREE.Mesh(floorGeometry, this.floorMaterial);
+    floor.position.y = -0.5;
+    floor.rotation.x = Math.PI / 2;
+    floor.position.z = - 200
+    this.scene.add(floor);
+  }
+
+  initSkybox = () => {
+    // SKYBOX
+    // var skyTexture = new THREE.ImageUtils.loadTexture('/assets/s3-bucket/blinds/wallpaper/mar3.jpg');
+    // skyTexture.wrapS = skyTexture.wrapT = THREE.RepeatWrapping;
+    // skyTexture.repeat.set(4, 4);
+    // var skyMaterial = new THREE.MeshBasicMaterial({ map: skyTexture, side: THREE.DoubleSide });
+    var skyBoxGeometry = new THREE.CubeGeometry(10000, 10000, 10000);
+    // var skyBoxMaterial = new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.BackSide });
+    var skyBox = new THREE.Mesh(skyBoxGeometry, this.floorMaterial);
+    this.scene.add(skyBox);
+  }
+
+  initStatues = () => {
+    const objLoader = new OBJLoader();
+    objLoader.load('/assets/s3-bucket/blinds/column/column_blend.obj', (root) => {
+      var column = root;
+      var mat = new THREE.MeshLambertMaterial({ color: 0xdddddd });
+      column.material = mat;
+      column.scale.set(60, 60, 60);
+      column.position.set(0, 80, 0);
+      this.columns.push(column)
+      // scene.add(column);
+
+      for (let i = 0; i < 10; i++) {
+        let newCL = column.clone();
+        newCL.position.set(-200, 78, i * -100 + 100);
+        this.scene.add(newCL);
+        this.columns.push(newCL);
+
+        let newCR = column.clone();
+        newCR.position.set(200, 78, i * -100 + 100);
+        this.scene.add(newCR);
+        this.columns.push(newCR);
+      }
+
     });
-  };
 
-  changeBlindMode = () => {
-    var blindMode = this.state.blindMode;
-    if (blindMode + 1 > 4) this.setState({blindMode: 0});
-    else this.setState({blindMode: blindMode+1});
-    // this.setState({blindMode: 3});
+    objLoader.load('/assets/s3-bucket/blinds/hercules/hercules.obj', (root) => {
+      var hercules = root;
+      var mat = new THREE.MeshLambertMaterial({ color: 0xdddddd });
+      hercules.material = mat;
+      let sc = 4;
+      hercules.scale.set(sc, sc, sc);
+      hercules.rotation.y = -3;
+      hercules.position.set(-100, 0, -100);
+      this.hercules.push(hercules);
+      this.scene.add(hercules);
+
+      // for (let i = 0; i < 4; i++) {
+      //   let newCL = hercules.clone();
+      //   newCL.position.set(-100, 0, i * -150 + 200);
+      //   this.scene.add(newCL);
+      //   this.hercules.push(newCL);
+
+      //   let newCR = hercules.clone();
+      //   newCR.position.set(100, 0, i * -200 + 200);
+      //   newCR.rotation.set(0, -Math.PI / 3, 0);
+      //   this.scene.add(newCR);
+      //   this.hercules.push(newCR);
+      // }
+
+    });
   }
 
+  initEffect = () => {
+    var width = window.innerWidth || 2;
+    var height = window.innerHeight || 2;
 
-
-  newFrameToTop = (id) => {
-    const newZ = getNewZIndices(id, this.state.zIndicesFrames);
-    this.setState({zIndicesFrames: newZ});
-    // console.log("ZZZ", this.state.zIndices);
+    this.effect = new AnaglyphEffect(this.renderer, width, height);
+    this.effect.setSize(width, height);
   }
 
-  onDblClick = (id) => {
-    // console.log(id);
-    this.newFrameToTop(id);
+  loadingDone = () => {
+    this.props.doneLoadingApp();
   }
 
+  onWindowResize = () => {
+    this.camera.aspect = window.innerWidth / window.innerHeight;
+    this.camera.updateProjectionMatrix();
+    // renderer.setSize(window.innerWidth, window.innerHeight);
+    this.effect.setSize(window.innerWidth, window.innerHeight);
+  }
 
-
-
+  startAnimationLoop = () => {
+    if (this.controls)
+      this.controls.update();
+    for (const c of this.columns)
+      c.rotation.y += .02;
+    this.effect.render(this.scene, this.camera);
+    this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
+  }
 
   render() {
-
-    // const xs = [0, 150, 300, 450, 600];
-
     return (
-      <div className="Blinds Sketch" onMouseMove={this.handleMouseMove}>
-        {this.getFrames()}
+      <div className="Blinds Sketch" >
+        <div className="Three" ref={ref => (this.mount = ref)} />
+        <Sketch className="p5sketch" ui={this.props.ui} />
+
+
       </div>
-    );
-  }
 
-  getFrames = () => {
-    const {zIndicesFrames, ogPositions, positions, mx, my} = this.state;
-    const imgW = (this.w+this.spacing)*4;
-    const imgH = (this.h+24+this.spacing)*4;
-
-    return (
-
-      this.state.positions.map((pos, i) => {
-        // console.log(ogPositions[i]);
-
-        const props = {
-          z: zIndicesFrames[i],
-          ogPos: ogPositions[i],
-          pos: positions[i],
-          w: this.w,
-          h: this.h,
-          id: i,
-          imgW: imgW,
-          imgH: imgH,
-          startX: this.startX,
-          startY: this.startY,
-          mx: mx,
-          my: my,
-          title: "", // this.getLetter(i),
-          newFrameToTop: this.newFrameToTop,
-          onDblClick: this.onDblClick,
-          mode: this.state.blindMode
-        };
-        return <Window key={i} {...props} />
-      })
     )
   }
-
-  getLetter = (i) => {
-    const x = Math.floor(i/this.numFramesH);
-    const y = i%this.numFramesH;
-    const iPrime = x + y * this.numFramesW;
-
-    // const str = "blind eye";
-    // if (iPrime >= str.length) return "";
-    // return str.substring(iPrime, iPrime+1);
-    // if (iPrime === 0) return "blind";
-    // else if (iPrime === 1) return "eye";
-    if (i === 0) return "blind";
-    else if (i === 1) return "eye";
-    return "";
-  }
-
-  initOgPos = () => {
-    const positions = [];
-    // let i = 0;
-    for (let x = 0; x < this.numFramesW; x++) {
-      for (let y = 0; y < this.numFramesH; y++) {
-        // const xx = i%2===0?x-spacing/2:x;
-        const xx = this.startX + x*(this.w+this.spacing);
-        const yy = this.startY + y*(this.h + this.spacing + 24);
-        positions.push({x: xx, y: yy})
-        // i++;
-      }
-
-    }
-    return positions;
-  }
-
-  initPos = () => {
-    const positions = [];
-    for (let x = 0; x < this.numFramesW; x++) {
-      for (let y = 0; y < this.numFramesH; y++) {
-        positions.push({x: 0, y: 0})
-      }
-    }
-    return positions;
-  }
-}
-
-function initZIndices() {
-  let ind = [];
-  for (let i = 0; i < 100; i++) {
-    ind.push(i);
-  }
-  return ind;
 }
 
 
 
-export default Blinds;
+
+const mapStateToProps = (state) => {
+  return {
+    ui: state.ui
+  }
+}
+
+const mapDispatchToProps = () => {
+  return {
+    doneLoadingApp,
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps())(Blinds);

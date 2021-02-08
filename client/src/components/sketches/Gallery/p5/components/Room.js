@@ -1,7 +1,7 @@
 import { roomConfig, globalConfig } from '../../constants';
 import { doorCrossing, boundaryCrossing, doorLineCrossing, boundaryLineCrossing } from './Boundaries';
 
-import { rooms } from '../../constants';
+import { rooms }  from '../../../Sketches';
 
 export default class Room {
 
@@ -16,8 +16,8 @@ export default class Room {
     this.y = room.y;
     this.rot = room.rot;
     this.dir = room.dir;
+    this.link = room.link;
     this.title = room.title;
-    this.label = room.label;
 
     this.w = 5;
     this.h = 5;
@@ -115,22 +115,22 @@ export default class Room {
       this.p5.fill(0);
       this.p5.noStroke();
       
-      if (this.label === "hard drives on seashores") {
-        let br = this.label.substring(9, this.label.length).indexOf(" ") + 9;
-        let t1 = this.label.substring(0, br);
-        let t2 = this.label.substring(br, this.label.length);
+      if (this.title === "hard drives on seashores") {
+        let br = this.title.substring(9, this.title.length).indexOf(" ") + 9;
+        let t1 = this.title.substring(0, br);
+        let t2 = this.title.substring(br, this.title.length);
         this.p5.text(t1, -this.p5.textWidth(t1) / 2, 0);
         this.p5.text(t2, -this.p5.textWidth(t2) / 2, 17);
       }
-      else if (this.label.length > 12) {
-        let br = this.label.indexOf(" ");
-        let t1 = this.label.substring(0, br);
-        let t2 = this.label.substring(br, this.label.length);
+      else if (this.title.length > 12) {
+        let br = this.title.indexOf(" ");
+        let t1 = this.title.substring(0, br);
+        let t2 = this.title.substring(br, this.title.length);
         this.p5.text(t1, -this.p5.textWidth(t1) / 2, 0);
         this.p5.text(t2, -this.p5.textWidth(t2) / 2, 17);
       } 
       else 
-        this.p5.text(this.label, -this.p5.textWidth(this.label) / 2, 0);
+        this.p5.text(this.title, -this.p5.textWidth(this.title) / 2, 0);
       this.p5.pop();
      
       
@@ -204,7 +204,7 @@ export default class Room {
       x0 = this.x + this.w - 1;
       x1 = this.x + this.w;
     }
-    const doorC = { x0: x0, y0: y0, x1: x1, y1: y1, to: this.title };
+    const doorC = { x0: x0, y0: y0, x1: x1, y1: y1, to: this.link };
     // return doorCrossing(userStep, doorC, globalConfig);
     return doorLineCrossing(prevStep, userStep, doorC, globalConfig);
   }

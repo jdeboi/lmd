@@ -1,0 +1,21 @@
+.RoomDecal {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3em;
+  flex: 1; }
+  .RoomDecal .decal-content {
+    padding: 15px;
+    box-sizing: border-box;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin: auto; }
+    .RoomDecal .decal-content .identify {
+      margin: auto; }
+    .RoomDecal .decal-content .usersEye {
+      padding: 8px;
+      border: 1px solid black;
+      border-radius: 6px;
+      display: inline-block; }
+    .RoomDecal .decal-content .participants-box {
+      width: 100%; }

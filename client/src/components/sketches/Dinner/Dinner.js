@@ -9,12 +9,12 @@
 
 // body, flat face, replaced with texture. arms robotic drinking wine
 import React from 'react';
-import Frame from '../../../shared/Frame/Frame';
+import Frame from '../../shared/Frame/Frame';
 // import DesktopIcon from '../../shared/DesktopIcon/DesktopIcon';
 // import './Loop.css';
 // Babylon
 import { Scene, AnaglyphUniversalCamera, UniversalCamera,PostProcess, Effect, HemisphericLight, Vector3, Vector2, SceneLoader,AssetContainer, MeshBuilder, StandardMaterial,  VideoTexture, CubeTexture, Color3,Color4, Mesh, Texture } from 'babylonjs';
-import BabylonScene from '../../../shared/Babylon.jsx';
+import BabylonScene from '../../shared/Babylon.jsx';
 
 // import candles0 from './assets/candles0.gif';
 // import candles1 from './assets/candles1.gif';

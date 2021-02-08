@@ -10,6 +10,8 @@ import Header from '../components/shared/Header/Header';
 import Chat from '../components/shared/Chat/Chat';
 // import Dock from '../components/shared/Dock/Dock';
 
+import {sketches, getUrl} from '../components/sketches/Sketches';
+
 // cookies
 import Cookies from 'js-cookie';
 
@@ -30,10 +32,12 @@ import Mars from '../components/sketches/Mars/Mars';
 import WetStreams from '../components/sketches/WetStreams/WetStreams';
 import Confessional from '../components/sketches/Confessional/Confessional';
 import Confessions from '../components/sketches/Confessional/Confessions';
-import Loop from '../components/sketches/Loop/Loop';
+import Xfinity from '../components/sketches/Xfinity/Xfinity';
 import Flush from '../components/sketches/Flush/Flush';
 import Oogle from '../components/sketches/Oogle/Oogle';
 import Yosemite from '../components/sketches/Yosemite/Yosemite';
+import Blinds from '../components/sketches/Blinds/Blinds';
+import Dinner from '../components/sketches/Dinner/Dinner';
 
 // under construction
 // import Altar from '../components/sketches/Test/Altar/Altar';
@@ -41,10 +45,9 @@ import Yosemite from '../components/sketches/Yosemite/Yosemite';
 // import Three from '../components/sketches/Test/Three/Three';
 // import Dimension from '../components/sketches/Dimension/Dimension';
 
-// import Dinner from '../components/sketches/Test/Dinner/Dinner';
+// 
 import Dig from '../components/sketches/Test/Dig/Dig';
-import Blinds from '../components/sketches/Blinds/Blinds';
-// import ClickMe from '../components/sketches/Test/ClickMe/ClickMe';
+import ClickMe from '../components/sketches/ClickMe/ClickMe';
 import MoonLight from '../components/sketches/Test/MoonLight/MoonLight';
 
 // pages
@@ -59,6 +62,7 @@ import SignIn from '../components/shared/SignIn/SignIn';
 import Welcome from '../components/shared/Welcome/Welcome';
 import FAQFrame from '../components/shared/FAQ/FAQFrame';
 import Volume from '../components/shared/Volume/Volume';
+import RoomDecal from '../components/shared/RoomDecal/RoomDecal';
 
 import MobileFooter from '../components/shared/Header/MobileFooter/MobileFooter';
 // import RoomUsers from '../components/shared/RoomUsers/RoomUsers';
@@ -138,10 +142,6 @@ class App extends React.Component {
     this.state = {
       cursor: 0,
       cursorID: 0,
-      wOG: window.innerWidth,
-      hOG: window.innerHeight,
-      mx: 0,
-      my: 0,
       classes: ["App"],
       showSideBar: false,
       hasAvatar: false,
@@ -150,9 +150,10 @@ class App extends React.Component {
       showDock: true,
       sessionID: null,
       usersChange: false,
-      users: null,
+      users: [],
+      hasLoadedRoom: false,
       // userAxctiveChat: null,
-      roomCount: { "macbook-air": 0, "hard-drives-on-seashores": 0, "wet-streams": 0, "jungle-gyms": 0, "cloud-confessional": 0, "esc-to-mars": 0, "xfinity-depths": 0, "wasted-days": 0, "home-page": 0, "gallery":0, "blind-eye": 0 }
+      roomCount: { "macbook-air": 0, "hard-drives-on-seashores": 0, "wet-streams": 0, "jungle-gyms": 0, "cloud-confessional": 0, "esc-to-mars": 0, "xfinity-depths": 0, "wasted-days": 0, "home-page": 0, "gallery": 0, "blind-eye": 0 }
     };
 
 
@@ -183,6 +184,7 @@ class App extends React.Component {
     window.addEventListener("resize", this.updateDeviceDimensions);
 
     this.unlisten = this.props.history.listen((location, action) => this.pageChange(location));
+    this.props.loadingApp();
   }
 
   componentWillUnmount() {
@@ -198,10 +200,17 @@ class App extends React.Component {
 
 
   pageChange = (location) => {
-    this.props.loadingApp();
+
+
+
     this.props.hideMenus();
     // this.props.setOneMenu(null);
-    this.userSetRoom(location)
+    const nextRoom = this.getRoom(location.pathname);
+    if (nextRoom != this.props.user.room) {
+      this.props.loadingApp();
+      this.setState({hasLoadedRoom: false});
+    }
+    this.props.setUserRoom(nextRoom);
   }
 
   toggleSideBar = () => {
@@ -292,11 +301,11 @@ class App extends React.Component {
   }
 
   addBots = () => {
-    const hostBot = {x: hostBotLocation.x, y:  hostBotLocation.y, room: "gallery", avatar: "😷", userName: "hostBot", id: 4};
+    const hostBot = { x: hostBotLocation.x, y: hostBotLocation.y, room: "gallery", avatar: "😷", userName: "hostBot", id: 4 };
     const cheeseBot = { x: wineLocation[0].x - 100, y: wineLocation[0].y + 80, avatar: "🤖", room: "gallery", userName: "cheeseBot", id: 0 };
     const wineBot = { x: wineLocation[1].x + 120, y: wineLocation[1].y + 50, avatar: "🤖", room: "gallery", userName: "wineBot", id: 1 };
     const cocktailBot = { x: wineLocation[2].x + 120, y: wineLocation[2].y + 50, avatar: "🤖", room: "gallery", userName: "cocktailBot", id: 2 };
-    const dj = { x: djLocation.x+100, y: djLocation.y-30, room: "gallery", avatar: "🎧", userName: "DJ", id: 3 };
+    const dj = { x: djLocation.x + 100, y: djLocation.y - 30, room: "gallery", avatar: "🎧", userName: "DJ", id: 3 };
     socket.emit("setBot", cheeseBot);
     socket.emit("setBot", wineBot);
     socket.emit("setBot", cocktailBot);
@@ -353,10 +362,9 @@ class App extends React.Component {
     this.props.setUserRoom(room);
   }
 
-  userSetRoom = (location, action) => {
-    const nextRoom = this.getRoom(location.pathname);
-    this.props.setUserRoom(nextRoom);
-  }
+  // userSetRoom = (location, action) => {
+    
+  // }
 
   getRoom = (path = this.props.location.pathname) => {
     var rm = path.substring(1, path.length);
@@ -364,7 +372,8 @@ class App extends React.Component {
     if (rm == "") rm = "gallery";
     else if (rm == "confessions") rm = "cloud-confessional";
 
-    const pages = ["gallery", "macbook-air", "wet-streams", "hard-drives-on-seashores", "blind-eye", "cloud-confessional", "xfinity-depths", "esc-to-mars", "jungle-gyms", "flush", "home-page", "wasted-days", "yosemite"];
+    const pages = sketches.map((sketch) => sketch.link);
+    pages.push("gallery");
     const pages2 = ["statement", "thesis", "bio", "about", "credits"];
     if (!pages.includes(rm) && !pages2.includes(rm)) rm = "";
 
@@ -411,7 +420,7 @@ class App extends React.Component {
     // console.log(counter);
     const { ui } = this.props;
 
-    const appHeaderClass = "App-Header" + (ui.isMobile || ui.hasFooter? " mobile": "");
+    const appHeaderClass = "App-Header" + (ui.isMobile || ui.hasFooter ? " mobile" : "");
 
     return (
       <div className={this.getStringClasses()}>
@@ -424,24 +433,27 @@ class App extends React.Component {
           <div className="App-Content inner-outline" onMouseMove={this.handleMouseMove}>
             <Switch>
               <Route exact path="/" render={() => (<Gallery users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} />)} />
-              <Route path="/macbook-air" render={() => (<MacbookAir />)} />
-              <Route path="/jungle-gyms" render={() => (<JungleGyms />)} />
-              <Route path="/hard-drives-on-seashores" render={() => (<HardDrives />)} />
-              <Route path="/wasted-days" render={() => (<Wasted />)} />
-              <Route path="/esc-to-mars" render={() => (<Mars addClass={this.addClass} removeClass={this.removeClass} />)} />
-              <Route path="/wet-streams" render={() => (<WetStreams />)} />
-              <Route path="/xfinity-depths" render={() => (<Loop />)} />
-              <Route path="/cloud-confessional" render={() => (<Confessional cursor={this.state.cursorID} />)} />
+              <Route path={getUrl("mac")} render={() => (<MacbookAir />)} />
+              <Route path={getUrl("jung")} render={() => (<JungleGyms />)} />
+              <Route path={getUrl("hard")} render={() => (<HardDrives />)} />
+              <Route path={getUrl("wasted")} render={() => (<Wasted />)} />
+              <Route path={getUrl("esc")} render={() => (<Mars addClass={this.addClass} removeClass={this.removeClass} />)} />
+              <Route path={getUrl("wet")} render={() => (<WetStreams />)} />
+              <Route path={getUrl("xfin")} render={() => (<Xfinity />)} />
+              <Route path={getUrl("cloud")} render={() => (<Confessional cursor={this.state.cursorID} />)} />
               <Route path="/confessions" render={() => (<Confessions />)} />
-              <Route path="/flush" render={() => (<Flush />)} />
-              <Route path="/home-page" render={() => (<Oogle />)} />
-              <Route path="/blind-eye" render={() => (<Blinds />)} />
-              <Route path="/yosemite" component={Yosemite} />
+              <Route path={getUrl("flush")} render={() => (<Flush />)} />
+              <Route path={getUrl("home")} render={() => (<Oogle />)} />
+              <Route path={getUrl("blind")} render={() => (<Blinds />)} />
+              <Route path={getUrl("yose")} component={Yosemite} />
+              <Route path={getUrl("click")} component={ClickMe} />
 
               <Route path="/dig" render={() => (<Dig addClass={this.addClass} />)} />
               {<Route path="/moon-light" component={MoonLight} />}
+              {<Route path="/click-me" component={ClickMe} />}
+              <Route path={"/dinner"} component={Dinner} />
               {/*<Route  path="/three" component={Three} />*/}
-             
+
               <Route path="/about" render={() => (<About ui={this.props.ui} />)} />
               <Route path="/statement" render={() => (<Statement ui={this.props.ui} />)} />
               <Route path="/credits" render={() => (<Credits ui={this.props.ui} />)} />
@@ -450,7 +462,7 @@ class App extends React.Component {
             </Switch>
 
           </div>
-          {<FPSStats top={window.innerHeight - 255} left={10} />}
+          {/* {<FPSStats top={window.innerHeight - 255} left={10} />} */}
           {/* <Exit /> */}
           {/* <SideBar room={this.state.user.room} user={this.state.user} users={this.state.users} usersChange={this.state.usersChange} showSideBar={this.state.showSideBar} handleDrawerClose={this.handleDrawerClose.bind(this)} messages={this.state.messages} addUserMessage={this.addUserMessage} userActiveChat={this.state.userActiveChat} userSetActiveChat={this.userSetActiveChat}  />*/}
           <Chat users={this.state.users} usersChange={this.state.usersChange} />
@@ -459,6 +471,7 @@ class App extends React.Component {
           {/* <RoomUsers users={this.state.users} /> */}
           <FAQFrame />
           <SignIn hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} closeSignIn={this.closeSignIn} isFrame={true} />
+          <RoomDecal hasLoadedRoom={this.state.hasLoadedRoom} users={this.state.users} onHide={() => this.setState({hasLoadedRoom: true})} />
           <Welcome user={this.props.user} hasAvatar={this.state.hasAvatar} showWelcome={this.state.showWelcome} closeWelcome={this.closeWelcome} />
           {/* <Dock showDock={this.state.showDock} /> */}
           <MobileFooter currentPage={this.getRoomTitle()} user={this.props.user} avatarClicked={this.avatarClicked} />
@@ -469,6 +482,7 @@ class App extends React.Component {
 
 
 }
+
 
 const mapStateToProps = (state) => {
   return {

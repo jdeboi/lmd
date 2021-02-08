@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+
 import './Confessional.css';
 // store
 // import { doneLoadingApp } from '../../../store/actions/';
@@ -65,7 +66,7 @@ class Confessional extends React.Component {
       webY: this.winY - 50,
       earCursor: this.props.cursor,
       volume: this.minVol,
-      confessFormHidden: true
+      confessFormHidden: true,
     };
 
     factor = 0.1;
@@ -95,6 +96,7 @@ class Confessional extends React.Component {
     alert("thanks for your submission. uploading to the cloud");
     this.props.history.push("/confessions");
   }
+
 
   render() {
     const { tweetX, tweetY } = this.state;

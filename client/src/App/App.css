@@ -110,7 +110,8 @@ input.standardInputWhite {
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none; }
+    user-select: none;
+    pointer-events: none; }
   .App #fps {
     position: absolute;
     background-color: black;
@@ -124,7 +125,8 @@ input.standardInputWhite {
     height: 20px; }
   .App .bold {
     font-weight: bold; }
-  .App header.menuTheme, .App .menuTheme {
+  .App header.menuTheme,
+  .App .menuTheme {
     color: white;
     background: black; }
   .App .dottedBG1 {
@@ -140,11 +142,13 @@ input.standardInputWhite {
     transform: scaleX(-1); }
   .App .flippedY {
     transform: scaleY(-1); }
-
-@font-face {
-  font-family: notoEmojiFont;
-  src: url(/assets/s3-bucket/gallery/NotoColorEmoji.ttf); }
+  .App .bold {
+    font-family: consoleFontBold; }
 
 @font-face {
   font-family: consoleFont;
   src: url(./assets/fonts/dogica.ttf); }
+
+@font-face {
+  font-family: consoleFontBold;
+  src: url(./assets/fonts/dogicabold.ttf); }

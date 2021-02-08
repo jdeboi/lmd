@@ -156,7 +156,7 @@ class Gallery extends React.Component {
         <ReactAudioPlayer
           src={this.songs[this.props.music.currentSong]}
           autoPlay={true}
-          volume={this.getVolume()}
+          volume={0}//{this.getVolume()}
           controls={false}
           loop={true}
           ref={player => {

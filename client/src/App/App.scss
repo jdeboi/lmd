@@ -1,16 +1,14 @@
-
 @import "../styles/constants.scss";
 
-.App.overflow-all{
+.App.overflow-all {
   overflow: scroll;
   height: 100%;
   width: 100%;
   position: absolute;
   top: 0;
   left: 0;
-  display:block;
+  display: block;
   line-height: 1.6em;
-
 
   .App-Content {
     overflow: scroll;
@@ -19,11 +17,9 @@
     position: absolute;
     top: 0;
     left: 0;
-    display:block;
+    display: block;
   }
-
 }
-
 
 .App {
   background-color: black;
@@ -72,10 +68,7 @@
     align-items: stretch;
 
     overflow: hidden;
-
   }
-
-
 
   // .Frame-box {
   //   /* padding-top: 36px; */
@@ -96,8 +89,8 @@
     border-right: 2px solid black;
     /* border-bottom: 3px solid black; */
     -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
-    box-sizing: border-box;         /* Opera/IE 8+ */
+    -moz-box-sizing: border-box; /* Firefox, other Gecko */
+    box-sizing: border-box; /* Opera/IE 8+ */
   }
 
   // a way to classify all sketch divs to take up full space
@@ -125,7 +118,6 @@
     z-index: 0;
   }
 
-
   .noSelect {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -133,6 +125,7 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    pointer-events: none;
   }
 
   #fps {
@@ -152,21 +145,54 @@
     font-weight: bold;
   }
 
-
-
-  header.menuTheme, .menuTheme {
+  header.menuTheme,
+  .menuTheme {
     color: white;
     background: black;
   }
 
   .dottedBG1 {
-    background-image:
-    radial-gradient(ellipse farthest-corner, transparent 0%, transparent 35%, #fff 30%, #fff 40%, transparent 90%),
-    radial-gradient(ellipse farthest-corner at 0px 0px, transparent 0%, transparent 20%, #fff 15%, #fff 20%, transparent 50%),
-    radial-gradient(ellipse farthest-corner at 8px 8px, transparent 0%, transparent 20%, #fff 15%, #fff 20%, transparent 50%),
-    radial-gradient(ellipse farthest-corner at 0px 8px, transparent 0%, transparent 20%, #fff 15%, #fff 20%, transparent 40%),
-    radial-gradient(ellipse farthest-corner at 8px 0px, transparent 0%, transparent 20%, #fff 15%, #fff 20%, transparent 50%),
-    linear-gradient(120deg, #11ffff 0,  #ff11ff 100%);
+    background-image: radial-gradient(
+        ellipse farthest-corner,
+        transparent 0%,
+        transparent 35%,
+        #fff 30%,
+        #fff 40%,
+        transparent 90%
+      ),
+      radial-gradient(
+        ellipse farthest-corner at 0px 0px,
+        transparent 0%,
+        transparent 20%,
+        #fff 15%,
+        #fff 20%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse farthest-corner at 8px 8px,
+        transparent 0%,
+        transparent 20%,
+        #fff 15%,
+        #fff 20%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse farthest-corner at 0px 8px,
+        transparent 0%,
+        transparent 20%,
+        #fff 15%,
+        #fff 20%,
+        transparent 40%
+      ),
+      radial-gradient(
+        ellipse farthest-corner at 8px 0px,
+        transparent 0%,
+        transparent 20%,
+        #fff 15%,
+        #fff 20%,
+        transparent 50%
+      ),
+      linear-gradient(120deg, #11ffff 0, #ff11ff 100%);
 
     background-size: 8px 8px, 8px 8px, 8px 8px, 8px 8px, 8px 8px, 100% 100%;
   }
@@ -181,7 +207,6 @@
     min-height: 100%;
   }
 
-
   .flippedX {
     transform: scaleX(-1);
   }
@@ -190,15 +215,17 @@
     transform: scaleY(-1);
   }
 
- 
-}
-
-@font-face {
-  font-family: notoEmojiFont;
-  src: url(/assets/s3-bucket/gallery/NotoColorEmoji.ttf);
+  .bold {
+    font-family: consoleFontBold;
+  }
 }
 
 @font-face {
   font-family: consoleFont;
   src: url(./assets/fonts/dogica.ttf);
+}
+
+@font-face {
+  font-family: consoleFontBold;
+  src: url(./assets/fonts/dogicabold.ttf);
 }

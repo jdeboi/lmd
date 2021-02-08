@@ -1,4 +1,74 @@
 .Yosemite {
-  background-image: url(/assets/s3-bucket/yosemite/yosemite3d.png);
+  background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/yosemite/yosemite3d.png);
   background-size: cover;
+  background-position: center;
+
+  .fyre {
+    background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/yosemite/fy_trans.gif);
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.Frame.fire {
+  .titlebar {
+    animation-duration: 400ms;
+    animation-name: blink;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+}
+
+.Frame {
+  .window {
+    .content {
+      pointer-events: all;
+    }
+  }
+}
+
+.burned-folders {
+  padding: 15px;
+
+  .folder-item {
+    width: 100%;
+    color:black;
+    display:flex;
+    flex-direction: row;
+    padding-bottom: 10px;
+    
+
+    .folder-img {
+      background-repeat: no-repeat;
+      padding-right: 15px;
+      width: 20px;
+      height: 20px;
+      background-size:contain;
+      background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/loop/folder.png)
+    }
+
+    .folder-title {
+      margin-top: 4px;
+    }
+    
+  }
+  // .folder-item:hover {
+  //   color:red;
+
+  //   .folder-img {
+  //     background-size:contain;
+  //     // background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/yosemite/fireemoji.png)
+  //   }
+  // }
+
+}
+
+@keyframes blink {
+  from {
+     background: red;
+  }
+  to {
+    background: black;
+  }
 }

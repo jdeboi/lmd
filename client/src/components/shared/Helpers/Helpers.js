@@ -19,3 +19,20 @@ export function getNewZIndices(indexToTop, array) {
   newArr[indexToTop] = maxVal;
   return newArr;
 }
+
+export function mapVal(val, in_min, in_max, out_min, out_max) {
+  return (val - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+export function constrain(val, min, max) {
+  if (val < min)
+    return min;
+  else if (val > max)
+    return max;
+  return val;
+}
+
+export function randomInRange(start, end) {
+  let diff = end-start;
+  return Math.random()*diff+start;
+}

@@ -37,12 +37,12 @@ import Oogle from '../components/sketches/Oogle/Oogle';
 // import Three from '../components/sketches/Test/Three/Three';
 // import Dimension from '../components/sketches/Dimension/Dimension';
 
-import Dinner from '../components/sketches/Test/Dinner/Dinner';
+import Dinner from '../components/sketches/Dinner/Dinner';
 import Dig from '../components/sketches/Test/Dig/Dig';
-import Blinds from '../components/sketches/Blinds/Blinds';
-import ClickMe from '../components/sketches/Test/ClickMe/ClickMe';
+import Blinds from '../components/sketches/Blinds/BlindsOG';
+import ClickMe from '../components/sketches/ClickMe/ClickMe';
 import MoonLight from '../components/sketches/Test/MoonLight/MoonLight';
-import Yosemite from '../components/sketches/Test/Yosemite/Yosemite';
+import Yosemite from '../components/sketches/Yosemite/Yosemite';
 
 // pages
 import About from '../components/pages/About';

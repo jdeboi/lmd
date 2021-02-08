@@ -7,8 +7,7 @@ import BabylonScene from '../../../shared/Babylon.jsx';
 import { WaterMaterial } from 'babylonjs-materials';
 
 var camera, water, waterMesh;
-var tubes = [];
-var seed = 1;
+
 
 class MoonLight extends React.Component {
   // https://codepen.io/JohJakob/pen/YPxgwo

@@ -1,4 +1,4 @@
-import { LOADINGAPP, DONELOADINGAPP, RESIZEAPP } from '../actions';
+import { LOADINGAPP, DONELOADINGAPP, RESIZEAPP, STARTCOMPOSITION } from '../actions';
 
 let initW = typeof window === 'object' ? window.innerWidth : null;
 let initH = typeof window === 'object' ? window.innerHeight : null;
@@ -17,7 +17,8 @@ const initialState = {
     headerH: getHeaderH(initW, initH),
     toolbarH: 26,
     contentW: getContentW(initW, initH),
-    contentH: getContentH(initW, initH)
+    contentH: getContentH(initW, initH),
+    compositionStarted: false
 };
 
 function getHasFooter(w, h) {
@@ -36,7 +37,7 @@ function getIsMobile() {
 function getWindowSize(w) {
     if (!w)
         return 'medium';
-    else if (w < 340) 
+    else if (w < 340)
         return 'xxsmall';
     else if (w < 480)
         return 'xsmall';
@@ -51,7 +52,7 @@ function getWindowSize(w) {
 
 function getContentW(w, h) {
     if (getHasFooter(w, h) || getIsMobile(w, h)) {
-        if (getOrientation(w, h) === "portrait" ) {
+        if (getOrientation(w, h) === "portrait") {
             return w;
         }
         return w - footerMobileH; // right hand menu
@@ -61,7 +62,7 @@ function getContentW(w, h) {
 
 function getContentH(w, h) {
     if (getHasFooter(w, h) || getIsMobile(w, h)) {
-        if (getOrientation(w, h) === "portrait" ) {
+        if (getOrientation(w, h) === "portrait") {
             return h - footerMobileH - headerMobileH;
         }
         return h - headerMobileH;
@@ -69,8 +70,8 @@ function getContentH(w, h) {
     return h - headerH;
 }
 
-function getHeaderH (w, h) {
-    return (getHasFooter(w, h) || getIsMobile())? headerMobileH : headerH;
+function getHeaderH(w, h) {
+    return (getHasFooter(w, h) || getIsMobile()) ? headerMobileH : headerH;
 }
 
 export const windowReducer = (state = initialState, action) => {
@@ -86,18 +87,24 @@ export const windowReducer = (state = initialState, action) => {
             window.size = getWindowSize(window.width);
             window.hasFooter = getHasFooter(window.width, window.height);
             window.headerH = getHeaderH(window.width, window.height);
-            window.contentW =  getContentW(window.width, window.height);
+            window.contentW = getContentW(window.width, window.height);
             window.contentH = getContentH(window.width, window.height);
             return window;
-        
+
         case LOADINGAPP:
             window.loading = true;
             return window;
 
         case DONELOADINGAPP:
             window.loading = false;
+            window.compositionStarted = false;
             return window;
-        default:
+
+        case STARTCOMPOSITION:
+            window.compositionStarted = true;
+            return window;
+        
+            default:
             return state;
 
     }

@@ -1,5 +1,6 @@
 $windowS:160px;
 
+
 .Header {
   // border-bottom: #aaa 1px solid;
   box-shadow: 0px 3px 20px 0px #ffffff16;
@@ -13,11 +14,23 @@ $windowS:160px;
 
   // background-image: url(/assets/s3-bucket/test/squares.gif);
   // background-image: url(/assets/s3-bucket/gallery/wallpaper/wallpaper3.jpg);
-  background-size: 200px 200px;
-  background-repeat: repeat;
-  // background: white;
-  background-color: black; // olive #eaf63336; // navy #33c0f636 // honestly, black? // greenblue #33f6f636; //
+  
+  // background-size: 200px 200px;
+  // background-repeat: repeat;
+  // background-color: black; // olive #eaf63336; // navy #33c0f636 // honestly, black? // greenblue #33f6f636; //
 
+  .react-p5 {
+    position: absolute;
+    width: 100%;
+
+    canvas {
+      width: 100%;
+    }
+  }
+
+  #babylon-canvas {
+    width: 99.8%;
+  }
 
   .window {
     // border: 1px solid #aaa;
@@ -45,7 +58,7 @@ $windowS:160px;
     .background2 {
       // background-image: url(/assets/s3-bucket/gallery/wallpaper/wallpaper2.jpg);
       // background-image: url(/assets/s3-bucket/test/palmblk.jpg);
-      background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/blinds/palm.png);
+      // background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/blinds/palm.png);
 
       // background-size: 160% 160%;
     }

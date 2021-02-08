@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Frame from '../../shared/Frame/Frame';
 
 // import FrameSimple from '../../shared/Frame/FrameSimple';
@@ -7,9 +8,12 @@ import ReactPlayer from 'react-player'
 
 // import ReactAudioPlayer from 'src/components/sketches/Gallery/node_modules/react-audio-player';
 
-import {getRandomNum, getNewZIndices} from '../../shared/Helpers/Helpers';
-import {getTweetContent, initConfessions, initZIndicesIcons, initZIndicesFrames} from './components/Helpers';
+import { getRandomNum, getNewZIndices } from '../../shared/Helpers/Helpers';
+import { getTweetContent, initConfessions, initZIndicesIcons, initZIndicesFrames } from './components/Helpers';
 import Confession from './components/ConfessionIcon/Confession';
+
+import TweetModal from './components/ConfessionIcon/Tweet/TweetModal';
+
 // import mainVid from  "./assets/waves2_lines.mp4";
 // import dove from  "./assets/dove_t.gif";
 // import shellSound from "./assets/shell_sound.wav";
@@ -20,7 +24,7 @@ import Confession from './components/ConfessionIcon/Confession';
 
 // import txt from './assets/Canned/txt.png';
 
-import { faEye,faRetweet, faVideo, faMicrophoneAlt, faMicrophoneAltSlash } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faRetweet, faVideo, faMicrophoneAlt, faMicrophoneAltSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
@@ -34,7 +38,10 @@ class Confessions extends React.Component {
       tweets: [],
       time: 0,
       zIndicesIcons: initZIndicesIcons(),
-      zIndicesFrames: initZIndicesFrames()
+      zIndicesFrames: initZIndicesFrames(),
+      modalTweetHidden: true,
+      modalTweet: null,
+      modalTweetConfession: null
     };
 
 
@@ -71,7 +78,7 @@ class Confessions extends React.Component {
       let i = 0;
       const users = initialRes.tweets.includes.users;
 
-      console.log("USERS", users);
+      // console.log("USERS", users);
       for (const tweet of initialRes.tweets.data) {
         const id = tweet.author_id;
         const findUserByID = users.filter(user => {
@@ -82,10 +89,10 @@ class Confessions extends React.Component {
 
     }
     else {
-      console.log("NO TWEETS");
+      // console.log("NO TWEETS");
     }
 
-    console.log("DONE", this.state.tweets);
+    // console.log("DONE", this.state.tweets);
   }
 
 
@@ -108,32 +115,42 @@ class Confessions extends React.Component {
     tweet.replies = tweetObj.public_metrics.reply_count;
     if (i === 0) tweets[0] = tweet;
     else tweets.push(tweet);
-    this.setState({tweets});
+    this.setState({ tweets });
   }
 
 
 
   newIconToTop = (id) => {
-    console.log("id", id)
+    // console.log("id", id)
     const newZ = getNewZIndices(id, this.state.zIndicesIcons);
-    this.setState({zIndicesIcons: newZ});
+    this.setState({ zIndicesIcons: newZ });
     // console.log("ZZZ", this.state.zIndices);
   }
 
 
   newFrameToTop = (id) => {
     const newZ = getNewZIndices(id, this.state.zIndicesFrames);
-    this.setState({zIndicesFrames: newZ});
+    this.setState({ zIndicesFrames: newZ });
     // console.log("ZZZ", this.state.zIndices);
   }
 
   onDblClick = (id) => {
-    // console.log(id);
+    console.log(id);
     this.newFrameToTop(id);
   }
 
+
+  setTweetModal = (tweet, confession) => {
+    this.setState({ modalTweetHidden: false,  modalTweet: tweet, modalTweetConfession: confession })
+  }
+
+  hideTweetModal = () => {
+    this.setState({ modalTweetHidden: true });
+  }
+
   render() {
-    const {confessions, tweets, time, zIndicesIcons, zIndicesFrames} = this.state;
+    const { confessions, tweets, time, zIndicesIcons, zIndicesFrames } = this.state;
+
 
     return (
       <div className="Confessional Sketch">
@@ -145,19 +162,45 @@ class Confessions extends React.Component {
               time: time,
               tweet: tweets[i],
               confession: confessions[i],
+              setTweetModal: this.setTweetModal,
               onDblClick: this.onDblClick,
               newFrameToTop: this.newFrameToTop,
-              newIconToTop: this.newIconToTop,
+              newIconToTop: this.newIconToTop
             }
-            return(<Confession key={i} i={i}  {...props}/>)
+            if (this.props.ui.width > 500)
+              return (<Confession key={i} i={i}  {...props} />)
+            else if (i < 5)
+              return (<Confession key={i} i={i}  {...props} />)
+            return null;
           })
         }
-        {/* <Glasses y={30} /> */}
+        {
+          this.props.ui.isMobile ?
+            <TweetModal
+              isHidden={this.state.modalTweetHidden}
+              onHide={this.hideTweetModal}
+              tweet={this.state.modalTweet}
+              confession={this.state.modalTweetConfession}
+              ui={this.props.ui}
+            />
+            : null
+        }
       </div>
     );
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    ui: state.ui
+  }
+}
+
+const mapDispatchToProps = () => {
+  return {
+    // doneLoadingApp
+  }
+}
 
 
-export default Confessions;
+export default connect(mapStateToProps, mapDispatchToProps())(Confessions);

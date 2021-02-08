@@ -1,6 +1,7 @@
 import Draggable from './Draggable/Draggable';
 // import ShadowDraggable from './Draggable/ShadowDraggable'
-import { rooms, p5ToWorldCoords, globalConfig } from '../../constants';
+import { p5ToWorldCoords, globalConfig } from '../../constants';
+import { rooms }  from '../../../Sketches';
 
 export default class RoomLabel extends Draggable {
 
@@ -15,12 +16,12 @@ export default class RoomLabel extends Draggable {
         const point = p5ToWorldCoords(room.x, room.y);
         this.x = point.x - this.w/2 + 5*globalConfig.scaler/2;
         this.y = point.y- this.h/2+ 5*globalConfig.scaler/2;
-        this.label = room.label;
         this.title = room.title;
+        this.link = room.link;
     }
 
     display(dogica, roomCount) {
-        let rc = roomCount[this.title];
+        let rc = roomCount[this.link];
         this.p5.push();
         this.p5.translate(this.x, this.y);
         if (!this.closed) {
@@ -48,7 +49,7 @@ export default class RoomLabel extends Draggable {
         
        
 
-        // if (this.label.length > 12) this.p5.translate(0, 35);
+        // if (this.title.length > 12) this.p5.translate(0, 35);
         // else 
         this.p5.translate(0, 20);
 
@@ -98,22 +99,22 @@ export default class RoomLabel extends Draggable {
         // draw title
         this.p5.fill(0);
         this.p5.noStroke();
-        if (this.label === "hard drives on seashores") {
-            let br = this.label.substring(9, this.label.length).indexOf(" ") + 9;
-            let t1 = this.label.substring(0, br);
-            let t2 = this.label.substring(br+1, this.label.length);
+        if (this.title === "hard drives on seashores") {
+            let br = this.title.substring(9, this.title.length).indexOf(" ") + 9;
+            let t1 = this.title.substring(0, br);
+            let t2 = this.title.substring(br+1, this.title.length);
             this.p5.text(t1, 0, 0);
             this.p5.text(t2, 0, 17);
         }
-        else if (this.label.length > 12) {
-            let br = this.label.indexOf(" ");
-            let t1 = this.label.substring(0, br);
-            let t2 = this.label.substring(br+1, this.label.length);
+        else if (this.title.length > 12) {
+            let br = this.title.indexOf(" ");
+            let t1 = this.title.substring(0, br);
+            let t2 = this.title.substring(br+1, this.title.length);
             this.p5.text(t1, 0, 0);
             this.p5.text(t2, 0, 17);
         }
         else
-            this.p5.text(this.label, 0, 0);
+            this.p5.text(this.title, 0, 0);
 
     }
 }

@@ -4,11 +4,12 @@
   width: 100%;
   top: 0px;
   left: 0px;
-  background-image: url("/videos/face.gif");
+  background-image: url("/assets/s3-bucket/clickMe/face.gif");
   /* cursor: pointer !important; */
   background-repeat: repeat; }
   .ClickMe .content {
-    background-color: rgba(255, 255, 255, 0); }
+    background-color: rgba(255, 255, 255, 0);
+    pointer-events: all; }
   .ClickMe .window {
     background-color: rgba(255, 255, 255, 0); }
   .ClickMe .loading {
@@ -22,6 +23,11 @@
   .ClickMe button {
     height: 100px;
     font-size: 50px; }
+    .ClickMe button img {
+      height: 40px;
+      width: 40px; }
+  .ClickMe .hands button {
+    margin: auto; }
 
 /* https://media.giphy.com/media/3o7btNNSCfjnn14imk/giphy.gif */
 /* peeps glitch https://media.giphy.com/media/2shBNJSPTrpWvoXfpD/source.gif */

@@ -40,16 +40,23 @@ class DesktopIcon extends React.Component {
     this.onControlledDrag(e, position);
     this.onStop();
   };
+  
 
   onDblClick = () => {
     // let {isHidden} = this.state;
     // isHidden = !isHidden;
+    console.log("dbl")
     this.setState({ isHidden: false });
-    this.props.onDblClick(this.props.id);
+    if (this.props.onDblClick) this.props.onDblClick(this.props.id);
   }
 
   onClick = () => {
     if (this.props.newIconToTop) this.props.newIconToTop();
+    if (this.props.onClickMobile) {
+      this.props.onClickMobile();
+      console.log("mob cl")
+      this.onDblClick();
+    } 
   }
 
   onHide = () => {

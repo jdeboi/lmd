@@ -3,6 +3,7 @@ import './Modal.css';
 import { connect } from 'react-redux';
 import Frame from '../../../shared/Frame/Frame';
 import CenterModal from '../../../shared/CenterModal/CenterModal';
+import ReactPlayer from 'react-player';
 // import { setOneMenu, hideFaq, toggleFaq } from '../../../../store/actions/menuItems';
 
 
@@ -14,16 +15,16 @@ class Modal extends React.Component {
 
         this.state = {
             currentContent: 0,
-            contentVisible: false
+            contentHidden: true
         }
     }
 
     render() {
-        const {ui} = this.props;
-       if (ui.isMobile || ui.hasFooter) {
-           return this.getMobileModal();
-       }
-       return this.getDesktopModal();
+        const { ui } = this.props;
+        if (ui.isMobile || ui.hasFooter) {
+            return this.getMobileModal();
+        }
+        return this.getDesktopModal();
     }
 
     getDesktopModal = () => {
@@ -37,7 +38,7 @@ class Modal extends React.Component {
                 onHide={onHide}
                 className="home-page-modal"
                 windowStyle={{ background: "rgba(0, 0, 0, .9)" }}
-                content={this.getModalContentPortrait(w, h)}
+                content={this.getModalContentPortrait(w, h, this.getMobileFrameH())}
                 width={300}
                 height={this.getMobileFrameH()}
                 x={20}
@@ -48,16 +49,17 @@ class Modal extends React.Component {
     }
 
     getMobileModal = () => {
-        const { ui } = this.props;
+        const { ui, isHidden, onHide } = this.props;
+        console.log(isHidden);
         const w = ui.width - 40;
         const h = ui.contentH - 40;
-        const content = ui.orientation === "portrait"? this.getModalContentPortrait(w, h): this.getModalContentLandscape();
+        const content = ui.orientation === "portrait" ? this.getModalContentPortrait(w, h, h) : this.getModalContentLandscape();
         return (
             <CenterModal
                 title=""
-                isHidden={false}
-                onHide={this.onHide}
-                ui={this.props.ui}
+                isHidden={isHidden}
+                onHide={onHide}
+                ui={ui}
                 classN="home-modal"
                 content={content}
                 isRelative={true}
@@ -75,7 +77,7 @@ class Modal extends React.Component {
         return null;
     }
 
-    getModalContentPortrait = (w, h) => {
+    getModalContentPortrait = (w, h, fh) => {
         const { ui, data } = this.props;
         let imgH = 300;
         let imgW = 300;
@@ -89,20 +91,34 @@ class Modal extends React.Component {
                 classN += " landscape"
         }
 
-       const imgStyle = { 
-           backgroundImage: `url(${window.AWS}/homePage/thumbnails/${data.img}.jpg)`,
-           height: imgH,
-           width: imgW 
+        const imgStyle = {
+            backgroundImage: `url(${window.AWS}/homePage/thumbnails/${data.img}.jpg)`,
+            height: imgH,
+            width: imgW
         }
-        
+
+        let stars = "";
+        for (let i = 0; i < Math.round(data.stars); i++) {
+            stars += "*";
+        }
 
         return (
-            <div className={classN}>
-                <div className="loc-img" style={imgStyle} />
+            <div className={classN} style={{height: fh}}>
+                {/* <div className="loc-img" style={imgStyle} /> */}
+                <ReactPlayer
+                    className={"react-player loc-vid"}
+                    playing
+                    muted
+                    loop
+                    width={imgH}
+                    height={imgW}
+                    playsInline
+                    url={`${window.AWS}/homePage/vids/${data.img}.mp4`}
+                />
                 <div className="loc-container" style={{ height: txtH, width: w }}>
                     <div className="loc-txt">
                         <div className="loc-title">{data.name}</div>
-                        <div className="loc-stars">4.5 ****</div>
+                        <div className="loc-stars">{data.stars + " " + stars}</div>
                         <div className="loc-description">{data.description}</div>
                     </div>
                 </div>
@@ -111,9 +127,10 @@ class Modal extends React.Component {
     }
 
     getButtons = () => {
+        const {onHide} = this.props;
         return (
             <div className="center-buttons">
-                <button className="standardButton primary" onClick={this.onHide}>close</button>
+                <button className="standardButton primary" onClick={onHide}>close</button>
             </div>
         )
     }

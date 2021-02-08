@@ -4,26 +4,20 @@ import { faComment, faHeart } from "@fortawesome/free-regular-svg-icons";
 // import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-class Tweet extends React.Component {
-  // https://codepen.io/JohJakob/pen/YPxgwo
-  constructor(props) {
-    super(props);
-
-  }
-
-  render() {
-    if (this.props.tweet) {
-      return this.getTweet(this.props.tweet);
+function TweetContent(props) {
+    if (!props.tweet && !props.confession) {
+        return <div></div>
     }
-    return <div>{this.props.confession.txt}</div>
-  }
+    else if (!props.tweet) {
+        return <div>{props.confession.txt}</div>
+    }
 
-  getTweet = (tweet) => {
-    const {text, username, url, likes, rts, replies, time, tweetID} = tweet;
+
+    const {text, username, url, likes, rts, replies, time, tweetID} = props.tweet;
     const tweetUri = `twitter.com/${username}/status/${tweetID}`;
     const profileUrl = "https://twitter.com/" + username;
     const tweetUriA = <a href={"https://"+tweetUri} target="_blank">{tweetUri.substring(0, 15) + "..."}</a>;
-      var name = tweet.name;
+      var name = props.tweet.name;
       if (name.length > 24) name = name.substring(0, 24) + "...";
       return (
         <div className="tweet">
@@ -44,8 +38,6 @@ class Tweet extends React.Component {
           </div>
         </div>
       )
-    }
-
   }
 
-  export default Tweet;
+  export default TweetContent;

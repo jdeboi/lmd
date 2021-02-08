@@ -105,13 +105,9 @@ input.standardInputWhite {
       padding: 0px;
       padding-left: 4px;
       padding-right: 4px; }
-    .Header.mobile span.xxsmallLogo {
-      line-height: 16px;
-      padding: 0px;
-      position: absolute;
-      top: -22px;
-      height: 60px;
-      vertical-align: middle; }
+    .Header.mobile .xxsmall {
+      line-height: 60px;
+      height: 60px; }
   .Header .currentPage {
     color: #335ef6dd; }
   .Header .disabled {

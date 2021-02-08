@@ -2,6 +2,8 @@
 export const RESETAPP = 'RESETAPP';
 export const LOADINGAPP = 'LOADINGAPP';
 export const DONELOADINGAPP = 'DONELOADINGAPP';
+export const STARTCOMPOSITION = 'STARTCOMPOSITION';
+export const RESETCOMPOSITION = 'RESETCOMPOSITION';
 export const RESIZEAPP = 'RESIZEAPP';
 
 export const loadingApp = () => {
@@ -15,6 +17,18 @@ export const doneLoadingApp = () => {
     type: DONELOADINGAPP
   }
 }
+
+export const startComposition = () => {
+  return {
+    type: STARTCOMPOSITION
+  }
+}
+
+// export const resetComposition = () => {
+//   return {
+//     type: RESETCOMPOSITION
+//   }
+// }
 
 export const resetApp = () => {
   return {

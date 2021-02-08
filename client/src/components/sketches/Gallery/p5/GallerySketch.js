@@ -78,7 +78,8 @@ var lastMouseMove = 0;
 
 //////////////
 // PROPS
-var user, users, roomCount, isMobile;
+var user, roomCount, isMobile;
+var users = []
 
 
 export default (props) => {
@@ -150,15 +151,15 @@ export default (props) => {
   const setup = (p5, canvasParentRef) => {
     // use parent to render the canvas in this ref
     // (without that p5 will render the canvas outside of your component)
-    
+
     initBuilding(p5);
     initEmojis(p5);
     initDivs(p5);
     treeSlider = new TreeSlider(31, 40, 2);
     // miniMap = new MiniMap(p5, 50, p5.windowHeight - 200 - 80, 200, 200);
     stepTo = { x: user.x, y: user.y };
-    
-    
+
+
     const cnv = p5.createCanvas(p5.windowWidth, p5.windowHeight);
     cnv.parent(canvasParentRef);
     cnv.mousePressed(() => triggerMove(props.setUserActive, p5));
@@ -270,7 +271,8 @@ export default (props) => {
 
     //////////////
     // updating
-    updateDivs(userEase, users, doors, divs);
+    if (users)
+      updateDivs(userEase, users, doors, divs);
     treeSlider.update(p5);
     updateUserEase(p5);
 
@@ -397,7 +399,9 @@ export default (props) => {
   }
 
   const triggerMove = (setUserActive, p5) => {
-    const userClicked = checkUserClicked(userEase, users, p5);
+    let userClicked = false;
+    if (users)
+      userClicked = checkUserClicked(userEase, users, p5);
     if (userClicked) {
       setUserActive(userClicked);
       return;

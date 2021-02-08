@@ -62,7 +62,6 @@ input.standardInputWhite {
     display: flex;
     flex-direction: row;
     color: white;
-    height: 50px;
     padding-bottom: 5px; }
     .tweet .tweet-top .tweeter-icon {
       flex: 0 0 auto;
