@@ -4,10 +4,10 @@
   width:100%;
   top: 0px;
   left: 0px;
-  background-image: url("/assets/s3-bucket/clickMe/face.gif");
+  background-image: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/face.gif");
 
   /* cursor: pointer !important; */
-  // cursor: url("/images/cursor/pointer.png"), auto;
+  
   background-repeat: repeat;
 
   .content {
@@ -19,6 +19,14 @@
     background-color: rgba(255, 255, 255, 0);
   }
 
+  .react-p5 {
+    position: absolute;
+    width: 100%;
+
+    canvas {
+      width: 100%;
+    }
+  }
 
   .loading {
     position: absolute;
@@ -31,7 +39,7 @@
   }
 
   button {
-    height: 100px;
+    height: 60px;
     font-size: 50px;
 
     img {
@@ -47,5 +55,65 @@
   }
 }
 
+
+// .titlebar {
+//   cursor:pointer !important;
+// }
+
+.point0 {
+  cursor: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/cursors/point0.png"), auto;
+
+  button {
+    cursor: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/cursors/point0.png"), auto;
+  }
+}
+
+.point1 {
+  cursor: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/cursors/point1.png"), auto;
+
+  button {
+    cursor: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/cursors/point1.png"), auto;
+  }
+}
+
+.point2 {
+  cursor: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/cursors/point2.png"), auto;
+
+  button {
+    cursor: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/cursors/point2.png"), auto;
+  }
+}
+
+.point3 {
+  cursor: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/cursors/point3.png"), auto;
+
+  button {
+    cursor: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/cursors/point3.png"), auto;
+  }
+}
+
+.point4 {
+  cursor: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/cursors/point4.png"), auto;
+
+  button {
+    cursor: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/cursors/point4.png"), auto;
+  }
+}
+
+.kiss {
+  cursor: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/cursors/kiss.png"), auto;
+
+  button {
+    cursor: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/cursors/kiss.png"), auto;
+  }
+}
+
+.erase {
+  cursor: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/cursors/eraser.png"), auto;
+
+  button {
+    cursor: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/cursors/eraser.png"), auto;
+  }
+}
 /* https://media.giphy.com/media/3o7btNNSCfjnn14imk/giphy.gif */
 /* peeps glitch https://media.giphy.com/media/2shBNJSPTrpWvoXfpD/source.gif */

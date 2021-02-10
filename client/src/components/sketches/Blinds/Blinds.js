@@ -64,7 +64,7 @@ class Blinds extends React.Component {
     this.camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
     this.scene.add(this.camera);
     this.scene.fog = new THREE.FogExp2(0xccddbb, 0.002);//efd1b5
-    this.camera.position.set(0, 150, 400);
+    this.camera.position.set(0, 100, 400);
     this.camera.lookAt(this.scene.position);
 
   }
@@ -115,6 +115,7 @@ class Blinds extends React.Component {
     this.scene.add(skyBox);
   }
 
+ 
   initStatues = () => {
     const objLoader = new OBJLoader();
     objLoader.load('/assets/s3-bucket/blinds/column/column_blend.obj', (root) => {
@@ -144,11 +145,11 @@ class Blinds extends React.Component {
       var hercules = root;
       var mat = new THREE.MeshLambertMaterial({ color: 0xdddddd });
       hercules.material = mat;
-      let sc = 4;
+      let sc = 2;
       hercules.scale.set(sc, sc, sc);
-      hercules.rotation.y = -3;
+      // hercules.rotation.y = -3;
       hercules.position.set(-100, 0, -100);
-      this.hercules.push(hercules);
+      // this.hercules.push(hercules);
       this.scene.add(hercules);
 
       // for (let i = 0; i < 4; i++) {
@@ -164,6 +165,19 @@ class Blinds extends React.Component {
       //   this.hercules.push(newCR);
       // }
 
+    });
+
+    objLoader.load('/assets/s3-bucket/blinds/bench/bench.obj', (root) => {
+      var bench = root;
+      var mat = new THREE.MeshLambertMaterial({ color: 0xdddddd });
+      bench.material = mat;
+      bench.scale.set(1, 1, 1);
+      bench.position.set(0, 0, 50);
+      bench.rotation.y = Math.PI/2;
+      
+      this.scene.add(bench);
+
+     
     });
   }
 

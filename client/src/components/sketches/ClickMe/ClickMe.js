@@ -1,7 +1,7 @@
 import React from 'react';
 import "./ClickMe.css";
 
-import { AnaglyphUniversalCamera, HemisphericLight, Vector3, SceneLoader, MeshBuilder, StandardMaterial, PhotoDome, CubeTexture, Color3, Mesh, Texture } from 'babylonjs';
+import { AnaglyphUniversalCamera, HemisphericLight, TextureLoader, MeshBasicMaterial, Vector3, SceneLoader, MeshBuilder, StandardMaterial, PhotoDome, CubeTexture, Color3, Mesh, Texture } from 'babylonjs';
 import BabylonScene from '../../shared/Babylon.jsx'; // import the component above linking to file we just created.
 
 import Frame from '../../shared/Frame/Frame';
@@ -32,7 +32,7 @@ class ClickMe extends React.Component {
       handT: 0,
       handId: null,
       showHands: false,
-      toolID: "hand"
+      cursor: "point0"
     }
 
     this.onRender = this.onRender.bind(this);
@@ -52,7 +52,7 @@ class ClickMe extends React.Component {
     // const camera = new UniversalCamera("UniversalCamera", new Vector3(0, 1, -25), scene);
     var camera = new AnaglyphUniversalCamera("af_cam", new Vector3(0, 8, -5), 0.033, scene);
     scene = scene;
-    scene.clearColor = Color3.Gray();
+    scene.clearColor = Color3.Black();
     // scene.fogMode = Scene.FOGMODE_LINEAR;
     // scene.fogStart = 520.0;
     // scene.fogEnd = 560.0;
@@ -113,26 +113,26 @@ class ClickMe extends React.Component {
     // moveHands(scene);
   }
 
-  handUp = () => {
-    console.log("hand up")
+  // handUp = () => {
+  //   console.log("hand up")
 
-    clearTimeout(this.handTimer);
-    this.setState({ handId: null, showHands: false, toolID: "hand" })
-  }
+  //   clearTimeout(this.handTimer);
+  //   this.setState({ handId: null, showHands: false, toolID: "hand" })
+  // }
 
-  handDown = () => {
-    console.log("hand down")
+  // handDown = () => {
+  //   console.log("hand down")
 
-    this.setState({ handId: null, handT: new Date() })
-    this.handTimer = setTimeout(this.showHandMenu, 1500);
-  }
+  //   this.setState({ handId: null, handT: new Date() })
+  //   this.handTimer = setTimeout(this.showHandMenu, 1500);
+  // }
 
-  handLeave = () => {
-    console.log("leave hand")
-    if (!this.state.showHandMenu) {
-      clearTimeout(this.handTimer);
-    }
-  }
+  // handLeave = () => {
+  //   console.log("leave hand")
+  //   if (!this.state.showHandMenu) {
+  //     clearTimeout(this.handTimer);
+  //   }
+  // }
 
   // checkHand = () => {
   //   if (this.state.handId && new Date - this.state.handT) {
@@ -140,58 +140,55 @@ class ClickMe extends React.Component {
   //   }
   // }
 
-  showHandMenu = () => {
-    console.log("show hands")
-    this.setState({ showHands: true });
-  }
+  // showHandMenu = () => {
+  //   console.log("show hands")
+  //   this.setState({ showHands: true });
+  // }
 
-  getHandMenu = () => {
-    if (this.state.showHands) {
-      let hands = ["🖐🏿", "🖐🏾", "🖐🏽", "🖐🏼", "🖐🏻"];
-      return (
-        <div className="handBox">
-          {hands.map((hand, i) =>
-            <button>{hand}</button>
-          )}
-        </div>
-      )
-    }
-    return null;
-  }
+  // getHandMenu = () => {
+  //   if (this.state.showHands) {
+  //     let hands = ["🖐🏿", "🖐🏾", "🖐🏽", "🖐🏼", "🖐🏻"];
+  //     return (
+  //       <div className="handBox">
+  //         {hands.map((hand, i) =>
+  //           <button>{hand}</button>
+  //         )}
+  //       </div>
+  //     )
+  //   }
+  //   return null;
+  // }
 
-  setTool = (id) => {
-    this.setState({ toolID: id });
+  setCursor = (id) => {
+    this.setState({ cursor: id });
   }
 
   getClickMenu() {
-
+    let hands = [0, 0, 0, 0, 0];
     return (
       <Frame title="" content={
         <div className="hands">
 
+          {/* {hands.map((hand, i) => {
+            let h = i;
+            return(
+              <button key={i} onClick={() => this.setCursor("point" + h)}>
+                <img src={"/assets/s3-bucket/clickMe/cursors/point" + h + ".png"} width={80} height={80} />
+              </button>
+            )
+          })} */}
           <button
             className="hand"
-            onTouchStart={this.handDown}
-            onTouchEnd={this.handUp}
-            onMouseDown={this.handDown}
-            onMouseUp={this.handUp}
-            onMouseLeave={this.handLeave}
+            onClick={() => this.setCursor("kiss")}
           >
-            🖐🏿
-              </button>
-
+            <img className="buttonImg" src={window.AWS + "/clickMe/cursorImages/kiss.png"} />
+          </button>
           <button
             className="hand"
-            onClick={() => this.setTool("kiss")}
+            onClick={() => this.setCursor("erase")}
           >
-            💋
-              </button>
-          <button
-            className="hand"
-            onClick={() => this.setTool("erase")}
-          >
-            <img className="buttonImg" src={window.AWS+ "/clickMe/eraser.png"} />
-              </button>
+            <img className="buttonImg" src={window.AWS + "/clickMe/cursorImages/eraser.png"} />
+          </button>
         </div>
       }
         width={80} height={400} x={window.innerWidth - 100} y={(window.innerHeight - 80 - 97 * hands.length) / 2}
@@ -207,24 +204,33 @@ class ClickMe extends React.Component {
 
   render() {
     return (
-      <div className="ClickMe Sketch">
-        <BabylonScene className="noSelect backgroundCover" antialias onSceneReady={this.onSceneReady} onRender={this.onRender} id='babylon-canvas' />
+      <div className={"ClickMe Sketch " + this.state.cursor}>
+        {/* <BabylonScene className="noSelect backgroundCover" antialias onSceneReady={this.onSceneReady} onRender={this.onRender} id='babylon-canvas' /> */}
+       
+        {this.getSketch(true)}
         {this.getClickMenu()}
-        {this.getFrame()}
-        {this.getHandMenu()}
+        {/* {this.getFrame()} */}
+        {/* {this.getHandMenu()} */}
       </div>
+    )
+  }
+
+  getSketch = (fullS) => {
+    return (
+      <Sketch
+          className="p5sketch"
+          w={800}
+          h={800}
+          fullS={fullS}
+          cursor={this.state.cursor}
+        />
     )
   }
 
   getFrame = () => {
     return (
       <Frame title="" content={
-        <Sketch
-          className="p5sketch"
-          w={800}
-          h={800}
-          tool={this.state.toolID}
-        />
+        this.getSketch(false)
       }
         width={800} height={800} y={100} x={100}
       />
@@ -301,11 +307,16 @@ function addFace(scene) {
     face.scaling = new Vector3(sc, sc, sc);
 
     // Create materials
+    // const texture = new TextureLoader().load("/assets/s3-bucket/clickMe/face/skintest.jpg");
+    // texture.wrapS = RepeatWrapping;
+    // texture.wrapT = RepeatWrapping;
+    // texture.repeat.set(4, 4);
     var myMaterial = new StandardMaterial("myMaterial", scene);
-    myMaterial.diffuseColor = new Color3(.4, .4, .4);
-    myMaterial.specularColor = new Color3(0.1, 0.1, 1);
+    myMaterial.diffuseColor = new Color3(.7, .7, .7);
+    myMaterial.specularColor = new Color3(0.5, 0.5, .5);
     // myMaterial.emissiveColor = new Color3(1, 1, 1);
     myMaterial.ambientColor = new Color3(0.5, .5, 0.53);
+    // var myMaterial = new MeshBasicMaterial( { map: texture } );
 
     face.material = myMaterial;
     // face.material.wireframe = true;

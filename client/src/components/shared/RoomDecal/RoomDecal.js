@@ -17,9 +17,12 @@ class RoomDecal extends React.Component {
         this.state = {
         }
 
+        // this.enterButton = React.createRef();
     }
 
-
+    // componentDidMount() {
+    //     this.enterButton.current.focus();
+    // }
 
     render() {
         const { ui, user, users, hasLoadedRoom } = this.props;
@@ -65,7 +68,7 @@ class RoomDecal extends React.Component {
                 />
             );
         }
-        
+
 
         return null;
 

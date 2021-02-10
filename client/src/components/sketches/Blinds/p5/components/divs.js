@@ -37,16 +37,18 @@ export const addMobileLandscapeDivs = (ui, divs, blinds, shadow, p5) => {
 export const addDesktopDivs = (ui, divs, blinds, shadow, p5) => {
     divs.windows = [];
     
-    const bufferX = 60; // buffer
-    const bufferY = 40; // buffer
+    const bufferX = 30; // buffer
+    const bufferY = 30; // buffer
     const spacing = 30; // between elements
     const w = 160;
     const h = w;
     // const imgW = (w+spacing)*4;
     // const imgH = (h+24+spacing)*4;
    
-    const numFramesW = Math.floor((ui.contentW-2*bufferX+spacing)/(w+spacing));
-    const numFramesH = Math.floor((ui.contentH-2*bufferY+spacing)/(h+24+spacing));
+    let numFramesW = Math.floor((ui.contentW-2*bufferX+spacing)/(w+spacing));
+    let numFramesH = Math.floor((ui.contentH-2*bufferY+spacing)/(h+24+spacing));
+    numFramesW = Math.min(numFramesW, 6);
+    numFramesH = Math.min(numFramesH, 4);
     const startX = (ui.contentW - numFramesW*(w+spacing)+spacing)/2;
     const startY = (ui.contentH-(h+ ui.toolbarH+spacing)*numFramesH+spacing)/2; //(window.innerHeight-this.numFramesH*(h+24+spacing)+spacing)/2;
     

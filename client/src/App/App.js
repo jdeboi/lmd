@@ -17,7 +17,7 @@ import Cookies from 'js-cookie';
 
 // store
 import { connect } from 'react-redux';
-import { loadingApp, resizeApp } from '../store/actions';
+import { loadingApp, resizeApp, startComposition } from '../store/actions';
 import { hideMenus, setOneMenu } from '../store/actions/menuItems';
 import { setUserRoom, setUser, moveUser, setWine } from '../store/actions/user';
 import { addMessage, addMessageNotification } from '../store/actions/messages';
@@ -182,6 +182,7 @@ class App extends React.Component {
 
 
     window.addEventListener("resize", this.updateDeviceDimensions);
+    window.addEventListener("keydown", this.handleKeyPress);
 
     this.unlisten = this.props.history.listen((location, action) => this.pageChange(location));
     this.props.loadingApp();
@@ -189,6 +190,7 @@ class App extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDeviceDimensions);
+    window.removeEventListener("keydown", this.handleKeyPress);
     // this.socket.disconnect();
     this.unlisten();
   }
@@ -198,6 +200,17 @@ class App extends React.Component {
     if (this.state.usersChange) this.setState({ usersChange: false })
   }
 
+
+  handleKeyPress = (e) => {
+    if (e.keyCode === 13) {
+      const {user} = this.props;
+      const {hasLoadedRoom} = this.state;
+      if (!hasLoadedRoom && user.room !== "gallery") {
+        this.setState({hasLoadedRoom: true});
+        this.props.startComposition();
+      }
+    }
+  }
 
   pageChange = (location) => {
 
@@ -462,7 +475,7 @@ class App extends React.Component {
             </Switch>
 
           </div>
-          {/* {<FPSStats top={window.innerHeight - 255} left={10} />} */}
+          {<FPSStats top={window.innerHeight - 255} left={10} />}
           {/* <Exit /> */}
           {/* <SideBar room={this.state.user.room} user={this.state.user} users={this.state.users} usersChange={this.state.usersChange} showSideBar={this.state.showSideBar} handleDrawerClose={this.handleDrawerClose.bind(this)} messages={this.state.messages} addUserMessage={this.addUserMessage} userActiveChat={this.state.userActiveChat} userSetActiveChat={this.userSetActiveChat}  />*/}
           <Chat users={this.state.users} usersChange={this.state.usersChange} />
@@ -502,7 +515,8 @@ const mapDispatchToProps = () => {
     resizeApp,
     loadingApp,
     hideMenus,
-    setOneMenu
+    setOneMenu,
+    startComposition
   }
 }
 //

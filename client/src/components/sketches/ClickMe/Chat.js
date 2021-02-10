@@ -151,7 +151,7 @@ class Chat extends React.Component {
       setTimeout(this.addEllipses, 500);
     }
     else {
-      console.log("enter a message")
+      // console.log("enter a message")
     }
   }
 
