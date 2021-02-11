@@ -26,7 +26,6 @@ import Dancer from './components/Dancer';
 //////////////
 // CONFIG
 import { globalConfig } from "../constants";
-var isClosed;
 
 //////////////
 // BUILDING 
@@ -88,7 +87,6 @@ export default (props) => {
   users = props.users;
   isMobile = props.isMobile;
   roomCount = props.roomCount;
-  isClosed = props.isClosed;
 
   const preload = (p5) => {
     const url = "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/gallery/";
@@ -240,8 +238,7 @@ export default (props) => {
     // building
     drawWalls(walls, p5);
     drawRooms(rooms, roomTextures, eyeIcon, roomCount, p5);
-    if (!isClosed) 
-      displayRoomLabelDivs(dogica, roomCount, userEase.x, userEase.y, divs);
+    displayRoomLabelDivs(dogica, roomCount, userEase.x, userEase.y, divs);
 
     //////////////
     // emojis
@@ -300,8 +297,9 @@ export default (props) => {
     p5.push();
     p5.translate(p5.windowWidth / 2, p5.windowHeight / 2);
     p5.translate(-userEase.x, -userEase.y);
-    p5.translate(globalConfig.x * globalConfig.scaler, globalConfig.y * globalConfig.scaler);
-    displayDoorDivs(userEase.x, userEase.y, divs, isClosed);
+    p5.translate(globalConfig.x * globalConfig.scaler, globalConfig.y * globalConfig.scaler)
+
+    displayDoorDivs(userEase.x, userEase.y, divs);
     displayBarDivs(userEase.x, userEase.y, divs);
     displayTreeDivs(userEase.x, userEase.y, treeSlider.getValue(p5), divs);
     displayLightDivs(userEase.x, userEase.y, divs);
@@ -344,7 +342,7 @@ export default (props) => {
     // check crossed an inside boundary
     // check if crossed a room boundary
 
-    if (!isClosed && roomDoor) {
+    if (roomDoor) {
       if (window.confirm('Leave the main gallery?')) {
         props.userNewRoom(roomDoor);
       }
@@ -354,22 +352,22 @@ export default (props) => {
     // else if (poolB) {
     //   isWalking = false;
     // }
-    else if (!isClosed && outsideDoor) {
+    else if (outsideDoor) {
       // props.userMove(userStep.x, userStep.y);
       stepTo = { x: userStep.x, y: userStep.y };
       // console.log("outside door")
       props.toggleOutside();
     }
-    else if (!isClosed && roomDoorEntry) {
+    else if (roomDoorEntry) {
       // props.userMove(userStep.x, userStep.y);
       stepTo = { x: userStep.x, y: userStep.y };
       // console.log("enter/exit room")
     }
-    else if (!isClosed && roomBoundary(rooms, prevStep, userStep)) {
+    else if (roomBoundary(rooms, prevStep, userStep)) {
       isWalking = false;
       // console.log("room boundary")
     }
-    else if (!isClosed && roomDoorB) {
+    else if (roomDoorB) {
       isWalking = false;
       // console.log("room door boundary")
     }

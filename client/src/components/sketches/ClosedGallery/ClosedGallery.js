@@ -133,7 +133,7 @@ class Gallery extends React.Component {
   }
 
   render() {
-    const { users, user, roomCount, ui, isClosed } = this.props;
+    const { users, user, roomCount, ui } = this.props;
     // const { zIndex, zIndicesIcons, zIndicesFrames } = this.state;
 
     return (
@@ -143,7 +143,6 @@ class Gallery extends React.Component {
           user={user}
           users={users}
           roomCount={roomCount}
-          isClosed={isClosed}
           userMove={(x, y) => this.props.moveUser(x, y, wineLocation)}
           userTransition={(x, y) => this.props.transitionUser(x, y, wineLocation)}
           userNewRoom={this.props.userNewRoom}

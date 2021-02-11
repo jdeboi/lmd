@@ -1,0 +1,149 @@
+.Gallery {
+  // background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/gallery/grass/200.png);
+  // background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/gallery/shrub.jpg);
+  // background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/jungleGyms/wallpaper3.jpg);
+  background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/gallery/galaxy.png);
+
+  // background-repeat: repeat;
+  // background-size: 450px 300px;
+
+  // background: black;
+  background-size: cover;
+  background-position: center;
+  pointer-events: none;
+
+  .outerFrame {
+    pointer-events: none;
+    box-shadow: 0px 0px 20px #000000; /* #6c6c6c; */
+    background: transparent;
+    position: absolute;
+  }
+
+  .Frame {
+    pointer-events: none;
+
+    .titlebar {
+      pointer-events: all;
+    }
+  }
+
+  .clouds {
+    /*  made 0, was -200, because clouds were behind app-frame-box thing */
+    z-index: 0;
+    // fixed so that it doesn't push other divs down
+    position: fixed;
+
+    min-width: 100%;
+    min-height: 100%;
+  }
+
+  .MFA-deets {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    div a {
+      text-decoration: none;
+      color: black;
+    }
+  }
+
+  .Bar {
+    padding: 6px;
+    font-size: 30px;
+  }
+
+  .WineBar {
+    padding-top: 15px;
+  }
+
+  .DJStation {
+    padding: 6px;
+    font-size: 30px;
+  }
+
+  .canvas {
+    pointer-events: all;
+  }
+
+  .pools {
+    // position: absolute;
+
+    .poolContainer {
+      // position: relative;
+
+      .pool {
+        width: 300px;
+        pointer-events: all;
+        height: 300px;
+        // position: absolute;
+        background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/gallery/waves.gif);
+        background-size: cover;
+      }
+    }
+  }
+
+  .room-info {
+    padding: 10px;
+    color: black;
+    background-color: white;
+    height: 200px;
+    h3 {
+      font-size: 14px;
+    }
+    p {
+      font-size: 10px;
+    }
+  }
+
+  .MiniMap {
+    .otherAvatarsMiniMap {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 200px;
+      height: 200px;
+
+      .mini-avatars {
+        position: relative;
+        width: 200px;
+        height: 200px;
+
+        .emojiMiniMap {
+          position: absolute;
+          font-size: 12px;
+          margin-top: -6px;
+          margin-left: -6px;
+          width: 20px;
+          height: 20px;
+          // z-index: 600;
+        }
+      }
+    }
+  }
+
+  .react-p5 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    // z-index: 1;
+    pointer-events: all;
+    // width: 100%;
+    // height: 100%;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .HomePage {
+    .loading {
+      font-size: 30px;
+    }
+  }
+}

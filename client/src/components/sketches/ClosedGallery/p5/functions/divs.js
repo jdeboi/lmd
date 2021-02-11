@@ -109,8 +109,8 @@ export const addTrashDivs = (divs, trashFiles, shadow, p5) => {
 export const addFolderDivs = (divs, instaImg, txtFile, p5) => {
     divs.folders = [];
     let labels = [
-        { x: 560, y: 0, label: "statement", link: "https://www.losingmydimension.com/statement" },
-        { x: 620, y: 130, label: "thesis", link: "https://www.losingmydimension.com/statement" },
+        { x: 560, y: 0, label: "statement", link: "https://www.instagram.com/jdeboi/" },
+        { x: 620, y: 130, label: "thesis", link: "http://losingmydimension.com/thesis.pdf" },
         { x: 510, y: 230, label: "instagram", link: "https://www.instagram.com/jdeboi/" }
     ];
 
@@ -194,10 +194,10 @@ export const addTreeDivs = (divs, tree, p5) => {
     // divs.trees.push(new Draggable(numTrees + 3, sc * -1.5, 36.5 * sc, w, h, p5, tree));
 }
 
-export const displayDoorDivs = (userX, userY, divs, isClosed) => {
+export const displayDoorDivs = (userX, userY, divs) => {
 
     for (const door of divs.doors) {
-        door.display(userX, userY, isClosed);
+        door.display(userX, userY);
         door.displayToolBar(userX, userY);
     }
     // for(let i = 0; i < 4; i++) {

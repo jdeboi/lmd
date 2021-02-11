@@ -156,6 +156,7 @@ class App extends React.Component {
       roomCount: { "macbook-air": 0, "hard-drives-on-seashores": 0, "wet-streams": 0, "jungle-gyms": 0, "cloud-confessional": 0, "esc-to-mars": 0, "xfinity-depths": 0, "wasted-days": 0, "home-page": 0, "gallery": 0, "blind-eye": 0 }
     };
 
+    this.isClosed = true;
 
   }
 
@@ -387,6 +388,7 @@ class App extends React.Component {
 
     const pages = sketches.map((sketch) => sketch.link);
     pages.push("gallery");
+    pages.push("gallerytest");
     const pages2 = ["statement", "thesis", "bio", "about", "credits"];
     if (!pages.includes(rm) && !pages2.includes(rm)) rm = "";
 
@@ -445,7 +447,9 @@ class App extends React.Component {
           </div>
           <div className="App-Content inner-outline" onMouseMove={this.handleMouseMove}>
             <Switch>
-              <Route exact path="/" render={() => (<Gallery users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} />)} />
+              <Route exact path="/" render={() => (<Gallery users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} isClosed={this.isClosed} />)} />
+              <Route exact path="/gallerytest" render={() => (<Gallery users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} isClosed={false} />)} />
+
               <Route path={getUrl("mac")} render={() => (<MacbookAir />)} />
               <Route path={getUrl("jung")} render={() => (<JungleGyms />)} />
               <Route path={getUrl("hard")} render={() => (<HardDrives />)} />
@@ -475,7 +479,7 @@ class App extends React.Component {
             </Switch>
 
           </div>
-          {<FPSStats top={window.innerHeight - 255} left={10} />}
+          {/* {<FPSStats top={window.innerHeight - 255} left={10} />} */}
           {/* <Exit /> */}
           {/* <SideBar room={this.state.user.room} user={this.state.user} users={this.state.users} usersChange={this.state.usersChange} showSideBar={this.state.showSideBar} handleDrawerClose={this.handleDrawerClose.bind(this)} messages={this.state.messages} addUserMessage={this.addUserMessage} userActiveChat={this.state.userActiveChat} userSetActiveChat={this.userSetActiveChat}  />*/}
           <Chat users={this.state.users} usersChange={this.state.usersChange} />
@@ -485,7 +489,7 @@ class App extends React.Component {
           <FAQFrame />
           <SignIn hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} closeSignIn={this.closeSignIn} isFrame={true} />
           <RoomDecal hasLoadedRoom={this.state.hasLoadedRoom} users={this.state.users} onHide={() => this.setState({hasLoadedRoom: true})} />
-          <Welcome user={this.props.user} hasAvatar={this.state.hasAvatar} showWelcome={this.state.showWelcome} closeWelcome={this.closeWelcome} />
+          <Welcome isClosed={this.isClosed} user={this.props.user} hasAvatar={this.state.hasAvatar} showWelcome={this.state.showWelcome} closeWelcome={this.closeWelcome} />
           {/* <Dock showDock={this.state.showDock} /> */}
           <MobileFooter currentPage={this.getRoomTitle()} user={this.props.user} avatarClicked={this.avatarClicked} />
         </MuiThemeProvider>

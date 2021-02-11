@@ -12,6 +12,7 @@ import MFADeets from './components/MFADeets';
 import SignIn from '../SignIn/SignIn';
 import FAQ from '../FAQ/FAQ';
 import Glasses from './components/Glasses';
+import Closed from './components/Closed';
 
 
 class Welcome extends React.Component {
@@ -26,8 +27,6 @@ class Welcome extends React.Component {
       title: "Welcome"
     }
 
-
-    this.onHide = this.onHide.bind(this);
   }
 
   // basically, don't re-render this component unless that signin window
@@ -43,19 +42,27 @@ class Welcome extends React.Component {
 
 
 
-  onHide() {
+  onHide = () => {
     alert("Sorry, please click through to the end of this dialog box.");
     // this.handleSubmit();
     // if (this.props.hasAvatar && this.state.user.userName != "") this.props.closeSignIn();
   }
 
   render() {
-    const { ui, showWelcome } = this.props;
-    const content = this.getWelcomeStep(this.state.step);
-    const buttons = this.getButtons(this.state.step);
+    const { ui, showWelcome, isClosed } = this.props;
+    const {step, title} = this.state;
+    if (isClosed) {
+      var content = this.getWelcomeStepClosed(step);
+      var buttons = this.getButtonsClosed(step);
+    }
+    else {
+      var content = this.getWelcomeStep(step);
+      var buttons = this.getButtons(step);
+    }
+   
     return (
       <CenterModal
-        title={this.state.title}
+        title={title}
         isHidden={!showWelcome}
         onHide={this.onHide}
         ui={ui}
@@ -68,6 +75,50 @@ class Welcome extends React.Component {
     );
 
 
+  }
+
+  getWelcomeStepClosed = (step) => {
+    if (step === 0)
+      return <MFADeets width={this.props.ui.width} />
+    else if (step == 1)
+      return <Closed  />
+    else if (step === 2)
+      return <SignIn {...this.props} setClick={click => this.clickSubmit = click} nextStep={this.nextStep} prevStep={this.prevStep} isFrame={false} />;
+    else if (step == 3)
+      return <Glasses />
+    return null;
+  }
+
+  getButtonsClosed = (step) => {
+    if (step === 0)
+      return (
+        <div className="center-buttons">
+          <button className="standardButton primary" onClick={this.nextStep}>next</button>
+        </div>
+      );
+    else if (step === 2)
+      // https://stackoverflow.com/questions/37949981/call-child-method-from-parent
+      return (
+        <div className="center-buttons">
+          <button className="standardButton secondary" onClick={this.prevStep}>back</button>
+          <button className="standardButton primary" onClick={() => this.clickSubmit()}>next</button>
+        </div>
+      );
+    else if (step === 1)
+      return (
+        <div className="center-buttons">
+          <button className="standardButton secondary" onClick={this.prevStep}>back</button>
+          <button className="standardButton primary" onClick={this.nextStep}>next</button>
+        </div>
+      );
+    else if (step == 3)
+      return (
+        <div className="center-buttons">
+          <button className="standardButton secondary" onClick={this.prevStep}>back</button>
+          <button className="standardButton primary" onClick={this.props.closeWelcome}>finish</button>
+        </div>
+      );
+    return null;
   }
 
   getWelcomeStep = (step) => {

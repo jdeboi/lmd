@@ -71,17 +71,17 @@
     .Welcome .MFA-deets div a {
       text-decoration: none;
       color: black; }
+  .Welcome .MFA-deets.closed {
+    line-height: 1.6em; }
   .Welcome .Frame .circleButton {
     color: darkgray; }
     .Welcome .Frame .circleButton:hover {
       color: darkgray; }
   .Welcome .Glasses {
     height: 100%;
-    border: 2px solid black;
-    border-radius: 6px;
     line-height: 1.4em; }
     .Welcome .Glasses .instruction {
-      padding: 20px; }
+      padding: 10px; }
     .Welcome .Glasses h2 {
       font-size: 20px; }
     .Welcome .Glasses p {

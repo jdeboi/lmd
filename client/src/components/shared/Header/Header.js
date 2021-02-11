@@ -104,10 +104,10 @@ class Header extends React.Component {
     const hamburgerMenuItems = [
       { title: "about", link: "about", shortcut: "" },
       { title: "statement", link: "statement", shortcut: "" },
-      { title: "thesis", link: "thesis", shortcut: "" },
+      // { title: "thesis", link: "thesis", shortcut: "" },
       
       // {title: "cookies", link:"/words", shortcut: "🍪"},
-      { title: "credits", link: "credits", shortcut: "" }
+      // { title: "credits", link: "credits", shortcut: "" }
     ];
 
     return (
@@ -151,7 +151,10 @@ class Header extends React.Component {
     
     return (
       
-      <FinderSubmenu ui={this.props.ui} currentPage={this.props.currentPage} title="losing my dimension" icon="" specialClass="" listItems={sketches} />
+      // <FinderSubmenu ui={this.props.ui} currentPage={this.props.currentPage} title="losing my dimension" icon="" specialClass="" listItems={sketches} />
+      // <li className={`expandable`}><Link to="/"><span id="pageTitle">Losing My Dimension</span></Link></li>
+      this.props.currentPage==="gallerytest"?<FinderSubmenu ui={this.props.ui} currentPage={this.props.currentPage} title="losing my dimension" icon="" specialClass="" listItems={sketches} />:<li>losing my dimension</li>
+
     )
   }
 

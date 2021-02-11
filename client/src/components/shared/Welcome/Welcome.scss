@@ -155,6 +155,10 @@
     }
   }
 
+  .MFA-deets.closed {
+    line-height: 1.6em;
+  }
+
   .Frame .circleButton {
     color: darkgray;
 
@@ -165,11 +169,11 @@
 
   .Glasses {
     height: 100%;
-    border: 2px solid black;
-    border-radius: 6px;
+    // border: 2px solid black;
+    // border-radius: 6px;
 
     .instruction {
-      padding: 20px;
+      padding: 10px;
     }
 
     // text-align: center;
