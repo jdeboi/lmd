@@ -153,7 +153,7 @@ class Header extends React.Component {
       
       // <FinderSubmenu ui={this.props.ui} currentPage={this.props.currentPage} title="losing my dimension" icon="" specialClass="" listItems={sketches} />
       // <li className={`expandable`}><Link to="/"><span id="pageTitle">Losing My Dimension</span></Link></li>
-      this.props.currentPage==="gallerytest"?<FinderSubmenu ui={this.props.ui} currentPage={this.props.currentPage} title="losing my dimension" icon="" specialClass="" listItems={sketches} />:<li>losing my dimension</li>
+      this.props.currentPage==="gallerytest"?<FinderSubmenu ui={this.props.ui} currentPage={this.props.currentPage} title="losing my dimension" icon="" specialClass="" listItems={sketches} />:<li><span id="pageTitle">losing my dimension</span></li>
 
     )
   }

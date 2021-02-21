@@ -37,6 +37,8 @@ class RoomDecal extends React.Component {
                     onHide={this.props.onHide}
                     ui={ui}
                     z={2500}
+                    height={300}
+                    width={400}
                     isRelative={false}
                     classN="RoomDecal"
                     content={

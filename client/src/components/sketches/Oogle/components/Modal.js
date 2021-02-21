@@ -29,8 +29,8 @@ class Modal extends React.Component {
 
     getDesktopModal = () => {
         const { onHide, isHidden } = this.props;
-        let h = this.getMobileFrameH() - 300;
-        let w = 300;
+        const w = ui.width - 40;
+        const h = ui.contentH - 40;
         return (
             <Frame title=""
                 bounded={true}
@@ -50,9 +50,6 @@ class Modal extends React.Component {
 
     getMobileModal = () => {
         const { ui, isHidden, onHide } = this.props;
-        console.log(isHidden);
-        const w = ui.width - 40;
-        const h = ui.contentH - 40;
         const content = ui.orientation === "portrait" ? this.getModalContentPortrait(w, h, h) : this.getModalContentLandscape();
         return (
             <CenterModal

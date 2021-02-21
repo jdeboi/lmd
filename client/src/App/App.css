@@ -35,7 +35,7 @@ input.standardInputWhite {
   border-radius: 6px; }
 
 .App.overflow-all {
-  overflow: scroll;
+  overflow: auto;
   height: 100%;
   width: 100%;
   position: absolute;
@@ -44,7 +44,7 @@ input.standardInputWhite {
   display: block;
   line-height: 1.6em; }
   .App.overflow-all .App-Content {
-    overflow: scroll;
+    overflow: auto;
     height: 100%;
     width: 100%;
     position: absolute;

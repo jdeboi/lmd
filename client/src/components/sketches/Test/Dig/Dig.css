@@ -1,6 +1,6 @@
 .Dig {
   background-color: blue;
-  overflow: scroll;
+  overflow: auto;
   height: 100%;
   width: 100%;
   position: absolute;

@@ -318,7 +318,7 @@ input.standardInputWhite {
   @media screen and (max-width: 830px) {
     .Header .submenu ul {
       font-size: 12px;
-      overflow-y: scroll;
+      overflow-y: auto;
       overflow-x: hidden; } }
   @media screen and (max-width: 400px) {
     .Header {
@@ -330,6 +330,11 @@ input.standardInputWhite {
       font-size: 12px; }
       .Header .submenu ul {
         font-size: 8px; } }
+  @media screen and (max-width: 314px) {
+    .Header {
+      font-size: 10px; }
+      .Header .submenu ul {
+        font-size: 10px; } }
 
 .BackHeader {
   position: absolute;

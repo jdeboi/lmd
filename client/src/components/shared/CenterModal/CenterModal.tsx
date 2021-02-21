@@ -17,11 +17,16 @@ interface CenterModalProps {
   onHide(): any
 }
 
-export default function CenterModal({ title, classN, ui, z, isHidden, content, buttons, isRelative, onHide }: CenterModalProps) {
+export default function CenterModal({ title, classN, ui, z, height, width, isHidden, content, buttons, isRelative, onHide }: CenterModalProps) {
 
   
-  const {w, h , x, y } = getCenterModalDim(ui, isRelative);
-
+  let {w, h , x, y } = getCenterModalDim(ui, isRelative);
+  if (height && width) {
+    h = Math.min(h, height);
+    w = Math.min(w, width);
+    y = (ui.contentH - h - ui.toolbarH)/2;
+    x = (ui.contentW - w)/2;
+  }
   const classT = (!isHidden ? " GrayedOut" : "");
 
 

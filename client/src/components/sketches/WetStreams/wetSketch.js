@@ -16,7 +16,11 @@ export default function sketch (p) {;
     {velX: {min: -5, max:5}, velY: {min: -.5, max:0}},
     {velX: {min: -.5, max:5}, velY: {min: -.5, max:0}}
   ];
-  let offsets = [{x:215,y:328}, {x:215,y:215}, {x:50,y:195}, {x:132,y:254}, {x:260,y:335}, {x:285,y:330}];
+  let offsets = [{x:215,y:328}, {x:215,y:215}, {x:50,y:195}, {x:134,y:244}, {x:260,y:335}, {x:285,y:320}];
+  if (p.windowWidth < 500)
+    offsets = [{x:215,y:348}, {x:215,y:245}, {x:70,y:215}, {x:154,y:274}, {x:270,y:365}, {x:285,y:340}];
+  else if (p.windowWidth > 2000)
+    offsets = [{x:215,y:328}, {x:215,y:215}, {x:50,y:195}, {x:134,y:244}, {x:260,y:335}, {x:285,y:320}];
   let degrees = [0, 60, 90, 80, 40, 0];
 
 

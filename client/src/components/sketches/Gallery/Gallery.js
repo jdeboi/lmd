@@ -85,7 +85,8 @@ class Gallery extends React.Component {
   }
 
   getHomeComponents = () => {
-    const { users, user, ui } = this.props;
+    const { users, user, ui, spacing } = this.props;
+  
     // const { zIndicesIcons, zIndicesFrames } = this.state;
     if (ui.loading)
       return (
@@ -94,7 +95,7 @@ class Gallery extends React.Component {
     return (
       <React.Fragment>
 
-        <MiniMap users={users} user={user} x={10} y={10} wineLocation={wineLocation} />
+        <MiniMap users={users} user={user} x={spacing} y={spacing} wineLocation={wineLocation} />
 
       </React.Fragment>
     )

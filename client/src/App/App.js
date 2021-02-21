@@ -181,6 +181,7 @@ class App extends React.Component {
       this.setState({ hasAvatar: false, showWelcome: true });
     }
 
+    
 
     window.addEventListener("resize", this.updateDeviceDimensions);
     window.addEventListener("keydown", this.handleKeyPress);
@@ -437,6 +438,14 @@ class App extends React.Component {
 
     const appHeaderClass = "App-Header" + (ui.isMobile || ui.hasFooter ? " mobile" : "");
 
+    const {contentW} = ui.contentW;
+    if (contentW < 800) 
+      this.edgeSpacing = 10;
+    else if (contentW < 1920)
+      this.edgeSpacing = 20;
+    else 
+      this.edgeSpacing = 30;
+
     return (
       <div className={this.getStringClasses()}>
         <MuiThemeProvider theme={theme}>
@@ -447,8 +456,8 @@ class App extends React.Component {
           </div>
           <div className="App-Content inner-outline" onMouseMove={this.handleMouseMove}>
             <Switch>
-              <Route exact path="/" render={() => (<Gallery users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} isClosed={this.isClosed} />)} />
-              <Route exact path="/gallerytest" render={() => (<Gallery users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} isClosed={false} />)} />
+              <Route exact path="/" render={() => (<Gallery users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} isClosed={this.isClosed} spacing={this.edgeSpacing} />)} />
+              <Route exact path="/gallerytest" render={() => (<Gallery users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} isClosed={false} spacing={this.edgeSpacing} />)} />
 
               <Route path={getUrl("mac")} render={() => (<MacbookAir />)} />
               <Route path={getUrl("jung")} render={() => (<JungleGyms />)} />
@@ -482,9 +491,9 @@ class App extends React.Component {
           {/* {<FPSStats top={window.innerHeight - 255} left={10} />} */}
           {/* <Exit /> */}
           {/* <SideBar room={this.state.user.room} user={this.state.user} users={this.state.users} usersChange={this.state.usersChange} showSideBar={this.state.showSideBar} handleDrawerClose={this.handleDrawerClose.bind(this)} messages={this.state.messages} addUserMessage={this.addUserMessage} userActiveChat={this.state.userActiveChat} userSetActiveChat={this.userSetActiveChat}  />*/}
-          <Chat users={this.state.users} usersChange={this.state.usersChange} />
+          <Chat users={this.state.users} usersChange={this.state.usersChange} spacing={this.edgeSpacing} />
           {/* <Participants users={this.state.users} /> */}
-          <Volume />
+          <Volume spacing={this.edgeSpacing} />
           {/* <RoomUsers users={this.state.users} /> */}
           <FAQFrame />
           <SignIn hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} closeSignIn={this.closeSignIn} isFrame={true} />

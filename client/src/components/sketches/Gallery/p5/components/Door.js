@@ -80,16 +80,16 @@ export default class Door extends Draggable {
     }
   }
 
-  display(userX, userY, isClosed) {
+  display(userX, userY, isClosed, closedSign) {
     this.p5.push();
     this.p5.translate(this.x, this.y);
     if (!this.closed) {
-      if (!this.minimized) this.displayContent(userX, userY, isClosed);
+      if (!this.minimized) this.displayContent(userX, userY, isClosed, closedSign);
     }
     this.p5.pop();
   }
 
-  displayContent(userX, userY, isClosed) {
+  displayContent(userX, userY, isClosed, closedSign) {
 
     let dAmt = this.openAmt;
     if (isClosed)
@@ -113,6 +113,12 @@ export default class Door extends Draggable {
     this.p5.scale(-1, 1);
     this.p5.image(this.imgs[1], -dAmt - w, 0, w, h);
     this.p5.pop();
+
+    if (isClosed) {
+      let sW = closedSign.width*.4;
+      let sH =closedSign.height*.4;
+      this.p5.image(closedSign, (w-sW)/2, (h-sH)/2, sW, sH)
+    }
     this.p5.pop();
   }
 

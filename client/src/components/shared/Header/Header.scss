@@ -491,7 +491,7 @@
     // font-size: $fontSize-tablet-1;
     .submenu ul {
       font-size: $fontSize-tablet-2;
-      overflow-y: scroll;
+      overflow-y: auto;
       overflow-x: hidden;
     }
   }
@@ -507,6 +507,13 @@
     font-size: $fontSize-mobile-3;
     .submenu ul {
       font-size: $fontSize-mobile-4;
+    }
+  }
+
+  @media screen and (max-width: 314px) {
+    font-size: $fontSize-mobile-5;
+    .submenu ul {
+      font-size: $fontSize-mobile-5;
     }
   }
 }

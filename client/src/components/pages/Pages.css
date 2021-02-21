@@ -8,7 +8,7 @@
   background-image: url("./assets/wallpaper3.jpg");
   background-repeat: repeat;
   background-size: 350px 250px;
-  overflow: scroll; }
+  overflow: auto; }
   .Page a {
     color: cyan; }
   .Page h1 {

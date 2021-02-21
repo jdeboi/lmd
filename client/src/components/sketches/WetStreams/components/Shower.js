@@ -24,7 +24,7 @@ class Shower extends React.Component {
     let classn = id===5?"showerhead flippedX":"showerhead";
 
     return (
-      <Frame id={id} onDrag={(position) => handleDrag(id, position)} title={title} content={
+      <Frame id={id} onDrag={(position) => handleDrag(id, position)} title={""} content={
         <div className={classn}>
         <img src={imgSrc} style={{width:w +"px", height:h+"px"}} alt="shower head" />
         </div>

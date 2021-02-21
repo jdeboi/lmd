@@ -27,8 +27,8 @@ class Volume extends React.Component {
 
     render() {
         const w = 200;
-        const { music, ui, setVolume } = this.props;
-        const style = { height: 20, width: w - 20 };
+        const { music, ui, setVolume, spacing } = this.props;
+        const style = { height: 20, width: w - spacing };
 
         return (
             <Frame title="volume"
@@ -54,7 +54,7 @@ class Volume extends React.Component {
                         />
                     </div>
                 }
-                width={w} height={40} x={ui.width - w - 20} y={34 + 30} z={1000}
+                width={w} height={40} x={ui.width - w - spacing} y={34 + 30} z={1000}
             />
         );
     }

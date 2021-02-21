@@ -1,9 +1,9 @@
 .Mars.Sketch {
-  overflow: scroll;
+  overflow: auto;
 }
 
 .Mars {
-  top:30px;
+  top:0px; // why was this 30?
   left:0;
   width: 100%;
   height: 100%;
@@ -46,8 +46,6 @@
 
   .diving {
     background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/mars/diving2.gif);
-    height: 152px;
-    width: 500px;
     background-size: 100% 100%;
   }
 
@@ -56,7 +54,7 @@
     height: 100%;
     width: 100%;
     background-position: cover;
-    background-size: 300px 300px;
+    // background-size: 300px 300px;
 
 
     // overflow: hidden;
@@ -68,8 +66,7 @@
       height: 50%;
       width:51%;
       position: relative;
-      top: 75px;
-      left: 74px;
+   
       overflow: hidden;
       color: red;
 
@@ -95,7 +92,7 @@
     width: 100%;
     height:100%;
     background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/mars/pool/yellowchair.png);
-    background-size: 200px 200px;
+    // background-size: 200px 200px;
   }
 
   .umbrellas  {
@@ -191,11 +188,11 @@
     // background-image: url(./assets/whale.gif);
     // background-size:cover;
     background-repeat: repeat;
-    background-size: 39px 40px;
+    // background-size: 39px 40px;
 
     button {
       height: 100%;
-      width: 74px;
+      // width: 74px;
       font-family: Arial;
 
       padding-top: 30px;

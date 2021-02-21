@@ -1,6 +1,6 @@
 .Instructions-list {
   text-align: center;
-  overflow: scroll;
+  overflow: auto;
   border: 2px solid black;
   pointer-events: all;
   border-radius: 6px; }

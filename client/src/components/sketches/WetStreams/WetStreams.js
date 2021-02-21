@@ -22,6 +22,8 @@ class WetStreams extends React.Component {
     // const availH = window.innerHeight -34 -2*26-3*this.spacing;
     // const dim = 300; //Math.max(availH/2, 300);
     this.spacing = 15; //(window.innerHeight -30 -2*26-dim*2)/3;
+    // if (this.props.ui.contentW > 1500)
+    //   this.spacing = 60;
     this.state = {
       deltaPositions: [
         { x: 0, y: 0 },
@@ -131,6 +133,9 @@ class WetStreams extends React.Component {
       }
      
     }
+    else if (ui.contentW > 2000) {
+      dim = 370;
+    }
     const showerFrame = {
       w: dim,
       h: dim
@@ -170,9 +175,12 @@ class WetStreams extends React.Component {
       showWater[i] = playingStreams[i] && !isMinimized[i] && !isClosed[i];
     }
 
+    let bgimg = "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/wetStreams/blk2000.png";
+    if (ui.contentW > 2000)
+      bgimg = "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/wetStreams/bigGrid2.png";
 
     return (
-      <div className="WetStreams Sketch">
+      <div className="WetStreams Sketch" style={{backgroundImage: `url(${bgimg})`}}>
 
         {origins.map((origin, i) => {
           const props = {
@@ -200,7 +208,6 @@ class WetStreams extends React.Component {
           isPlaying={showWater}
         />
 
-        {/* <Glasses /> */}
       </div>
     )
   }

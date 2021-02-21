@@ -116,6 +116,10 @@ class HardDrives extends React.Component {
       trees[i].rotation.y += .005 * sign;
     }
 
+    for (let i = 0; i < bottles.length; i++) {
+      bottles[i].position.y = .7 * Math.sin(new Date()/600 + bottles[i].position.x/60);
+    }
+
     let t = new Date();
     if (!changed && t - start > 5000) {
       // onInsta();
@@ -135,13 +139,15 @@ class HardDrives extends React.Component {
   render() {
     const {ui } = this.props;
     const svFrame = {};
-    const f = .8;
+    let f = .8;
+    if (ui.contentW >= 1920)
+      f = 1.3;
     const ogW = 600 *f;
     const ogH = 450 * .8 * f;
     svFrame.w = ogW;
     svFrame.h = ogH;
-    svFrame.x = (ui.width - svFrame.w)*.3;
-    svFrame.y = (ui.height - svFrame.h-30)*.4;
+    svFrame.x = (ui.contentW - svFrame.w)*.27;
+    svFrame.y = (ui.contentH - svFrame.h-30)*.5;
   
     if (ui.hasFooter || ui.isMobile) {
       if (ui.orientation === "portrait") {

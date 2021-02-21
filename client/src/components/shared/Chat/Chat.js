@@ -418,7 +418,7 @@ class Chat extends React.Component {
   }
 
   getFrame = () => {
-    const {ui} = this.props;
+    const {ui, spacing} = this.props;
     var users = [];
     if (this.props.users) {
       users = this.props.users;
@@ -426,9 +426,12 @@ class Chat extends React.Component {
     const { userHover } = this.state;
 
     // headerH+bufferH*2+cbarH + usersH
-    const bufferH = 30;
-    const y = 34 + bufferH * 2 + 24 + 120
-    const h = ui.height - y - 24 - 30;
+
+    const frW = 300;
+
+    let minY = spacing * 2 + ui.toolbarH + 120;
+    const h = Math.min(ui.contentH - minY - ui.toolbarH, 800);
+    const y = ui.height - h - spacing - ui.toolbarH;
 
     return (
       <Frame title="chat" bounded={true} isHidden={this.props.chatIsHidden} onHide={this.props.hideChat} windowStyle={{ background: "rgba(0, 0, 0, .9)" }} content={
@@ -463,7 +466,7 @@ class Chat extends React.Component {
           </div>
         </div>
       }
-        width={300} height={h} x={ui.width - 320} y={y} z={1000}
+        width={frW} height={h} x={ui.width - frW - spacing} y={y} z={1000}
       />
     );
   }

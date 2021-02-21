@@ -41,6 +41,7 @@ var lightImgs = [];
 var tableImgs = [];
 var trashFiles = [];
 var columnGif;
+var closedSign;
 
 //////////////
 // PLANTS 
@@ -102,6 +103,7 @@ export default (props) => {
     roomTextures[1] = p5.loadImage(url + "rooms/right.png");
     roomTextures[2] = p5.loadImage(url + "rooms/left.png");
     eyeIcon = p5.loadImage(url + "eye.png")
+    closedSign = p5.loadImage(url + "closed.png");
 
     //////////////
     // emojis
@@ -301,7 +303,7 @@ export default (props) => {
     p5.translate(p5.windowWidth / 2, p5.windowHeight / 2);
     p5.translate(-userEase.x, -userEase.y);
     p5.translate(globalConfig.x * globalConfig.scaler, globalConfig.y * globalConfig.scaler);
-    displayDoorDivs(userEase.x, userEase.y, divs, isClosed);
+    displayDoorDivs(userEase.x, userEase.y, divs, isClosed, closedSign);
     displayBarDivs(userEase.x, userEase.y, divs);
     displayTreeDivs(userEase.x, userEase.y, treeSlider.getValue(p5), divs);
     displayLightDivs(userEase.x, userEase.y, divs);
@@ -314,6 +316,9 @@ export default (props) => {
     treeSlider.display(p5);
 
     p5.pop();
+
+    if (p5.windowWidth !== p5.width || p5.windowHeight !== p5.height)
+      windowResized(p5);
   }
 
   ////////////////////////////////////////////////////////////////////////

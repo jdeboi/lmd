@@ -17,7 +17,7 @@
   .loc-content .loc-txt {
     height: 100%;
     line-height: 1.5em;
-    overflow: scroll; }
+    overflow: auto; }
     .loc-content .loc-txt div {
       padding-bottom: 10px; }
     .loc-content .loc-txt .loc-title {

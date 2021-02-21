@@ -194,10 +194,10 @@ export const addTreeDivs = (divs, tree, p5) => {
     // divs.trees.push(new Draggable(numTrees + 3, sc * -1.5, 36.5 * sc, w, h, p5, tree));
 }
 
-export const displayDoorDivs = (userX, userY, divs, isClosed) => {
+export const displayDoorDivs = (userX, userY, divs, isClosed, closedSign) => {
 
     for (const door of divs.doors) {
-        door.display(userX, userY, isClosed);
+        door.display(userX, userY, isClosed, closedSign);
         door.displayToolBar(userX, userY);
     }
     // for(let i = 0; i < 4; i++) {

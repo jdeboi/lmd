@@ -40,7 +40,7 @@
         height: 80px;
         border: 2px solid black;
         border-radius: 6px;
-        overflow: scroll; }
+        overflow: auto; }
         .Welcome .WelcomeContent .SignInForm .SignIn-Content .emoji-list button {
           font-size: 18px;
           width: 24px;

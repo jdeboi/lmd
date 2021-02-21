@@ -89,8 +89,8 @@ class Wasted extends React.Component {
 
         {grids.map((i) => {
           let factor = ui.width / 1000;
-          if (factor > 1) factor = 1;
-          else if (factor < .8) factor = .5;
+          if (factor > 1.5) factor = 1.5;
+          if (factor < .8) factor = .5;
           const val = (980 - 100 * i) * factor;
           const x = ui.width / 2 - val / 2;
           const y = (ui.height - this.heightBuffer) / 2 - val / 2;
