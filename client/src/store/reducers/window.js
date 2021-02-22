@@ -18,7 +18,8 @@ const initialState = {
     toolbarH: 26,
     contentW: getContentW(initW, initH),
     contentH: getContentH(initW, initH),
-    compositionStarted: false
+    compositionStarted: false,
+    edgeSpacing: getEdgeSpacing(initW, initH)
 };
 
 function getHasFooter(w, h) {
@@ -74,6 +75,14 @@ function getHeaderH(w, h) {
     return (getHasFooter(w, h) || getIsMobile()) ? headerMobileH : headerH;
 }
 
+function getEdgeSpacing(w, h) {
+    if (w < 800)
+        return 10;
+    else if (w >= 1920)
+        return 30;
+    return 20;
+}
+
 export const windowReducer = (state = initialState, action) => {
 
     const window = { ...state };
@@ -89,6 +98,7 @@ export const windowReducer = (state = initialState, action) => {
             window.headerH = getHeaderH(window.width, window.height);
             window.contentW = getContentW(window.width, window.height);
             window.contentH = getContentH(window.width, window.height);
+            window.edgeSpacing = getEdgeSpacing(window.width, window.height);
             return window;
 
         case LOADINGAPP:

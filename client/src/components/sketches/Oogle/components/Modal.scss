@@ -21,7 +21,7 @@
     }
 
     .loc-container {
-        padding: 20px;
+        padding: 0px 20px 0px 20px;
         box-sizing: border-box;
         flex: 1;
     }
@@ -38,6 +38,7 @@
     
         .loc-title {
             font-size: 20px;
+            padding-top: 20px;
         }
     
         .loc-stars {
@@ -47,6 +48,8 @@
         .loc-description {
             font-size: 11px;
             line-height: 1.6em;
+            padding-bottom: 20px;
+          
         }
     }
 

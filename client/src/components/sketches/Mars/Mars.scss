@@ -23,6 +23,11 @@
   // box-sizing: border-box;
   // border-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/mars/tile.png) 150 round;
 
+  .Mars-Desktop {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+  }
   .Frame {
     .content {
       .tank {
@@ -174,7 +179,6 @@
   }
 
   .swimSign {
-    font-size: 55pt;
     padding-top: 40px;
     font-weight: bold;
   }
@@ -195,7 +199,6 @@
       // width: 74px;
       font-family: Arial;
 
-      padding-top: 30px;
       background-color: white;
       border: none;
     }

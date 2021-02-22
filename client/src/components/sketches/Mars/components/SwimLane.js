@@ -88,13 +88,13 @@ class SwimLane extends React.Component {
         let lane1Class="water";
         if (i == y0) {
           lane0=<img height={40} width={40} src={window.AWS+"/mars/womanswim.png"} />;
-          if (dir0 === 1) lane0Class="rot";
-          else lane0Class="rotNeg90";
+          // if (dir0 === 1) lane0Class="rot";
+          // else lane0Class="rotNeg90";
         }
         if (i == y1) {
           lane1=<img height={40} width={40} src={window.AWS+"/mars/manswim.png"} />;
-          if (dir1 === 1) lane1Class="rot90";
-          else lane1Class="rotNeg90";
+          // if (dir1 === 1) lane1Class="rot90";
+          // else lane1Class="rotNeg90";
         }
         return (
           <div key={i} className="swimRow"><span className={lane0Class} >{lane0}</span><span className={lane1Class} >{lane1}</span></div>

@@ -21,15 +21,19 @@
     background: transparent;
   }
 
-  .bar-vid {
-    flex: 1 1 auto;
-    color: white;
+  // .bar-vid {
+  //   flex: 1 1 auto;
+  //   color: white;
 
-    button {
-      color: $tweetColPrimary;
-    }
+  //   button {
+  //     color: $tweetColPrimary;
+  //   }
+  // }
+
+  .vidButton {
+    color: $tweetColPrimary;
   }
-
+  
   .bar-emojis {
     flex: 1 1 auto;
     display: flex;

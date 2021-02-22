@@ -96,7 +96,9 @@ class Header extends React.Component {
     )
   }
 
-
+  isXXSmall = () => {
+    return (this.props.currentPage !== "gallery" && this.props.ui.width < 445);
+  }
 
   getHamburgerSub = () => {
     // const homeIcon = this.props.ui.isMobile?"fas fa-bars":"fa fa-cube";
@@ -149,13 +151,14 @@ class Header extends React.Component {
     //   // {title: "losing my dimension", link:"/losing-my-dimension", shortcut: "&#x2318;9"},
     // ];
     
-    return (
-      
-      // <FinderSubmenu ui={this.props.ui} currentPage={this.props.currentPage} title="losing my dimension" icon="" specialClass="" listItems={sketches} />
-      // <li className={`expandable`}><Link to="/"><span id="pageTitle">Losing My Dimension</span></Link></li>
-      this.props.currentPage==="gallerytest"?<FinderSubmenu ui={this.props.ui} currentPage={this.props.currentPage} title="losing my dimension" icon="" specialClass="" listItems={sketches} />:<li><span id="pageTitle">losing my dimension</span></li>
-
-    )
+    const {currentPage} = this.props;
+    if (currentPage === "gallerytest")
+      return <FinderSubmenu ui={this.props.ui} currentPage={this.props.currentPage} title="losing my dimension" icon="" specialClass="" listItems={sketches} />
+    else if (this.isXXSmall() && currentPage !== "gallery")
+      return null;
+    else
+      return <li><span id="pageTitle">losing my dimension</span></li>
+    
   }
 
   getDesktopHeader = () => {

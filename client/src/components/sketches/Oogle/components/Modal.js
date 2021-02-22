@@ -28,7 +28,7 @@ class Modal extends React.Component {
     }
 
     getDesktopModal = () => {
-        const { onHide, isHidden } = this.props;
+        const { onHide, isHidden, ui } = this.props;
         const w = ui.width - 40;
         const h = ui.contentH - 40;
         return (
@@ -38,9 +38,9 @@ class Modal extends React.Component {
                 onHide={onHide}
                 className="home-page-modal"
                 windowStyle={{ background: "rgba(0, 0, 0, .9)" }}
-                content={this.getModalContentPortrait(w, h, this.getMobileFrameH())}
+                content={this.getModalContentPortrait()}
                 width={300}
-                height={this.getMobileFrameH()}
+                height={this.getModalFrameH()}
                 x={20}
                 y={20}
                 z={1000}
@@ -50,7 +50,9 @@ class Modal extends React.Component {
 
     getMobileModal = () => {
         const { ui, isHidden, onHide } = this.props;
-        const content = ui.orientation === "portrait" ? this.getModalContentPortrait(w, h, h) : this.getModalContentLandscape();
+        let h = ui.contentH;
+        let w = ui.contentW;
+        const content = ui.orientation === "portrait" ? this.getModalContentPortrait() : this.getModalContentLandscape();
         return (
             <CenterModal
                 title=""
@@ -66,19 +68,22 @@ class Modal extends React.Component {
         )
     }
 
-    getMobileFrameH = () => {
-        return this.props.ui.contentH - 40 - this.props.ui.toolbarH;
+    getModalFrameH = () => {
+        const {ui} = this.props;
+        const fullH = ui.contentH - ui.toolbarH - 2*ui.edgeSpacing ;
+        return Math.min(fullH, 800);
     }
 
     getModalContentLandscape = (w, h) => {
         return null;
     }
 
-    getModalContentPortrait = (w, h, fh) => {
+    getModalContentPortrait = () => {
         const { ui, data } = this.props;
+        let fH = this.getModalFrameH();
         let imgH = 300;
         let imgW = 300;
-        let txtH = h - 250;
+        let txtH = fH - imgH;
 
         let classN = "loc-content";
         if (ui.hasFooter || ui.isMobile) {
@@ -100,7 +105,7 @@ class Modal extends React.Component {
         }
 
         return (
-            <div className={classN} style={{height: fh}}>
+            <div className={classN} style={{height: fH}}>
                 {/* <div className="loc-img" style={imgStyle} /> */}
                 <ReactPlayer
                     className={"react-player loc-vid"}
@@ -112,7 +117,7 @@ class Modal extends React.Component {
                     playsInline
                     url={`${window.AWS}/homePage/vids/${data.img}.mp4`}
                 />
-                <div className="loc-container" style={{ height: txtH, width: w }}>
+                <div className="loc-container" style={{ height: txtH, width: imgW }}>
                     <div className="loc-txt">
                         <div className="loc-title">{data.name}</div>
                         <div className="loc-stars">{data.stars + " " + stars}</div>

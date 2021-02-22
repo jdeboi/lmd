@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import './BottomBar.css';
-import { faEye, faRetweet, faVideo, faMicrophoneAlt, faMicrophoneAltSlash } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faRetweet, faVideo, faVideoSlash, faMicrophoneAlt, faMicrophoneAltSlash } from "@fortawesome/free-solid-svg-icons";
 // import { faComment, faHeart } from "@fortawesome/free-regular-svg-icons";
 // import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -62,23 +62,34 @@ class BottomBar extends React.Component {
 
   render() {
     const emojis = this.state.emojis;
+    const { toggleAudio, toggleVideo, videoOn, audioOn, addCandle } = this.props;
+    const vidIcon = videoOn ? faVideo : faVideoSlash;
+    const audioIcon = audioOn ? faMicrophoneAlt : faMicrophoneAltSlash;
+
     return (
       <div>
         <div className="confession-bottomBar">
-          <div className="bar-vid">
-            <Button variant="contained"><FontAwesomeIcon icon={faVideo} /></Button>
-            <Button variant="contained"><FontAwesomeIcon icon={faMicrophoneAlt} /></Button>
-          </div>
           <div className="bar-emojis">
+            {/* <div className="bar-vid"> */}
+            <Button variant="contained" className="vidButton" onClick={toggleVideo}><FontAwesomeIcon icon={vidIcon} /></Button>
+            <Button variant="contained" className="vidButton" onClick={toggleAudio}><FontAwesomeIcon icon={audioIcon} /></Button>
+            {/* </div> */}
+            <span style={{ paddingRight: 70 }} />
             <Button variant="contained" onClick={() => this.addEmoji(0)}><img src={window.AWS + "/waveforms/emojis/prayer.png"} /></Button>
             <Button variant="contained" onClick={() => this.addEmoji(1)}><img src={window.AWS + "/waveforms/emojis/communion.png"} /></Button>
             <Button variant="contained" onClick={() => this.addEmoji(2)}><img src={window.AWS + "/waveforms/emojis/praise.png"} /></Button>
-
             <Button variant="contained" onClick={() => this.addEmoji(3)}><img src={window.AWS + "/waveforms/emojis/open.png"} /></Button>
-          </div>
-          <div className="bar-good-bad">
-            <Button variant="contained" ><img src={window.AWS + "/waveforms/emojis/halo.png"} /></Button>
-            <Button variant="contained" ><img src={window.AWS + "/waveforms/emojis/devil.png"} /></Button>
+            <Button variant="contained" onClick={() => this.addEmoji(4)}><img src={window.AWS + "/waveforms/emojis/raised.png"} /></Button>
+            <span style={{ paddingRight: 30 }} />
+            <Button variant="contained" onClick={() => this.addEmoji(5)}><img src={window.AWS + "/waveforms/emojis/halo.png"} /></Button>
+            <Button variant="contained" onClick={() => this.addEmoji(6)}><img src={window.AWS + "/waveforms/emojis/heart_face.png"} /></Button>
+            <Button variant="contained" onClick={() => this.addEmoji(7)}><img src={window.AWS + "/waveforms/emojis/hand_face.png"} /></Button>
+            <span style={{ paddingRight: 70 }} />
+            {/* <div className="bar-good-bad"> */}
+            {/* <Button variant="contained" ><img src={window.AWS + "/waveforms/emojis/halo.png"} /></Button>
+            <Button variant="contained" ><img src={window.AWS + "/waveforms/emojis/devil.png"} /></Button> */}
+            <Button variant="contained" onClick={addCandle}><img src={window.AWS + "/waveforms/emojis/candle.png"} /></Button>
+            {/* </div> */}
           </div>
         </div>
         <Emojis emojis={emojis} />

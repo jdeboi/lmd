@@ -144,6 +144,18 @@ input.standardInputWhite {
     transform: scaleY(-1); }
   .App .bold {
     font-family: consoleFontBold; }
+  .App .rot90 {
+    transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg); }
+  .App .rotNeg90 {
+    transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg); }
 
 @font-face {
   font-family: consoleFont;

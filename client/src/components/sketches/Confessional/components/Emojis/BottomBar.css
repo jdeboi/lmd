@@ -49,11 +49,8 @@ input.standardInputWhite {
     height: 50px;
     font-size: 24px;
     background: transparent; }
-  .confession-bottomBar .bar-vid {
-    flex: 1 1 auto;
-    color: white; }
-    .confession-bottomBar .bar-vid button {
-      color: #6666cc; }
+  .confession-bottomBar .vidButton {
+    color: #6666cc; }
   .confession-bottomBar .bar-emojis {
     flex: 1 1 auto;
     display: flex;

@@ -13,6 +13,7 @@ import BottomBar from './components/Emojis/BottomBar';
 
 import ConfessFormFrame from './components/ConfessForm/ConfessFormFrame';
 import ConfessMobileForm from './components/ConfessForm/ConfessMobileForm';
+import Candles from './components/Candles/Candles';
 
 // import DesktopIcon from '../../shared/DesktopIcon/DesktopIcon';
 // import FrameSimple from '../../shared/Frame/FrameSimple';
@@ -67,6 +68,9 @@ class Confessional extends React.Component {
       earCursor: this.props.cursor,
       volume: this.minVol,
       confessFormHidden: true,
+      audioOn: true,
+      videoOn: true,
+      candles: []
     };
 
     factor = 0.1;
@@ -92,11 +96,32 @@ class Confessional extends React.Component {
   //   }
   // }
 
+  addCandle = () => {
+    // console.log("ADD EMOJI", id);
+    const {ui} = this.props;
+    const candle = { x: Math.random() * (ui.contentW-150), y: Math.random() * (ui.contentH-350) };
+    this.setState(prevState => ({
+      candles: [...prevState.candles, candle]
+    }))
+  }
+
+
   onSubmit = () => {
-    alert("thanks for your submission. uploading to the cloud");
+    alert("Thanks for your submission. Uploading to the cloud...");
     this.props.history.push("/confessions");
   }
 
+  toggleAudio = () => {
+    this.setState(prevState => ({
+      audioOn: !prevState.audioOn
+    }));
+  }
+
+  toggleVideo = () => {
+    this.setState(prevState => ({
+      videoOn: !prevState.videoOn
+    }));
+  }
 
   render() {
     const { tweetX, tweetY } = this.state;
@@ -168,17 +193,18 @@ class Confessional extends React.Component {
   }
 
   getDesktop = () => {
-    const { tweetX, tweetY, webX, webY, windowX, windowY } = this.state;
+    const { tweetX, tweetY, webX, webY, windowX, windowY, audioOn, videoOn, candles } = this.state;
 
     return (
       <div className="Confessional Sketch">
         <div className="confessions-form">
           <PearlyGates w={this.dimW} h={this.dimH} x={windowX} y={windowY} />
           <div className="member" ref={this.memberRef0}>
-            <WebZoom x={webX} y={webY} />
+            <WebZoom videoOn={videoOn} audioOn={audioOn} x={webX} y={webY} />
           </div>
           <ConfessFormFrame w={this.tweetW} h={310} x={tweetX} y={tweetY-20} onSubmit={this.onSubmit} />
-          <BottomBar />
+          <Candles candles={candles} />
+          <BottomBar audioOn={audioOn} videoOn={videoOn} toggleAudio={this.toggleAudio} toggleVideo={this.toggleVideo} addCandle={this.addCandle} />
         </div>
       </div>
     )
