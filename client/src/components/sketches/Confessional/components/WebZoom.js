@@ -6,12 +6,11 @@ import Webcam from "react-webcam";
 
 
 export default function WebZoom(props) {
-    const { x, y, audioOn, videoOn } = props;
+    const { x, y, audioOn, videoOn, factor } = props;
 
-    const factor = 1.4;
     const videoConstraints = {
-      width: 230 * factor,
-      height: 130 * factor,
+      width: 230 * 1.4 * 1,
+      height: 130 * 1.4 * 1,
       facingMode: "user"
     };
 

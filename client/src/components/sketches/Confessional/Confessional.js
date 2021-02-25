@@ -15,6 +15,8 @@ import ConfessFormFrame from './components/ConfessForm/ConfessFormFrame';
 import ConfessMobileForm from './components/ConfessForm/ConfessMobileForm';
 import Candles from './components/Candles/Candles';
 
+import {mapVal, constrain} from '../../shared/Helpers/Helpers';
+
 // import DesktopIcon from '../../shared/DesktopIcon/DesktopIcon';
 // import FrameSimple from '../../shared/Frame/FrameSimple';
 
@@ -35,9 +37,13 @@ class Confessional extends React.Component {
   constructor(props) {
     super(props);
 
-    let factor = .3;
-    this.dimW = 1584 * factor;
-    this.dimH = 1588 * factor;
+    const {ui} = this.props;
+    
+    this.factor = mapVal(window.innerWidth, 1440, 2560, 1, 1.5);
+    this.factor = constrain(this.factor, 1, 1.5);
+
+    this.dimW = 1584 * this.factor * .3;
+    this.dimH = 1588 * this.factor * .3;
 
     this.minVol = .01;
 
@@ -73,7 +79,7 @@ class Confessional extends React.Component {
       candles: []
     };
 
-    factor = 0.1;
+  
     this.memberRef0 = React.createRef();
 
   }
@@ -133,18 +139,6 @@ class Confessional extends React.Component {
   }
 
 
-  // {/*this.getEarMenu()*/}
-  // {/* <ReactAudioPlayer
-  //   src={window.AWS + "/waveforms/shell_sound.wav"}
-  //   autoPlay={true}
-  //   volume={this.state.volume}
-  //   controls={false}
-  //   loop={true}
-  //   ref={player => {
-  //     this.audioPlayer = player;
-  //   }}
-  //   /> */}
-  // {/* </div>*/}
 
   getMobile = () => {
     const { windowX, windowY, confessFormHidden } = this.state;
@@ -200,7 +194,7 @@ class Confessional extends React.Component {
         <div className="confessions-form">
           <PearlyGates w={this.dimW} h={this.dimH} x={windowX} y={windowY} />
           <div className="member" ref={this.memberRef0}>
-            <WebZoom videoOn={videoOn} audioOn={audioOn} x={webX} y={webY} />
+            <WebZoom videoOn={videoOn} audioOn={audioOn} x={webX} y={webY} factor={this.factor} />
           </div>
           <ConfessFormFrame w={this.tweetW} h={310} x={tweetX} y={tweetY-20} onSubmit={this.onSubmit} />
           <Candles candles={candles} />
