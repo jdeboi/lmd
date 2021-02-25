@@ -159,10 +159,6 @@ class Oogle extends Component {
     promises.push(this.loadObj(window.AWS + '/homePage/models/window/Window_02.obj', { x: 0 * this.scaler, y: -50, z: 9 * this.scaler }, 10, 0));
 
     promises.push(this.loadObj(window.AWS + '/homePage/models/kitchen/cabinets.obj', { x: 7.6 * this.scaler, y: -80, z: 9.5 * this.scaler }, 130, Math.PI));
-    // promises.push(loadObj('assets/s3-bucket/oogle/models/bookcase/Bookcase.obj', { x: 0 * this.scaler, y: -80, z: 9.5 * this.scaler }, 230, Math.PI));
-
-    // loadObj('/assets/s3-bucket/homePage/models/door/Door_01.obj', {x: 0*this.scaler, y: -200, z: 3*this.this.scaler}, 45, Math.PI);
-    // loadObj('/assets/s3-bucket/homePage/models/fiddle/RubberFigPottedPlant.obj', {x: 5*this.scaler, y: -200, z: 5*this.scaler}, 30, Math.PI);
 
     Promise.all(promises)
       .then(callback);

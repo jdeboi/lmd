@@ -7,7 +7,7 @@ let blinds;
 let coverImg;
 let isDragging = false;
 let wallTexture;
-let bkImg;
+// let bkImg;
 let shadow;
 
 let ui;
@@ -20,13 +20,10 @@ export default (props) => {
     ui = props.ui;
 
     const preload = (p5) => {
-        const url = "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/gallery/";
-        blinds = p5.loadImage("/assets/s3-bucket/blinds/blinds_sm.png");
-
-        wallTexture = p5.loadImage("/assets/s3-bucket/blinds/wallpaper/stuccoblk.jpg");
-        shadow = p5.loadImage(url + "tracklights/black_shadow.png");
-        bkImg = p5.loadImage("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/blinds/palm.png")
-        
+        const url = "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches";
+        blinds = p5.loadImage(url + "/blinds/blinds_sm.png");
+        wallTexture = p5.loadImage(url + "/blinds/wallpaper/stuccoblk.jpg");
+        shadow = p5.loadImage(url + "/gallery/tracklights/black_shadow.png");
     }
 
     ////////////////////////////////////////////////////////////////////////
