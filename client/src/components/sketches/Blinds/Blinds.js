@@ -96,7 +96,7 @@ class Blinds extends React.Component {
 
   initFloor = () => {
     // FLOOR
-    var floorTexture = new THREE.ImageUtils.loadTexture('/assets/s3-bucket/blinds/wallpaper/blkmar.jpg');
+    var floorTexture = new THREE.ImageUtils.loadTexture(window.AWS + "/blinds/wallpaper/blkmar.jpg");
     floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
     floorTexture.repeat.set(4, 4);
     this.floorMaterial = new THREE.MeshBasicMaterial({ map: floorTexture, side: THREE.BackSide });
@@ -110,10 +110,6 @@ class Blinds extends React.Component {
 
   initSkybox = () => {
     // SKYBOX
-    // var skyTexture = new THREE.ImageUtils.loadTexture('/assets/s3-bucket/blinds/wallpaper/mar3.jpg');
-    // skyTexture.wrapS = skyTexture.wrapT = THREE.RepeatWrapping;
-    // skyTexture.repeat.set(4, 4);
-    // var skyMaterial = new THREE.MeshBasicMaterial({ map: skyTexture, side: THREE.DoubleSide });
     var skyBoxGeometry = new THREE.CubeGeometry(10000, 10000, 10000);
     // var skyBoxMaterial = new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.BackSide });
     var skyBox = new THREE.Mesh(skyBoxGeometry, this.floorMaterial);
@@ -123,7 +119,7 @@ class Blinds extends React.Component {
 
   initStatues = () => {
     const objLoader = new OBJLoader();
-    objLoader.load('/assets/s3-bucket/blinds/models/column/column_blend.obj', (root) => {
+    objLoader.load(window.AWS + "/blinds/models/column/column_blend.obj", (root) => {
       var column = root;
       var mat = new THREE.MeshLambertMaterial({ color: 0xdd0000 });
       column.material = mat;
@@ -147,7 +143,7 @@ class Blinds extends React.Component {
 
     });
 
-    objLoader.load('/assets/s3-bucket/blinds/models/hercules/hercules.obj', (root) => {
+    objLoader.load(window.AWS + "/blinds/models/hercules/hercules.obj", (root) => {
       var hercules = root;
       var mat = new THREE.MeshLambertMaterial({ color: 0xdddddd });
       hercules.material = mat;
@@ -173,7 +169,7 @@ class Blinds extends React.Component {
 
     });
 
-    objLoader.load('/assets/s3-bucket/blinds/models/blockchain/model.obj', (root) => {
+    objLoader.load(window.AWS + "/blinds/models/blockchain/model.obj", (root) => {
       var fence = root;
       var mat = new THREE.MeshLambertMaterial({ color: 0xdddddd });
       fence.material = mat;
@@ -195,19 +191,7 @@ class Blinds extends React.Component {
 
     });
 
-    /////////// bench
-    // objLoader.load('/assets/s3-bucket/blinds/bench/bench.obj', (root) => {
-    //   var bench = root;
-    //   var mat = new THREE.MeshLambertMaterial({ color: 0xdddddd });
-    //   bench.material = mat;
-    //   bench.scale.set(1, 1, 1);
-    //   bench.position.set(0, 0, 50);
-    //   bench.rotation.y = Math.PI / 2;
 
-    //   this.scene.add(bench);
-
-
-    // });
   }
 
   initEffect = () => {
@@ -229,7 +213,7 @@ class Blinds extends React.Component {
 
   initFrames = () => {
     this.frames = [];
-    const texture = new THREE.TextureLoader().load("assets/s3-bucket/blinds/frames/frame.png");
+    const texture = new THREE.TextureLoader().load(window.AWS + "/blinds/frame.png");
     const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
     for (let i = 0; i < this.numFrames; i++) {
       const frameH = 100;

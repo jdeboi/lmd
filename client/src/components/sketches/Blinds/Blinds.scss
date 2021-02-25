@@ -6,19 +6,7 @@ $windowS:160px;
   box-shadow: 0px 3px 20px 0px #ffffff16;
 }
 .Blinds {
-  // background-image: url(/assets/s3-bucket/blinds/code.jpg);
-  // background-image: url(/assets/s3-bucket/shared/bluetile.jpg);
-
-  // background-image: url(/assets/s3-bucket/blinds/darkwall.jpg);
-  // background-image: url(/assets/s3-bucket/gallery/concrete.jpg);
-
-  // background-image: url(/assets/s3-bucket/test/squares.gif);
-  // background-image: url(/assets/s3-bucket/gallery/wallpaper/wallpaper3.jpg);
-  
-  // background-size: 200px 200px;
-  // background-repeat: repeat;
-  // background-color: black; // olive #eaf63336; // navy #33c0f636 // honestly, black? // greenblue #33f6f636; //
-
+ 
   .react-p5 {
     position: absolute;
     top: 0;
@@ -52,18 +40,10 @@ $windowS:160px;
     }
 
     .background1 {
-      // background-image: url(/assets/s3-bucket/wetStreams/blk2000.png);
       background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/blinds/palm.png);
 
     }
 
-    .background2 {
-      // background-image: url(/assets/s3-bucket/gallery/wallpaper/wallpaper2.jpg);
-      // background-image: url(/assets/s3-bucket/test/palmblk.jpg);
-      // background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/blinds/palm.png);
-
-      // background-size: 160% 160%;
-    }
 
     .windowFrame {
       background-image: url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/blinds/blinds.png);
