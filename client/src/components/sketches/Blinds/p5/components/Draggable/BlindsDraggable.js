@@ -1,4 +1,5 @@
 import Draggable from './Draggable';
+import {mapVal, constrain} from '../../../../../shared/Helpers/Helpers';
 
 export default class BlindsDraggable extends Draggable {
 
@@ -30,7 +31,9 @@ export default class BlindsDraggable extends Draggable {
         // if (this.props.id == 0) console.log(pos, ogPos);
         const dy = this.p5.mouseY - this.y;
         const dis = Math.sqrt(dx* dx + dy*dy);
-        this.isClosed = dis < 300?true: false;
+        let maxDis = mapVal(window.innerWidth, 400, 2560, 240, 500);
+        maxDis = constrain(maxDis, 240, 500);
+        this.isClosed = dis < maxDis?true: false;
     
         let closeSpeed = .03;
         if (this.isClosed) {

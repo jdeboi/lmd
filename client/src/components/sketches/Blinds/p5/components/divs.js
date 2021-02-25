@@ -1,4 +1,5 @@
 import BlindsDraggable from './Draggable/BlindsDraggable';
+import {mapVal, constrain} from '../../../../shared/Helpers/Helpers';
 
 export const addMobilePortraitDivs = (ui, divs, blinds, shadow, p5) => {
     divs.windows = [];
@@ -40,7 +41,10 @@ export const addDesktopDivs = (ui, divs, blinds, shadow, p5) => {
     const bufferX = 30; // buffer
     const bufferY = 30; // buffer
     const spacing = 30; // between elements
-    const w = 160;
+    const minW = 160;
+    const maxW = 230;
+    let w = mapVal(ui.contentW, 1440, 2560, minW, maxW);
+    w = constrain(w, minW, maxW);
     const h = w;
     // const imgW = (w+spacing)*4;
     // const imgH = (h+24+spacing)*4;

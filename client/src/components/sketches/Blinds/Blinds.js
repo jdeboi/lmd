@@ -96,7 +96,7 @@ class Blinds extends React.Component {
 
   initFloor = () => {
     // FLOOR
-    var floorTexture = new THREE.ImageUtils.loadTexture(window.AWS + "/blinds/wallpaper/blkmar.jpg");
+    var floorTexture = new THREE.TextureLoader().load(window.AWS + "/blinds/wallpaper/blkmar.jpg");
     floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
     floorTexture.repeat.set(4, 4);
     this.floorMaterial = new THREE.MeshBasicMaterial({ map: floorTexture, side: THREE.BackSide });
@@ -263,9 +263,9 @@ class Blinds extends React.Component {
     const { ui } = this.props;
     return (
       <div className="Blinds Sketch" >
-        {/* <div className="Three" ref={ref => (this.mount = ref)} />
-        {ui.loading ? <div className="backgroundCover" style={{ backgroundColor: "black" }} /> : null} */}
-        {/* <Sketch className="p5sketch" ui={ui} loadingDone={this.loadingDone} /> */}
+        <div className="Three" ref={ref => (this.mount = ref)} />
+        {ui.loading ? <div className="backgroundCover" style={{ backgroundColor: "black" }} /> : null}
+        <Sketch className="p5sketch" ui={ui} loadingDone={this.loadingDone} />
 
 
       </div>
