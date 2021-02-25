@@ -41,9 +41,8 @@ export default (props) => {
         const cnv = p5.createCanvas(w, h);
         cnv.parent(canvasParentRef);
         cnv.mousePressed(() => canvasPressed(p5));
-
-
-
+        
+        p5.textSize(54);
     };
 
     ////////////////////////////////////////////////////////////////////////
@@ -55,7 +54,7 @@ export default (props) => {
     }
 
     const mouseDragged = (p5) => {
-        p5.textSize(54);
+        
         addMark(p5);
     }
 
@@ -98,11 +97,6 @@ export default (props) => {
     const mouseReleased = (p5) => {
     }
 
-    // const windowResized = (p5) => {
-    //     p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
-    //     initGraphics(p5);
-
-    // }
 
     const doubleClicked = (p5) => {
 

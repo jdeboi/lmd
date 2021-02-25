@@ -1,7 +1,7 @@
 import React from 'react';
 import "./ClickMe.css";
 
-import { AnaglyphUniversalCamera, HemisphericLight, TextureLoader, MeshBasicMaterial, Vector3, SceneLoader, MeshBuilder, StandardMaterial, PhotoDome, CubeTexture, Color3, Mesh, Texture } from 'babylonjs';
+import { AnaglyphUniversalCamera, HemisphericLight, TextureLoader, MeshPhongMaterial, MeshBasicMaterial, Vector3, SceneLoader, MeshBuilder, StandardMaterial, PhotoDome, CubeTexture, Color3, Mesh, Texture } from 'babylonjs';
 import BabylonScene from '../../shared/Babylon.jsx'; // import the component above linking to file we just created.
 
 import Frame from '../../shared/Frame/Frame';
@@ -15,12 +15,12 @@ import Button from '@material-ui/core/Button';
 
 // palm https://poly.google.com/view/ficLBIjGliK
 
-var loaded = true;
-var face;
-var hands = [];
-var handMat;
-var scene;
-var currentHandIndex = 0;
+// var loaded = true;
+// var this.face;
+// var hands = [];
+// var handMat;
+// var scene;
+// var currentHandIndex = 0;
 
 class ClickMe extends React.Component {
 
@@ -35,8 +35,8 @@ class ClickMe extends React.Component {
       cursor: "point0"
     }
 
-    this.onRender = this.onRender.bind(this);
-    this.onSceneReady = this.onSceneReady.bind(this);
+    this.loaded = false;
+    this.face = null;
   }
 
 
@@ -48,20 +48,20 @@ class ClickMe extends React.Component {
 
 
 
-  onSceneReady(scene) {
+  onSceneReady = (scene) => {
     // const camera = new UniversalCamera("UniversalCamera", new Vector3(0, 1, -25), scene);
-    var camera = new AnaglyphUniversalCamera("af_cam", new Vector3(0, 8, -5), 0.033, scene);
-    scene = scene;
+    this.camera = new AnaglyphUniversalCamera("af_cam", new Vector3(0, 8, -5), 0.033, scene);
+    this.scene = scene;
     scene.clearColor = Color3.Black();
     // scene.fogMode = Scene.FOGMODE_LINEAR;
     // scene.fogStart = 520.0;
     // scene.fogEnd = 560.0;
     // scene.fogColor = new Color3(0);
 
-    camera.setTarget(new Vector3(0, 8, 0));
+    this.camera.setTarget(new Vector3(0, 8, 0));
 
-    const canvas = scene.getEngine().getRenderingCanvas();
-    camera.attachControl(canvas, true);
+    const canvas = this.scene.getEngine().getRenderingCanvas();
+    this.camera.attachControl(canvas, true);
     // camera.inputs.clear();
     // camera.inputs.removeMouse();
     // camera.inputs.removeByType("FreeCameraKeyboardMoveInput");
@@ -90,7 +90,8 @@ class ClickMe extends React.Component {
 
     // addHands(scene);
     // addSkybox(scene);
-    addFace(scene);
+
+    this.addFace(this.scene);
 
     // var mat = new StandardMaterial("handMat", scene);
     // mat.diffuseTexture = new Texture("assets/s3-bucket/clickMe/frame.png", scene);
@@ -101,13 +102,81 @@ class ClickMe extends React.Component {
   }
 
 
+  addSkybox = (scene) => {
+    var skybox;
+    skybox = Mesh.CreateBox("skyBox", 1000.0, scene);
+    var skyboxMaterial = new StandardMaterial("skyBox", this.scene);
+    skyboxMaterial.backthis.faceCulling = false;
+    skyboxMaterial.reflectionTexture = new CubeTexture(process.env.PUBLIC_URL + "/textures/skybox/emoji/emoji_wall", scene);
+    // skyboxMaterial.reflectionTexture = new CubeTexture("/textures/skybox/invert/skybox", scene);
+    skyboxMaterial.reflectionTexture.coordinatesMode = Texture.SKYBOX_MODE;
+    skyboxMaterial.diffuseColor = new Color3(0, 0, 0);
+    skyboxMaterial.specularColor = new Color3(0, 0, 0);
+    skyboxMaterial.disableLighting = true;
+    skybox.material = skyboxMaterial;
+  }
+
+  addFace = (scene) => {
+
+    var mat = new StandardMaterial("dog", scene);
+    mat.diffuseTexture = new Texture("/assets/s3-bucket/clickMe/face/rainbow.png", scene);
+    // mat.diffuseTexture.hasAlpha = true;
+    mat.backFaceCulling = true;
+    mat.diffuseTexture.uScale = 1;
+    mat.diffuseTexture.vScale = 1;
+    this.loadFace(mat);
+
+    // var cylinder = Mesh.CreateCylinder("rebarGrayZAxis", 400, 100, 100, 60, scene, false);
+    // cylinder.material = mat;
+    // cylinder.position.z = 405;
+  }
+
+  loadFace = (myMaterial) => {
+    var url = "/assets/s3-bucket/clickMe/face/";
+    var gThis = this;
+    SceneLoader.LoadAssetContainer(url, "blockydebb.obj", this.scene, function (container) {
+      var meshes = container.meshes;
+      // console.log(meshes)
+      gThis.face = meshes[0];
 
 
+      // this.face.rotation.y = Math.random()*Math.PI*2;
+      gThis.face.rotation.x = -1.3;
+      // this.face.rotation.z = (-.3+Math.random()*.6);
 
-  onRender(scene) {
+      gThis.face.position.y = -140;
+      gThis.face.position.x = 0;
+      gThis.face.position.z = 405;
+      let sc = 2;
+      gThis.face.scaling = new Vector3(sc, sc, sc);
 
-    if (face) {
-      face.rotation.y = Math.PI * .4 * Math.sin((new Date()).getTime() / 1200) + .3;
+      // Create materials
+
+
+      //////////////
+      // var myMaterial = new StandardMaterial("myMaterial", scene);
+      // myMaterial.diffuseColor = new Color3(.7, .7, .7);
+      // myMaterial.specularColor = new Color3(0.5, 0.5, .5);
+      // // myMaterial.emissiveColor = new Color3(1, 1, 1);
+      // myMaterial.ambientColor = new Color3(0.5, .5, 0.53);
+      /////////////
+
+
+      gThis.face.material = myMaterial;
+      // this.face.material.wireframe = true;
+
+      container.addAllToScene();  // Adds all elements to the scene
+
+      gThis.loaded = true;
+
+    });
+  }
+
+ 
+  onRender = (scene) => {
+
+    if (this.face) {
+      this.face.rotation.y = Math.PI * .4 * Math.sin((new Date()).getTime() / 1200) + .3;
     }
 
     // moveHands(scene);
@@ -163,7 +232,7 @@ class ClickMe extends React.Component {
     this.setState({ cursor: id });
   }
 
-  getClickMenu() {
+  getClickMenu = () => {
     let hands = [0, 0, 0, 0, 0];
     return (
       <Frame title="" content={
@@ -196,7 +265,7 @@ class ClickMe extends React.Component {
     );
   }
 
-  handChange(index) {
+  handChange = (index) => {
     console.log(index);
   }
 
@@ -205,8 +274,8 @@ class ClickMe extends React.Component {
   render() {
     return (
       <div className={"ClickMe Sketch " + this.state.cursor}>
-        {/* <BabylonScene className="noSelect backgroundCover" antialias onSceneReady={this.onSceneReady} onRender={this.onRender} id='babylon-canvas' /> */}
-       
+        <BabylonScene className="noSelect backgroundCover" antialias onSceneReady={this.onSceneReady} onRender={this.onRender} id='babylon-canvas' />
+
         {this.getSketch(true)}
         {this.getClickMenu()}
         {/* {this.getFrame()} */}
@@ -218,12 +287,12 @@ class ClickMe extends React.Component {
   getSketch = (fullS) => {
     return (
       <Sketch
-          className="p5sketch"
-          w={800}
-          h={800}
-          fullS={fullS}
-          cursor={this.state.cursor}
-        />
+        className="p5sketch"
+        w={800}
+        h={800}
+        fullS={fullS}
+        cursor={this.state.cursor}
+      />
     )
   }
 
@@ -272,61 +341,8 @@ class ClickMe extends React.Component {
 
 
 // }
-function addSkybox(scene) {
-  var skybox;
-  skybox = Mesh.CreateBox("skyBox", 1000.0, scene);
-  var skyboxMaterial = new StandardMaterial("skyBox", scene);
-  skyboxMaterial.backFaceCulling = false;
-  skyboxMaterial.reflectionTexture = new CubeTexture(process.env.PUBLIC_URL + "/textures/skybox/emoji/emoji_wall", scene);
-  // skyboxMaterial.reflectionTexture = new CubeTexture("/textures/skybox/invert/skybox", scene);
-  skyboxMaterial.reflectionTexture.coordinatesMode = Texture.SKYBOX_MODE;
-  skyboxMaterial.diffuseColor = new Color3(0, 0, 0);
-  skyboxMaterial.specularColor = new Color3(0, 0, 0);
-  skyboxMaterial.disableLighting = true;
-  skybox.material = skyboxMaterial;
-}
 
 
-function addFace(scene) {
-
-  var url = "/assets/s3-bucket/clickMe/face/"
-  SceneLoader.LoadAssetContainer(url, "blockydebb.obj", scene, function (container) {
-    var meshes = container.meshes;
-
-    face = meshes[0];
-    console.log(meshes)
-
-    // face.rotation.y = Math.random()*Math.PI*2;
-    face.rotation.x = -1.3;
-    // face.rotation.z = (-.3+Math.random()*.6);
-
-    face.position.y = -140;
-    face.position.x = 0;
-    face.position.z = 405;
-    let sc = 2;
-    face.scaling = new Vector3(sc, sc, sc);
-
-    // Create materials
-    // const texture = new TextureLoader().load("/assets/s3-bucket/clickMe/face/skintest.jpg");
-    // texture.wrapS = RepeatWrapping;
-    // texture.wrapT = RepeatWrapping;
-    // texture.repeat.set(4, 4);
-    var myMaterial = new StandardMaterial("myMaterial", scene);
-    myMaterial.diffuseColor = new Color3(.7, .7, .7);
-    myMaterial.specularColor = new Color3(0.5, 0.5, .5);
-    // myMaterial.emissiveColor = new Color3(1, 1, 1);
-    myMaterial.ambientColor = new Color3(0.5, .5, 0.53);
-    // var myMaterial = new MeshBasicMaterial( { map: texture } );
-
-    face.material = myMaterial;
-    // face.material.wireframe = true;
-
-    container.addAllToScene();  // Adds all elements to the scene
-
-    loaded = true;
-
-  });
-}
 
 
 export default ClickMe;

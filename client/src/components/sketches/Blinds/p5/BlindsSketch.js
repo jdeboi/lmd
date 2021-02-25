@@ -26,6 +26,7 @@ export default (props) => {
         wallTexture = p5.loadImage("/assets/s3-bucket/blinds/wallpaper/stuccoblk.jpg");
         shadow = p5.loadImage(url + "tracklights/black_shadow.png");
         bkImg = p5.loadImage("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/blinds/palm.png")
+        
     }
 
     ////////////////////////////////////////////////////////////////////////
@@ -39,7 +40,9 @@ export default (props) => {
         cnv.parent(canvasParentRef);
         cnv.mousePressed(() => canvasPressed(p5));
 
-        wallTexture.resize(wallTexture.width * .4, wallTexture.height * .4)
+        // let dim = getCenterCoverDim(p5, wallTexture.width, wallTexture.height);
+        // wallTexture.resize(dim.w, dim.h)
+        wallTexture.resize(wallTexture.width*.4, wallTexture.height*.4 )
 
         if (ui.hasFooter && ui.orientation === "portrait")
             addMobilePortraitDivs(ui, divs, blinds, shadow, p5)
@@ -52,7 +55,7 @@ export default (props) => {
         // p5.textFont(dogica, 14);
         // p5.frameRate(20);
 
-        // props.loadingDone();
+        props.loadingDone();
 
         // wallTexture.resize(p5.windowWidth, p5.windowHeight);
 
@@ -79,8 +82,9 @@ export default (props) => {
         // displayDivs(divs, col, col2, p5.color(100));
 
         let buttoncol = p5.color(255);
-        let framecol = p5.color(255, 0)
-        let toolcol = p5.color(150, 150, 100, 100);
+        let framecol = p5.color(255, 50)
+        // let toolcol = p5.color(150, 150, 100, 100);
+        let toolcol = p5.color(110, 119, 54, 180);
         displayDivs(divs, toolcol, framecol, buttoncol);
         updateDivs(divs);
 
@@ -92,7 +96,9 @@ export default (props) => {
         if (coverImg) {
             coverImg.push();
             coverImg.clear();
-            coverImg.background(10, 0, 20);
+            // coverImg.background(10, 0, 20);
+            coverImg.background(0)
+
             // let dim = getCenterCoverDim(p5, wallTexture.width, wallTexture.height);
             // coverImg.image(wallTexture, dim.x, dim.y, dim.w, dim.h);
 

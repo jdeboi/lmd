@@ -3,6 +3,8 @@
 
 .Blinds .react-p5 {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%; }
   .Blinds .react-p5 canvas {
     width: 100%; }

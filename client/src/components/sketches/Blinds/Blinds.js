@@ -36,14 +36,19 @@ class Blinds extends React.Component {
     this.columns = [];
     this.hercules = [];
 
+    this.framesSpacing = 200;
+    this.numFrames = 10;
+
     this.initCamera();
     this.initRenderer(this.mount);
     this.initControls();
     this.initLights();
     this.initFloor();
+    this.initGround();
     this.initSkybox();
     this.initStatues();
     this.initEffect();
+    this.initFrames();
 
     window.addEventListener('resize', this.onWindowResize, false);
 
@@ -84,8 +89,8 @@ class Blinds extends React.Component {
 
   initLights = () => {
     // LIGHT
-    var light = new THREE.PointLight(0xffffff);
-    light.position.set(-100, 200, 100);
+    var light = new THREE.PointLight(0xdddddd);
+    light.position.set(-100, 200, 260);
     this.scene.add(light);
   }
 
@@ -115,12 +120,12 @@ class Blinds extends React.Component {
     this.scene.add(skyBox);
   }
 
- 
+
   initStatues = () => {
     const objLoader = new OBJLoader();
-    objLoader.load('/assets/s3-bucket/blinds/column/column_blend.obj', (root) => {
+    objLoader.load('/assets/s3-bucket/blinds/models/column/column_blend.obj', (root) => {
       var column = root;
-      var mat = new THREE.MeshLambertMaterial({ color: 0xdddddd });
+      var mat = new THREE.MeshLambertMaterial({ color: 0xdd0000 });
       column.material = mat;
       column.scale.set(60, 60, 60);
       column.position.set(0, 80, 0);
@@ -130,6 +135,7 @@ class Blinds extends React.Component {
       for (let i = 0; i < 10; i++) {
         let newCL = column.clone();
         newCL.position.set(-200, 78, i * -100 + 100);
+        newCL.material = mat;
         this.scene.add(newCL);
         this.columns.push(newCL);
 
@@ -141,44 +147,67 @@ class Blinds extends React.Component {
 
     });
 
-    objLoader.load('/assets/s3-bucket/blinds/hercules/hercules.obj', (root) => {
+    objLoader.load('/assets/s3-bucket/blinds/models/hercules/hercules.obj', (root) => {
       var hercules = root;
       var mat = new THREE.MeshLambertMaterial({ color: 0xdddddd });
       hercules.material = mat;
       let sc = 2;
       hercules.scale.set(sc, sc, sc);
-      // hercules.rotation.y = -3;
-      hercules.position.set(-100, 0, -100);
+      hercules.rotation.y = -3;
+      hercules.position.set(0, 40, 260);
       // this.hercules.push(hercules);
       this.scene.add(hercules);
 
       // for (let i = 0; i < 4; i++) {
       //   let newCL = hercules.clone();
-      //   newCL.position.set(-100, 0, i * -150 + 200);
+      //   // newCL.position.set(-100, 0, i * -150 + 200);
       //   this.scene.add(newCL);
       //   this.hercules.push(newCL);
 
-      //   let newCR = hercules.clone();
-      //   newCR.position.set(100, 0, i * -200 + 200);
-      //   newCR.rotation.set(0, -Math.PI / 3, 0);
-      //   this.scene.add(newCR);
-      //   this.hercules.push(newCR);
+      //   // let newCR = hercules.clone();
+      //   // newCR.position.set(100, 0, i * -200 + 200);
+      //   // newCR.rotation.set(0, -Math.PI / 3, 0);
+      //   // this.scene.add(newCR);
+      //   // this.hercules.push(newCR);
       // }
 
     });
 
-    objLoader.load('/assets/s3-bucket/blinds/bench/bench.obj', (root) => {
-      var bench = root;
+    objLoader.load('/assets/s3-bucket/blinds/models/blockchain/model.obj', (root) => {
+      var fence = root;
       var mat = new THREE.MeshLambertMaterial({ color: 0xdddddd });
-      bench.material = mat;
-      bench.scale.set(1, 1, 1);
-      bench.position.set(0, 0, 50);
-      bench.rotation.y = Math.PI/2;
-      
-      this.scene.add(bench);
+      fence.material = mat;
+      let sc = 200;
+      fence.scale.set(sc, sc, sc);
 
-     
+      for (let i = 0; i < 3; i++) {
+        var fenceR = fence.clone();
+        fenceR.rotation.y = 2;
+        fenceR.position.set(-50 - i * 30, 40, 260 - 200 * i);
+        // this.hercules.push(hercules);
+        this.scene.add(fenceR);
+
+        var fenceL = fence.clone();
+        fenceL.rotation.y = -2;
+        fenceL.position.set(50 + i * 30, 40, 260 - 200 * i);
+        this.scene.add(fenceL);
+      }
+
     });
+
+    /////////// bench
+    // objLoader.load('/assets/s3-bucket/blinds/bench/bench.obj', (root) => {
+    //   var bench = root;
+    //   var mat = new THREE.MeshLambertMaterial({ color: 0xdddddd });
+    //   bench.material = mat;
+    //   bench.scale.set(1, 1, 1);
+    //   bench.position.set(0, 0, 50);
+    //   bench.rotation.y = Math.PI / 2;
+
+    //   this.scene.add(bench);
+
+
+    // });
   }
 
   initEffect = () => {
@@ -187,6 +216,40 @@ class Blinds extends React.Component {
 
     this.effect = new AnaglyphEffect(this.renderer, width, height);
     this.effect.setSize(width, height);
+  }
+
+  initGround = () => {
+
+    const size = 500;
+    const divisions = 70;
+
+    const gridHelper = new THREE.GridHelper(size, divisions);
+    this.scene.add(gridHelper);
+  }
+
+  initFrames = () => {
+    this.frames = [];
+    const texture = new THREE.TextureLoader().load("assets/s3-bucket/blinds/frames/frame.png");
+    const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
+    for (let i = 0; i < this.numFrames; i++) {
+      const frameH = 100;
+      const geometry = new THREE.BoxGeometry(frameH, frameH, 1);
+
+      const frame = new THREE.Mesh(geometry, material);
+      frame.position.z = -i * this.framesSpacing;
+      frame.position.y = frameH / 2 + 20;
+
+      this.frames.push(frame);
+      this.scene.add(frame);
+    }
+  }
+  updateFrames = () => {
+    for (let i = 0; i < this.frames.length; i++) {
+      const frame = this.frames[i];
+      frame.position.z += .7;
+      if (frame.position.z > 1000)
+        frame.position.z = -1000;
+    }
   }
 
   loadingDone = () => {
@@ -207,13 +270,18 @@ class Blinds extends React.Component {
       c.rotation.y += .02;
     this.effect.render(this.scene, this.camera);
     this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
+
+    this.updateFrames();
   }
 
+
   render() {
+    const { ui } = this.props;
     return (
       <div className="Blinds Sketch" >
         <div className="Three" ref={ref => (this.mount = ref)} />
-        <Sketch className="p5sketch" ui={this.props.ui} />
+        {ui.loading ? <div className="backgroundCover" style={{ backgroundColor: "black" }} /> : null}
+        <Sketch className="p5sketch" ui={ui} loadingDone={this.loadingDone} />
 
 
       </div>
