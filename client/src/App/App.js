@@ -480,7 +480,7 @@ class App extends React.Component {
             </Switch>
 
           </div>
-          {<FPSStats top={window.innerHeight - 255} left={10} />}
+          {/* {<FPSStats top={window.innerHeight - 255} left={10} />} */}
           {/* <Exit /> */}
           {/* <SideBar room={this.state.user.room} user={this.state.user} users={this.state.users} usersChange={this.state.usersChange} showSideBar={this.state.showSideBar} handleDrawerClose={this.handleDrawerClose.bind(this)} messages={this.state.messages} addUserMessage={this.addUserMessage} userActiveChat={this.state.userActiveChat} userSetActiveChat={this.userSetActiveChat}  />*/}
           <Chat users={this.state.users} usersChange={this.state.usersChange} />

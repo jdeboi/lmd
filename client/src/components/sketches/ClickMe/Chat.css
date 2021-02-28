@@ -1,4 +1,4 @@
-.Chat {
+.Chatz {
   padding: 15px;
   margin: auto;
   height: 100%;
@@ -8,13 +8,13 @@
   /* background-image: url("https://media.giphy.com/media/3pZjE2Z0HNVMk/giphy.gif"); */
   cursor: url("/images/cursor/pointer.png"), auto;
   /* background-color: black; */ }
-  .Chat .Chat-header {
+  .Chatz .Chat-header {
     text-align: center;
     font-size: 34px; }
-  .Chat .Chat-input {
+  .Chatz .Chat-input {
     height: 60px;
     padding-top: 10px; }
-    .Chat .Chat-input .emojiBar {
+    .Chatz .Chat-input .emojiBar {
       width: 100%;
       height: 60px;
       border-radius: 4px;
@@ -25,14 +25,14 @@
       box-sizing: border-box;
       padding: 10px;
       background-color: rgba(255, 255, 255, 0); }
-    .Chat .Chat-input button {
+    .Chatz .Chat-input button {
       width: 100%;
       height: 100%;
       cursor: url("/images/cursor/pointer.png"), auto;
       color: white;
       border: 1px solid black;
       background-color: rgba(255, 255, 255, 0.2); }
-  .Chat .Chat-message-box {
+  .Chatz .Chat-message-box {
     flex-direction: column;
     height: 300px;
     width: 100%;
@@ -46,35 +46,35 @@
     /* background-color: white; */
     /* background-image: url("/videos/face.gif"); */
     /* background-image: url("https://media.giphy.com/media/3pZjE2Z0HNVMk/giphy.gif"); */ }
-  .Chat .Chat-messages {
+  .Chatz .Chat-messages {
     bottom: 0px;
     position: absolute;
     width: 100%;
     min-height: 100%; }
-  .Chat .Chat-messages-bounding {
+  .Chatz .Chat-messages-bounding {
     padding: 10px;
     width: 500px; }
-  .Chat .Chat-buttons {
+  .Chatz .Chat-buttons {
     padding-top: 10px; }
-    .Chat .Chat-buttons button {
+    .Chatz .Chat-buttons button {
       height: 60px;
       width: 40px;
       cursor: url("/images/cursor/pointer.png"), auto;
       border: 1px solid black;
       background-color: rgba(255, 255, 255, 0.1); }
-  .Chat .bubbleContainer {
+  .Chatz .bubbleContainer {
     display: flex;
     width: 100%; }
-  .Chat .me {
+  .Chatz .me {
     justify-content: flex-start !important; }
-  .Chat .you {
+  .Chatz .you {
     justify-content: flex-end !important; }
-  .Chat .bubble {
+  .Chatz .bubble {
     border-radius: 12px;
     padding: 10px 15px 10px 15px; }
-  .Chat .me .bubble {
+  .Chatz .me .bubble {
     background-color: #e0e0e0; }
-  .Chat .you .bubble {
+  .Chatz .you .bubble {
     background-color: #ffc800; }
-  .Chat .emoji-button {
+  .Chatz .emoji-button {
     font-size: 34px; }

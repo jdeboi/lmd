@@ -73,7 +73,7 @@ class Chat extends React.Component {
 
     //{// <div className="Chat-header">😳</div>}
     return (
-      <div className="Chat">
+      <div className="Chatz">
 
         <div className="Chat-message-box">
           <div className="Chat-messages">

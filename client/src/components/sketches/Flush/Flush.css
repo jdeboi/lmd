@@ -1,15 +1,17 @@
-.VorTech .Frame .content .flush {
+.Flush .Frame .content .flush {
   pointer-events: all; }
 
-.VorTech .flush {
+.Flush .flush {
   width: 150px;
   height: 60px; }
-  .VorTech .flush button {
+  .Flush .flush button {
     color: white;
     width: 100%;
     height: 100%;
     transition: transform 1s;
+    -moz-transition: transform 1s;
+    -webkit-transition: transform 1s;
     transform-origin: top right; }
-    .VorTech .flush button img {
+    .Flush .flush button img {
       width: 100%;
       height: 100%; }

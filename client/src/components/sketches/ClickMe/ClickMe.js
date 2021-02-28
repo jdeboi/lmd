@@ -8,7 +8,7 @@ import Frame from '../../shared/Frame/Frame';
 // import FrameSimple from '../../Universal/Frame/FrameSimple';
 
 import Sketch from './ClickMeSketch';
-
+import Chat from './Chat';
 
 // import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -280,6 +280,7 @@ class ClickMe extends React.Component {
         {this.getClickMenu()}
         {/* {this.getFrame()} */}
         {/* {this.getHandMenu()} */}
+        <Chat />
       </div>
     )
   }

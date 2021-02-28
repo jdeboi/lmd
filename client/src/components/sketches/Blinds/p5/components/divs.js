@@ -60,10 +60,10 @@ export const addDesktopDivs = (ui, divs, blinds, shadow, p5) => {
     for (let x = 0; x < numFramesW; x++) {
         for (let y = 0; y < numFramesH; y++) {
           // const xx = i%2===0?x-spacing/2:x;
-        //   const xx = startX + x*(w+spacing);
-        //   const yy = startY + y*(h + spacing + 24);
-        const xx = Math.random()*(window.innerWidth-w);
-        const yy = Math.random()*(window.innerHeight-w-30)+30;
+          const xx = startX + x*(w+spacing);
+          const yy = startY + y*(h + spacing + 24);
+        // const xx = Math.random()*(window.innerWidth-w);
+        // const yy = Math.random()*(window.innerHeight-w-30)+30;
           divs.windows.push(new BlindsDraggable(i++, xx, yy, w, h, blinds, shadow, p5))
           // i++;
         }

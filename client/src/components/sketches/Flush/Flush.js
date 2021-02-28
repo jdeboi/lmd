@@ -11,12 +11,12 @@ import Emoji from './Emoji';
 
 var camera, water, waterMesh;
 var lastVolume = 0;
-var tubes = [];
-var seed = 1;
+// var tubes = [];
+// var seed = 1;
 var emojis = [];
-var isFlushing = false;
-var isStopping = false;
-var handleDown = false;
+// var isFlushing = false;
+// var isStopping = false;
+// var handleDown = false;
 var vidTex;
 
 class Flush extends React.Component {
@@ -27,7 +27,9 @@ class Flush extends React.Component {
     // this.imgW = 350;
 
     this.state = {
-      // isFlushing : false
+      handleDown: false,
+      isFlushing : true,
+      isStopping : false
     }
 
   }
@@ -60,17 +62,6 @@ class Flush extends React.Component {
 
 
 
-    // Skybox
-    // var skyW = 1000;
-    // var skybox = Mesh.CreateBox("skyBox", skyW, scene);
-    // var skyboxMaterial = new StandardMaterial("skyBox", scene);
-    // skyboxMaterial.backFaceCulling = false;
-    // skyboxMaterial.reflectionTexture = new CubeTexture(window.AWS+"/shared/sky/moon/moon", scene);
-    // skyboxMaterial.reflectionTexture.coordinatesMode = Texture.SKYBOX_MODE;
-    // skyboxMaterial.diffuseColor = new Color3(0, 0, 0);
-    // skyboxMaterial.specularColor = new Color3(0, 0, 0);
-    // skyboxMaterial.disableLighting = true;
-    // skybox.material = skyboxMaterial;
 
     for (let i = 0; i < 150; i++) {
       emojis[i] = new Emoji(scene);
@@ -95,7 +86,7 @@ class Flush extends React.Component {
   onRender = (scene) => {
     for (const emoji of emojis) {
       // if (isFlushing)
-      emoji.update(isStopping);
+      emoji.update(this.state.isStopping);
       // else emoji.hide();
     }
     if (this.props.music.volume != lastVolume) {
@@ -108,9 +99,10 @@ class Flush extends React.Component {
 
   flushToilet = () => {
     // this.setState({isFlushing: true});
-    isFlushing = true;
-    handleDown = true;
-    isStopping = false;
+    const isFlushing = true;
+    const handleDown = true;
+    const isStopping = false;
+    this.setState({isFlushing, handleDown, isStopping})
     for (const emoji of emojis) {
       // if (isFlushing)
       emoji.startFlush();
@@ -121,20 +113,22 @@ class Flush extends React.Component {
   }
 
   stopFlush = () => {
-    isFlushing = false;
-    isStopping = true;
+    const isFlushing = false;
+    const isStopping = true;
+    this.setState({isFlushing, isStopping})
     // this.setState({isFlushing: false});
   }
 
   handleUp = () => {
-    handleDown = false;
+    const handleDown = false;
+    this.setState({handleDown})
   }
 
   render() {
 
-    const deg = handleDown ? "rotate(-20deg)" : "rotate(0deg)";
+    const deg = this.state.handleDown ? "rotate(-20deg)" : "rotate(0deg)";
     return (
-      <div className="VorTech Sketch" ref={this.divRef} >
+      <div className="Flush Sketch" ref={this.divRef} >
 
         { <BabylonScene className="noSelect backgroundCover" antialias onSceneReady={this.onSceneReady} onRender={this.onRender} id='babylon-canvas' />}
         <Frame title="" x={100} y={100} width={150} height={60} windowStyle={{ background: "transparent" }} content={
