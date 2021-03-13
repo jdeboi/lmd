@@ -156,7 +156,7 @@ class App extends React.Component {
       roomCount: { "macbook-air": 0, "hard-drives-on-seashores": 0, "wet-streams": 0, "jungle-gyms": 0, "cloud-confessional": 0, "esc-to-mars": 0, "xfinity-depths": 0, "wasted-days": 0, "home-page": 0, "gallery": 0, "blind-eye": 0 }
     };
 
-    this.isClosed = true;
+    this.isClosed = false;
 
   }
 

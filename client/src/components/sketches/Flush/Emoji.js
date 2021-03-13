@@ -6,14 +6,17 @@ export default class Emoji {
     this.r = Math.random()*8;
     this.ang = Math.random() * 2 * Math.PI;
 
-    const imgs = ["wave", "angry", "angry2", "tp", "flag", "rabbit"];
+    const imgs = ["wave", "angry", "angry2", "tp", "flag", "rabbit", "ok"];
     this.index = 0;
     let rand = Math.random();
 
-    if (rand < .025) this.index = 1;
-    else if (rand < .05) this.index = 2;
-    else if (rand < .1) this.index = 3;
-    else if (rand < .15) this.index = 4;
+    
+    if (rand < .1) this.index = 1;
+    else if (rand < .2) this.index = 2;
+    else if (rand < .3) this.index = 3;
+    else if (rand < .4) this.index = 4;
+    else if (rand < .45) this.index = 5;
+    else if (rand < .6) this.index = 6;
 
     var emojiTexture = new Texture(`${window.AWS}/vorTech/emojis/${imgs[this.index]}.png`, scene);
     // emojiTexture.vScale = emojiTexture.uScale = 10;

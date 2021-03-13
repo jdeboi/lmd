@@ -71,7 +71,7 @@ class Flush extends React.Component {
     var mat = new StandardMaterial("groundMaterial", scene);
     vidTex = new VideoTexture("video", window.AWS + "/vorTech/whirl2.mp4", scene, true);
     vidTex.video.volume = 0;
-    vidTex.video.play();
+    // vidTex.video.play(); // is this needed?
     mat.diffuseTexture = vidTex;
 
     var plane = Mesh.CreateGround("plane", 512, 512, 32, scene, false);
