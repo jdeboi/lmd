@@ -88,8 +88,6 @@ class Flush extends React.Component {
       this.vidTex.video.volume = this.props.music.volume*.2;
       this.lastVolume = this.props.music.volume;
     }
-    console.log(this.vidTex.video);
-
   }
 
   flushToilet = () => {
