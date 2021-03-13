@@ -151,8 +151,8 @@ class Header extends React.Component {
     //   // {title: "losing my dimension", link:"/losing-my-dimension", shortcut: "&#x2318;9"},
     // ];
     
-    const {currentPage} = this.props;
-    if (currentPage === "gallerytest")
+    const {currentPage, isClosed} = this.props;
+    if ((currentPage==="gallery" &&  !isClosed) || currentPage === "gallerytest")
       return <FinderSubmenu ui={this.props.ui} currentPage={this.props.currentPage} title="losing my dimension" icon="" specialClass="" listItems={sketches} />
     else if (this.isXXSmall() && currentPage !== "gallery")
       return null;

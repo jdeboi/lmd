@@ -9,15 +9,6 @@ import { Scene, AnaglyphUniversalCamera, UniversalCamera, PostProcess, Effect, H
 import BabylonScene from '../../shared/Babylon.jsx';
 import Emoji from './Emoji';
 
-var camera, water, waterMesh;
-var lastVolume = 0;
-// var tubes = [];
-// var seed = 1;
-var emojis = [];
-// var isFlushing = false;
-// var isStopping = false;
-// var handleDown = false;
-var vidTex;
 
 class Flush extends React.Component {
   // https://codepen.io/JohJakob/pen/YPxgwo
@@ -48,52 +39,56 @@ class Flush extends React.Component {
     return (((a % b) + b) % b);
   }
 
-  onSceneReady(scene) {
+ 
+  onSceneReady = (scene) => {
     // const camera = new UniversalCamera("UniversalCamera", new Vector3(0, 1, -25), scene);
-    camera = new AnaglyphUniversalCamera("af_cam", new Vector3(0, 0, -5), 0.033, scene);
-    scene.clearColor = new Color4(0, 0, 0, 0);
-    camera.setTarget(new Vector3(0, 0, 10));
+    this.scene = scene;
+    this.camera = new AnaglyphUniversalCamera("af_cam", new Vector3(0, 0, -5), 0.033, this.scene);
+ 
+    this.scene.clearColor = new Color4(0, 0, 0, 0);
+    this.camera.setTarget(new Vector3(0, 0, 10));
 
-    const canvas = scene.getEngine().getRenderingCanvas();
-    camera.attachControl(canvas, true);
+    const canvas = this.scene.getEngine().getRenderingCanvas();
+    this.camera.attachControl(canvas, true);
 
-    const light = new HemisphericLight("light1", new Vector3(0, 0, -1), scene);
+    const light = new HemisphericLight("light1", new Vector3(0, 0, -1), this.scene);
     light.intensity = .5;
 
 
 
-
+    this.emojis = [];
     for (let i = 0; i < 150; i++) {
-      emojis[i] = new Emoji(scene);
+      this.emojis[i] = new Emoji(this.scene);
     }
 
 
-    var mat = new StandardMaterial("groundMaterial", scene);
-    vidTex = new VideoTexture("video", window.AWS + "/vorTech/whirl2.mp4", scene, true);
-    vidTex.video.volume = 0;
-    // vidTex.video.play(); // is this needed?
-    mat.diffuseTexture = vidTex;
+    var mat = new StandardMaterial("groundMaterial", this.scene);
+    this.vidTex = new VideoTexture("video", window.AWS + "/vorTech/whirl2.mp4", this.scene, true);
+    this.vidTex.video.volume = 0;
+    this.vidTex.video.play(); // is this needed?
+    mat.diffuseTexture = this.vidTex;
 
-    var plane = Mesh.CreateGround("plane", 512, 512, 32, scene, false);
+    var plane = Mesh.CreateGround("plane", 512, 512, 32, this.scene, false);
     // plane.position.y = -10;
     plane.position.z = 180;
     plane.rotation.x = -Math.PI / 2;
     plane.material = mat;
 
+    this.lastVolume = 0;
   }
 
 
   onRender = (scene) => {
-    for (const emoji of emojis) {
+    for (const emoji of this.emojis) {
       // if (isFlushing)
       emoji.update(this.state.isStopping);
       // else emoji.hide();
     }
-    if (this.props.music.volume != lastVolume) {
-      vidTex.video.volume = this.props.music.volume*.2;
-      lastVolume = this.props.music.volume;
+    if (this.props.music.volume != this.lastVolume) {
+      this.vidTex.video.volume = this.props.music.volume*.2;
+      this.lastVolume = this.props.music.volume;
     }
-
+    console.log(this.vidTex.video);
 
   }
 
@@ -103,7 +98,7 @@ class Flush extends React.Component {
     const handleDown = true;
     const isStopping = false;
     this.setState({isFlushing, handleDown, isStopping})
-    for (const emoji of emojis) {
+    for (const emoji of this.emojis) {
       // if (isFlushing)
       emoji.startFlush();
       // else emoji.hide();

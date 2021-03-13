@@ -444,7 +444,7 @@ class App extends React.Component {
           {/* <CssBaseline />*/}
           <div className={appHeaderClass}>
             <div className="BackHeader"></div>
-            <Header currentPage={this.getRoomTitle()} user={this.props.user} avatarClicked={this.avatarClicked} />
+            <Header currentPage={this.getRoomTitle()} user={this.props.user} avatarClicked={this.avatarClicked} isClosed={this.isClosed} />
           </div>
           <div className="App-Content inner-outline" onMouseMove={this.handleMouseMove}>
             <Switch>
