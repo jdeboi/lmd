@@ -4,8 +4,8 @@ export const labels = [
   [
     // foyer
     { lev: 0, id: 0, name: "petrified wood", x: .5, y: 5, img: "wood", stars: 3.2, description: "What goes on a mantle? Can someone please answer this question? Highly-curated photos only, please." },
-    { lev: 0, id: 1, name: "floppy fish",x: 3, y: 3.5,  img: "bathroom", stars: 2.6, description: "Facebook ads for this interactive floppy fish really got me. So many videos of happy cats! Tacocat has been a pain in the ass lately and I thought an electronic toy would tire that boy out. Well, I'd give this thing 2 stars because he's excited about the fish for all of about 20 seconds before he could care less." },
-    { lev: 0, id: 2, name: "dad epitomizing the 80s photoshoot", x: .5, y: 1, img: "plant", stars: 3, description: "des2" },
+    { lev: 0, id: 1, name: "floppy fish",x: 3, y: 3.5,  img: "floppyfish", stars: 2.6, description: "Facebook ads for this interactive floppy fish really got me. So many videos of happy cats! Tacocat has been a pain in the ass lately and I thought an electronic toy would tire that boy out. Well, I'd give this thing 2 stars because he's excited about the fish for all of about 20 seconds before he could care less." },
+    { lev: 0, id: 2, name: "2020 xmas ornament", x: .5, y: 1, img: "tp", stars: 3, description: "Glad to know that when the apocalyse actually happens, we will be wiping our asses with leaves. If we learned anything in 2020 it's that people can't live without Charmin. Let me hear you say LATE STAGE CAPITALISM." },
 
     // living
     { lev: 0, id: 3, name: "plastic succulent", x: 9, y: .2, img: "plastic", stars: 4.1, description: "I could blame this fake plant purchase on the fact that the living room doesn't get much light, but the truth is that I'm really terrible at keeping things alive. But honestly, I don't think anyone can tell this thing is fake. Extra stars." },
@@ -19,7 +19,7 @@ export const labels = [
     // kitchen
     { lev: 0, id: 8, name: "craft drawer", x: .5, y: 7, img: "craft", stars: 4.5, description: "Craft, craft, craft! What is better than having every tool that you need to pull off that Lundi Gras headdress? Hot glue to the max! Also, Perler beads are the best rediscovery of my 30s." },
     { lev: 0, id: 9, name: "hiding vodka", x: 1.5, y: 10.8, img: "vodka", stars: 2.0, description: "I hid this bottle to prevent my partner from drinking like a fish. I can't tell if my hiding solution has had any effect." },
-    { lev: 0, id: 10, name: "old takeout", x: 6, y: 9, img: "sponge", stars: 3.3, description: "Was this takeout ever any good? No. But what is the value of pulling food directly out of the fridge? Has to be worth like a letter grade or two on the food scale. I'll give this B- fried rice an 92.5%; and this teacher rounds up." },
+    { lev: 0, id: 10, name: "old takeout", x: 6, y: 9, img: "takeout", stars: 3.3, description: "Was this takeout ever any good? No. But what is the value of pulling food directly out of the fridge? Has to be worth like a letter grade or two on the food scale. I'll give this B- fried rice an 92.5%; and this teacher rounds up." },
     
     // bedroom
     { lev: 0, id: 11, name: "mardi gras ephemera", x: 14, y: 8, stars: 5.0, img: "mardi", description: "Every New Orleanian has a mardi gras closet. I think most New Orleanians need a Mardi Gras room. Seriously, best day of life." },
@@ -30,7 +30,7 @@ export const labels = [
   [
     // foyer
     { lev: 1, id: 0, name: "stanky litter box", x: 4.5, y: 5, stars: 1.4, img: "litter", description: "Tacocat has started pooping outside, which iis the best thing ever. Except for the garden. Or the neighbors? Not actually sure where his excrement ends up. Regardless, stoked this litter requries less input." },
-    { lev: 1, id: 1, name: "cat pee rug stain", x: 4, y: 3, stars: 0.1, img: "bathroom", description: "To clarify, this pee stain came from a previous roommate's cat. Cat pee is the worst." },
+    { lev: 1, id: 1, name: "cat pee rug stain", x: 4, y: 3, stars: 0.1, img: "rug", description: "To clarify, this pee stain came from a previous roommate's cat. Cat pee is the worst." },
 
     // living
     { lev: 1, id: 2, name: "forgotten coffee", x: 7, y: 2, stars: 2.2, img: "coffee", description: "I have this weird proclivity for making tea and subsequently forgetting all about said tea.I have this weird proclivity for making coffee and subsequently forgetting all about said coffee. Sometimes I wonder if I even like coffee, or if I just drink it because that is a normalized part of our culture? Does it actually make me feel more awake? I guess placebo is real." },
@@ -77,7 +77,7 @@ export const labels = [
 
 export const rooms = [
   { "id": 0, "name": "foyer", "icon": "foyer", stars: 2.2, "points": [0, 0, 0, 0, 0, 6, 6, 0, 6, 6, 0, 0, 0, 0, 0], "iconPos": { x: 3, y: 3 }, img: "foyer", description: "The foyer is really just the, 'leave your crap here' room. One time I was waiting for the subway in Brooklyn with a huge IKEA bag full of random shit and this rat ran out from the tracks, grabbed a napkin, and pulled it into its little hole. We really aren't much different from subway mammals." },
-  { "id": 1, "name": "living room", "icon": "living", stars: 4.4, "points": [6, 0, 0, 6, 0, 6, 14, 0, 6, 14, 0, 0, 6, 0, 0], "iconPos": { x: 10, y: 3 }, img: "bathroom", description: "The purchase of a Pottery Barn couch was such a game changer. When you get a good couch, you become a real adult. That is my honest metric." },
+  { "id": 1, "name": "living room", "icon": "living", stars: 4.4, "points": [6, 0, 0, 6, 0, 6, 14, 0, 6, 14, 0, 0, 6, 0, 0], "iconPos": { x: 10, y: 3 }, img: "living", description: "The purchase of a Pottery Barn couch was such a game changer. When you get a good couch, you become a real adult. That is my honest metric." },
   { "id": 2, "name": "bathroom", "icon": "bathroom", stars: 4.1, "points": [14, 0, 0, 14, 0, 6, 18, 0, 6, 18, 0, 0, 14, 0, 0], "iconPos": { x: 16, y: 3 }, img: "bathroom", description: "Please let subway tile be cool for at least 5 years. Just re-did the bathroom to match the Pinterest so that shit better not change until I get my money's worth." },
   { "id": 3, "name": "kitchen", "icon": "kitchen", stars: 2.4, "points": [0, 0, 6, 0, 0, 12, 10, 0, 12, 10, 0, 6, 0, 0, 6], "iconPos": { x: 5, y: 9 }, img: "fridge", description: "This kitchen accidentally got painted this really offensive lime green (the paint swatches are hard to visualize on a wall if you aren't good at color!); color needs to go. Painting is just such a pain in the ass." },
   { "id": 4, "name": "bedroom", "icon": "bedroom", stars: 3.9, "points": [10, 0, 6, 10, 0, 12, 18, 0, 12, 18, 0, 6, 10, 0, 6], "iconPos": { x: 12, y: 8 }, img: "bedroom", description: "I inherited a Scandinavian bedroom set from my mom. Probably the bed I was conceived in. Try not to think about that too much." },

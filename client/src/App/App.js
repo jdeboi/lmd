@@ -10,7 +10,7 @@ import Header from '../components/shared/Header/Header';
 import Chat from '../components/shared/Chat/Chat';
 // import Dock from '../components/shared/Dock/Dock';
 
-import {sketches, getUrl} from '../components/sketches/Sketches';
+import { sketches, getUrl } from '../components/sketches/Sketches';
 
 // cookies
 import Cookies from 'js-cookie';
@@ -37,24 +37,17 @@ import Flush from '../components/sketches/Flush/Flush';
 import Oogle from '../components/sketches/Oogle/Oogle';
 import Yosemite from '../components/sketches/Yosemite/Yosemite';
 import Blinds from '../components/sketches/Blinds/Blinds';
-import Dinner from '../components/sketches/Dinner/Dinner';
-
-// under construction
-// import Altar from '../components/sketches/Test/Altar/Altar';
-
-// import Three from '../components/sketches/Test/Three/Three';
-// import Dimension from '../components/sketches/Dimension/Dimension';
-
-// 
-import Dig from '../components/sketches/Test/Dig/Dig';
 import ClickMe from '../components/sketches/ClickMe/ClickMe';
-import MoonLight from '../components/sketches/Test/MoonLight/MoonLight';
 
 // pages
 import About from '../components/pages/About';
 import Statement from '../components/pages/Statement';
 import Credits from '../components/pages/Credits';
 import NotFound from '../components/pages/NotFound';
+
+// utilities
+import RegisterDesktop from '../components/utilities/RegisterDesktop/RegisterDesktop';
+import ViewUsers from '../components/utilities/ViewUsers/ViewUsers';
 
 // menu frames
 import SignIn from '../components/shared/SignIn/SignIn';
@@ -156,8 +149,8 @@ class App extends React.Component {
       roomCount: { "macbook-air": 0, "hard-drives-on-seashores": 0, "wet-streams": 0, "jungle-gyms": 0, "cloud-confessional": 0, "esc-to-mars": 0, "xfinity-depths": 0, "wasted-days": 0, "home-page": 0, "gallery": 0, "blind-eye": 0 }
     };
 
-    this.isClosed = false;
-    this.isMenuOn = true;
+    this.isClosed = true;
+    this.isMenuOn = false;
   }
 
 
@@ -181,7 +174,7 @@ class App extends React.Component {
       this.setState({ hasAvatar: false, showWelcome: true });
     }
 
-    
+
 
     window.addEventListener("resize", this.updateDeviceDimensions);
     window.addEventListener("keydown", this.handleKeyPress);
@@ -205,10 +198,10 @@ class App extends React.Component {
 
   handleKeyPress = (e) => {
     if (e.keyCode === 13) {
-      const {user} = this.props;
-      const {hasLoadedRoom} = this.state;
+      const { user } = this.props;
+      const { hasLoadedRoom } = this.state;
       if (!hasLoadedRoom && user.room !== "gallery") {
-        this.setState({hasLoadedRoom: true});
+        this.setState({ hasLoadedRoom: true });
         this.props.startComposition();
       }
     }
@@ -223,7 +216,7 @@ class App extends React.Component {
     const nextRoom = this.getRoom(location.pathname);
     if (nextRoom != this.props.user.room) {
       this.props.loadingApp();
-      this.setState({hasLoadedRoom: false});
+      this.setState({ hasLoadedRoom: false });
     }
     this.props.setUserRoom(nextRoom);
   }
@@ -378,7 +371,7 @@ class App extends React.Component {
   }
 
   // userSetRoom = (location, action) => {
-    
+
   // }
 
   getRoom = (path = this.props.location.pathname) => {
@@ -449,8 +442,8 @@ class App extends React.Component {
           <div className="App-Content inner-outline" onMouseMove={this.handleMouseMove}>
             <Switch>
               <Route exact path="/" render={() => (<Gallery users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} isClosed={this.isClosed} />)} />
-              <Route exact path="/gallerytest" render={() => (<Gallery users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} isClosed={false} />)} />
 
+              {/* Sketches */}
               <Route path={getUrl("mac")} render={() => (<MacbookAir />)} />
               <Route path={getUrl("jung")} render={() => (<JungleGyms />)} />
               <Route path={getUrl("hard")} render={() => (<HardDrives />)} />
@@ -466,15 +459,16 @@ class App extends React.Component {
               <Route path={getUrl("yose")} component={Yosemite} />
               <Route path={getUrl("click")} component={ClickMe} />
 
-              <Route path="/dig" render={() => (<Dig addClass={this.addClass} />)} />
-              {<Route path="/moon-light" component={MoonLight} />}
-              {<Route path="/click-me" component={ClickMe} />}
-              <Route path={"/dinner"} component={Dinner} />
-              {/*<Route  path="/three" component={Three} />*/}
-
+              {/* Pages */}
               <Route path="/about" render={() => (<About ui={this.props.ui} />)} />
               <Route path="/statement" render={() => (<Statement ui={this.props.ui} />)} />
               <Route path="/credits" render={() => (<Credits ui={this.props.ui} />)} />
+
+              {/* Utilities */}
+              <Route exact path="/gallerytest" render={() => (<Gallery users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} isClosed={false} />)} />
+              <Route exact path="/register" render={() => (<RegisterDesktop />)} />
+              <Route exact path="/viewusers" render={() => <ViewUsers users={this.state.users} />} />
+
 
               <Route component={NotFound} />
             </Switch>
@@ -489,7 +483,7 @@ class App extends React.Component {
           {/* <RoomUsers users={this.state.users} /> */}
           <FAQFrame />
           <SignIn hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} closeSignIn={this.closeSignIn} isFrame={true} />
-          <RoomDecal hasLoadedRoom={this.state.hasLoadedRoom} users={this.state.users} onHide={() => this.setState({hasLoadedRoom: true})} />
+          <RoomDecal hasLoadedRoom={this.state.hasLoadedRoom} users={this.state.users} onHide={() => this.setState({ hasLoadedRoom: true })} />
           <Welcome isClosed={this.isClosed} user={this.props.user} hasAvatar={this.state.hasAvatar} showWelcome={this.state.showWelcome} closeWelcome={this.closeWelcome} />
           {/* <Dock showDock={this.state.showDock} /> */}
           <MobileFooter currentPage={this.getRoomTitle()} user={this.props.user} avatarClicked={this.avatarClicked} />

@@ -4,6 +4,8 @@ export const MOVEUSER = 'MOVEUSER';
 export const MOVEUSERROOM = 'MOVEUSERROOM';
 export const REGISTERUSER = 'REGISTERUSER';
 
+export const SETUSERCOMP = 'SETUSERCOMP';
+
 export const ADDWINE = 'ADDWINE';
 export const SETWINE = 'SETWINE';
 export const RESETWINE = 'RESETWINE';
@@ -29,6 +31,13 @@ export const setUserRoom = (room) => {
   return {
     type: SETUSERROOM,
     payload: {room}
+  }
+}
+
+export const setUserComp = (comp) => {
+  return {
+    type: SETUSERCOMP,
+    payload: {comp}
   }
 }
 

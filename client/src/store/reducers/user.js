@@ -1,4 +1,4 @@
-import { SETUSERROOM, SETUSER, MOVEUSER, MOVEUSERROOM, TOGGLEOUTSIDE, SETWINE, RESETWINE, ADDWINE, SETCHEESE, RESETCHEESE, ADDCHEESE, SETCOCKTAIL, RESETCOCKTAIL, ADDCOCKTAIL } from '../actions/user';
+import { SETUSERROOM, SETUSERCOMP, SETUSER, MOVEUSER, MOVEUSERROOM, TOGGLEOUTSIDE, SETWINE, RESETWINE, ADDWINE, SETCHEESE, RESETCHEESE, ADDCHEESE, SETCOCKTAIL, RESETCOCKTAIL, ADDCOCKTAIL } from '../actions/user';
 import { SETUSERACTIVECHAT, SETUSERHOVERCHAT, USERHOVERCHATLEAVE } from '../actions/userActiveChat';
 
 import Cookies from 'js-cookie';
@@ -7,7 +7,7 @@ import socket from "../../components/shared/Socket/Socket";
 import { globalConfig } from '../../components/sketches/Gallery/constants';
 
 // reducer (check what to do with action)
-const initState = { avatar: "😀", userName: "", room: "gallery", roomX: 0, roomY: 0, x: globalConfig.stepS / 2, y: globalConfig.stepS / 2, hasWine: null, needsWine: false, hasCheese: null, needsCheese: false, hasCocktail: null, needsCocktail: false };
+const initState = { avatar: "😀", userName: "", room: "gallery", comp: null, roomX: 0, roomY: 0, x: globalConfig.stepS / 2, y: globalConfig.stepS / 2, hasWine: null, needsWine: false, hasCheese: null, needsCheese: false, hasCocktail: null, needsCocktail: false };
 
 export const userReducer = (state = initState, action) => {
   const user = { ...state };
@@ -28,12 +28,22 @@ export const userReducer = (state = initState, action) => {
     case SETUSER:
       user.avatar = action.payload.avatar;
       user.userName = action.payload.userName;
+
+      const comp = Cookies.get('comp');
+      if (comp)
+        user.comp = comp;
+
       Cookies.set("hasAvatar", true);
       Cookies.set("avatar", user.avatar);
       Cookies.set("userName", user.userName);
       socket.emit("setUser", user);
+      
       return user;
 
+    case SETUSERCOMP:
+      user.comp = action.payload.comp;
+      Cookies.set("comp", user.comp);
+      return user;
     case MOVEUSER:
       user.x = action.payload.x;
       user.y = action.payload.y;

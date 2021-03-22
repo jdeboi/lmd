@@ -1,0 +1,13 @@
+.Desktop-Register {
+  color: white; }
+  .Desktop-Register .container {
+    margin-top: 30px; }
+    .Desktop-Register .container label {
+      color: white;
+      font-size: 30px; }
+    .Desktop-Register .container input {
+      width: 106px;
+      height: 54px;
+      color: white;
+      border: 1px solid white;
+      margin-right: 10px; }

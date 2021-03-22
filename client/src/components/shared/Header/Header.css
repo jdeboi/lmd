@@ -372,5 +372,4 @@ span.focus:after {
   text-shadow: none !important; }
 
 span#pageTitle {
-  font-weight: bold;
   white-space: nowrap; }
