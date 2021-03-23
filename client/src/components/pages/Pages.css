@@ -66,3 +66,11 @@
 
 .Page.landscape .container {
   padding-right: 40px; }
+
+.NotFound {
+  color: white; }
+  .NotFound .container {
+    margin: auto auto; }
+    .NotFound .container h1 {
+      font-size: 30px;
+      line-height: 36px; }

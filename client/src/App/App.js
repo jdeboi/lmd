@@ -465,12 +465,12 @@ class App extends React.Component {
               <Route path="/credits" render={() => (<Credits ui={this.props.ui} />)} />
 
               {/* Utilities */}
-              <Route exact path="/gallerytest" render={() => (<Gallery users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} isClosed={false} />)} />
-              <Route exact path="/register" render={() => (<RegisterDesktop />)} />
-              <Route exact path="/viewusers" render={() => <ViewUsers users={this.state.users} />} />
+              <Route path="/gallerytest" render={() => (<Gallery users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} isClosed={false} />)} />
+              <Route path="/register" render={() => (<RegisterDesktop />)} />
+              <Route act path="/viewusers" render={() => <ViewUsers users={this.state.users} />} />
 
 
-              <Route component={NotFound} />
+              <Route path="*" component={NotFound} />
             </Switch>
 
           </div>
