@@ -32,7 +32,7 @@ class RegisterDesktop extends React.Component {
                     <form onSubmit={this.handleSubmit}>
                         <label>
                             Computer number:
-                    <input type="text" value={this.state.computerNumber} onChange={this.handleChange} />
+                        <input type="text" value={this.state.computerNumber} onChange={this.handleChange} />
                         </label>
                         <input className="" type="submit" value="Submit" />
                     </form>
