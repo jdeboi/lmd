@@ -94,6 +94,8 @@ class App extends React.Component {
     this.socketSetup();
     const hasAvatar = Cookies.get('hasAvatar');
 
+    // this.props.router.setRouteLeaveHook(this.props.route, this.onLeave); 
+
     if (hasAvatar) {
       const userName = Cookies.get('userName');
       const avatar = Cookies.get('avatar');
@@ -141,6 +143,7 @@ class App extends React.Component {
   }
 
   pageChange = (location) => {
+    console.log("PAGE CHANGE", location.pathname)
     this.props.hideMenus();
     const nextRoom = this.getRoom(location.pathname);
     if (nextRoom != this.props.user.room) {
@@ -269,6 +272,12 @@ class App extends React.Component {
 
   }
 
+  onLeave=(nextState) => { 
+    if(nextState.action === 'POP') { 
+      console.log("LEAVING??")
+    }
+  }
+
   getUserNameById = (id) => {
     const users = this.state.users;
     if (users) {
@@ -355,6 +364,9 @@ class App extends React.Component {
     const { ui } = this.props;
     const appHeaderClass = "App-Header" + (ui.isMobile || ui.hasFooter ? " mobile" : "");
 
+    
+      console.log("room",this.getRoomTitle());
+    
     return (
       <div className={this.getStringClasses()}>
           <div className={appHeaderClass}>

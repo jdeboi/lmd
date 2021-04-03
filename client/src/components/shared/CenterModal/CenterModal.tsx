@@ -22,9 +22,7 @@ export default function CenterModal({ title, classN, ui, z, height, width, isHid
 
 
   let { w, h, x, y } = getCenterModalDim(ui, isRelative);
-  if (classN === 'confessional-modal') {
-    console.log(x, y, w, h);
-  }
+
   if (height && width) {
     h = Math.min(h, height);
     w = Math.min(w, width);
