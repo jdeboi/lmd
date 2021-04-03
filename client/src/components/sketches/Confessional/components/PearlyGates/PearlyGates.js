@@ -11,6 +11,9 @@ export default function PearlyGates(props) {
     let yLive = h - 55;
     if (h < 400)
         yLive = h - 35;
+
+    this.pearlyVid = React.createRef();
+    
     return (
         <React.Fragment>
             <Frame className="stairway" title="" content={
@@ -21,6 +24,7 @@ export default function PearlyGates(props) {
                         className={"react-player mainContent"}
                         width={w}
                         height={h}
+                        ref={this.pearlyVid}
                     >
                         <source src={window.AWS + "/waveforms/waves2_lines.mp4"} type="video/mp4" ></source>
                     </video>

@@ -27,6 +27,7 @@ class MacbookAir extends React.Component {
     this.mainOG = { x: 0, y: 0 };
 
     this.cloudsRef = React.createRef();
+    this.fanRef = React.createRef();
 
     this.setSpeed = this.setSpeed.bind(this);
     this.getDimensions = this.getDimensions.bind(this);
@@ -45,7 +46,8 @@ class MacbookAir extends React.Component {
 
   setSpeed(speed) {
     this.cloudsRef.current.playbackRate = speed;
-    this.setState({ videoSpeed: speed });
+    // this.setState({ videoSpeed: speed });
+    this.fanRef.current.playbackRate = speed;
   }
 
   getDimensions() {
@@ -76,7 +78,7 @@ class MacbookAir extends React.Component {
       let availableHeight = windowHeight - minSpacingY * 2;
       let availableWidth = windowWidth - minSpacingX * 2 - minSpacingMiddle - sliderDim.w; // width of slider
       const windowAspectRatio = availableWidth / availableHeight;
-      
+
       // should we max out the height or width in the available space?
       // in this case, there's more available width than the original image; 
       // max out height
@@ -113,7 +115,7 @@ class MacbookAir extends React.Component {
       let windowAspectRatio = availableWidth / availableHeight;
 
       let windowDim = { w: originalDim.w, h: originalDim.h, x: 0, y: 0 };
-      
+
       if (windowAspectRatio < aspectRatio) {
         // max device height out
         windowDim.h = Math.min(availableHeight, originalDim.h);
@@ -140,7 +142,7 @@ class MacbookAir extends React.Component {
 
 
   getMainWindow(windowDim) {
-    const {ui } = this.props;
+    const { ui } = this.props;
     if (ui.width <= 0 || windowDim.w <= 0) {
       return null;
     }
@@ -150,21 +152,31 @@ class MacbookAir extends React.Component {
         this.mainOG.y = windowDim.y;
       }
 
-      const title= "";//(ui.isMobile || ui.hasFooter)?"":"macbook air";
+      const title = "";//(ui.isMobile || ui.hasFooter)?"":"macbook air";
       return (
         <Frame title={title} content={
-          /*<video width={dimW-2} height={dimH} muted loop autoPlay><source src={videoDimURL} type="video/mp4"></source></video>*/
-          <ReactPlayer
-            className={"react-player mainContent"}
-            playing
-            muted
-            loop
+          <video
+            ref={this.fanRef}
             width={windowDim.w}
             height={windowDim.h}
-            playsInline
-            url={window.AWS + "/macbookAir/noframe.mp4"}
+            muted
+            loop
+            playsInLine
             playbackRate={this.state.videoSpeed}
-          />
+            autoPlay>
+            <source src={window.AWS + "/macbookAir/noframe.mp4"} type="video/mp4"></source>
+          </video>
+          // <ReactPlayer
+          //   className={"react-player mainContent"}
+          //   playing
+          //   muted
+          //   loop
+          //   width={windowDim.w}
+          //   height={windowDim.h}
+          //   playsInline
+          //   url={window.AWS + "/macbookAir/noframe.mp4"}
+          //   playbackRate={this.state.videoSpeed}
+          // />
         }
           width={windowDim.w + 2} height={windowDim.h} x={windowDim.x} y={windowDim.y} px={windowDim.x} py={windowDim.y}
         />
@@ -181,8 +193,8 @@ class MacbookAir extends React.Component {
       return (
         <Frame title="" icon="&#58160;" content={
           <div className="sliderBox">
-            {sliderDim.w < 200 ? 
-            <ContinuousSliderVert callback={this.setSpeed} h={sliderDim.h} w={sliderDim.w} /> : <ContinuousSliderHoriz callback={this.setSpeed} w={sliderDim.w} h={sliderDim.h} />}
+            {sliderDim.w < 200 ?
+              <ContinuousSliderVert callback={this.setSpeed} h={sliderDim.h} w={sliderDim.w} /> : <ContinuousSliderHoriz callback={this.setSpeed} w={sliderDim.w} h={sliderDim.h} />}
           </div>
         }
           width={sliderDim.w} height={sliderDim.h} x={sliderDim.x} y={sliderDim.y} px={sliderDim.x} py={sliderDim.y}
@@ -224,9 +236,9 @@ function ContinuousSliderVert(props) {
   };
 
   let style = {};
-  style.height = props.h-12*2;
+  style.height = props.h - 12 * 2;
   style.width = "auto";
-  let sliderStyle = {width: style.width, height: style.height-105}
+  let sliderStyle = { width: style.width, height: style.height - 105 }
   return (
     <div className="emoji-slider-vert emoji-slider" style={style}>
       <div className="emoji gust-emoji top" aria-label="dashing away"></div>
@@ -251,7 +263,7 @@ function ContinuousSliderHoriz(props) {
   style.width = 100;
 
   return (
-    <div className="emoji-slider emoji-slider-horiz" style={{height:"auto", width: props.w}}>
+    <div className="emoji-slider emoji-slider-horiz" style={{ height: "auto", width: props.w }}>
       <div className="cloud-emoji emoji left" aria-label="cloud"></div>
       <Slider value={value} onChange={handleChange} orientation="horizontal" style={style} color='primary' aria-labelledby="continuous-slider" step={0.1} min={0.0} max={2.0} defaultValue={1.0} />
       <div className="gust-emoji emoji" aria-label="dashing away"></div>

@@ -359,7 +359,7 @@ export default (props) => {
         props.userNewRoom(roomDoor);
       }
       isWalking = false;
-      console.log("entering room", roomDoor);
+      // console.log("entering room", roomDoor);
     }
     // else if (poolB) {
     //   isWalking = false;
@@ -373,19 +373,19 @@ export default (props) => {
     else if (!isClosed && roomDoorEntry) {
       // props.userMove(userStep.x, userStep.y);
       stepTo = { x: userStep.x, y: userStep.y };
-      console.log("enter/exit room")
+      // console.log("enter/exit room")
     }
     else if (!isClosed && roomBoundary(rooms, prevStep, userStep)) {
       isWalking = false;
-      console.log("room boundary")
+      // console.log("room boundary")
     }
     else if (!isClosed && roomDoorB) {
       isWalking = false;
-      console.log("room door boundary")
+      // console.log("room door boundary")
     }
     else if (wallBoundary(walls, prevStep, userStep)) {
       isWalking = false;
-      console.log("wall boundary")
+      // console.log("wall boundary")
     }
     else {
       // props.userMove(userStep.x, userStep.y);

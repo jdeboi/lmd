@@ -4,8 +4,8 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { getCenterModalDim } from '../../../shared/CenterModal/Helper';
-import CenterModal from '../../../shared/CenterModal/CenterModal';
+// import { getCenterModalDim } from '../../../shared/CenterModal/Helper';
+// import CenterModal from '../../../shared/CenterModal/CenterModal';
 // import BabylonWaterScene from './BabylonWater';
 // import SwimLane from './SwimLane';
 // import PoolButtons from './PoolButtons';
@@ -15,7 +15,7 @@ import BigCrater from './BigCrater';
 // import Board from './Board';
 
 
-import { mapVal, constrain } from '../../../shared/Helpers/Helpers';
+// import { mapVal, constrain } from '../../../shared/Helpers/Helpers';
 
 class MarsMobile extends React.Component {
 
