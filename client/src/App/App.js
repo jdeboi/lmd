@@ -1,19 +1,15 @@
 import React from 'react';
 import { Route, Switch, withRouter } from "react-router-dom";
 
-// import update from 'react-addons-update';
-import update from 'immutability-helper';
-
 import './App.css';
-import Header from '../components/shared/Header/Header';
-// import SideBar from '../components/shared/SideBar/SideBar';
-import Chat from '../components/shared/Chat/Chat';
-// import Dock from '../components/shared/Dock/Dock';
-
-import { sketches, getUrl } from '../components/sketches/Sketches';
 
 // cookies
 import Cookies from 'js-cookie';
+
+// shared components
+import Header from '../components/shared/Header/Header';
+import MobileFooter from '../components/shared/Header/MobileFooter/MobileFooter';
+import Chat from '../components/shared/Chat/Chat';
 
 // store
 import { connect } from 'react-redux';
@@ -22,7 +18,9 @@ import { hideMenus, setOneMenu, showSignIn, setGalleryActive } from '../store/ac
 import { setUserRoom, setUser, moveUser, setWine } from '../store/actions/user';
 import { addMessage, addMessageNotification } from '../store/actions/messages';
 
+
 // sketches
+import { sketches, getUrl } from '../components/sketches/Sketches';
 import Gallery from '../components/sketches/Gallery/Gallery';
 import MacbookAir from '../components/sketches/MacbookAir/MacbookAir';
 import JungleGyms from '../components/sketches/JungleGyms/JungleGyms';
@@ -53,22 +51,10 @@ import ScrollSketches from '../components/utilities/ScrollSketches/ScrollSketche
 
 // menu frames
 import SignIn from '../components/shared/SignIn/SignIn';
-// import Participants from '../components/shared/Participants/Participants';
 import Welcome from '../components/shared/Welcome/Welcome';
 import FAQFrame from '../components/shared/FAQ/FAQFrame';
 import Volume from '../components/shared/Volume/Volume';
 import RoomDecal from '../components/shared/RoomDecal/RoomDecal';
-
-import MobileFooter from '../components/shared/Header/MobileFooter/MobileFooter';
-// import RoomUsers from '../components/shared/RoomUsers/RoomUsers';
-
-
-
-// import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-// import indigo from '@material-ui/core/colors/indigo';
-// import pink from '@material-ui/core/colors/pink';
-// import red from '@material-ui/core/colors/red';
-// import CssBaseline from '@material-ui/core/CssBaseline';
 
 
 import socket from "../components/shared/Socket/Socket";
@@ -85,53 +71,8 @@ const DEBUG = true;
 
 
 
-
-// import dogicaFont from './assets/fonts/dogica.ttf';
-// const dogica = {
-//   fontFamily: 'dogica',
-//   fontStyle: 'normal',
-//   fontDisplay: 'swap',
-//   fontWeight: 400,
-//   src: `
-//   local('dogica'),
-//   local('dogica-Regular'),
-//   url(${dogicaFont}) format('ttf')
-//   `,
-//   unicodeRange:
-//     'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF',
-// };
-
 window.AWS = "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches";
 
-// All the following keys are optional.
-// We try our best to provide a great default value.
-// const theme = createMuiTheme({
-//   palette: {
-//     // type: 'dark',
-//     primary: { main: indigo[300] },
-//     secondary: pink,
-//     error: red,
-//     // Used by `getContrastText()` to maximize the contrast between the background and
-//     // the text.
-//     contrastThreshold: 3,
-//     // Used to shift a color's luminance by approximately
-//     // two indexes within its tonal palette.
-//     // E.g., shift from Red 500 to Red 300 or Red 700.
-//     tonalOffset: 0.2,
-
-//   },
-//   typography: {
-//     fontFamily: 'dogica, Arial',
-//     fontSize: 10,
-//   },
-//   overrides: {
-//     // MuiCssBaseline: {
-//     //   '@global': {
-//     //     '@font-face': [dogica],
-//     //   },
-//     // },
-//   },
-// });
 
 class App extends React.Component {
 
@@ -155,21 +96,18 @@ class App extends React.Component {
     };
 
     this.isClosed = true;
-    this.isMenuOn = true;
+    this.isMenuOn = false;
   }
 
 
   componentDidMount() {
-    // const id = Cookies.get('hand');
     this.socketSetup();
     const hasAvatar = Cookies.get('hasAvatar');
 
     if (hasAvatar) {
       const userName = Cookies.get('userName');
       const avatar = Cookies.get('avatar');
-      // const user= {...this.props.user};
-      // user.userName = userName;
-      // user.avatar = avatar;
+
       const room = this.getRoom();
       this.props.setUser(userName, avatar);
       this.props.setUserRoom(room);
@@ -192,7 +130,6 @@ class App extends React.Component {
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDeviceDimensions);
     window.removeEventListener("keydown", this.handleKeyPress);
-    // this.socket.disconnect();
     this.unlisten();
   }
 
@@ -214,11 +151,7 @@ class App extends React.Component {
   }
 
   pageChange = (location) => {
-
-
-
     this.props.hideMenus();
-    // this.props.setOneMenu(null);
     const nextRoom = this.getRoom(location.pathname);
     if (nextRoom != this.props.user.room) {
       this.props.loadingApp();
@@ -263,7 +196,6 @@ class App extends React.Component {
   //////////////////////////////////////////////////////////
   // USERS
   socketSetup = () => {
-
     socket.on('connect', () => {
       const user = this.props.user;
       this.setState({ sessionID: socket.id });
@@ -379,9 +311,6 @@ class App extends React.Component {
     this.props.setUserRoom(room);
   }
 
-  // userSetRoom = (location, action) => {
-
-  // }
 
   getRoom = (path = this.props.location.pathname) => {
     var rm = path.substring(1, path.length);
@@ -432,16 +361,12 @@ class App extends React.Component {
   };
 
   render() {
-    // const counter = useSelector(state => state.counterReducer);
-    // console.log(counter);
+    
     const { ui } = this.props;
-
     const appHeaderClass = "App-Header" + (ui.isMobile || ui.hasFooter ? " mobile" : "");
 
     return (
       <div className={this.getStringClasses()}>
-        {/* <MuiThemeProvider theme={theme}> */}
-          {/* <CssBaseline />*/}
           <div className={appHeaderClass}>
             <div className="BackHeader"></div>
             <Header currentPage={this.getRoomTitle()} user={this.props.user} avatarClicked={this.avatarClicked} isClosed={this.isClosed} isMenuOn={this.isMenuOn} />
@@ -478,23 +403,18 @@ class App extends React.Component {
               <Route path="/pangallery" render={() => <PanGallery users={this.state.users} roomCount={this.state.roomCount} />} />
               <Route path="/scroll" render={() => <ScrollSketches addClass={this.addClass} removeClass={this.removeClass} />} />
        
-
+               {/* catch all */}
               <Route path="*" component={NotFound} />
             </Switch>
 
           </div>
           {<FPSStats top={window.innerHeight - 255} left={10} />}
-          {/* <Exit /> */}
-          {/* <SideBar room={this.state.user.room} user={this.state.user} users={this.state.users} usersChange={this.state.usersChange} showSideBar={this.state.showSideBar} handleDrawerClose={this.handleDrawerClose.bind(this)} messages={this.state.messages} addUserMessage={this.addUserMessage} userActiveChat={this.state.userActiveChat} userSetActiveChat={this.userSetActiveChat}  />*/}
           <Chat users={this.state.users} usersChange={this.state.usersChange} />
-          {/* <Participants users={this.state.users} /> */}
           <Volume />
-          {/* <RoomUsers users={this.state.users} /> */}
           <FAQFrame />
           <SignIn hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} isFrame={true} />
           <RoomDecal hasLoadedRoom={this.state.hasLoadedRoom} users={this.state.users} onHide={() => this.setState({ hasLoadedRoom: true })} />
           <Welcome isClosed={this.isClosed} user={this.props.user} hasAvatar={this.state.hasAvatar} showWelcome={this.state.showWelcome} closeWelcome={this.closeWelcome} />
-          {/* <Dock showDock={this.state.showDock} /> */}
           <MobileFooter currentPage={this.getRoomTitle()} user={this.props.user} avatarClicked={this.avatarClicked} />
       </div>
     );
@@ -528,6 +448,5 @@ const mapDispatchToProps = () => {
     setGalleryActive
   }
 }
-//
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps())(App));
