@@ -462,18 +462,18 @@ export default (props) => {
       userTakeStep(0, 1);
     }
 
-    else if (p5.key == 'w') {
-      userTakeStep(0, -1);
-    }
-    else if (p5.key == 'd') {
-      userTakeStep(1, 0);
-    }
-    else if (p5.key == 'a') {
-      userTakeStep(-1, 0);
-    }
-    else if (p5.key == 's') {
-      userTakeStep(0, 1);
-    }
+    // else if (p5.key == 'w') {
+    //   userTakeStep(0, -1);
+    // }
+    // else if (p5.key == 'd') {
+    //   userTakeStep(1, 0);
+    // }
+    // else if (p5.key == 'a') {
+    //   userTakeStep(-1, 0);
+    // }
+    // else if (p5.key == 's') {
+    //   userTakeStep(0, 1);
+    // }
   }
 
   const mouseReleased = (p5) => {

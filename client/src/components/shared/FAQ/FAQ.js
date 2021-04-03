@@ -13,7 +13,7 @@ export default function FAQ(props) {
         <div className="faqImg"><img src={moveGif} /></div>
         <div className="instruction-txt">
           <h3>Move</h3>
-          <p>Click on tiles or press arrow/ WASD keys.</p>
+          <p>Click/tap on tiles or press arrow keys.</p>
         </div>
       </div>
 

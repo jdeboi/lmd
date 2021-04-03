@@ -38,7 +38,6 @@ class FAQFrame extends React.Component {
         <button className="standardButton primary" onClick={this.onHide}>close</button>
       </div>
     )
-    // return null;
   }
 
 }

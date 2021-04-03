@@ -3,13 +3,14 @@ import { Route, Switch, withRouter } from "react-router-dom";
 
 import './App.css';
 
-// cookies
 import Cookies from 'js-cookie';
+import socket from "../components/shared/Socket/Socket";
 
 // shared components
 import Header from '../components/shared/Header/Header';
 import MobileFooter from '../components/shared/Header/MobileFooter/MobileFooter';
 import Chat from '../components/shared/Chat/Chat';
+// import FPSStats from "react-fps-stats";
 
 // store
 import { connect } from 'react-redux';
@@ -18,6 +19,12 @@ import { hideMenus, setOneMenu, showSignIn, setGalleryActive } from '../store/ac
 import { setUserRoom, setUser, moveUser, setWine } from '../store/actions/user';
 import { addMessage, addMessageNotification } from '../store/actions/messages';
 
+// menu frames
+import SignIn from '../components/shared/SignIn/SignIn';
+import Welcome from '../components/shared/Welcome/Welcome';
+import FAQFrame from '../components/shared/FAQ/FAQFrame';
+import Volume from '../components/shared/Volume/Volume';
+import RoomDecal from '../components/shared/RoomDecal/RoomDecal';
 
 // sketches
 import { sketches, getUrl } from '../components/sketches/Sketches';
@@ -49,28 +56,11 @@ import ViewUsers from '../components/utilities/ViewUsers/ViewUsers';
 import PanGallery from '../components/utilities/PanGallery/PanGallery';
 import ScrollSketches from '../components/utilities/ScrollSketches/ScrollSketches';
 
-// menu frames
-import SignIn from '../components/shared/SignIn/SignIn';
-import Welcome from '../components/shared/Welcome/Welcome';
-import FAQFrame from '../components/shared/FAQ/FAQFrame';
-import Volume from '../components/shared/Volume/Volume';
-import RoomDecal from '../components/shared/RoomDecal/RoomDecal';
-
-
-import socket from "../components/shared/Socket/Socket";
-
-import FPSStats from "react-fps-stats";
-
-// import Exit from '../components/shared/Exit/Exit';
-
-// import { userNearWine } from './Helpers/Boundaries';
+// users
 import { djLocation, wineLocation, hostBotLocation } from '../components/sketches/Gallery/constants';
 
 
 const DEBUG = true;
-
-
-
 window.AWS = "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches";
 
 

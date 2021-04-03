@@ -198,7 +198,7 @@ class SignIn extends React.Component {
   resetApp = () => {
     // reset cookies?
     // console.log("resetting");
-    this.props.closeSignIn();
+    // this.props.closeSignIn();
     this.props.resetApp();
     // this.props.history.push("/");
     window.location.href = "/";
