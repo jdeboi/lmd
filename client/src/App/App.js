@@ -408,7 +408,7 @@ class App extends React.Component {
             </Switch>
 
           </div>
-          {<FPSStats top={window.innerHeight - 255} left={10} />}
+          {/* {<FPSStats top={window.innerHeight - 255} left={10} />} */}
           <Chat users={this.state.users} usersChange={this.state.usersChange} />
           <Volume />
           <FAQFrame />

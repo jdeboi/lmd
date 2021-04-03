@@ -105,7 +105,7 @@ function isUser(userName) {
     "everyone",
     "host",
     "room",
-    "jenna",
+    // "jenna",
     "winebot",
     "hostbot",
     "helpbot",
