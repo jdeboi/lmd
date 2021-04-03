@@ -19,8 +19,8 @@ class Flush extends React.Component {
 
     this.state = {
       handleDown: false,
-      isFlushing : true,
-      isStopping : false
+      isFlushing: true,
+      isStopping: false
     }
 
   }
@@ -39,12 +39,12 @@ class Flush extends React.Component {
     return (((a % b) + b) % b);
   }
 
- 
+
   onSceneReady = (scene) => {
     // const camera = new UniversalCamera("UniversalCamera", new Vector3(0, 1, -25), scene);
     this.scene = scene;
     this.camera = new AnaglyphUniversalCamera("af_cam", new Vector3(0, 0, -5), 0.033, this.scene);
- 
+
     this.scene.clearColor = new Color4(0, 0, 0, 0);
     this.camera.setTarget(new Vector3(0, 0, 10));
 
@@ -65,7 +65,7 @@ class Flush extends React.Component {
     var mat = new StandardMaterial("groundMaterial", this.scene);
     this.vidTex = new VideoTexture("video", window.AWS + "/vorTech/whirl2.mp4", this.scene, true);
     this.vidTex.video.volume = 0;
-    this.vidTex.video.play(); // is this needed?
+    // this.vidTex.video.play(); // is this needed?
     mat.diffuseTexture = this.vidTex;
 
     var plane = Mesh.CreateGround("plane", 512, 512, 32, this.scene, false);
@@ -85,9 +85,19 @@ class Flush extends React.Component {
       // else emoji.hide();
     }
     if (this.props.music.volume != this.lastVolume) {
-      this.vidTex.video.volume = this.props.music.volume*.2;
+      this.vidTex.video.volume = this.props.music.volume * .2;
       this.lastVolume = this.props.music.volume;
     }
+
+    // for mobile??
+    if(this.vidTex.video && !this.isVideoPlaying()) {
+      this.vidTex.video.play();
+    }
+  }
+
+  isVideoPlaying = () => {
+    let vid = this.vidTex.video;
+    return !!(vid.currentTime > 0 && !vid.paused && !vid.ended && vid.readyState > 2);
   }
 
   flushToilet = () => {
@@ -95,7 +105,7 @@ class Flush extends React.Component {
     const isFlushing = true;
     const handleDown = true;
     const isStopping = false;
-    this.setState({isFlushing, handleDown, isStopping})
+    this.setState({ isFlushing, handleDown, isStopping })
     for (const emoji of this.emojis) {
       // if (isFlushing)
       emoji.startFlush();
@@ -108,13 +118,13 @@ class Flush extends React.Component {
   stopFlush = () => {
     const isFlushing = false;
     const isStopping = true;
-    this.setState({isFlushing, isStopping})
+    this.setState({ isFlushing, isStopping })
     // this.setState({isFlushing: false});
   }
 
   handleUp = () => {
     const handleDown = false;
-    this.setState({handleDown})
+    this.setState({ handleDown })
   }
 
   render() {
