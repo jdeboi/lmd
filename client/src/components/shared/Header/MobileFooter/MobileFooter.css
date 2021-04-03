@@ -65,6 +65,22 @@ input.standardInputWhite {
     align-items: stretch; }
     .MobileFooter.landscape .top {
       margin-top: 60px; }
+    .MobileFooter.landscape .notification .badge {
+      left: 28px; }
+  .MobileFooter .notification {
+    position: relative; }
+    .MobileFooter .notification .badge {
+      position: absolute;
+      font-size: 10px;
+      top: -40px;
+      left: 42px;
+      height: 20px;
+      width: 20px;
+      text-align: center;
+      line-height: 20px;
+      border-radius: 50%;
+      background: red;
+      color: white; }
   .MobileFooter button {
     color: white;
     flex: 1;

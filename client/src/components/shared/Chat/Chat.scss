@@ -54,25 +54,29 @@ $appLightBlue: #03cefc;
 
 
         .message-from {
-          color: white;
+          // color: white;
+          color: #ddd;
         }
 
         .message-to {
-          color: #dddddd;
+          color: #ddd;
+          // color: white;
+          // color: #dddddd;
         }
 
         .message-to-red {
-          color: $appLightBlue;
+          // color: $appAlertColor;
+          color: #ddd;
         }
 
         .message-deets {
           // opacity: .6;
-          padding-bottom: 4px;
-          font-size: 8px;
+          padding-bottom: 7px;
+          font-size: 10px;
         }
 
         .message-txt {
-          font-size: 10px;
+          font-size: 12px;
           line-height: 1.8em;
         }
 

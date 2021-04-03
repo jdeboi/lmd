@@ -51,16 +51,16 @@ input.standardInputWhite {
       flex: 1;
       overflow: auto; }
       .Chat .Chat-messages .Chat-messages-box .Chat-messages-inner-box .message-from {
-        color: white; }
+        color: #ddd; }
       .Chat .Chat-messages .Chat-messages-box .Chat-messages-inner-box .message-to {
-        color: #dddddd; }
+        color: #ddd; }
       .Chat .Chat-messages .Chat-messages-box .Chat-messages-inner-box .message-to-red {
-        color: #03cefc; }
+        color: #ddd; }
       .Chat .Chat-messages .Chat-messages-box .Chat-messages-inner-box .message-deets {
-        padding-bottom: 4px;
-        font-size: 8px; }
+        padding-bottom: 7px;
+        font-size: 10px; }
       .Chat .Chat-messages .Chat-messages-box .Chat-messages-inner-box .message-txt {
-        font-size: 10px;
+        font-size: 12px;
         line-height: 1.8em; }
       .Chat .Chat-messages .Chat-messages-box .Chat-messages-inner-box .bubbleContainer {
         display: flex;

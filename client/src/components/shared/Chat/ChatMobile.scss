@@ -46,19 +46,20 @@ $appLightBlue: #43909e;
 
                 .message-to {
                     color: gray;
+                    // color: #ddd;
                 }
 
                 .message-to-red {
-                    color: $appLightBlue;
+                    // color: $appAlertColor;
                 }
 
                 .message-deets {
-                    padding-bottom: 4px;
-                    font-size: 8px;
+                    padding-bottom: 7px;
+                    font-size: 10px;
                 }
 
                 .message-txt {
-                    font-size: 10px;
+                    font-size: 12px;
                     line-height: 1.8em;
                 }
 
@@ -110,7 +111,8 @@ $appLightBlue: #43909e;
                             }
             
                             .message-to-red {
-                                color: red;
+                                // color: $appAlertColor;
+                                color: #ddd;
                             }
             
                         }
@@ -125,6 +127,7 @@ $appLightBlue: #43909e;
 
                     .message-deets {
                         text-align: left;
+                        
                     }
                 }
             }

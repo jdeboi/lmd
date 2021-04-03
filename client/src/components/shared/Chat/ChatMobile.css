@@ -61,13 +61,11 @@ input.standardInputWhite {
         color: black; }
       .ChatMobile .Chat-messages .Chat-messages-box .Chat-messages-inner-box .message-to {
         color: gray; }
-      .ChatMobile .Chat-messages .Chat-messages-box .Chat-messages-inner-box .message-to-red {
-        color: #43909e; }
       .ChatMobile .Chat-messages .Chat-messages-box .Chat-messages-inner-box .message-deets {
-        padding-bottom: 4px;
-        font-size: 8px; }
+        padding-bottom: 7px;
+        font-size: 10px; }
       .ChatMobile .Chat-messages .Chat-messages-box .Chat-messages-inner-box .message-txt {
-        font-size: 10px;
+        font-size: 12px;
         line-height: 1.8em; }
       .ChatMobile .Chat-messages .Chat-messages-box .Chat-messages-inner-box .bubbleContainer {
         display: flex;
@@ -98,7 +96,7 @@ input.standardInputWhite {
             .ChatMobile .Chat-messages .Chat-messages-box .Chat-messages-inner-box .bubbleContainer.chat-from-me .bubble .message-deets .message-to {
               color: #ddd; }
             .ChatMobile .Chat-messages .Chat-messages-box .Chat-messages-inner-box .bubbleContainer.chat-from-me .bubble .message-deets .message-to-red {
-              color: red; }
+              color: #ddd; }
       .ChatMobile .Chat-messages .Chat-messages-box .Chat-messages-inner-box .bubbleContainer.chat-from-other {
         justify-content: flex-start; }
         .ChatMobile .Chat-messages .Chat-messages-box .Chat-messages-inner-box .bubbleContainer.chat-from-other .message-deets {
