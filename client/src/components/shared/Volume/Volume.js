@@ -33,7 +33,7 @@ class Volume extends React.Component {
         return (
             <Frame title="volume"
                 bounded={true}
-                isHidden={this.props.volumeIsHidden}
+                isHidden={this.props.menu.isVolumeHidden}
                 onHide={this.props.hideVolume}
                 className="VolumeBar"
                 windowStyle={{ background: "rgba(0, 0, 0, .9)" }}
@@ -81,7 +81,7 @@ const mapStateToProps = (state) => {
     return {
         ui: state.ui,
         music: state.music,
-        volumeIsHidden: state.volumeIsHidden
+        menu: state.menu
     }
 }
 

@@ -26,7 +26,7 @@ import { toggleMap, toggleFaq, toggleChat, toggleUserIcons, toggleVolumeMenu } f
 import { resetMessgeNotification } from '../../../store/actions/messages';
 import { toggleVolume } from '../../../store/actions/music';
 
-import {sketches} from '../../sketches/Sketches';
+import { sketches } from '../../sketches/Sketches';
 
 /*
 React.PureComponent’s shouldComponentUpdate() only shallowly compares
@@ -78,11 +78,11 @@ class Header extends React.Component {
 
 
     if (this.isSimpleHeader()) {
-      if (this.props.ui.orientation === "landscape") 
+      if (this.props.ui.orientation === "landscape")
         return this.getMobileHeaderLandscape();
       return this.getMobileHeaderPortrait();
     }
-     
+
     return this.getDesktopHeader();
   }
 
@@ -107,7 +107,7 @@ class Header extends React.Component {
       { title: "about", link: "about", shortcut: "" },
       { title: "statement", link: "statement", shortcut: "" },
       // { title: "thesis", link: "thesis", shortcut: "" },
-      
+
       // {title: "cookies", link:"/words", shortcut: "🍪"},
       // { title: "credits", link: "credits", shortcut: "" }
     ];
@@ -150,21 +150,22 @@ class Header extends React.Component {
     //   // {title: "i got the feels", link:"/i-got-the-feels", shortcut: "&#x2318;8"},
     //   // {title: "losing my dimension", link:"/losing-my-dimension", shortcut: "&#x2318;9"},
     // ];
-    
-    const {currentPage, isClosed,isMenuOn} = this.props;
+
+    const { currentPage, isClosed, isMenuOn } = this.props;
     if ((isMenuOn) || currentPage === "gallerytest")
       return <FinderSubmenu ui={this.props.ui} currentPage={this.props.currentPage} title="losing my dimension" icon="" specialClass="" listItems={sketches} />
     else if (this.isXXSmall() && currentPage !== "gallery")
       return null;
     else
       return <li><span id="pageTitle">losing my dimension</span></li>
-    
+
   }
 
   getDesktopHeader = () => {
 
-    const headerClass = "Header menuTheme";
-
+    let headerClass = "Header menuTheme";
+    if (this.props.currentPage === "click me baby")
+      headerClass += " clickMe";
     return (
       <header className={headerClass}>
         <ul className="left">
@@ -201,7 +202,7 @@ class Header extends React.Component {
           {this.getArrowIconLi()}
           {this.getHamburgerSub()}
           {this.getMainMenuSub()}
-          
+
           {/* {this.getMainTitleLi()} */}
         </ul>
       </header>
@@ -257,7 +258,7 @@ class Header extends React.Component {
 
 
   getVolumeLi = () => {
-    const classVol = "expandable icon" + (this.props.volumeIsHidden ? " closed" : " opened");
+    const classVol = "expandable icon" + (this.props.menu.isVolumeHidden ? " closed" : " opened");
     return (
       <li className={classVol} onClick={this.props.toggleVolumeMenu}>
         {/* <Volume isMuted={this.props.music.isMuted} /> */}
@@ -284,7 +285,7 @@ class Header extends React.Component {
   }
 
   getFaqLi = () => {
-    const classFaq = "expandable icon" + (this.props.faqIsHidden ? " closed" : " opened");
+    const classFaq = "expandable icon" + (this.props.menu.isFaqHidden ? " closed" : " opened");
 
     return (
       <li className={classFaq} onClick={this.props.toggleFaq}>
@@ -297,7 +298,7 @@ class Header extends React.Component {
     var classMap = "icon";
     const isHome = this.props.user.room === "gallery";
     if (isHome) {
-      classMap += (this.props.mapIsHidden ? " closed" : " opened");
+      classMap += (this.props.menu.isMapHidden ? " closed" : " opened");
       classMap += " expandable";
     }
     else classMap += " closed disabled";
@@ -312,7 +313,7 @@ class Header extends React.Component {
   }
 
   getChatLi = () => {
-    var classChat = "expandable icon" + (this.props.chatIsHidden ? " closed" : " opened");
+    var classChat = "expandable icon" + (this.props.menu.isChatHidden ? " closed" : " opened");
     if (this.props.chatNotifications)
       classChat += " notify";
     return (
@@ -348,11 +349,7 @@ class Header extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    chatIsHidden: state.chatIsHidden,
-    faqIsHidden: state.faqIsHidden,
-    mapIsHidden: state.mapIsHidden,
-    volumeIsHidden: state.volumeIsHidden,
-    userIconsIsHidden: state.userIconsIsHidden,
+    menu: state.menu,
     chatNotifications: state.chatNotifications,
     music: state.music,
     ui: state.ui

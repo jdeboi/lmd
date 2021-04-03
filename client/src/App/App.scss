@@ -239,6 +239,14 @@
 
 }
 
+.App.clickMe {
+  .inner-outline {
+    border-left: 2px solid $limeColor;
+    border-right: 2px solid $limeColor;
+    border-bottom: 2px solid $limeColor;
+  }
+}
+
 @font-face {
   font-family: consoleFont;
   src: url(./assets/fonts/dogica.ttf);

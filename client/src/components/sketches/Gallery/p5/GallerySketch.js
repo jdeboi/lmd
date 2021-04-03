@@ -242,7 +242,7 @@ export default (props) => {
     // building
     drawWalls(walls, p5);
     drawRooms(rooms, roomTextures, eyeIcon, roomCount, p5);
-    if (!isClosed) 
+    if (!isClosed)
       displayRoomLabelDivs(dogica, roomCount, userEase.x, userEase.y, divs);
 
     //////////////
@@ -317,8 +317,8 @@ export default (props) => {
 
     p5.pop();
 
-    if (p5.windowWidth !== p5.width || p5.windowHeight !== p5.height)
-      windowResized(p5);
+    if (p5.windowWidth !== window.innerWidth || p5.windowHeight !== window.innerHeight)
+      manualResize(p5);
   }
 
   ////////////////////////////////////////////////////////////////////////
@@ -461,11 +461,30 @@ export default (props) => {
     else if (p5.keyCode === p5.DOWN_ARROW) {
       userTakeStep(0, 1);
     }
+
+    else if (p5.key == 'w') {
+      userTakeStep(0, -1);
+    }
+    else if (p5.key == 'd') {
+      userTakeStep(1, 0);
+    }
+    else if (p5.key == 'a') {
+      userTakeStep(-1, 0);
+    }
+    else if (p5.key == 's') {
+      userTakeStep(0, 1);
+    }
   }
 
   const mouseReleased = (p5) => {
     endDivDrag(divs);
     if (treeSlider) treeSlider.endDrag();
+  }
+
+  const manualResize = (p5) => {
+    p5.windowWidth = window.innerWidth;
+    p5.windowHeight = window.innerHeight;
+    windowResized(p5);
   }
 
   const windowResized = (p5) => {

@@ -1,18 +1,65 @@
+@import "../../../styles/constants.scss";
+
 .ClickMe {
   background-color: black;
-  height:100%;
-  width:100%;
+  height: 100%;
+  width: 100%;
   top: 0px;
   left: 0px;
-  // background-image: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/face.gif");
 
   /* cursor: pointer !important; */
-  
+
   background-repeat: repeat;
+
+  .Frame {
+    .window {
+      border-color: $limeColor;
+      .content {
+        pointer-events: none;
+
+        .btn {
+          pointer-events: all;
+        }
+      }
+    }
+
+    .titlebar {
+      border-bottom: 2px solid $limeColor;
+    }
+    .circleButton {
+      background: $limeColor;
+
+      &:hover {
+        background: $limeColor;
+      }
+    }
+  }
+
+  .rose {
+    background-image: url("/assets/s3-bucket/clickMe/dying.gif");
+    background-size: cover;
+  }
+
+  .faceGif {
+    background-image: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/face.gif");
+    background-size: cover;
+    background-position: center;
+  }
+
+  .heart {
+    background: black;
+    background-image: url("/assets/s3-bucket/clickMe/heart.png");
+    // background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+
+
 
   .content {
     background-color: rgba(255, 255, 255, 0);
-    pointer-events: all;
+    pointer-events: none;
   }
 
   .window {
@@ -51,20 +98,14 @@
     button {
       margin: auto;
     }
-   
   }
 }
 
 
-// .titlebar {
-//   cursor:pointer !important;
-// }
-
 .point0 {
-  cursor: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/cursors/point0.png"), auto;
-
+  cursor: url("/assets/s3-bucket/clickMe/cursors/like.png"), auto;
   button {
-    cursor: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/cursors/point0.png"), auto;
+    cursor: url("/assets/s3-bucket/clickMe/cursors/like.png"), auto;
   }
 }
 
@@ -117,3 +158,6 @@
 }
 /* https://media.giphy.com/media/3o7btNNSCfjnn14imk/giphy.gif */
 /* peeps glitch https://media.giphy.com/media/2shBNJSPTrpWvoXfpD/source.gif */
+// .Header {
+//   border-color: lime;
+// }

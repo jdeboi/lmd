@@ -18,7 +18,7 @@ import Cookies from 'js-cookie';
 // store
 import { connect } from 'react-redux';
 import { loadingApp, resizeApp, startComposition } from '../store/actions';
-import { hideMenus, setOneMenu } from '../store/actions/menuItems';
+import { hideMenus, setOneMenu, showSignIn, setGalleryActive } from '../store/actions/menuItems';
 import { setUserRoom, setUser, moveUser, setWine } from '../store/actions/user';
 import { addMessage, addMessageNotification } from '../store/actions/messages';
 
@@ -48,6 +48,8 @@ import NotFound from '../components/pages/NotFound';
 // utilities
 import RegisterDesktop from '../components/utilities/RegisterDesktop/RegisterDesktop';
 import ViewUsers from '../components/utilities/ViewUsers/ViewUsers';
+import PanGallery from '../components/utilities/PanGallery/PanGallery';
+import ScrollSketches from '../components/utilities/ScrollSketches/ScrollSketches';
 
 // menu frames
 import SignIn from '../components/shared/SignIn/SignIn';
@@ -60,10 +62,12 @@ import RoomDecal from '../components/shared/RoomDecal/RoomDecal';
 import MobileFooter from '../components/shared/Header/MobileFooter/MobileFooter';
 // import RoomUsers from '../components/shared/RoomUsers/RoomUsers';
 
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import indigo from '@material-ui/core/colors/indigo';
-import pink from '@material-ui/core/colors/pink';
-import red from '@material-ui/core/colors/red';
+
+
+// import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+// import indigo from '@material-ui/core/colors/indigo';
+// import pink from '@material-ui/core/colors/pink';
+// import red from '@material-ui/core/colors/red';
 // import CssBaseline from '@material-ui/core/CssBaseline';
 
 
@@ -71,62 +75,63 @@ import socket from "../components/shared/Socket/Socket";
 
 import FPSStats from "react-fps-stats";
 
-import Exit from '../components/shared/Exit/Exit';
+// import Exit from '../components/shared/Exit/Exit';
 
 // import { userNearWine } from './Helpers/Boundaries';
 import { djLocation, wineLocation, hostBotLocation } from '../components/sketches/Gallery/constants';
 
 
-
-import dogicaFont from './assets/fonts/dogica.ttf';
-
 const DEBUG = true;
 
-const dogica = {
-  fontFamily: 'dogica',
-  fontStyle: 'normal',
-  fontDisplay: 'swap',
-  fontWeight: 400,
-  src: `
-  local('dogica'),
-  local('dogica-Regular'),
-  url(${dogicaFont}) format('ttf')
-  `,
-  unicodeRange:
-    'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF',
-};
+
+
+
+// import dogicaFont from './assets/fonts/dogica.ttf';
+// const dogica = {
+//   fontFamily: 'dogica',
+//   fontStyle: 'normal',
+//   fontDisplay: 'swap',
+//   fontWeight: 400,
+//   src: `
+//   local('dogica'),
+//   local('dogica-Regular'),
+//   url(${dogicaFont}) format('ttf')
+//   `,
+//   unicodeRange:
+//     'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF',
+// };
 
 window.AWS = "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches";
 
 // All the following keys are optional.
 // We try our best to provide a great default value.
-const theme = createMuiTheme({
-  palette: {
-    // type: 'dark',
-    primary: { main: indigo[300] },
-    secondary: pink,
-    error: red,
-    // Used by `getContrastText()` to maximize the contrast between the background and
-    // the text.
-    contrastThreshold: 3,
-    // Used to shift a color's luminance by approximately
-    // two indexes within its tonal palette.
-    // E.g., shift from Red 500 to Red 300 or Red 700.
-    tonalOffset: 0.2,
+// const theme = createMuiTheme({
+//   palette: {
+//     // type: 'dark',
+//     primary: { main: indigo[300] },
+//     secondary: pink,
+//     error: red,
+//     // Used by `getContrastText()` to maximize the contrast between the background and
+//     // the text.
+//     contrastThreshold: 3,
+//     // Used to shift a color's luminance by approximately
+//     // two indexes within its tonal palette.
+//     // E.g., shift from Red 500 to Red 300 or Red 700.
+//     tonalOffset: 0.2,
 
-  },
-  typography: {
-    fontFamily: 'dogica, Arial',
-    fontSize: 10,
-  },
-  overrides: {
-    // MuiCssBaseline: {
-    //   '@global': {
-    //     '@font-face': [dogica],
-    //   },
-    // },
-  },
-});
+//   },
+//   typography: {
+//     fontFamily: 'dogica, Arial',
+//     fontSize: 10,
+//   },
+//   overrides: {
+//     // MuiCssBaseline: {
+//     //   '@global': {
+//     //     '@font-face': [dogica],
+//     //   },
+//     // },
+//   },
+// });
 
 class App extends React.Component {
 
@@ -150,7 +155,7 @@ class App extends React.Component {
     };
 
     this.isClosed = true;
-    this.isMenuOn = false;
+    this.isMenuOn = true;
   }
 
 
@@ -169,6 +174,7 @@ class App extends React.Component {
       this.props.setUser(userName, avatar);
       this.props.setUserRoom(room);
       this.setState({ hasAvatar: true, showWelcome: false }); // false
+      // this.props.setGalleryActive();
     }
     else {
       this.setState({ hasAvatar: false, showWelcome: true });
@@ -361,7 +367,10 @@ class App extends React.Component {
 
   avatarClicked = () => {
     if (DEBUG) console.log("SHOW AV")
-    if (!this.state.showWelcome) this.setState({ showSignIn: true });
+    if (!this.state.showWelcome) {
+      this.setState({ showSignIn: true });
+      this.props.showSignIn();
+    }
   }
 
   userNewRoom = (room) => {
@@ -395,12 +404,10 @@ class App extends React.Component {
     return rm;
   }
 
-  closeSignIn = () => {
-    this.setState({ showSignIn: false })
-  }
 
   closeWelcome = () => {
     this.setState({ showWelcome: false, hasAvatar: true })
+    // this.props.setGalleryActive();
   }
 
   getStringClasses = () => {
@@ -433,7 +440,7 @@ class App extends React.Component {
 
     return (
       <div className={this.getStringClasses()}>
-        <MuiThemeProvider theme={theme}>
+        {/* <MuiThemeProvider theme={theme}> */}
           {/* <CssBaseline />*/}
           <div className={appHeaderClass}>
             <div className="BackHeader"></div>
@@ -457,7 +464,7 @@ class App extends React.Component {
               <Route path={getUrl("home")} render={() => (<Oogle />)} />
               <Route path={getUrl("blind")} render={() => (<Blinds />)} />
               <Route path={getUrl("yose")} component={Yosemite} />
-              <Route path={getUrl("click")} component={ClickMe} />
+              <Route path={getUrl("click")} render={() => (<ClickMe addClass={this.addClass} removeClass={this.removeClass} />)} />
 
               {/* Pages */}
               <Route path="/about" render={() => (<About ui={this.props.ui} />)} />
@@ -467,14 +474,16 @@ class App extends React.Component {
               {/* Utilities */}
               <Route path="/gallerytest" render={() => (<Gallery users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} isClosed={false} />)} />
               <Route path="/register" render={() => (<RegisterDesktop />)} />
-              <Route act path="/viewusers" render={() => <ViewUsers users={this.state.users} />} />
-
+              <Route path="/viewusers" render={() => <ViewUsers users={this.state.users} />} />
+              <Route path="/pangallery" render={() => <PanGallery users={this.state.users} roomCount={this.state.roomCount} />} />
+              <Route path="/scroll" render={() => <ScrollSketches addClass={this.addClass} removeClass={this.removeClass} />} />
+       
 
               <Route path="*" component={NotFound} />
             </Switch>
 
           </div>
-          {/* {<FPSStats top={window.innerHeight - 255} left={10} />} */}
+          {<FPSStats top={window.innerHeight - 255} left={10} />}
           {/* <Exit /> */}
           {/* <SideBar room={this.state.user.room} user={this.state.user} users={this.state.users} usersChange={this.state.usersChange} showSideBar={this.state.showSideBar} handleDrawerClose={this.handleDrawerClose.bind(this)} messages={this.state.messages} addUserMessage={this.addUserMessage} userActiveChat={this.state.userActiveChat} userSetActiveChat={this.userSetActiveChat}  />*/}
           <Chat users={this.state.users} usersChange={this.state.usersChange} />
@@ -482,12 +491,11 @@ class App extends React.Component {
           <Volume />
           {/* <RoomUsers users={this.state.users} /> */}
           <FAQFrame />
-          <SignIn hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} closeSignIn={this.closeSignIn} isFrame={true} />
+          <SignIn hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} isFrame={true} />
           <RoomDecal hasLoadedRoom={this.state.hasLoadedRoom} users={this.state.users} onHide={() => this.setState({ hasLoadedRoom: true })} />
           <Welcome isClosed={this.isClosed} user={this.props.user} hasAvatar={this.state.hasAvatar} showWelcome={this.state.showWelcome} closeWelcome={this.closeWelcome} />
           {/* <Dock showDock={this.state.showDock} /> */}
           <MobileFooter currentPage={this.getRoomTitle()} user={this.props.user} avatarClicked={this.avatarClicked} />
-        </MuiThemeProvider>
       </div>
     );
   }
@@ -515,7 +523,9 @@ const mapDispatchToProps = () => {
     loadingApp,
     hideMenus,
     setOneMenu,
-    startComposition
+    startComposition,
+    showSignIn,
+    setGalleryActive
   }
 }
 //

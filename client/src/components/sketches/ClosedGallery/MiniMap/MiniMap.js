@@ -34,7 +34,7 @@ class MiniMap extends React.Component {
     const wine1 = {...wineLocation[1]};
     wine1.room="gallery";
 
-    let isHidden = (ui.isMobile || ui.hasFooter) ? this.props.menu !== "map" : this.props.mapIsHidden;
+    let isHidden = (ui.isMobile || ui.hasFooter) ? this.props.menu.mobile !== "map" : this.props.menu.isMapHidden;
 
     const dim = (ui.isMobile || ui.hasFooter) ? 135 : 200;
     // if (otherUser.userName=="jdboi") console.log(otherUser.x, otherUser.y);
@@ -73,7 +73,6 @@ class MiniMap extends React.Component {
 
 const mapStateToProps = (state) => {
  return {
-   mapIsHidden: state.mapIsHidden,
    ui: state.ui,
    menu: state.menu
  }

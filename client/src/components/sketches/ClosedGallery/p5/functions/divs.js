@@ -353,13 +353,17 @@ const checkDiv = (userX, userY, div) => {
 }
 
 export const checkFolderDivsDouble = (userX, userY, divs) => {
-    for (const folder of divs.folders) {
-        folder.checkDoubleClicked(userX, userY);
-    }
+    if (divs.folders) {
+        for (const folder of divs.folders) {
+            folder.checkDoubleClicked(userX, userY);
+        }
+    }  
 }
 
 export const checkTrashDivsDouble = (userX, userY, divs) => {
-    for (const trash of divs.trashCans) {
-        trash.checkDoubleClicked(userX, userY);
+    if (divs.trashCans) {
+        for (const trash of divs.trashCans) {
+            trash.checkDoubleClicked(userX, userY);
+        }
     }
 }

@@ -15,7 +15,7 @@ import socket from "../Socket/Socket";
 
 import { connect } from 'react-redux';
 import { setOneMenu, hideChat, toggleChat } from '../../../store/actions/menuItems';
-import { addMessage, resetMessgeNotification} from '../../../store/actions/messages';
+import { addMessage, resetMessgeNotification } from '../../../store/actions/messages';
 import { addWine, addCocktail, addCheese } from '../../../store/actions/user';
 import { setUserActiveChat } from '../../../store/actions/userActiveChat';
 import { setRandomSong, setSong } from '../../../store/actions/music';
@@ -36,12 +36,12 @@ class Chat extends React.Component {
       cheeseBotJustAsked: false,
       cocktailBotJustAsked: false,
       hostBotJustAsked: false,
-      djJustAsked : 0
+      djJustAsked: 0
     }
     this.textInput = React.createRef();
   }
 
- 
+
 
   handleTextBoxChange = (event) => {
     const textBox = event.target.value;
@@ -143,7 +143,7 @@ class Chat extends React.Component {
     else {
       const lc = txt.toLowerCase();
       let phrase = "";
-      if (lc === "y" || lc.indexOf("yes") > -1) {  
+      if (lc === "y" || lc.indexOf("yes") > -1) {
         phrase = "Stop by the bar to pick up your glass.";
         this.props.addWine(wineLocation[1]);
       }
@@ -328,7 +328,7 @@ class Chat extends React.Component {
   }
 
   render() {
-    const {ui} = this.props;
+    const { ui } = this.props;
     // console.log(menu)
     if (ui.isMobile || ui.hasFooter) {
       return this.getMobileFrame();
@@ -344,81 +344,81 @@ class Chat extends React.Component {
 
   onHide = () => {
     this.props.hideChat();
-    // this.props.setOneMenu();
+    this.props.setOneMenu();
   }
 
   getMobileFrame = () => {
-    const {w, h} = getCenterModalDim(this.props.ui, false);
+    const { w, h } = getCenterModalDim(this.props.ui, false);
     return (
       <CenterModal
-      title="chat"
-      z={1000}
-      isHidden={this.props.menu !== "chat"}
-      onHide={this.onHide}
-      ui={this.props.ui}
-      isRelative={false}
-      classN="ChatMobile"
-      content={this.getMobileContent(w, h)}
-      buttons={this.getMobileButtons()}
-    />
+        title="chat"
+        z={1000}
+        isHidden={this.props.menu.mobile !== "chat"}
+        onHide={this.onHide}
+        ui={this.props.ui}
+        isRelative={false}
+        classN="ChatMobile"
+        content={this.getMobileContent(w, h)}
+        buttons={this.getMobileButtons()}
+      />
     );
   }
 
   getIsHidden = (props) => {
-    const {ui, menu, chatIsHidden} = props;
-    
+    const { ui, menu } = props;
+
     if (ui.isMobile || ui.hasFooter) {
-      return menu !== "chat";
+      return menu.mobile !== "chat";
     }
-    return chatIsHidden;
+    return menu.isChatHidden;
   }
 
   getMobileContent = (w, h) => {
-    const inputW = w - 60-40-20;
+    const inputW = w - 60 - 40 - 20;
     return (
-        <div className="Chat-messages" style={{ display: "flex", flexDirection: "column", height: h }}>
-          <div className="Chat-form">
-            <div className="to-form">
-              <div className="to-div">To: </div>
-              <ComboBox {...this.props} setRecipient={this.setRecipient} w={w-40-40} /> 
-            </div>
-            <div className="Chat-send">
-              <div className="Chat-send-item margR">
-                <input
-                  label=""
-                  id="margin-dense"
-                  className={"standardInput form-item"}
-                  placeholder="enter message"
-                  value={this.state.textBox}
-                  onChange={this.handleTextBoxChange}
-                  onFocus={this.props.resetMessgeNotification}
-                  onKeyDown={this.handleKeyDown}
-                  style={{width: inputW}}
-                />
-              </div>
-              <div className="Chat-send-item"><button className="sendButton" disabled={this.state.buttonDisabled} onClick={this.onSubmit}><SendIcon disabled={this.state.buttonDisabled} /></button></div>
-            </div>
-            
+      <div className="Chat-messages" style={{ display: "flex", flexDirection: "column", height: h }}>
+        <div className="Chat-form">
+          <div className="to-form">
+            <div className="to-div">To: </div>
+            <ComboBox {...this.props} setRecipient={this.setRecipient} w={w - 40 - 40} />
           </div>
-          {/* <button className="sendButton standardButton primary">send</button> */}
-          <Messages isMobile={true} messages={this.props.messages} addUserMessage={this.props.addMessage} />
-        
+          <div className="Chat-send">
+            <div className="Chat-send-item margR">
+              <input
+                label=""
+                id="margin-dense"
+                className={"standardInput form-item"}
+                placeholder="enter message"
+                value={this.state.textBox}
+                onChange={this.handleTextBoxChange}
+                onFocus={this.props.resetMessgeNotification}
+                onKeyDown={this.handleKeyDown}
+                style={{ width: inputW }}
+              />
+            </div>
+            <div className="Chat-send-item"><button className="sendButton" disabled={this.state.buttonDisabled} onClick={this.onSubmit}><SendIcon disabled={this.state.buttonDisabled} /></button></div>
+          </div>
+
         </div>
+        {/* <button className="sendButton standardButton primary">send</button> */}
+        <Messages isMobile={true} messages={this.props.messages} addUserMessage={this.props.addMessage} />
+
+      </div>
     );
   }
 
   getMobileButtons = () => {
     return (
-      null
-      // <div className="center-buttons chat-buttons">
-      //   {/* <button className="standardButton secondary" onClick={this.onHide}>close</button> */}
-      //   <button className="standardButton primary" disabled={this.state.buttonDisabled} onClick={this.onSubmit}>send</button>
-      // </div>
+      // null
+      <div className="center-buttons chat-buttons">
+        <button className="standardButton primary" onClick={this.onHide}>close</button>
+        {/* <button className="standardButton primary" disabled={this.state.buttonDisabled} onClick={this.onSubmit}>send</button> */}
+      </div>
     )
   }
 
   getFrame = () => {
-    const {ui} = this.props;
+    const { ui, menu } = this.props;
     var users = [];
     if (this.props.users) {
       users = this.props.users;
@@ -434,7 +434,7 @@ class Chat extends React.Component {
     const y = ui.height - h - ui.edgeSpacing - ui.toolbarH;
 
     return (
-      <Frame title="chat" bounded={true} isHidden={this.props.chatIsHidden} onHide={this.props.hideChat} windowStyle={{ background: "rgba(0, 0, 0, .9)" }} content={
+      <Frame title="chat" bounded={true} isHidden={menu.isChatHidden} onHide={this.props.hideChat} windowStyle={{ background: "rgba(0, 0, 0, .9)" }} content={
 
         <div className="Chat">
 
@@ -456,7 +456,7 @@ class Chat extends React.Component {
                     onChange={this.handleTextBoxChange}
                     onFocus={this.props.resetMessgeNotification}
                     onKeyDown={this.handleKeyDown}
-                    ref={(input) => { this.textInput = input; }} 
+                    ref={(input) => { this.textInput = input; }}
                   />
                 </div>
                 {/* <button className="standardButton form-item blueOutline" disabled={this.state.buttonDisabled} onClick={this.onSubmit}><SendIcon disabled={this.state.buttonDisabled} /></button>*/}
@@ -466,27 +466,26 @@ class Chat extends React.Component {
           </div>
         </div>
       }
-        width={frW} height={h} x={ui.width - frW - ui.edgeSpacing } y={y} z={1000}
+        width={frW} height={h} x={ui.width - frW - ui.edgeSpacing} y={y} z={1000}
       />
     );
   }
 
-//   componentDidUpdate(prevProps, prevState) {
-//     if (this.getIsHidden(prevProps) && !this.getIsHidden(this.props)) {
-//       // console.log("FOCUS", this.textInput)
-//       // if (this.textInput) 
-//         // this.textInput.focus();
-//       // else
-//       //   console.log("nope")
-//     }
-//   }
+  //   componentDidUpdate(prevProps, prevState) {
+  //     if (this.getIsHidden(prevProps) && !this.getIsHidden(this.props)) {
+  //       // console.log("FOCUS", this.textInput)
+  //       // if (this.textInput) 
+  //         // this.textInput.focus();
+  //       // else
+  //       //   console.log("nope")
+  //     }
+  //   }
 
 }
 
 
 const mapStateToProps = (state) => {
   return {
-    chatIsHidden: state.chatIsHidden,
     user: state.user,
     room: state.user.room,
     messages: state.messages,

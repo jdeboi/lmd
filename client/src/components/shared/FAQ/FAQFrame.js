@@ -10,12 +10,13 @@ class FAQFrame extends React.Component {
 
   onHide = () => {
     this.props.hideFaq();
-    // this.props.setOneMenu(null);
+    this.props.setOneMenu(null);
+    console.log("testing")
   }
 
   render() {
-    const {ui} = this.props;
-    let isHidden = (ui.isMobile || ui.hasFooter) ? this.props.menu !== "faq" : this.props.faqIsHidden;
+    const {ui, menu} = this.props;
+    let isHidden = (ui.isMobile || ui.hasFooter) ? menu.mobile !== "faq" : menu.isFaqHidden;
     return (
       <CenterModal
         title="FAQ"
@@ -32,19 +33,18 @@ class FAQFrame extends React.Component {
   }
 
   getButtons = () => {
-    // return (
-    //   <div className="center-buttons">
-    //     <button className="standardButton primary" onClick={this.onHide}>close</button>
-    //   </div>
-    // )
-    return null;
+    return (
+      <div className="center-buttons">
+        <button className="standardButton primary" onClick={this.onHide}>close</button>
+      </div>
+    )
+    // return null;
   }
 
 }
 
 const mapStateToProps = (state) => {
   return {
-    faqIsHidden: state.faqIsHidden,
     ui: state.ui,
     menu: state.menu
   }

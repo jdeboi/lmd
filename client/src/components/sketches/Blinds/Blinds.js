@@ -10,12 +10,12 @@ import { doneLoadingApp } from '../../../store/actions';
 import * as THREE from "three";
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 // import { AnaglyphEffect } from 'three/examples/jsm/effects/AnaglyphEffect';
-import { MapControls, OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { Line2 } from 'three/examples/jsm/lines/Line2.js';
-import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js';
-import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js';
-import { Wireframe } from 'three/examples/jsm/lines/Wireframe.js';
-import { WireframeGeometry2 } from 'three/examples/jsm/lines/WireframeGeometry2.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+// import { Line2 } from 'three/examples/jsm/lines/Line2.js';
+// import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js';
+// import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js';
+// import { Wireframe } from 'three/examples/jsm/lines/Wireframe.js';
+// import { WireframeGeometry2 } from 'three/examples/jsm/lines/WireframeGeometry2.js';
 
 var AnaglyphEffect = require('../../shared/3D/AnaglyphEffect')(THREE);
 

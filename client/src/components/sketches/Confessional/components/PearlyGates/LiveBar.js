@@ -45,6 +45,7 @@ class LiveBar extends React.Component {
     let sec = timeInc % 60;
     let min = Math.floor(timeInc / 60);
     let hr = Math.floor(min / 60);
+    hr %= 12;
     // if (min < 10) min = "0" + min;
     if (hr < 10) hr = "0" + hr;
     if (sec < 10) sec = "0" + sec;

@@ -111,7 +111,7 @@ export const addFolderDivs = (divs, instaImg, txtFile, p5) => {
     let labels = [
         { x: 560, y: 0, label: "statement", link: "https://www.losingmydimension.com/statement" },
         { x: 620, y: 130, label: "thesis", link: "https://www.losingmydimension.com/statement" },
-        { x: 510, y: 230, label: "instagram", link: "https://www.instagram.com/jdeboi/" }
+        { x: 510, y: 230, label: "@jdeboi", link: "https://www.instagram.com/jdeboi/" }
     ];
 
     for (let i = 0; i < 3; i++) {
@@ -292,10 +292,10 @@ export function endDivDrag(divs) {
     }
 }
 
-export function updateDivs(userEase, users, doors, divs) {
+export function updateDivs(userEase, users, doors, divs, isPanGallery=false) {
 
     for (const door of divs.doors) {
-        door.openDoor(userEase, users);
+        door.openDoor(userEase, users, isPanGallery);
     }
 
     let keys = Object.keys(divs);

@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from "react-router-dom";
 import { getEmojis } from '../Welcome/components/Helpers';
 import CenterModal from '../CenterModal/CenterModal';
+import { setOneMenu, hideSignIn} from '../../../store/actions/menuItems';
 
 import './SignIn.css';
 
@@ -21,7 +22,8 @@ class SignIn extends React.Component {
 
     this.state = {
       localAvatar: props.user.avatar,
-      localUserName: props.user.userName
+      localUserName: props.user.userName,
+      shouldClose: false
       // user: { avatar: props.user.avatar, userName: props.user.userName },
     }
   }
@@ -38,7 +40,7 @@ class SignIn extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     const update = (
       (nextProps.showSignIn !== this.props.showSignIn)
-      || (nextProps.menu !== this.props.menu)
+      || (nextProps.menu.mobile !== this.props.menu.mobile)
       || (nextProps.ui.orientation !== this.props.ui.orientation)
       || (nextState.localUserName !== this.state.localUserName)
       || (nextState.localAvatar !== this.state.localAvatar)
@@ -75,13 +77,15 @@ class SignIn extends React.Component {
 
 
   onHide = () => {
-    this.handleSubmit();
-    if (this.props.hasAvatar && this.state.localUserName != "") this.props.closeSignIn();
+    this.setState({ shouldClose: true }, this.handleSubmit);
+    // if (this.props.hasAvatar && this.state.localUserName !== "")
+    //   this.props.closeSignIn();
   }
 
 
   userRegister = ({ isUser, user }) => {
     if (isUser) {
+      this.setState({ shouldClose: false });
       alert("username already exists. Please enter a new username.");
     }
     else {
@@ -93,10 +97,18 @@ class SignIn extends React.Component {
     this.props.setUser(userName, avatar);
 
     // set the local state to this registered state
-    this.setState({ localAvatar: avatar, localUserName: userName });
-    if (this.props.closeSignIn) this.props.closeSignIn(); // frame
-    else if (this.props.nextStep) this.props.nextStep(); // welcome page
+    this.setState({
+      localAvatar: avatar,
+      localUserName: userName
+    });
 
+    if (this.state.shouldClose) {
+      this.props.hideSignIn(); // frame
+    }
+    else if (this.props.nextStep)
+      this.props.nextStep(); // welcome page
+
+    this.setState({ shouldClose: false });
   }
 
   userRegisterCheck = (userName, avatar) => {
@@ -104,35 +116,48 @@ class SignIn extends React.Component {
     socket.emit("registerUser", userCheck, this.userRegister);
   }
 
+  handleUserUpdate = () => {
+    this.setState({ shouldClose: true }, this.handleSubmit);
+  }
+
   handleSubmit = () => {
     const avatar = this.state.localAvatar;
     const userName = this.state.localUserName;
     if (avatar === "") {
+      this.setState({ shouldClose: false });
       alert("Please select an emoji avatar");
     }
     else if (userName === "") {
+      this.setState({ shouldClose: false });
       alert("Please set a user name");
     }
+    else if (userName.length < 3) {
+      this.setState({ shouldClose: false });
+      alert("Usernames must be at least 3 letters");
+    }
+    // if we haven't changed names
     else if (userName === this.props.user.userName) {
       this.submitSuccess(userName, avatar)
     }
+    // if we have, check username
     else {
       this.userRegisterCheck(userName, avatar);
-
     }
   }
 
   render() {
-    const { w, h } = this.props;
+    const { w, h, isFrame } = this.props;
     let s;
-    if (this.props.isFrame) s = this.getFrame(w, h);
-    else s = this.getForm(w, h);
+    if (isFrame)
+      s = this.getFrame(w, h);
+    else
+      s = this.getForm(w, h);
     return (s);
   }
 
   getFrame = () => {
-    const {ui, menu, showSignIn} = this.props;
-    const isHidden = (ui.isMobile || ui.hasFooter) ? menu !== "user" : !showSignIn;
+    const { ui, menu } = this.props;
+    const isHidden = (ui.isMobile || ui.hasFooter) ? menu.mobile !== "signIn" : menu.isSignInHidden;
     return (
       <CenterModal
         title="avatar"
@@ -150,14 +175,14 @@ class SignIn extends React.Component {
 
   getForm = () => {
     let { localAvatar, localUserName } = this.state;
-    const {ui} = this.props;
+    const { ui } = this.props;
     const emojis = getEmojis();
-    let inputW = ui.width < 350? 190 : 225;
+    let inputW = ui.width < 350 ? 190 : 225;
     return (
       <React.Fragment>
         <div className="userBar flexItem flexPad flexRow">
           <div className="avatar">{localAvatar}</div>
-          <input style={{width: inputW}} onChange={this.setUserName} value={localUserName} placeholder="username" inputprops={{ 'aria-label': 'user name field' }} />
+          <input style={{ width: inputW }} onChange={this.setUserName} value={localUserName} placeholder="username" inputprops={{ 'aria-label': 'user name field' }} />
         </div>
         <div className="emoji-list flexItem flexPad flex1">
           {
@@ -185,7 +210,7 @@ class SignIn extends React.Component {
       buttons =
         <div className="center-buttons flexItem">
           <button className="standardButton secondary" onClick={this.resetApp}>logout</button>
-          <button className="standardButton primary" onClick={this.handleSubmit}>update</button>
+          <button className="standardButton primary" onClick={this.handleUserUpdate}>update</button>
 
         </div>
     }
@@ -207,7 +232,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = () => {
   return {
     resetApp,
-    setUser
+    setUser,
+    hideSignIn,
+    setOneMenu
   }
 }
 

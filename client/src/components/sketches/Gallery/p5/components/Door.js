@@ -64,20 +64,26 @@ export default class Door extends Draggable {
     // }
   }
 
-  openDoor(user, users) {
-    this.isOpen = this.checkOpen(user, users);
-    let speed = 10;
+  openDoor(user, users, isPanGallery) {
     let maxOpen = 124*this.scaler;
-    if (this.isOpen) {
-      this.openAmt += speed;
-      if (this.openAmt > maxOpen)
-        this.openAmt = maxOpen;
+    if (isPanGallery) {
+      this.openAmt = maxOpen;
     }
     else {
-      this.openAmt -= speed;
-      if (this.openAmt < 0)
-        this.openAmt = 0;
+      this.isOpen = this.checkOpen(user, users);
+      let speed = 10;
+      if (this.isOpen) {
+        this.openAmt += speed;
+        if (this.openAmt > maxOpen)
+          this.openAmt = maxOpen;
+      }
+      else {
+        this.openAmt -= speed;
+        if (this.openAmt < 0)
+          this.openAmt = 0;
+      }
     }
+    
   }
 
   display(userX, userY, isClosed, closedSign) {

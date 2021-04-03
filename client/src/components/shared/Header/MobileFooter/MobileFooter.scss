@@ -1,9 +1,21 @@
+@import '../../../../styles/constants.scss';
+
+.clickMe {
+    .Header {
+        border: 2px solid $limeColor;
+    }
+    .MobileFooter {
+        border: 2px solid $limeColor;
+    }
+}
+
 .MobileFooter {
     position: fixed;
     background-color: black;
     color: white;
     z-index: 2000;
-
+    box-sizing: border-box;
+    
     bottom: 0px;
     height: 60px;
     left: 0;
@@ -26,7 +38,7 @@
         align-items: stretch;
 
         .top {
-            margin-top: 30px;
+            margin-top: 60px;
         }
     }
 

@@ -1,0 +1,15 @@
+.Emoji-Monitor .pulse-emojis {
+  display: flex;
+  flex-direction: row;
+  padding: 5px; }
+
+.Emoji-Monitor .pulse-emojis.vert {
+  display: flex;
+  flex-direction: column;
+  padding-left: 24px; }
+
+.Emoji-Monitor .full {
+  opacity: 1; }
+
+.Emoji-Monitor .light {
+  opacity: .2; }

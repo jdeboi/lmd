@@ -157,6 +157,11 @@ input.standardInputWhite {
     -ms-transform: rotate(-90deg);
     -o-transform: rotate(-90deg); }
 
+.App.clickMe .inner-outline {
+  border-left: 2px solid #b4fa00;
+  border-right: 2px solid #b4fa00;
+  border-bottom: 2px solid #b4fa00; }
+
 @font-face {
   font-family: consoleFont;
   src: url(./assets/fonts/dogica.ttf); }

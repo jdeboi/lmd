@@ -518,6 +518,24 @@
   }
 }
 
+.Header.menuTheme.clickMe {
+  border-color: $limeColor;
+  // color: $limeColor;
+
+  .submenu ul {
+    // color: $limeColor;
+    border-color: $limeColor;
+  }
+
+  ul li a {
+    // color: $limeColor;
+  }
+
+  .selected {
+    // color: $limeColor;
+  }
+}
+
 .BackHeader {
   position: absolute;
   top: 0;

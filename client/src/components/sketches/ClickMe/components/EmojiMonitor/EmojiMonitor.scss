@@ -1,0 +1,25 @@
+
+.Emoji-Monitor {
+    // display: flex;
+    // flex-direction: row;
+
+    .pulse-emojis {
+        display: flex;
+        flex-direction: row;
+        // font-size: 28px;
+        padding: 5px;
+    }
+    .pulse-emojis.vert {
+        display: flex;
+        flex-direction: column;
+        padding-left: 24px;
+    }
+
+    .full {
+        opacity: 1;
+    }
+
+    .light {
+        opacity: .2;
+    }
+}

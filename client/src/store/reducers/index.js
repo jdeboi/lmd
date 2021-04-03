@@ -5,7 +5,9 @@ store is created from reducers; it's what holds state
 
 import { combineReducers } from 'redux';
 import { messagesReducer, messageNotificationReducer } from './messages';
-import { mapReducer, faqReducer, chatReducer, userIconsReducer, menuReducer, volumeReducer } from './menuItems';
+// import { mapReducer, faqReducer, chatReducer, loginReducer, userIconsReducer, menuReducer, volumeReducer } from './menuItems';
+import { menuReducer } from './menuItems';
+
 import { userReducer, userActiveChatReducer, userHoverChatReducer, userOutsideReducer } from './user';
 import { musicReducer } from './music';
 import { windowReducer} from './window';
@@ -17,11 +19,6 @@ const allReducers = combineReducers({
   user: userReducer,
   messages: messagesReducer,
   menu: menuReducer,
-  mapIsHidden: mapReducer,
-  faqIsHidden: faqReducer,
-  chatIsHidden: chatReducer,
-  volumeIsHidden: volumeReducer,
-  userIconsIsHidden: userIconsReducer,
   userActiveChat: userActiveChatReducer,
   userHoverChat: userHoverChatReducer,
   chatNotifications: messageNotificationReducer,

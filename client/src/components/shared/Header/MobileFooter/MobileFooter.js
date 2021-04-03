@@ -10,7 +10,7 @@ import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
 // store
 import { connect } from 'react-redux';
-import { showMap, showFaq, showChat, setOneMenu, toggleMap, toggleFaq, toggleChat, toggleUserIcons } from '../../../../store/actions/menuItems';
+import { showMap, showFaq, showChat, showSignIn, setOneMenu } from '../../../../store/actions/menuItems';
 import { resetMessgeNotification } from '../../../../store/actions/messages';
 
 
@@ -32,7 +32,7 @@ class MobileFooter extends React.Component {
                     {/* this.getGalleryButton()} */}
                     {this.getChatButton()}
                     {this.getFAQButton()}
-                    {this.getUserButton()}
+                    {this.getSignInButton()}
                 </div>
             )
         }
@@ -45,19 +45,19 @@ class MobileFooter extends React.Component {
         }
     }
 
-    getUserButton = () => {
+    getSignInButton = () => {
         const { menu } = this.props;
         ////////// USER CLASS
-        const classUser = "icon" + (menu === "user" ? " opened" : " closed");
+        const classUser = "icon" + (menu.mobile === "signIn" ? " opened" : " closed");
         return (
-            <button className={classUser} onClick={() => this.props.setOneMenu("user")}><AccountCircleIcon fontSize="inherit" /></button>
+            <button className={classUser} onClick={() => this.props.setOneMenu("signIn")}><AccountCircleIcon fontSize="inherit" /></button>
         )
     }
 
     getChatButton = () => {
         const { menu, chatNotifications, user } = this.props;
         ////////// CHAT CLASS
-        var classChat = "icon" + (menu === "chat" ? " opened" : " closed");
+        var classChat = "icon" + (menu.mobile === "chat" ? " opened" : " closed");
         if (chatNotifications) classChat += " notify";
         if (user.room !== "gallery") {
             classChat += " top";
@@ -70,11 +70,11 @@ class MobileFooter extends React.Component {
     getFAQButton = () => {
         const { menu } = this.props;
         ////////// FAQ CLASS
-        const classFaq = "icon" + (menu === "faq" ? " opened" : " closed");
+        const classFaq = "icon" + (menu.mobile === "faq" ? " opened" : " closed");
         // const classUserIcons = "expandable icon" + (this.props.userIconsIsHidden ? " closed" : " opened");
 
         return (
-            <button className={classFaq} onClick={() => this.props.showFaq()}><HelpOutlineIcon fontSize="inherit" /></button>
+            <button className={classFaq} onClick={() => this.props.setOneMenu("faq")}><HelpOutlineIcon fontSize="inherit" /></button>
         )
     }
 
@@ -83,13 +83,13 @@ class MobileFooter extends React.Component {
         ////////// MAP CLASS
         var classMap = "icon";
         if (user.room === "gallery") {
-            classMap += (menu === "map" ? " opened" : " closed");
+            classMap += (menu.mobile === "map" ? " opened" : " closed");
             classMap += " top";
         }
         else classMap += " closed disabled";
 
         return (
-            <button className={classMap} onClick={() => this.props.showMap()}><MapIcon fontSize="inherit" /></button>
+            <button className={classMap} onClick={() => this.props.setOneMenu("map")}><MapIcon fontSize="inherit" /></button>
         )
     }
 
@@ -115,7 +115,7 @@ class MobileFooter extends React.Component {
     chatClicked = () => {
         this.props.resetMessgeNotification();
         // this.props.setOneMenu("chat");
-        this.props.showChat();
+        this.props.setOneMenu("chat");
     }
 
     getChatNotification = () => {
@@ -144,10 +144,6 @@ class MobileFooter extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        chatIsHidden: state.chatIsHidden,
-        faqIsHidden: state.faqIsHidden,
-        mapIsHidden: state.mapIsHidden,
-        userIconsIsHidden: state.userIconsIsHidden,
         chatNotifications: state.chatNotifications,
         ui: state.ui,
         menu: state.menu
@@ -156,13 +152,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = () => {
     return {
-        toggleMap,
-        toggleFaq,
-        toggleChat,
         resetMessgeNotification,
-        toggleUserIcons,
         setOneMenu,
         showFaq,
+        showSignIn,
         showChat,
         showMap
     }

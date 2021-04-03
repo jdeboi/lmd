@@ -56,26 +56,27 @@ class Frame extends React.Component {
     this.onStop();
   };
 
-  toggleClosed = () => {
+  toggleClosed = (e) => {
     // console.log("CLOSE")
     this.setState({
       isVisible: false
     })
 
     if (this.props.onHide) this.props.onHide();
+    e.stopPropagation();
   }
 
-  toggleMinimzed = () => {
+  toggleMinimzed = (e) => {
     this.setState(prevState => ({
       isMinimized: !prevState.isMinimized
     }), () => {
       if (this.props.onMinimized) this.props.onMinimized();
     });
 
-
+    e.stopPropagation();
   }
 
-  toggleMaximized = () => {
+  toggleMaximized = (e) => {
     const controlledPosition = {...this.state.controlledPosition};
     controlledPosition.x = this.origCoords.x;
     controlledPosition.y = this.origCoords.y;
@@ -83,6 +84,7 @@ class Frame extends React.Component {
     this.setState({controlledPosition}, () => {
       if (this.props.onMaximized) this.props.onMaximized();
     });
+    e.stopPropagation()
   }
 
 
@@ -101,8 +103,9 @@ class Frame extends React.Component {
     if (this.props.newFrameToTop) this.props.newFrameToTop();
   }
 
-  handleClick = () => {
+  handleClick = (e) => {
     if (this.props.newFrameToTop) this.props.newFrameToTop();
+    e.stopPropagation();
   }
 
 

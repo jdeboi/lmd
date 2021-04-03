@@ -22,16 +22,28 @@ export const SHOWVOLUME = 'SHOWVOLUME';
 export const HIDEVOLUME = 'HIDEVOLUME';
 export const TOGGLEVOLUMEMENU = 'TOGGLEVOLUMEMENU';
 
+export const SHOWSIGNIN = 'SHOWSIGNIN';
+export const HIDESIGNIN = 'HIDESIGNIN';
+export const TOGGLESIGNIN = 'TOGGLESIGNIN';
+
+export const SETGALLERYACTIVE = 'SETGALLERYACTIVE';
+
 export const hideMenus = () => {
   return {
     type: HIDEMENUS
   }
 }
 
-export const setOneMenu = (menu) => {
+export const setOneMenu = (show) => {
   return {
     type: SETONEMENU,
-    payload: { menu }
+    payload: { show }
+  }
+}
+
+export const setGalleryActive = () => {
+  return {
+    type: SETGALLERYACTIVE
   }
 }
 
@@ -93,7 +105,7 @@ export const hideChat = () => {
 }
 
 
-///////////// MAP
+///////////// USER ICONS
 export const toggleUserIcons = () => {
   return {
     type: TOGGLEUSERICONS
@@ -130,5 +142,24 @@ export const hideVolume = () => {
 export const toggleVolumeMenu = () => {
   return {
     type: TOGGLEVOLUMEMENU
+  }
+}
+
+///////////// SIGN IN
+export const toggleSignIn = () => {
+  return {
+    type: TOGGLESIGNIN
+  }
+}
+
+export const showSignIn = () => {
+  return {
+    type: SHOWSIGNIN
+  }
+}
+
+export const hideSignIn = () => {
+  return {
+    type: HIDESIGNIN
   }
 }

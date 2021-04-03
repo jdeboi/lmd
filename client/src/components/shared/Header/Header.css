@@ -336,6 +336,11 @@ input.standardInputWhite {
       .Header .submenu ul {
         font-size: 10px; } }
 
+.Header.menuTheme.clickMe {
+  border-color: #b4fa00; }
+  .Header.menuTheme.clickMe .submenu ul {
+    border-color: #b4fa00; }
+
 .BackHeader {
   position: absolute;
   top: 0;

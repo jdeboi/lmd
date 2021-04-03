@@ -14,6 +14,7 @@ class Yosemite extends React.Component {
     this.state = {
       numPops: 0,
       popTime: 3000,
+      hasStarted: false,
       popups: this.getPopUps(),
       numFrames: 0,
       popW: 80
@@ -26,6 +27,7 @@ class Yosemite extends React.Component {
   componentDidMount() {
 
     // this.popInterval = setTimeout(this.popUp, 4000);
+    this.popInterval = setTimeout(this.startPop, 9000);
   }
 
   componentWillUnmount() {
@@ -35,11 +37,18 @@ class Yosemite extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.ui.compositionStarted !== this.props.ui.compositionStarted) {
-      this.popInterval = setTimeout(this.popUp, 4000);
+      this.popInterval = setTimeout(this.startPop, 4000);
+    }
+  }
+
+  startPop = () => {
+    if (!this.state.hasStarted) {
+      this.setState({hasStarted: true},this.popUp);
     }
   }
 
   popUp = () => {
+    
     const { ui } = this.props;
     let t = this.state.popTime - 200;
     let minT = 300;

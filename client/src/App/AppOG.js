@@ -40,7 +40,7 @@ import Oogle from '../components/sketches/Oogle/Oogle';
 import Dinner from '../components/sketches/Dinner/Dinner';
 import Dig from '../components/sketches/Test/Dig/Dig';
 import Blinds from '../components/sketches/Blinds/BlindsOG';
-import ClickMe from '../components/sketches/ClickMe/ClickMe';
+import ClickMe from '../components/sketches/ClickMe/ClickMeOG';
 import MoonLight from '../components/sketches/Test/MoonLight/MoonLight';
 import Yosemite from '../components/sketches/Yosemite/Yosemite';
 

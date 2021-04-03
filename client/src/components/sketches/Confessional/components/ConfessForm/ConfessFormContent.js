@@ -23,7 +23,7 @@ export default class ConfessionFormContent extends React.Component {
 
     render() {
         const { w, h, x, y, onSubmit } = this.props;
-        if (onSubmit) {
+        // if (true) {
             var line0 = (
                 <div className="line0 lineSp">
                     <div className="text-line0">Bless me</div>
@@ -35,20 +35,20 @@ export default class ConfessionFormContent extends React.Component {
                     </select>
                 </div>
             )
-        }
-        else {
-            var line0 = (
-                <React.Fragment>
-                    <div className="lineSp">Bless me</div>
-                    <select className="lineSp confessional-box" value={this.state.prayTo} onChange={this.handlePrayChange}>
-                        <option value="RBG">RBG</option>
-                        <option value="Father">Father</option>
-                        <option value="Mitch McConnel">Mitch McConnel</option>
-                        <option value="Kanye">Kanye</option>
-                    </select>
-                </React.Fragment>
-            )
-        }
+        // }
+        // else {
+        //     var line0 = (
+        //         <React.Fragment>
+        //             <div className="lineSp">Bless me</div>
+        //             <select className="lineSp confessional-box" value={this.state.prayTo} onChange={this.handlePrayChange}>
+        //                 <option value="RBG">RBG</option>
+        //                 <option value="Father">Father</option>
+        //                 <option value="Mitch McConnel">Mitch McConnel</option>
+        //                 <option value="Kanye">Kanye</option>
+        //             </select>
+        //         </React.Fragment>
+        //     )
+        // }
 
         return (
 

@@ -1,3 +1,39 @@
+button.standardButton {
+  font-size: 12px;
+  padding: 10px;
+  min-width: 140px;
+  text-align: center;
+  color: black;
+  border-radius: 6px;
+  border: 2px solid black;
+  color: white;
+  transition: all 0.2s ease-in-out; }
+  button.standardButton:hover {
+    transform: scale(1.05); }
+  button.standardButton.primary {
+    background: black;
+    color: white; }
+  button.standardButton.secondary {
+    background-color: white;
+    color: black;
+    border: 2px solid black; }
+
+input.standardInput {
+  font-size: 12px;
+  padding: 15px 10px;
+  text-align: left;
+  border: 2px solid black;
+  color: black;
+  border-radius: 6px; }
+
+input.standardInputWhite {
+  font-size: 12px;
+  padding: 15px 10px;
+  text-align: left;
+  border: 2px solid white;
+  color: white;
+  border-radius: 6px; }
+
 .ClickMe {
   background-color: black;
   height: 100%;
@@ -6,9 +42,33 @@
   left: 0px;
   /* cursor: pointer !important; */
   background-repeat: repeat; }
+  .ClickMe .Frame .window {
+    border-color: #b4fa00; }
+    .ClickMe .Frame .window .content {
+      pointer-events: none; }
+      .ClickMe .Frame .window .content .btn {
+        pointer-events: all; }
+  .ClickMe .Frame .titlebar {
+    border-bottom: 2px solid #b4fa00; }
+  .ClickMe .Frame .circleButton {
+    background: #b4fa00; }
+    .ClickMe .Frame .circleButton:hover {
+      background: #b4fa00; }
+  .ClickMe .rose {
+    background-image: url("/assets/s3-bucket/clickMe/dying.gif");
+    background-size: cover; }
+  .ClickMe .faceGif {
+    background-image: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/face.gif");
+    background-size: cover;
+    background-position: center; }
+  .ClickMe .heart {
+    background: black;
+    background-image: url("/assets/s3-bucket/clickMe/heart.png");
+    background-position: center;
+    background-repeat: no-repeat; }
   .ClickMe .content {
     background-color: rgba(255, 255, 255, 0);
-    pointer-events: all; }
+    pointer-events: none; }
   .ClickMe .window {
     background-color: rgba(255, 255, 255, 0); }
   .ClickMe .react-p5 {
@@ -34,9 +94,9 @@
     margin: auto; }
 
 .point0 {
-  cursor: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/cursors/point0.png"), auto; }
+  cursor: url("/assets/s3-bucket/clickMe/cursors/like.png"), auto; }
   .point0 button {
-    cursor: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/cursors/point0.png"), auto; }
+    cursor: url("/assets/s3-bucket/clickMe/cursors/like.png"), auto; }
 
 .point1 {
   cursor: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/cursors/point1.png"), auto; }
