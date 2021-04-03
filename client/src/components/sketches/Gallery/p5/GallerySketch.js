@@ -350,7 +350,12 @@ export default (props) => {
     // check if crossed a room boundary
     // console.log("roomdoor", roomDoor);
     if (!isClosed && roomDoor) {
-      if (window.confirm('Leave the main gallery?')) {
+      if (!isMobile) {
+        if (window.confirm('Leave the main gallery?')) {
+          props.userNewRoom(roomDoor);
+        }  
+      }
+      else {
         props.userNewRoom(roomDoor);
       }
       isWalking = false;
