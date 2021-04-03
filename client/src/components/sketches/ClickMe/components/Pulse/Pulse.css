@@ -10,7 +10,3 @@
     flex-direction: column;
     font-size: 29px;
     color: red; }
-  .Pulse .pulse-img {
-    background-image: url("/assets/s3-bucket/clickMe/pulse.png");
-    background-repeat: repeat-x;
-    background-size: cover; }

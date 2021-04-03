@@ -17,7 +17,7 @@ export default function Rose(props) {
     let dx = -fr*w;
 
     const roseStyle = {
-        backgroundImage: `url("/assets/s3-bucket/clickMe/rose/rosesprite3.png")`,
+        backgroundImage: `url("${window.AWS}/clickMe/rosesprite3.png")`,
         backgroundSize: "cover",
         backgroundPosition: `${dx}px 0px`,
         width: w,

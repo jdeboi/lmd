@@ -60,27 +60,19 @@ class ClickMe extends React.Component {
 
         this.interval = setInterval(this.setHeart, 20);
         this.props.addClass("clickMe");
-        let container, stats;
+
         let width, height;
         let scene, renderer, composer, gui;
         let anaglyphEffect;
         let currentSceneIndex = 0;
         let currentTime = 0;
-        // let comps = [];
         let blinds = [];
-        let ground;
-        let blindsTexture;
         let heart;
         let face;
-        // let heartRate = 60;
         let showLightning = true;
 
-        // this.heartInterval = setInterval(this.heartPump, 50);
-
         const sceneCreators = [
-            // createConesScene,
-            createPlasmaBallScene,
-            // createStormScene
+            createPlasmaBallScene
         ];
 
         const clock = new THREE.Clock();
@@ -94,18 +86,8 @@ class ClickMe extends React.Component {
         init(this.mount);
         animate();
 
-        // this.interval2 = setTimeout(() => {
-        //     // showLightning = true;
-        // }, 7000);
-
         function init(mount) {
 
-            // container = document.getElementById('container');
-            // renderer = new THREE.WebGLRenderer();
-            // renderer.setPixelRatio(window.devicePixelRatio);
-            // renderer.setSize(window.innerWidth, window.innerHeight);
-            // renderer.outputEncoding = THREE.sRGBEncoding;
-            // container.appendChild(renderer.domElement);
             renderer = new THREE.WebGLRenderer();
             renderer.setPixelRatio(window.devicePixelRatio);
             renderer.setSize(window.innerWidth, window.innerHeight);
@@ -119,19 +101,11 @@ class ClickMe extends React.Component {
             composer = new EffectComposer(renderer);
 
 
-
-            // stats = new Stats();
-            // container.appendChild(stats.dom);
-
-            // window.addEventListener('resize', onWindowResize);
-
             createScene();
             initFace();
-            // initComputers();
             initJar();
-            // initArm();
             initHeart();
-            initGround();
+            initBlinds();
         }
 
         function createScene() {
@@ -152,7 +126,7 @@ class ClickMe extends React.Component {
             anaglyphEffect.setSize(window.innerWidth, window.innerHeight);
         }
 
-        //
+       
 
         function createGUI() {
 
@@ -252,7 +226,7 @@ class ClickMe extends React.Component {
 
         }
 
-        //
+    
 
         function animate() {
             requestAnimationFrame(animate);
@@ -289,22 +263,9 @@ class ClickMe extends React.Component {
                 }
 
             }
-            // if (scene.userData.lightningMaterial.color){
-            //     let r = 0;
-            //     let g = 255;
-            //     let b = 0;
-            //     // if (heartRate >= 400) {
-            //         // r = Math.random()*155 + 100;
-            //         // g = Math.random()*155 + 100;
-            //         // b = Math.random()*155 + 100; //Math.random()*255
-            //     // }
-            //     // let per = mapVal(heartRate, 30, maxHeart, 0, 1);
-            //     scene.userData.lightningMaterial.color.setRGB(r, g, b).multiplyScalar(1 / 255);
-            // }
+        
 
             if (blinds[0]) {
-                // blindsTexture.offset.set(0, (new Date()/5000)%1);
-                // ground.material.map.needsUpdate = true;
                 const hr = mapVal(heartRate, 30, maxHeart, .2, 8);
                 for (const blind of blinds) {
                     blind.position.y += hr;
@@ -329,12 +290,6 @@ class ClickMe extends React.Component {
             return outlinePass;
 
         }
-
-        //
-
-
-
-        //
 
         function createPlasmaBallScene() {
 
@@ -563,12 +518,11 @@ class ClickMe extends React.Component {
 
         }
 
-        //
 
-        function initGround() {
+        function initBlinds() {
             const GROUND_SIZE = 1000;
 
-            blindsTexture = new THREE.TextureLoader().load("/assets/s3-bucket/clickMe/blinds.jpeg");
+            var blindsTexture = new THREE.TextureLoader().load(window.AWS + "/clickMe/textures/blinds.jpeg");
             blindsTexture.wrapS = THREE.RepeatWrapping;
             blindsTexture.wrapT = THREE.RepeatWrapping;
             blindsTexture.repeat.set( 2, 2 );
@@ -596,51 +550,12 @@ class ClickMe extends React.Component {
             blinds[3].position.y = -2000;
             scene.add(blinds[3]);
 
-            // ground.position.z -= 400;
-            // ground.position.y += 400;
-
-            scene.add(ground);
-
-        }
-
-        function initArm() {
-            const url = "/assets/s3-bucket/clickMe/models/arm/tinker.obj";
-            const objLoader = new OBJLoader();
-            objLoader.load(url, (root) => {
-                var arm = root;
-                var mat = new THREE.MeshLambertMaterial({ color: 0xdd0000 });
-                arm.material = mat;
-                const sc = 6;
-                arm.scale.set(sc, sc, sc);
-                arm.rotation.x = -.4;
-                arm.rotation.y = .8;
-                arm.rotation.z = Math.PI + 1.2;
-                arm.position.set(100, 250, -530);
-
-                scene.add(arm);
-
-            });
-            // const url = "/assets/s3-bucket/clickMe/models/skeleton/tinker.obj";
-            // const objLoader = new OBJLoader();
-            // objLoader.load(url, (root) => {
-            //     var arm = root;
-            //     var mat = new THREE.MeshLambertMaterial({ color: 0xdd0000 });
-            //     arm.material = mat;
-            //     const sc = 20;
-            //     arm.scale.set(sc, sc, sc);
-            //     // arm.rotation.x = -Math.PI / 2;
-            //     // arm.rotation.z = Math.PI;
-            //     arm.position.set(-1000, 800, -1000);
-
-            //     scene.add(arm);
-
-            // });
         }
 
 
 
         function initFace() {
-            const url = "/assets/s3-bucket/clickMe/models/face/blockydebb.obj";
+            const url = window.AWS + "/clickMe/models/face/blockydebb.obj";
             const objLoader = new OBJLoader();
             objLoader.load(url, (root) => {
                 face = root;
@@ -658,74 +573,14 @@ class ClickMe extends React.Component {
             });
         }
 
-        // function initComputers() {
-        //     const MTLFile = "/assets/s3-bucket/clickMe/models/computer/materials.mtl";
-        //     const url = "/assets/s3-bucket/clickMe/models/computer/model2.obj";
-
-        //     new MTLLoader()
-        //         .load(MTLFile, function (materials) {
-        //             materials.preload();
-        //             const objLoader = new OBJLoader();
-        //             objLoader.setMaterials(materials);
-        //             objLoader.load(url, (root) => {
-        //                 var comp = root;
-        //                 // var mat = new THREE.MeshLambertMaterial({ color: 0xffffff });
-        //                 // comp.material = mat;
-        //                 const sc = 1000;
-        //                 comp.scale.set(sc, sc, sc);
-        //                 // comp.rotation.x = -Math.PI / 2;
-        //                 // comp.rotation.z = Math.PI;
-
-        //                 let spread = 1000;
-        //                 let y = 7;
-        //                 let x = -200; //Math.random() * spread - spread / 2;
-        //                 let z = -800;//Math.random() * spread - spread / 2
-        //                 comp.rotation.y = Math.PI;
-        //                 comp.position.set(x, y, z);
-        //                 comps.push(comp);
-        //                 scene.add(comp);
-
-        //                 // for (let i = 0; i < 10; i++) {
-        //                 //     var comp2 = comp.clone();
-        //                 //     let x = Math.random() * spread - spread / 2;
-        //                 //     let z = Math.random() * spread - spread / 2
-        //                 //     comp2.rotation.y = Math.random() * Math.PI * 2;
-        //                 //     comp2.position.set(x, y, z);
-        //                 //     comps.push(comp2);
-        //                 //     // this.hercules.push(hercules);
-        //                 //     scene.add(comp2);
-        //                 // }
-
-        //             });
-        //         });
-
-        // }
-
-
         function initJar() {
-            const MTLFile = "/assets/s3-bucket/clickMe/models/jar/materials.mtl";
-            const url = "/assets/s3-bucket/clickMe/models/jar/model.obj";
+            const MTLFile = window.AWS + "/clickMe/models/jar/materials.mtl";
+            const url = window.AWS + "/clickMe/models/jar/model.obj";
 
             const objLoader = new OBJLoader();
             objLoader.load(url, (root) => {
-                var comp = root;
-                // var mat = new THREE.MeshLambertMaterial({ 
-                //     color: 0xffffff 
-                // });
-                // comp.material = mat;
-                const r = "/assets/s3-bucket/clickMe/textures/Bridge2/";
-                const urls = [r + "posx.jpg", r + "negx.jpg",
-                r + "posy.jpg", r + "negy.jpg",
-                r + "posz.jpg", r + "negz.jpg"];
-
-                const textureCube = new THREE.CubeTextureLoader().load(urls);
-                textureCube.mapping = THREE.CubeReflectionMapping;
-                textureCube.encoding = THREE.sRGBEncoding;
-                // scene.background=textureCube;
-
-                const texture = new THREE.TextureLoader().load("/assets/s3-bucket/clickMe/textures/clouds.jpeg");
-                // scene.background=texture;
-
+                var jar = root;
+               
                 const jarMaterial = new THREE.MeshPhysicalMaterial({
                     transparent: true,
                     opacity: .5,
@@ -733,11 +588,8 @@ class ClickMe extends React.Component {
                     color: 'white',
                     metalness: 1,
                     roughness: .2,
-                    envMap: textureCube
                 });
-                var mat = new THREE.MeshPhongMaterial({ color: 0xdd0000, specular: 0x009900, shininess: 30 });
-
-                comp.traverse(function (child) {
+                jar.traverse(function (child) {
 
                     if (child instanceof THREE.Mesh) {
 
@@ -747,71 +599,20 @@ class ClickMe extends React.Component {
 
                 });
                 const sc = 800;
-                comp.scale.set(sc, sc, sc);
-                // comp.material = jarMaterial;
-                // comp.rotation.x = -Math.PI / 2;
-                // comp.rotation.z = Math.PI;
-
-                let spread = 1000;
+                jar.scale.set(sc, sc, sc);
                 let y = 100;
-                let x = 0; //Math.random() * spread - spread / 2;
-                let z = -100;//Math.random() * spread - spread / 2
-                comp.rotation.y = Math.PI;
-                comp.position.set(x, y, z);
-                // comps.push(comp);
-                scene.add(comp);
+                let x = 0;
+                let z = -100;
+                jar.rotation.y = Math.PI;
+                jar.position.set(x, y, z);
+                scene.add(jar);
 
             });
-            // new MTLLoader()
-            //     .load(MTLFile, function (materials) {
-            //         materials.preload();
-            //         const objLoader = new OBJLoader();
-            //         objLoader.setMaterials(materials);
-            //         objLoader.load(url, (root) => {
-            //             var comp = root;
-            //             // var mat = new THREE.MeshLambertMaterial({ 
-            //             //     color: 0xffffff 
-            //             // });
-            //             // comp.material = mat;
-            //             const r = "/assets/s3-bucket/clickMe/textures/Bridge2/";
-            //             const urls = [r + "posx.jpg", r + "negx.jpg",
-            //             r + "posy.jpg", r + "negy.jpg",
-            //             r + "posz.jpg", r + "negz.jpg"];
-
-            //             const textureCube = new THREE.CubeTextureLoader().load(urls);
-            //             textureCube.mapping = THREE.CubeReflectionMapping;
-            //             textureCube.encoding = THREE.sRGBEncoding;
-
-            //             const jarMaterial = new THREE.MeshPhysicalMaterial({
-            //                 transparent: true,
-            //                 opacity: .3,
-            //                 depthWrite: true,
-            //                 color: 'white',
-            //                 metalness: 0,
-            //                 roughness: 0,
-            //                 envMap: textureCube
-            //             });
-            //             const sc = 400;
-            //             comp.scale.set(sc, sc, sc);
-            //             // comp.rotation.x = -Math.PI / 2;
-            //             // comp.rotation.z = Math.PI;
-
-            //             let spread = 1000;
-            //             let y = 7;
-            //             let x = -200; //Math.random() * spread - spread / 2;
-            //             let z = -400;//Math.random() * spread - spread / 2
-            //             comp.rotation.y = Math.PI;
-            //             comp.position.set(x, y, z);
-            //             comps.push(comp);
-            //             scene.add(comp);
-
-            //         });
-            //     });
 
         }
         function initHeart() {
-            const MTLFile = "/assets/s3-bucket/clickMe/models/heart/heart.mtl";
-            const url = "/assets/s3-bucket/clickMe/models/heart/heart.obj";
+            const MTLFile = window.AWS + "/clickMe/models/heart/heart.mtl";
+            const url = window.AWS + "/clickMe/models/heart/heart.obj";
 
             new MTLLoader()
                 .load(MTLFile, function (materials) {
@@ -820,32 +621,14 @@ class ClickMe extends React.Component {
                     objLoader.setMaterials(materials);
                     objLoader.load(url, (root) => {
                         heart = root;
-                        // var mat = new THREE.MeshLambertMaterial({ color: 0xffffff });
-                        // comp.material = mat;
                         const sc = 50;
                         heart.scale.set(sc, sc, sc);
                         heart.rotation.y = -.3;
-                        // comp.rotation.x = -Math.PI / 2;
-                        // comp.rotation.z = Math.PI;
-
-                        // let spread = 2000;
                         let y = 300;
                         let x = -30;
                         let z = -200;
                         heart.position.set(x, y, z);
                         scene.add(heart);
-
-                        // for (let i = 0; i < 10; i++) {
-                        //     var comp2 = comp.clone();
-                        //     let x = Math.random() * spread - spread / 2;
-                        //     let z = Math.random() * spread - spread / 2
-                        //     comp2.rotation.y = Math.random() * Math.PI * 2;
-                        //     comp2.position.set(x, y, z);
-                        //     comps.push(comp2);
-                        //     // this.hercules.push(hercules);
-                        //     scene.add(comp2);
-                        // }
-
                     });
                 });
 
@@ -859,12 +642,9 @@ class ClickMe extends React.Component {
                 heartVelocity = constrain(heartVelocity, -2, .5);
             heartRate += heartVelocity;
             heartRate = constrain(heartRate, 30, maxHeart);
-            // heartVelocity += heartAcceleration;
-            // heartRate = mapVal(dt, 0, 120, )
             heartTotal += (heartRate / 60) * .1;
             let ampX = mapVal(heartRate, 30, maxHeart, 2, 5);
             let heartSz = 50 + ampX * Math.sin(heartTotal);
-            // let heartSzY = 50 + ampX*.9 * Math.sin(heartTotal);
             if (heart)
                 heart.scale.set(heartSz, heartSz, heartSz);
             if (face) {
@@ -880,8 +660,6 @@ class ClickMe extends React.Component {
     componentWillUnmount() {
         clearInterval(this.interval);
         this.props.removeClass("clickMe");
-        // clearInterval(this.interval2);
-        // clearInterval(this.heartInterval);
     }
 
     onPointerMove = (event) => {
@@ -900,74 +678,8 @@ class ClickMe extends React.Component {
         this.setState({ cursor: id });
     }
 
-    // heartPump = () => {
-    //     const { heartRate, pulse } = this.state;
-
-    //     // let dt = new Date() - lastPump;
-    //     // let dh = mapVal(dt, 0, 5000, 30, -20);
-    //     // dh = constrain(dh, -20, 30);
-    //     // console.log(heartRate);
-    //     let sz = Math.sin(new Date() / 100.0 * (heartRate/60));
-    //     this.setState({ heartSz: sz, pulse: pulse + 1 });
-    // }
-
-    getHandMenu = () => {
-        // if (this.state.showHands) {
-        let hands = ["🖐🏿", "🖐🏾", "🖐🏽", "🖐🏼", "🖐🏻"];
-        return (
-            <Frame title="" content={
-
-                <div className="handBox">
-                    {hands.map((hand, i) => {
-                        let h = i;
-                        return (
-                            <button key={i} onClick={() => this.setCursor(h)}>{hand}</button>
-                        )
-                    })
-                    }
-                </div>
-            }
-                width={80} height={400} x={100} y={100}
-            />
-        )
-        // }
-        // return null;
-    }
-
-    getFace = () => {
-        const w = 200;
-        const h = w;
-        return (
-            <Frame title="" content={
-                <div className="">
-                    <div className="faceGif" style={{ width: w, height: h }} />
-                </div>
-            }
-                width={w} height={h} x={200} y={100}
-            />
-        )
-    }
-
-    getHeart = () => {
-        const w = 300;
-        const h = 500;
-        const bw = Math.floor(w + 30 * this.state.heartSz);
-        const bh = Math.floor(h + 30 * this.state.heartSz);
-        return (
-            <Frame title="" content={
-                <div className="heart" style={{ backgroundSize: `${bw}px ${bh}px`, width: w, height: h }} />
-            }
-                width={w} height={h} x={400} y={100}
-            />
-        )
-    }
-
-
-
 
     heartClicked = (amt) => {
-        // this.setState({ lastPump: new Date() });
-        // lastPump = new Date();
         if (heartRate <= 32) {
             heartVelocity += 10;
         }
@@ -976,13 +688,6 @@ class ClickMe extends React.Component {
                 heartVelocity = 0;
             heartVelocity += .2;
         }
-
-
-        // this.heartRate += amt * 4;
-        // this.heartRate = constrain(this.heartRate, 20, 200);
-        // heartRate += amt * 4;
-        // heartRate = constrain(heartRate, 20, 200);
-
     }
 
 
@@ -992,10 +697,6 @@ class ClickMe extends React.Component {
     }
 
     render() {
-        // white skin, black emoji
-        // identity doesn't go away
-        // the default cursor
-        // emojis don't 
         const { ui } = this.props;
         const { hR, hT } = this.state;
 

@@ -1,7 +1,7 @@
 .LikeButton {
   padding: 5px; }
   .LikeButton div {
-    background-image: url("/assets/s3-bucket/clickMe/cursors/like.png");
+    background-image: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/cursors/like.png");
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat; }

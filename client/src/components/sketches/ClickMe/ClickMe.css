@@ -54,18 +54,6 @@ input.standardInputWhite {
     background: #b4fa00; }
     .ClickMe .Frame .circleButton:hover {
       background: #b4fa00; }
-  .ClickMe .rose {
-    background-image: url("/assets/s3-bucket/clickMe/dying.gif");
-    background-size: cover; }
-  .ClickMe .faceGif {
-    background-image: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/face.gif");
-    background-size: cover;
-    background-position: center; }
-  .ClickMe .heart {
-    background: black;
-    background-image: url("/assets/s3-bucket/clickMe/heart.png");
-    background-position: center;
-    background-repeat: no-repeat; }
   .ClickMe .content {
     background-color: rgba(255, 255, 255, 0);
     pointer-events: none; }
@@ -94,9 +82,9 @@ input.standardInputWhite {
     margin: auto; }
 
 .point0 {
-  cursor: url("/assets/s3-bucket/clickMe/cursors/like.png"), auto; }
+  cursor: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/cursors/like.png"), auto; }
   .point0 button {
-    cursor: url("/assets/s3-bucket/clickMe/cursors/like.png"), auto; }
+    cursor: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/cursors/like.png"), auto; }
 
 .point1 {
   cursor: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/cursors/point1.png"), auto; }

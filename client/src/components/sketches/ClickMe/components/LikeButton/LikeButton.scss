@@ -2,29 +2,13 @@
   .LikeButton {
     
     padding: 5px;
+
+
     div {
-        background-image: url("/assets/s3-bucket/clickMe/cursors/like.png");
-        background-position: center;
-        background-size: contain;
-        background-repeat: no-repeat;
-    }
+      background-image: url("https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/cursors/like.png");
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+  }
     
-    // display: flex;
-    // flex-direction: row;
-
-    // div {
-    //   background-image: url("/assets/s3-bucket/clickMe/like.png");
-    //   width: 50px;
-    //   height: 50px;
-    //   background-size: cover;
-    // }
-
-    // .dislike {
-    //   -moz-transform: scaleY(-1);
-    //   -o-transform: scaleY(-1);
-    //   -webkit-transform: scaleY(-1);
-    //   transform: scaleY(-1);
-    //   filter: FlipV;
-    //   -ms-filter: "FlipV";
-    // }
   }
