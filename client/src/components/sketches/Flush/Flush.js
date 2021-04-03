@@ -102,6 +102,9 @@ class Flush extends React.Component {
 
   flushToilet = () => {
     // this.setState({isFlushing: true});
+    if(this.vidTex.video && !this.isVideoPlaying()) {
+      this.vidTex.video.play();
+    }
     const isFlushing = true;
     const handleDown = true;
     const isStopping = false;
