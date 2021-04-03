@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, withRouter } from "react-router-dom";
+import { Route, Switch, withRouter, useLocation } from "react-router-dom";
 
 import './App.css';
 
@@ -100,7 +100,7 @@ class App extends React.Component {
       const userName = Cookies.get('userName');
       const avatar = Cookies.get('avatar');
 
-      const room = this.getRoom();
+      const room = this.getRoom(this.props.location.pathname);
       this.props.setUser(userName, avatar);
       this.props.setUserRoom(room);
       this.setState({ hasAvatar: true, showWelcome: false }); // false
@@ -115,21 +115,24 @@ class App extends React.Component {
     window.addEventListener("resize", this.updateDeviceDimensions);
     window.addEventListener("keydown", this.handleKeyPress);
 
-    this.unlisten = this.props.history.listen((location, action) => this.pageChange(location));
+    // this.unlisten = this.props.history.listen((location, action) => this.pageChange(location));
     this.props.loadingApp();
   }
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDeviceDimensions);
     window.removeEventListener("keydown", this.handleKeyPress);
-    this.unlisten();
+    // this.unlisten();
   }
 
 
-  componentDidUpdate() {
-    if (this.state.usersChange) this.setState({ usersChange: false })
-  }
+  componentDidUpdate(prevProps) {
+    if (this.state.usersChange) 
+      this.setState({ usersChange: false });
 
+    if (this.props.location.pathname !== prevProps.location.pathname)
+      this.pageChange();
+  }
 
   handleKeyPress = (e) => {
     if (e.keyCode === 13) {
@@ -142,10 +145,11 @@ class App extends React.Component {
     }
   }
 
-  pageChange = (location) => {
-    console.log("PAGE CHANGE", location.pathname)
+  pageChange = () => {
+    let newPath = this.props.location.pathname;
+    console.log("PAGE CHANGE", newPath)
     this.props.hideMenus();
-    const nextRoom = this.getRoom(location.pathname);
+    const nextRoom = this.getRoom(newPath);
     if (nextRoom != this.props.user.room) {
       this.props.loadingApp();
       this.setState({ hasLoadedRoom: false });
@@ -311,7 +315,7 @@ class App extends React.Component {
   }
 
 
-  getRoom = (path = this.props.location.pathname) => {
+  getRoom = (path) => {
     var rm = path.substring(1, path.length);
 
     if (rm == "") rm = "gallery";
@@ -326,8 +330,8 @@ class App extends React.Component {
     return rm;
   }
 
-  getRoomTitle = () => {
-    var rm = this.getRoom();
+  getRoomTitle = (path) => {
+    var rm = this.getRoom(path);
     rm = rm.replace(/-/g, ' ');
     return rm;
   }
@@ -364,46 +368,45 @@ class App extends React.Component {
     const { ui } = this.props;
     const appHeaderClass = "App-Header" + (ui.isMobile || ui.hasFooter ? " mobile" : "");
 
-    
-      console.log("room",this.getRoomTitle());
+    const currentPage = this.getRoomTitle(this.props.location.pathname);
     
     return (
       <div className={this.getStringClasses()}>
           <div className={appHeaderClass}>
             <div className="BackHeader"></div>
-            <Header currentPage={this.getRoomTitle()} user={this.props.user} avatarClicked={this.avatarClicked} isClosed={this.isClosed} isMenuOn={this.isMenuOn} />
+            <Header currentPage={currentPage} user={this.props.user} avatarClicked={this.avatarClicked} isClosed={this.isClosed} isMenuOn={this.isMenuOn} />
           </div>
           <div className="App-Content inner-outline" onMouseMove={this.handleMouseMove}>
             <Switch>
               <Route exact path="/" render={() => (<Gallery users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} isClosed={this.isClosed} />)} />
 
               {/* Sketches */}
-              <Route path={getUrl("mac")} render={() => (<MacbookAir />)} />
-              <Route path={getUrl("jung")} render={() => (<JungleGyms />)} />
-              <Route path={getUrl("hard")} render={() => (<HardDrives />)} />
-              <Route path={getUrl("wasted")} render={() => (<Wasted />)} />
-              <Route path={getUrl("esc")} render={() => (<Mars addClass={this.addClass} removeClass={this.removeClass} />)} />
-              <Route path={getUrl("wet")} render={() => (<WetStreams />)} />
-              <Route path={getUrl("xfin")} render={() => (<Xfinity />)} />
-              <Route path={getUrl("cloud")} render={() => (<Confessional cursor={this.state.cursorID} />)} />
-              <Route path="/confessions" render={() => (<Confessions />)} />
-              <Route path={getUrl("flush")} render={() => (<Flush />)} />
-              <Route path={getUrl("home")} render={() => (<Oogle />)} />
-              <Route path={getUrl("blind")} render={() => (<Blinds />)} />
-              <Route path={getUrl("yose")} component={Yosemite} />
-              <Route path={getUrl("click")} render={() => (<ClickMe addClass={this.addClass} removeClass={this.removeClass} />)} />
+              <Route exact path={getUrl("mac")} render={() => (<MacbookAir />)} />
+              <Route exact path={getUrl("jung")} render={() => (<JungleGyms />)} />
+              <Route exact path={getUrl("hard")} render={() => (<HardDrives />)} />
+              <Route exact path={getUrl("wasted")} render={() => (<Wasted />)} />
+              <Route exact path={getUrl("esc")} render={() => (<Mars addClass={this.addClass} removeClass={this.removeClass} />)} />
+              <Route exact path={getUrl("wet")} render={() => (<WetStreams />)} />
+              <Route exact path={getUrl("xfin")} render={() => (<Xfinity />)} />
+              <Route exact path={getUrl("cloud")} render={() => (<Confessional cursor={this.state.cursorID} />)} />
+              <Route exact path="/confessions" render={() => (<Confessions />)} />
+              <Route exact path={getUrl("flush")} render={() => (<Flush />)} />
+              <Route exact path={getUrl("home")} render={() => (<Oogle />)} />
+              <Route exact path={getUrl("blind")} render={() => (<Blinds />)} />
+              <Route exact path={getUrl("yose")} component={Yosemite} />
+              <Route exact path={getUrl("click")} render={() => (<ClickMe addClass={this.addClass} removeClass={this.removeClass} />)} />
 
               {/* Pages */}
-              <Route path="/about" render={() => (<About ui={this.props.ui} />)} />
-              <Route path="/statement" render={() => (<Statement ui={this.props.ui} />)} />
-              <Route path="/credits" render={() => (<Credits ui={this.props.ui} />)} />
+              <Route exact path="/about" render={() => (<About ui={this.props.ui} />)} />
+              <Route exact path="/statement" render={() => (<Statement ui={this.props.ui} />)} />
+              <Route exact path="/credits" render={() => (<Credits ui={this.props.ui} />)} />
 
               {/* Utilities */}
-              <Route path="/gallerytest" render={() => (<Gallery users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} isClosed={false} />)} />
-              <Route path="/register" render={() => (<RegisterDesktop />)} />
-              <Route path="/viewusers" render={() => <ViewUsers users={this.state.users} />} />
-              <Route path="/pangallery" render={() => <PanGallery users={this.state.users} roomCount={this.state.roomCount} />} />
-              <Route path="/scroll" render={() => <ScrollSketches addClass={this.addClass} removeClass={this.removeClass} />} />
+              <Route exact path="/gallerytest" render={() => (<Gallery users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} isClosed={false} />)} />
+              <Route exact path="/register" render={() => (<RegisterDesktop />)} />
+              <Route exact path="/viewusers" render={() => <ViewUsers users={this.state.users} />} />
+              <Route exact path="/pangallery" render={() => <PanGallery users={this.state.users} roomCount={this.state.roomCount} />} />
+              <Route exact path="/scroll" render={() => <ScrollSketches addClass={this.addClass} removeClass={this.removeClass} />} />
        
                {/* catch all */}
               <Route path="*" component={NotFound} />
@@ -417,7 +420,7 @@ class App extends React.Component {
           <SignIn hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} isFrame={true} />
           <RoomDecal hasLoadedRoom={this.state.hasLoadedRoom} users={this.state.users} onHide={() => this.setState({ hasLoadedRoom: true })} />
           <Welcome isClosed={this.isClosed} user={this.props.user} hasAvatar={this.state.hasAvatar} showWelcome={this.state.showWelcome} closeWelcome={this.closeWelcome} />
-          <MobileFooter currentPage={this.getRoomTitle()} user={this.props.user} avatarClicked={this.avatarClicked} />
+          <MobileFooter currentPage={currentPage} user={this.props.user} avatarClicked={this.avatarClicked} />
       </div>
     );
   }
