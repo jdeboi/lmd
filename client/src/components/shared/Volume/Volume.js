@@ -3,6 +3,9 @@ import React from 'react';
 import VolumeOff from '@material-ui/icons/VolumeOff';
 import VolumeUp from '@material-ui/icons/VolumeUp';
 import VolumeDown from '@material-ui/icons/VolumeDown';
+import Play from '@material-ui/icons/PlayArrow';
+import Pause from '@material-ui/icons/Pause';
+
 
 import Slider from '@material-ui/core/Slider';
 import './Volume.css';
@@ -39,9 +42,9 @@ class Volume extends React.Component {
                 windowStyle={{ background: "rgba(0, 0, 0, .9)" }}
                 content={
                     <div className="volume-slider">
-                        {/* {this.getVolumeButton()} */}
+                        {this.getVolumeButton()}
                         <Slider
-                            value={music.volume}
+                            value={music.masterVolume}
                             onChange={this.sliderChange}
                             orientation="horizontal"
                             style={style}
@@ -50,12 +53,27 @@ class Volume extends React.Component {
                             step={0.05}
                             min={0.0}
                             max={1.0}
-                            defaultValue={music.volume}
+                            defaultValue={music.masterVolume}
                         />
                     </div>
                 }
                 width={w} height={40} x={ui.width - w - ui.edgeSpacing} y={34 + 30} z={1000}
             />
+        );
+    }
+
+    getPlayButton = () => {
+        const { music, toggleVolume } = this.props;
+        if (music.isMuted)
+            return (
+                <button onClick={toggleVolume} >
+                    <Play />
+                </button>
+            );
+        return (
+            <button onClick={toggleVolume} >
+                <Pause />
+            </button>
         );
     }
 

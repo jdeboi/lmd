@@ -110,7 +110,7 @@ export const addFolderDivs = (divs, instaImg, txtFile, p5) => {
     divs.folders = [];
     let labels = [
         { x: 560, y: 0, label: "statement", link: "https://www.losingmydimension.com/statement" },
-        { x: 620, y: 130, label: "thesis", link: "https://www.losingmydimension.com/statement" },
+        { x: 620, y: 130, label: "thesis", link: "https://lmd-bucket.s3.us-east-2.amazonaws.com/thesis.pdf" },
         { x: 510, y: 230, label: "@jdeboi", link: "https://www.instagram.com/jdeboi/" }
     ];
 

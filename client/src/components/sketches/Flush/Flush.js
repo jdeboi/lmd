@@ -3,6 +3,7 @@ import Frame from '../../shared/Frame/Frame';
 import './Flush.css';
 
 import { connect } from 'react-redux';
+import {setSketchMusic} from '../../../store/actions/music';
 
 // Babylon
 import { Scene, AnaglyphUniversalCamera, UniversalCamera, PostProcess, Effect, HemisphericLight, Vector3, Vector2, SceneLoader, AssetContainer, MeshBuilder, StandardMaterial, VideoTexture, CubeTexture, Color3, Color4, Mesh, Texture } from 'babylonjs';
@@ -27,7 +28,7 @@ class Flush extends React.Component {
 
 
   componentDidMount() {
-
+    this.props.setSketchMusic("flush", 0, .2);
   }
 
   componentWillUnmount() {
@@ -85,8 +86,8 @@ class Flush extends React.Component {
       // else emoji.hide();
     }
     if (this.props.music.volume != this.lastVolume) {
-      this.vidTex.video.volume = this.props.music.volume * .2;
-      this.lastVolume = this.props.music.volume;
+      this.vidTex.video.volume = 0; //this.props.music.volume * .2;
+      this.lastVolume = 0; //this.props.music.volume;
     }
 
     // for mobile??
@@ -160,6 +161,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = () => {
   return {
     // doneLoadingApp
+    setSketchMusic
   }
 }
 

@@ -28,7 +28,7 @@ class AvatarMiniMap extends React.Component {
     else if (user.userName === "DJ") avatar = "🎧";
     else if (user.userName === "cheeseBot") avatar = "🧀";
     else if (user.userName === "cocktailBot") avatar = "🍸";
-    else if (!isUser) avatar = "👤";
+    else if (!isUser) avatar = user.avatar;
     const hidden = (user.room !== "gallery");
 
     return (

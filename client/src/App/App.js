@@ -10,6 +10,9 @@ import socket from "../components/shared/Socket/Socket";
 import Header from '../components/shared/Header/Header';
 import MobileFooter from '../components/shared/Header/MobileFooter/MobileFooter';
 import Chat from '../components/shared/Chat/Chat';
+import YouTube from '../components/shared/LiveStream/YouTube';
+import ReactAudioPlayer from 'react-audio-player';
+
 // import FPSStats from "react-fps-stats";
 
 // store
@@ -82,11 +85,11 @@ class App extends React.Component {
       users: [],
       hasLoadedRoom: false,
       // userAxctiveChat: null,
-      roomCount: { "macbook-air": 0, "hard-drives-on-seashores": 0, "wet-streams": 0, "jungle-gyms": 0, "cloud-confessional": 0, "esc-to-mars": 0, "xfinity-depths": 0, "wasted-days": 0, "home-page": 0, "gallery": 0, "blind-eye": 0 }
+      roomCount: { "flush": 0, "click-me-baby": 0, "macbook-air": 0, "hard-drives-on-seashores": 0, "wet-streams": 0, "jungle-gyms": 0, "cloud-confessional": 0, "esc-to-mars": 0, "xfinity-depths": 0, "wasted-days": 0, "home-page": 0, "gallery": 0, "blind-eye": 0 }
     };
 
     this.isClosed = false;
-    this.isMenuOn = false;
+    this.isMenuOn = true;
   }
 
 
@@ -127,7 +130,7 @@ class App extends React.Component {
 
 
   componentDidUpdate(prevProps) {
-    if (this.state.usersChange) 
+    if (this.state.usersChange)
       this.setState({ usersChange: false });
 
     if (this.props.location.pathname !== prevProps.location.pathname)
@@ -147,7 +150,7 @@ class App extends React.Component {
 
   pageChange = () => {
     let newPath = this.props.location.pathname;
-    console.log("PAGE CHANGE", newPath)
+    // console.log("PAGE CHANGE", newPath)
     this.props.hideMenus();
     const nextRoom = this.getRoom(newPath);
     if (nextRoom != this.props.user.room) {
@@ -268,19 +271,19 @@ class App extends React.Component {
     if (this.state.users) {
       for (const usr of this.state.users) {
         var room = usr.room;
-        if (room in roomCount) roomCount[room]++;
+        if (room in roomCount)
+          roomCount[room]++;
       }
-      // console.log("OK", roomCount, this.state.users);
       this.setState({ roomCount })
     }
 
   }
 
-  onLeave=(nextState) => { 
-    if(nextState.action === 'POP') { 
-      console.log("LEAVING??")
-    }
-  }
+  // onLeave = (nextState) => {
+  //   if (nextState.action === 'POP') {
+  //     console.log("LEAVING??")
+  //   }
+  // }
 
   getUserNameById = (id) => {
     const users = this.state.users;
@@ -338,7 +341,7 @@ class App extends React.Component {
 
 
   closeWelcome = () => {
-    this.setState({ showWelcome: false, hasAvatar: true })
+    this.setState({ showWelcome: false, hasAvatar: true, hasLoadedRoom: true })
     // this.props.setGalleryActive();
   }
 
@@ -363,64 +366,87 @@ class App extends React.Component {
     }
   };
 
+  startMedia = () => {
+    console.log("starting media");
+    if (this.props.music.hasAudio && this.audioPlayer) {
+      // if (this.audioPlayer.audioEl) 
+      // this.audioPlayer.audioEl.play();
+    }
+    this.setState({ hasLoadedRoom: true });
+  }
+
   render() {
-    
-    const { ui } = this.props;
+
+    const { ui, music } = this.props;
     const appHeaderClass = "App-Header" + (ui.isMobile || ui.hasFooter ? " mobile" : "");
 
     const currentPage = this.getRoomTitle(this.props.location.pathname);
-    
+
     return (
       <div className={this.getStringClasses()}>
-          <div className={appHeaderClass}>
-            <div className="BackHeader"></div>
-            <Header currentPage={currentPage} user={this.props.user} avatarClicked={this.avatarClicked} isClosed={this.isClosed} isMenuOn={this.isMenuOn} />
-          </div>
-          <div className="App-Content inner-outline" onMouseMove={this.handleMouseMove}>
-            <Switch>
-              <Route exact path="/" render={() => (<Gallery users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} isClosed={this.isClosed} />)} />
+        <div className={appHeaderClass}>
+          <div className="BackHeader"></div>
+          <Header currentPage={currentPage} user={this.props.user} avatarClicked={this.avatarClicked} isClosed={this.isClosed} isMenuOn={this.isMenuOn} />
+        </div>
+        <div className="App-Content inner-outline" onMouseMove={this.handleMouseMove}>
+          <Switch>
+            <Route exact path="/" render={() => (<Gallery users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} isClosed={this.isClosed} />)} />
 
-              {/* Sketches */}
-              <Route exact path={getUrl("mac")} render={() => (<MacbookAir />)} />
-              <Route exact path={getUrl("jung")} render={() => (<JungleGyms />)} />
-              <Route exact path={getUrl("hard")} render={() => (<HardDrives />)} />
-              <Route exact path={getUrl("wasted")} render={() => (<Wasted />)} />
-              <Route exact path={getUrl("esc")} render={() => (<Mars addClass={this.addClass} removeClass={this.removeClass} />)} />
-              <Route exact path={getUrl("wet")} render={() => (<WetStreams />)} />
-              <Route exact path={getUrl("xfin")} render={() => (<Xfinity />)} />
-              <Route exact path={getUrl("cloud")} render={() => (<Confessional cursor={this.state.cursorID} />)} />
-              <Route exact path="/confessions" render={() => (<Confessions />)} />
-              <Route exact path={getUrl("flush")} render={() => (<Flush />)} />
-              <Route exact path={getUrl("home")} render={() => (<Oogle />)} />
-              <Route exact path={getUrl("blind")} render={() => (<Blinds />)} />
-              <Route exact path={getUrl("yose")} component={Yosemite} />
-              <Route exact path={getUrl("click")} render={() => (<ClickMe addClass={this.addClass} removeClass={this.removeClass} />)} />
+            {/* Sketches */}
+            <Route exact path={getUrl("mac")} render={() => (<MacbookAir />)} />
+            <Route exact path={getUrl("jung")} render={() => (<JungleGyms />)} />
+            <Route exact path={getUrl("hard")} render={() => (<HardDrives />)} />
+            <Route exact path={getUrl("wasted")} render={() => (<Wasted />)} />
+            <Route exact path={getUrl("esc")} render={() => (<Mars addClass={this.addClass} removeClass={this.removeClass} />)} />
+            <Route exact path={getUrl("wet")} render={() => (<WetStreams />)} />
+            <Route exact path={getUrl("xfin")} render={() => (<Xfinity />)} />
+            <Route exact path={getUrl("cloud")} render={() => (<Confessional cursor={this.state.cursorID} />)} />
+            <Route exact path="/confessions" render={() => (<Confessions />)} />
+            <Route exact path={getUrl("flush")} render={() => (<Flush />)} />
+            <Route exact path={getUrl("home")} render={() => (<Oogle />)} />
+            <Route exact path={getUrl("blind")} render={() => (<Blinds />)} />
+            <Route exact path={getUrl("yose")} component={Yosemite} />
+            <Route exact path={getUrl("click")} render={() => (<ClickMe addClass={this.addClass} removeClass={this.removeClass} />)} />
 
-              {/* Pages */}
-              <Route exact path="/about" render={() => (<About ui={this.props.ui} />)} />
-              <Route exact path="/statement" render={() => (<Statement ui={this.props.ui} />)} />
-              <Route exact path="/credits" render={() => (<Credits ui={this.props.ui} />)} />
+            {/* Pages */}
+            <Route exact path="/about" render={() => (<About ui={this.props.ui} />)} />
+            <Route exact path="/statement" render={() => (<Statement ui={this.props.ui} />)} />
+            <Route exact path="/credits" render={() => (<Credits ui={this.props.ui} />)} />
 
-              {/* Utilities */}
-              <Route exact path="/gallerytest" render={() => (<Gallery users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} isClosed={false} />)} />
-              <Route exact path="/register" render={() => (<RegisterDesktop />)} />
-              <Route exact path="/viewusers" render={() => <ViewUsers users={this.state.users} />} />
-              <Route exact path="/pangallery" render={() => <PanGallery users={this.state.users} roomCount={this.state.roomCount} />} />
-              <Route exact path="/scroll" render={() => <ScrollSketches addClass={this.addClass} removeClass={this.removeClass} />} />
-       
-               {/* catch all */}
-              <Route path="*" component={NotFound} />
-            </Switch>
+            {/* Utilities */}
+            <Route exact path="/gallerytest" render={() => (<Gallery users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} isClosed={false} />)} />
+            <Route exact path="/register" render={() => (<RegisterDesktop />)} />
+            <Route exact path="/viewusers" render={() => <ViewUsers users={this.state.users} />} />
+            <Route exact path="/pangallery" render={() => <PanGallery users={this.state.users} roomCount={this.state.roomCount} />} />
+            <Route exact path="/scroll" render={() => <ScrollSketches addClass={this.addClass} removeClass={this.removeClass} />} />
 
-          </div>
-          {/* {<FPSStats top={window.innerHeight - 255} left={10} />} */}
-          <Chat users={this.state.users} usersChange={this.state.usersChange} />
-          <Volume />
-          <FAQFrame />
-          <SignIn hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} isFrame={true} />
-          <RoomDecal hasLoadedRoom={this.state.hasLoadedRoom} users={this.state.users} onHide={() => this.setState({ hasLoadedRoom: true })} />
-          <Welcome isClosed={this.isClosed} user={this.props.user} hasAvatar={this.state.hasAvatar} showWelcome={this.state.showWelcome} closeWelcome={this.closeWelcome} />
-          <MobileFooter currentPage={currentPage} user={this.props.user} avatarClicked={this.avatarClicked} />
+            {/* catch all */}
+            <Route path="*" component={NotFound} />
+          </Switch>
+
+        </div>
+        {/* {<FPSStats top={window.innerHeight - 255} left={10} />} */}
+        <Chat users={this.state.users} usersChange={this.state.usersChange} />
+        <Volume />
+        <FAQFrame />
+        <SignIn hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} isFrame={true} />
+        <RoomDecal startMedia={this.startMedia} hasLoadedRoom={this.state.hasLoadedRoom} users={this.state.users} />
+        <Welcome isClosed={this.isClosed} user={this.props.user} hasAvatar={this.state.hasAvatar} showWelcome={this.state.showWelcome} closeWelcome={this.closeWelcome} />
+        <MobileFooter currentPage={currentPage} user={this.props.user} avatarClicked={this.avatarClicked} />
+        <YouTube />
+        { (currentPage === "gallery" && !this.state.showWelcome) ||
+          ui.compositionStarted ?
+          <ReactAudioPlayer
+            src={music.currentSongTitle}
+            autoPlay={true}
+            volume={music.volume}
+            controls={false}
+            loop={true}
+            ref={player => {
+              this.audioPlayer = player;
+            }}
+          /> : null
+        }
       </div>
     );
   }
@@ -432,7 +458,8 @@ class App extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
-    ui: state.ui
+    ui: state.ui,
+    music: state.music
   }
 }
 

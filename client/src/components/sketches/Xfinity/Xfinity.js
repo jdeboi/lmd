@@ -2,6 +2,7 @@ import React from 'react';
 import Frame from '../../shared/Frame/Frame';
 import DesktopIcon from '../../shared/DesktopIcon/DesktopIcon';
 import { connect } from 'react-redux';
+import {setSketchMusic} from '../../../store/actions/music';
 // import FrameSimple from '../../shared/Frame/FrameSimple';
 import './Xfinity.css';
 import { mapVal } from '../../shared/Helpers/Helpers';
@@ -56,7 +57,7 @@ class Xfinity extends React.Component {
     this.divRef.current.addEventListener('wheel', this.preventDefault);
     this.setImages();
 
-    // this.props.userSetRoom("xfinity-depths");
+    this.props.setSketchMusic("xfinity", 0, .3);
   }
 
   componentWillUnmount() {
@@ -362,6 +363,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = () => {
   return {
     // doneLoadingApp
+    setSketchMusic
   }
 }
 

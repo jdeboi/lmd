@@ -22,8 +22,11 @@ import { WireframeGeometry2 } from 'three/examples/jsm/lines/WireframeGeometry2.
 import { rooms, roomLines, roads, doors, labels } from './data';
 
 import Modal from './components/Modal';
+
+// store
 import { connect } from 'react-redux';
 import { doneLoadingApp } from '../../../store/actions/';
+import { setNoSketchMusic } from '../../../store/actions/music';
 
 
 var mapR = 0;
@@ -47,6 +50,7 @@ class Oogle extends Component {
 
   componentDidMount() {
 
+    this.props.setNoSketchMusic();
     this.icons = [];
     this.labelGroups = [[], [], [], []];
     this.roomLabels = [];
@@ -583,12 +587,12 @@ class Oogle extends Component {
 
   loadObj = (path, { x, y, z }, sc, rot) => {
 
-   
+
     return new Promise((resolve, reject) => {
       var object;
 
       const loadModel = () => {
-        object.traverse( (child) => {
+        object.traverse((child) => {
           if (child.isMesh) {
             const materialT = new THREE.MeshPhongMaterial({
               color: 0xffffff,
@@ -682,7 +686,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = () => {
   return {
-    doneLoadingApp
+    doneLoadingApp,
+    setNoSketchMusic
   }
 }
 

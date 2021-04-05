@@ -5,7 +5,6 @@ import "./JungleGyms.css";
 
 import * as THREE from "three";
 import { AnaglyphEffect } from 'three/examples/jsm/effects/AnaglyphEffect.js';
-// import { ImprovedNoise } from 'three/examples/jsm/math/ImprovedNoise.js'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
 import { DDSLoader } from 'three/examples/jsm/loaders/DDSLoader.js';
@@ -13,7 +12,10 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import Frame from '../../shared/Frame/Frame';
 import ReactPlayer from 'react-player';
-// import Glasses from '../../shared/Glasses/Glasses';
+
+// store
+import {connect} from 'react-redux';
+import { setSketchMusic } from '../../../store/actions/music';
 
 import Pipe from './Pipe';
 
@@ -36,7 +38,7 @@ class JungleGyms extends React.Component {
     this.setupScene();
     this.startAnimationLoop();
 
-    // this.props.userSetRoom("jungle-gyms");
+    this.props.setSketchMusic("jungleGyms", 0, .5);
   }
 
   componentWillUnmount() {
@@ -278,7 +280,7 @@ class JungleGyms extends React.Component {
           Your browser does not support HTML5 video.
         </video>
 
-       {/* { this.getControlsFrame()} */}
+        {/* { this.getControlsFrame()} */}
         {/*Glasses />*/}
       </div>
     )
@@ -329,4 +331,17 @@ function getFrame(dimW, dimH, dimX, dimY, tit, vid) {
   )
 }
 
-export default JungleGyms;
+const mapStateToProps = (state) => {
+  return {
+  }
+}
+
+const mapDispatchToProps = () => {
+  return {
+    // doneLoadingApp
+    setSketchMusic
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps())(JungleGyms);

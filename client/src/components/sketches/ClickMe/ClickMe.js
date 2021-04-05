@@ -13,6 +13,7 @@ import { constrain, mapVal } from '../../shared/Helpers/Helpers';
 // store
 import { connect } from 'react-redux';
 import { doneLoadingApp } from '../../../store/actions';
+import { setSketchMusic, setSketchVolume } from '../../../store/actions/music';
 
 import * as THREE from "three";
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
@@ -57,6 +58,7 @@ class ClickMe extends React.Component {
 
 
     componentDidMount() {
+        this.props.setSketchMusic("clickMe", 0, 0);
 
         this.interval = setInterval(this.setHeart, 20);
         this.props.addClass("clickMe");
@@ -126,7 +128,7 @@ class ClickMe extends React.Component {
             anaglyphEffect.setSize(window.innerWidth, window.innerHeight);
         }
 
-       
+
 
         function createGUI() {
 
@@ -226,7 +228,7 @@ class ClickMe extends React.Component {
 
         }
 
-    
+
 
         function animate() {
             requestAnimationFrame(animate);
@@ -263,7 +265,7 @@ class ClickMe extends React.Component {
                 }
 
             }
-        
+
 
             if (blinds[0]) {
                 const hr = mapVal(heartRate, 30, maxHeart, .2, 8);
@@ -525,21 +527,21 @@ class ClickMe extends React.Component {
             var blindsTexture = new THREE.TextureLoader().load(window.AWS + "/clickMe/textures/blinds.jpeg");
             blindsTexture.wrapS = THREE.RepeatWrapping;
             blindsTexture.wrapT = THREE.RepeatWrapping;
-            blindsTexture.repeat.set( 2, 2 );
+            blindsTexture.repeat.set(2, 2);
             blindsTexture.offset.set(0, 0);
-            
+
             const groundMat = new THREE.MeshLambertMaterial({ color: 0x6071a6, transparent: true, opacity: .7, map: blindsTexture });
             const z = -400;
             blinds[0] = new THREE.Mesh(new THREE.PlaneGeometry(GROUND_SIZE, GROUND_SIZE), groundMat);
             blinds[0].position.z = z;
             blinds[0].position.y = 1000;
             scene.add(blinds[0]);
-           
+
             blinds[1] = new THREE.Mesh(new THREE.PlaneGeometry(GROUND_SIZE, GROUND_SIZE), groundMat);
             blinds[1].position.z = z;
             blinds[1].position.y = 0;
             scene.add(blinds[1]);
-            
+
             blinds[2] = new THREE.Mesh(new THREE.PlaneGeometry(GROUND_SIZE, GROUND_SIZE), groundMat);
             blinds[2].position.z = z;
             blinds[2].position.y = -1000;
@@ -580,7 +582,7 @@ class ClickMe extends React.Component {
             const objLoader = new OBJLoader();
             objLoader.load(url, (root) => {
                 var jar = root;
-               
+
                 const jarMaterial = new THREE.MeshPhysicalMaterial({
                     transparent: true,
                     opacity: .5,
@@ -693,7 +695,9 @@ class ClickMe extends React.Component {
 
 
     setHeart = () => {
-        this.setState({ hR: heartRate, hT: heartTotal })
+        this.setState({ hR: heartRate, hT: heartTotal });
+        let vol = mapVal(heartRate, 30, maxHeart, .02, 1);
+        this.props.setSketchVolume(vol);
     }
 
     render() {
@@ -750,6 +754,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = () => {
     return {
         doneLoadingApp,
+        setSketchMusic,
+        setSketchVolume
     }
 }
 

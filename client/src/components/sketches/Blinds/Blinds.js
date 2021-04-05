@@ -6,6 +6,7 @@ import Sketch from './p5/BlindsSketch';
 // store
 import { connect } from 'react-redux';
 import { doneLoadingApp } from '../../../store/actions';
+import { setSketchMusic } from '../../../store/actions/music';
 
 import * as THREE from "three";
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
@@ -31,7 +32,7 @@ class Blinds extends React.Component {
 
 
   componentDidMount() {
-
+    this.props.setSketchMusic("cloud", 0, .2);
     this.scene = new THREE.Scene();
     this.columns = [];
     this.hercules = [];
@@ -286,6 +287,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = () => {
   return {
     doneLoadingApp,
+    setSketchMusic
   }
 }
 

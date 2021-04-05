@@ -5,7 +5,7 @@ import MarsMobile from './components/MarsMobile';
 
 // store
 import { connect } from 'react-redux';
-
+import { setSketchMusic } from '../../../store/actions/music';
 
 class Mars extends React.Component {
 
@@ -17,6 +17,8 @@ class Mars extends React.Component {
 
 
   componentDidMount() {
+
+    this.props.setSketchMusic("mars", 0, .5);
   }
 
   componentWillUnmount() {
@@ -24,10 +26,10 @@ class Mars extends React.Component {
 
 
   justPool = () => {
-    const {ui} = this.props;
+    const { ui } = this.props;
     if (ui.orientation === "portrait" && ui.contentW < 750)
       return true;
-    else if (ui.orientation === "landscape" && ui.contentH < 500) 
+    else if (ui.orientation === "landscape" && ui.contentH < 500)
       return true;
     return false;
   }
@@ -36,7 +38,7 @@ class Mars extends React.Component {
 
     return (
       <div className="Mars Sketch">
-        {this.justPool()?<MarsMobile />:<MarsDesktop addClass={this.props.addClass} removeClass={this.props.removeClass} />}
+        {this.justPool() ? <MarsMobile /> : <MarsDesktop addClass={this.props.addClass} removeClass={this.props.removeClass} />}
       </div>
     )
   }
@@ -53,7 +55,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = () => {
   return {
-
+    setSketchMusic
   }
 }
 

@@ -16,6 +16,7 @@ import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 // import Volume from '@material-ui/icons/VolumeMute';
 import VolumeUp from '@material-ui/icons/VolumeUp';
 import VolumeOff from '@material-ui/icons/VolumeOff';
+import LiveIcon from '@material-ui/icons/LiveTv';
 import VolumeDown from '@material-ui/icons/VolumeDown';
 
 // import UsersIcon from '@material-ui/icons/SupervisedUserCircle';
@@ -262,7 +263,8 @@ class Header extends React.Component {
     return (
       <li className={classVol} onClick={this.props.toggleVolumeMenu}>
         {/* <Volume isMuted={this.props.music.isMuted} /> */}
-        {this.getVolumeIcon()}
+        {/* {this.getVolumeIcon()} */}
+        <LiveIcon />
       </li>
     )
   }

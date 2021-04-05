@@ -5,6 +5,7 @@ import './Wasted.css';
 
 // store
 import { connect } from 'react-redux';
+import {setNoSketchMusic} from '../../../store/actions/music';
 // import { doneLoadingApp } from '../../../store/actions/';
 
 class Wasted extends React.Component {
@@ -32,6 +33,7 @@ class Wasted extends React.Component {
 
 
   componentDidMount() {
+    this.props.setNoSketchMusic();
     this.startTime = new Date();
     this.intervalFrames = setInterval(this.setFrame, 200);
   }
@@ -151,6 +153,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = () => {
   return {
     // doneLoadingApp
+    setNoSketchMusic
   }
 }
 

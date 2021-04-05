@@ -7,6 +7,7 @@ import sketch from './wetSketch';
 
 import Shower from './components/Shower';
 import { connect } from 'react-redux';
+import {setSketchMusic} from '../../../store/actions/music';
 
 // import {getNewZIndices} from '../../shared/Helpers/Helpers';
 // import Stair from './Stair';
@@ -46,6 +47,7 @@ class WetStreams extends React.Component {
     // window.addEventListener("resize", this.updateDimensions.bind(this));
     this.interval = setInterval(this.playStreamReset, 4000);
     // this.props.userSetRoom("wet-streams");
+    this.props.setSketchMusic("wetStreams", 0, .6);
   }
 
   componentWillUnmount() {
@@ -226,6 +228,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = () => {
   return {
     // doneLoadingApp
+    setSketchMusic
   }
 }
 

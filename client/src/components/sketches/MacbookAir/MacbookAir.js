@@ -5,7 +5,7 @@ import './MacbookAir.css';
 // import Grid from '@material-ui/core/Grid';
 import Slider from '@material-ui/core/Slider';
 // import indigo from '@material-ui/core/colors/indigo';
-
+import { setSketchMusic, setNoSketchMusic, setSketchVolume } from '../../../store/actions/music';
 import ReactPlayer from 'react-player'
 
 // store
@@ -38,15 +38,25 @@ class MacbookAir extends React.Component {
   componentDidMount() {
     this.interval = setInterval(this.resetPlayer, 22000);
     this.props.doneLoadingApp();
+    this.props.setSketchMusic("cloud", 0, .5);
   }
 
   componentWillUnmount() {
     clearInterval(this.interval);
   }
 
+  componentDidUpdate(prevProps) {
+    const {ui} = this.props;
+    if (ui.compositionStarted && !prevProps.ui.compositionStarted) {
+      this.fanRef.current.play();
+      this.cloudsRef.current.play();
+    }
+  }
+
   setSpeed(speed) {
     this.cloudsRef.current.playbackRate = speed;
     // this.setState({ videoSpeed: speed });
+    this.props.setSketchVolume(speed);
     this.fanRef.current.playbackRate = speed;
   }
 
@@ -161,8 +171,7 @@ class MacbookAir extends React.Component {
             height={windowDim.h}
             muted
             loop
-            playsInLine
-            playbackRate={this.state.videoSpeed}
+            playsInline
             autoPlay>
             <source src={window.AWS + "/macbookAir/noframe.mp4"} type="video/mp4"></source>
           </video>
@@ -275,13 +284,17 @@ function ContinuousSliderHoriz(props) {
 
 const mapStateToProps = (state) => {
   return {
-    ui: state.ui
+    ui: state.ui,
+    music: state.music
   }
 }
 
 const mapDispatchToProps = () => {
   return {
-    doneLoadingApp
+    doneLoadingApp,
+    setSketchMusic,
+    setSketchVolume,
+    setNoSketchMusic,
   }
 }
 

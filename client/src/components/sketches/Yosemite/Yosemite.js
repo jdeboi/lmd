@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Frame from '../../shared/Frame/Frame';
 import DesktopIcon from '../../shared/DesktopIcon/DesktopIcon';
-import Dock from '../../shared/Dock/Dock';
+// import Dock from '../../shared/Dock/Dock';
+import { setSketchMusic, setSketchVolume } from '../../../store/actions/music';
 import { mapVal, constrain, randomInRange } from '../../shared/Helpers/Helpers';
 import './Yosemite.css';
 
@@ -28,6 +29,7 @@ class Yosemite extends React.Component {
 
     // this.popInterval = setTimeout(this.popUp, 4000);
     this.popInterval = setTimeout(this.startPop, 9000);
+    this.props.setSketchMusic("yosemite", 0, 0);
   }
 
   componentWillUnmount() {
@@ -43,12 +45,12 @@ class Yosemite extends React.Component {
 
   startPop = () => {
     if (!this.state.hasStarted) {
-      this.setState({hasStarted: true},this.popUp);
+      this.setState({ hasStarted: true }, this.popUp);
     }
   }
 
   popUp = () => {
-    
+
     const { ui } = this.props;
     let t = this.state.popTime - 200;
     let minT = 300;
@@ -72,6 +74,9 @@ class Yosemite extends React.Component {
     popups[numPop] = pop;
     this.setState({ numPops: numPop, popTime: t, popups, popW })
 
+    let vol = mapVal(popW, 0, 700, 0, 1);
+    vol = constrain(vol, 0, 1);
+    this.props.setSketchVolume(vol);
     this.popInterval = setTimeout(this.popUp, t);
 
   }
@@ -212,7 +217,7 @@ class Yosemite extends React.Component {
 
   getFrames = () => {
     const { numFrames } = this.state;
-    const {ui} = this.props;
+    const { ui } = this.props;
     let frames = [];
     for (let i = 0; i < numFrames; i++) {
       frames[i] = i;
@@ -230,9 +235,9 @@ class Yosemite extends React.Component {
             framesW = 5;
             startX = 20;
           }
-          
+
           let direction = Math.floor(frame / framesW);
-          
+
           let x = 0;
           if (direction % 2 == 0) x = startX + frame % framesW * 20;
           else x = startX + framesW * 20 - frame % framesW * 20;
@@ -308,7 +313,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = () => {
   return {
-
+    setSketchMusic,
+    setSketchVolume
   }
 }
 

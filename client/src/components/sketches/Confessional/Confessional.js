@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import './Confessional.css';
 // store
 // import { doneLoadingApp } from '../../../store/actions/';
-
+import { setSketchMusic } from '../../../store/actions/music';
 
 import PearlyGates from './components/PearlyGates/PearlyGates';
 import WebZoom from './components/WebZoom';
@@ -87,6 +87,7 @@ class Confessional extends React.Component {
 
   componentDidMount() {
     // this.interval = setInterval(this.resetPlayer, 22000);
+    this.props.setSketchMusic("cloud", 0, 1);
   }
 
   componentWillUnmount() {
@@ -143,8 +144,8 @@ class Confessional extends React.Component {
     let sp = 10;
     const buttonSty = { top: 0, left: 0, position: "absolute" };
     // if (ui.orientation === "portrait") {
-      buttonSty.top = gates.y + gates.dim + sp * 2 + ui.toolbarH;
-      buttonSty.left = ui.contentW / 2 - buttonW / 2;
+    buttonSty.top = gates.y + gates.dim + sp * 2 + ui.toolbarH;
+    buttonSty.left = ui.contentW / 2 - buttonW / 2;
     // }
     // else {
 
@@ -157,12 +158,12 @@ class Confessional extends React.Component {
     let sp = 10;
     let buttonH = 36;
     // if (ui.orientation === "portrait") {
-      let availW = ui.contentW - sp * 2 - 4;
-      let availH = ui.contentH - ui.toolbarH - sp * 3 - buttonH;
-      let d = Math.min(availW, availH);
-      pearly.dim = Math.min(d, pearly.dim);
-      pearly.x = (ui.contentW - pearly.dim) / 2 - 2;
-      pearly.y = (ui.contentH - pearly.dim - sp - ui.toolbarH - buttonH) / 2;
+    let availW = ui.contentW - sp * 2 - 4;
+    let availH = ui.contentH - ui.toolbarH - sp * 3 - buttonH;
+    let d = Math.min(availW, availH);
+    pearly.dim = Math.min(d, pearly.dim);
+    pearly.x = (ui.contentW - pearly.dim) / 2 - 2;
+    pearly.y = (ui.contentH - pearly.dim - sp - ui.toolbarH - buttonH) / 2;
     // }
     // else {
 
@@ -236,6 +237,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = () => {
   return {
     // doneLoadingApp
+    setSketchMusic
   }
 }
 

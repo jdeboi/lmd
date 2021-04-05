@@ -174,7 +174,7 @@ class Chat extends React.Component {
       // else {
       //   phrase = "Cool, I don't drink either.";
       // }
-      let phrase = "sorry, I'm not a very smart bot."
+      let phrase = "Make sure that the red lens of your glasses is over your LEFT eye."
       this.props.addMessage({ to: "me", from: "hostBot", message: phrase, time: new Date(), avatar: userActiveChat.avatar });
       this.setState({ hostBotJustAsked: false });
     }
