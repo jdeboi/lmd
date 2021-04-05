@@ -52,6 +52,8 @@ export function seeUserClicked(userEase, users, p5) {
 
 
 export function drawUser(user, p5) {
+    const foodTime = 75*1000;
+
     p5.fill(255);
     p5.noStroke();
     p5.push();
@@ -60,15 +62,15 @@ export function drawUser(user, p5) {
     p5.text(user.avatar, -17, 17);
 
     p5.translate(0, 16);
-    if (user.hasCheese) {
+    if (user.hasCheese && new Date() - user.hasCheese < foodTime) {
         drawCheese(p5);
     }
 
-    if (user.hasWine) {
+    if (user.hasWine && new Date() - user.hasWine < foodTime) {
         drawWine(p5);
     }
 
-    if (user.hasCocktail) {
+    if (user.hasCocktail && new Date() - user.hasCocktail < foodTime) {
         drawCocktail(p5);
     }
 

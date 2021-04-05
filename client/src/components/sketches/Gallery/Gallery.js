@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { doneLoadingApp } from '../../../store/actions';
 import { moveUser, toggleOutside } from '../../../store/actions/user';
 import { setUserActiveChat } from '../../../store/actions/userActiveChat';
-import { setOneMenu, showChat } from '../../../store/actions/menuItems';
+import { setOneMenu, showChat, toggleLiveStream } from '../../../store/actions/menuItems';
 import { setNoSketchMusic, setSketchMusic, setSketchVolume } from '../../../store/actions/music';
 
 import { mapVal } from '../../shared/Helpers/Helpers';
@@ -24,14 +24,7 @@ class Gallery extends React.Component {
   constructor(props) {
     super(props);
 
-    // this.songs = [
-    //   window.AWS + "/gallery/music/lounge.mp3",
-    //   window.AWS + "/gallery/music/sexy.mp3",
-    //   window.AWS + "/gallery/music/jazzriff.mp3",
-    //   window.AWS + "/gallery/music/samba.mp3",
-    //   window.AWS + "/gallery/music/jazzpiano.mp3",
-    //   window.AWS + "/gallery/music/trap.mp3",
-    // ];
+
 
     this.state = {
       keyDown: false,
@@ -43,11 +36,14 @@ class Gallery extends React.Component {
     }
 
     this.props.setSketchMusic("gallery", 0, .1);
+
     // this.props.setNoSketchMusic();
   }
 
   componentDidMount() {
     this.loadingInterval = setInterval(this.cycleEllipses, 300);
+
+
     // window.addEventListener("resize", this.handleResize);
   }
 
@@ -85,6 +81,11 @@ class Gallery extends React.Component {
   loadingDone = () => {
     this.props.doneLoadingApp();
     clearInterval(this.loadingInterval);
+
+    const { hasFooter, isMobile } = this.props.ui;
+    if (!isMobile && !hasFooter) {
+      this.props.toggleLiveStream();
+    }
   }
 
   getHomeComponents = () => {
@@ -202,7 +203,8 @@ const mapDispatchToProps = () => {
     showChat,
     setSketchMusic,
     setSketchVolume,
-    setNoSketchMusic
+    setNoSketchMusic,
+    toggleLiveStream
   }
 }
 

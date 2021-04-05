@@ -79,13 +79,11 @@ export default (props) => {
         // displayDivs(divs, col, col2, p5.color(100));
 
         let buttoncol = p5.color(255);
-        let framecol = p5.color(255, 50)
+        let framecol = p5.color(255, 0)
         // let toolcol = p5.color(150, 150, 100, 100);
         let toolcol = p5.color(110, 119, 54, 180);
         displayDivs(divs, toolcol, framecol, buttoncol);
         updateDivs(divs);
-
-
 
     }
 

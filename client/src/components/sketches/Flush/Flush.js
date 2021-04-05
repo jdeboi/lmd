@@ -3,10 +3,10 @@ import Frame from '../../shared/Frame/Frame';
 import './Flush.css';
 
 import { connect } from 'react-redux';
-import {setSketchMusic} from '../../../store/actions/music';
+import { setSketchMusic } from '../../../store/actions/music';
 
 // Babylon
-import { Scene, AnaglyphUniversalCamera, UniversalCamera, PostProcess, Effect, HemisphericLight, Vector3, Vector2, SceneLoader, AssetContainer, MeshBuilder, StandardMaterial, VideoTexture, CubeTexture, Color3, Color4, Mesh, Texture } from 'babylonjs';
+import { AnaglyphUniversalCamera, HemisphericLight, Vector3, StandardMaterial, VideoTexture, Color4, Mesh } from 'babylonjs';
 import BabylonScene from '../../shared/Babylon.jsx';
 import Emoji from './Emoji';
 
@@ -49,8 +49,8 @@ class Flush extends React.Component {
     this.scene.clearColor = new Color4(0, 0, 0, 0);
     this.camera.setTarget(new Vector3(0, 0, 10));
 
-    const canvas = this.scene.getEngine().getRenderingCanvas();
-    this.camera.attachControl(canvas, true);
+    // const canvas = this.scene.getEngine().getRenderingCanvas();
+    // this.camera.attachControl(canvas, true);
 
     const light = new HemisphericLight("light1", new Vector3(0, 0, -1), this.scene);
     light.intensity = .5;
@@ -91,7 +91,7 @@ class Flush extends React.Component {
     }
 
     // for mobile??
-    if(this.vidTex.video && !this.isVideoPlaying()) {
+    if (this.vidTex.video && !this.isVideoPlaying()) {
       this.vidTex.video.play();
     }
   }
@@ -103,7 +103,7 @@ class Flush extends React.Component {
 
   flushToilet = () => {
     // this.setState({isFlushing: true});
-    if(this.vidTex.video && !this.isVideoPlaying()) {
+    if (this.vidTex.video && !this.isVideoPlaying()) {
       this.vidTex.video.play();
     }
     const isFlushing = true;
@@ -137,12 +137,18 @@ class Flush extends React.Component {
     return (
       <div className="Flush Sketch" ref={this.divRef} >
 
-        { <BabylonScene className="noSelect backgroundCover" antialias onSceneReady={this.onSceneReady} onRender={this.onRender} id='babylon-canvas' />}
-        <Frame title="" x={100} y={100} width={150} height={60} windowStyle={{ background: "transparent" }} content={
-          <div className="flush">
-            <button onClick={this.flushToilet} style={{ transform: deg }}><img src={window.AWS + "/vorTech/flush2.png"} /></button>
-          </div>
-        }
+        { <BabylonScene className="noSelect" antialias onSceneReady={this.onSceneReady} onRender={this.onRender} id='babylon-canvas' />}
+        <Frame title=""
+          x={100}
+          y={100}
+          width={150}
+          height={60}
+          windowStyle={{ background: "transparent" }}
+          content={
+            <div className="flush">
+              <button onClick={this.flushToilet} style={{ transform: deg }}><img src={window.AWS + "/vorTech/flush2.png"} /></button>
+            </div>
+          }
         />
       </div>
     );

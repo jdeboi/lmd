@@ -24,7 +24,7 @@ const initialState = {
 
 function getHasFooter(w, h) {
     //788
-    return (w < 817 || h < 600);
+    return (w < 835 || h < 600);
 }
 
 function getOrientation(w, h) {

@@ -23,7 +23,7 @@ import VolumeDown from '@material-ui/icons/VolumeDown';
 
 // store
 import { connect } from 'react-redux';
-import { toggleMap, toggleFaq, toggleChat, toggleUserIcons, toggleVolumeMenu } from '../../../store/actions/menuItems';
+import { toggleMap, toggleFaq, toggleChat, toggleUserIcons, toggleLiveStream } from '../../../store/actions/menuItems';
 import { resetMessgeNotification } from '../../../store/actions/messages';
 import { toggleVolume } from '../../../store/actions/music';
 
@@ -118,39 +118,8 @@ class Header extends React.Component {
     )
   }
 
-  // getMainTitleLi = () => {
-  //   const sty1 = { fontSize: 9, color: "white", height: 20, padding: 0, margin: 0 }
-  //   const sty2 = { fontSize: 12, color: "blue", height: 20, padding: 0, margin: 0 }
-  //   return (
-  //     <li>
-  //       <div style={{ display: "flex", flexDirection: "column", height: 60 }}>
-  //         <div style={sty1}>losing my dimension</div>
-  //         <div style={sty2}>{this.props.currentPage}</div>
-  //       </div>
-  //     </li>
-  //   )
-  // }
 
   getMainMenuSub = () => {
-    // const finderMenuItems = [
-    //   // { title: "about", link: "/about", shortcut: "", classN: "about" },
-    //   // { title: "spacer" },
-    //   { title: "gallery", link: "/", shortcut: "&#x2318;0", classN: "gallery" },
-    //   { title: "macbook air", link: "/macbook-air", shortcut: "&#x2318;1" },
-    //   { title: "wet streams", link: "/wet-streams", shortcut: "&#x2318;2" },
-    //   { title: "hard drives on seashores", link: "/hard-drives-on-seashores", shortcut: "&#x2318;3" },
-    //   { title: "jungle gyms", link: "/jungle-gyms", shortcut: "&#x2318;4" },
-    //   { title: "wasted days", link: "/wasted-days", shortcut: "&#x2318;5" },
-    //   { title: "esc to mars", link: "/esc-to-mars", shortcut: "&#x2318;6" },
-    //   { title: "xfinity depths", link: "/xfinity-depths", shortcut: "&#x2318;7" },
-    //   { title: "cloud confessional", link: "/cloud-confessional", shortcut: "&#x2318;8" },
-    //   { title: "blind eye", link: "/blind-eye", shortcut: "&#x2318;9" },
-    //   { title: "flush", link: "/flush", shortcut: "&#x2318;10" },
-    //   { title: "home page", link: "/home-page", shortcut: "&#x2318;11" },
-    //   { title: "yosemite", link: "/yosemite", shortcut: "&#x2318;12" },
-    //   // {title: "i got the feels", link:"/i-got-the-feels", shortcut: "&#x2318;8"},
-    //   // {title: "losing my dimension", link:"/losing-my-dimension", shortcut: "&#x2318;9"},
-    // ];
 
     const { currentPage, isClosed, isMenuOn } = this.props;
     if ((isMenuOn) || currentPage === "gallerytest")
@@ -182,10 +151,12 @@ class Header extends React.Component {
           {/* <li className={classUserIcons} onClick={this.props.toggleUserIcons}><UsersIcon fontSize="inherit" /></li> */}
           {this.getMapLi()}
           {this.getFaqLi()}
-          {this.getVolumeLi()}
+          {this.getLiveStreamLi()}
           <li></li>
           <li><Clock /></li>
-          <li></li>
+          {/* <li></li> */}
+          {this.props.user.comp === null? this.getVolumeLi(): null}
+          {/* <li></li> */}
           {this.getAvatarLi()}
           {/* <li className="expandable hamburger" onClick={this.props.toggleSideBar}><i className="fas fa-bars"></i></li>*/}
         </ul>
@@ -229,12 +200,6 @@ class Header extends React.Component {
   }
 
 
-  toggleVolume = () => {
-    this.setState(prevState => ({
-      volumeMuted: !prevState.volumeMuted
-    }));
-  }
-
   isSimpleHeader() {
     const { ui } = this.props;
     return (ui.isMobile || ui.hasFooter);
@@ -245,9 +210,7 @@ class Header extends React.Component {
     this.props.toggleChat();
   }
 
-  volumeClicked = () => {
-    this.props.toggleVolumeMenu();
-  }
+ 
 
   getMobileRightMenus() {
     return (
@@ -258,13 +221,23 @@ class Header extends React.Component {
   }
 
 
-  getVolumeLi = () => {
-    const classVol = "expandable icon" + (this.props.menu.isVolumeHidden ? " closed" : " opened");
+  getLiveStreamLi = () => {
+    const classVol = "expandable icon" + (this.props.menu.isLiveStreamHidden ? " closed" : " opened");
     return (
-      <li className={classVol} onClick={this.props.toggleVolumeMenu}>
+      <li className={classVol} onClick={this.props.toggleLiveStream}>
         {/* <Volume isMuted={this.props.music.isMuted} /> */}
         {/* {this.getVolumeIcon()} */}
         <LiveIcon />
+      </li>
+    )
+  }
+
+  getVolumeLi = () => {
+    const classVol = "expandable icon opened";
+    return (
+      <li className={classVol} onClick={this.props.toggleVolume}>
+        {/* <Volume isMuted={this.props.music.isMuted} /> */}
+        {this.getVolumeIcon()}
       </li>
     )
   }
@@ -363,7 +336,7 @@ const mapDispatchToProps = () => {
     toggleMap,
     toggleFaq,
     toggleChat,
-    toggleVolumeMenu,
+    toggleLiveStream,
     resetMessgeNotification,
     toggleUserIcons,
     toggleVolume,

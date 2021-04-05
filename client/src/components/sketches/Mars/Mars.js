@@ -18,7 +18,7 @@ class Mars extends React.Component {
 
   componentDidMount() {
 
-    this.props.setSketchMusic("mars", 0, .5);
+    this.props.setSketchMusic("mars", 0, .1);
   }
 
   componentWillUnmount() {

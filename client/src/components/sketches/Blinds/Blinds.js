@@ -46,7 +46,7 @@ class Blinds extends React.Component {
     this.initLights();
     this.initFloor();
     this.initGround();
-    this.initSkybox();
+    // this.initSkybox();
     this.initStatues();
     this.initEffect();
     this.initFrames();
@@ -109,13 +109,13 @@ class Blinds extends React.Component {
     this.scene.add(floor);
   }
 
-  initSkybox = () => {
-    // SKYBOX
-    var skyBoxGeometry = new THREE.CubeGeometry(10000, 10000, 10000);
-    // var skyBoxMaterial = new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.BackSide });
-    var skyBox = new THREE.Mesh(skyBoxGeometry, this.floorMaterial);
-    this.scene.add(skyBox);
-  }
+  // initSkybox = () => {
+  //   // SKYBOX
+  //   var skyBoxGeometry = new THREE.CubeGeometry(10000, 10000, 10000);
+  //   // var skyBoxMaterial = new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.BackSide });
+  //   var skyBox = new THREE.Mesh(skyBoxGeometry, this.floorMaterial);
+  //   this.scene.add(skyBox);
+  // }
 
 
   initStatues = () => {

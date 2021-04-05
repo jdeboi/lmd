@@ -22,6 +22,10 @@ export const SHOWVOLUME = 'SHOWVOLUME';
 export const HIDEVOLUME = 'HIDEVOLUME';
 export const TOGGLEVOLUMEMENU = 'TOGGLEVOLUMEMENU';
 
+export const SHOWLIVESTREAM = 'SHOWLIVESTREAM';
+export const HIDELIVESTREAM = 'HIDELIVESTREAM';
+export const TOGGLELIVESTREAM = 'TOGGLELIVESTREAM';
+
 export const SHOWSIGNIN = 'SHOWSIGNIN';
 export const HIDESIGNIN = 'HIDESIGNIN';
 export const TOGGLESIGNIN = 'TOGGLESIGNIN';
@@ -142,6 +146,28 @@ export const hideVolume = () => {
 export const toggleVolumeMenu = () => {
   return {
     type: TOGGLEVOLUMEMENU
+  }
+}
+
+
+////////////// live stream
+
+
+export const showLiveStream = () => {
+  return {
+    type: SHOWLIVESTREAM
+  }
+}
+
+export const hideLiveStream = () => {
+  return {
+    type: HIDELIVESTREAM
+  }
+}
+
+export const toggleLiveStream = () => {
+  return {
+    type: TOGGLELIVESTREAM
   }
 }
 

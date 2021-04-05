@@ -20,7 +20,7 @@ class FAQFrame extends React.Component {
     return (
       <CenterModal
         title="FAQ"
-        z={1000}
+        z={2501}
         isHidden={isHidden}
         onHide={this.onHide}
         isRelative={false}

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Frame from '../../shared/Frame/Frame';
 import DesktopIcon from '../../shared/DesktopIcon/DesktopIcon';
 // import Dock from '../../shared/Dock/Dock';
-import { setSketchMusic, setSketchVolume } from '../../../store/actions/music';
+import { setSketchMusic, setSketchVolume, setSong } from '../../../store/actions/music';
 import { mapVal, constrain, randomInRange } from '../../shared/Helpers/Helpers';
 import './Yosemite.css';
 
@@ -29,7 +29,7 @@ class Yosemite extends React.Component {
 
     // this.popInterval = setTimeout(this.popUp, 4000);
     this.popInterval = setTimeout(this.startPop, 9000);
-    this.props.setSketchMusic("yosemite", 0, 0);
+    this.props.setSketchMusic("yosemite", 1, 0);
   }
 
   componentWillUnmount() {
@@ -74,8 +74,16 @@ class Yosemite extends React.Component {
     popups[numPop] = pop;
     this.setState({ numPops: numPop, popTime: t, popups, popW })
 
-    let vol = mapVal(popW, 0, 700, 0, 1);
+    // let blazeVal = 300;
+    // let vol = mapVal(popW, 0, blazeVal, 0, 1);
+    // if (popW > blazeVal) {
+    //   if (this.props.music.currentSong === 0) 
+    //     this.props.setSong(1);
+    //   vol = mapVal(popW, blazeVal, 1000, .1, 1);
+    // }
+    let vol = mapVal(popW, 80, 300, 0, 1);
     vol = constrain(vol, 0, 1);
+
     this.props.setSketchVolume(vol);
     this.popInterval = setTimeout(this.popUp, t);
 
@@ -307,14 +315,16 @@ class Yosemite extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    ui: state.ui
+    ui: state.ui,
+    music: state.music
   }
 }
 
 const mapDispatchToProps = () => {
   return {
     setSketchMusic,
-    setSketchVolume
+    setSketchVolume,
+    setSong
   }
 }
 

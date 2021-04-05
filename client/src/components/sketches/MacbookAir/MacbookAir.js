@@ -61,15 +61,14 @@ class MacbookAir extends React.Component {
   }
 
   getDimensions() {
-    var headerH = 34;
-    var toolbarH = 28;
     var ui = { ...this.props.ui };
+    var toolbarH = ui.toolbarH;
     var windowWidth = ui.contentW;
     var windowHeight = ui.contentH;
     var aspectRatio = ui.contentW / ui.contentH;
     // var {} = this.props.dimensions;
     var minSpacing = 20;
-    windowHeight -= headerH;
+    // windowHeight -= headerH;
 
     const originalDim = { w: 840, h: 540 };
 

@@ -161,7 +161,7 @@ class SignIn extends React.Component {
     return (
       <CenterModal
         title="avatar"
-        z={1000}
+        z={2501}
         isHidden={isHidden}
         onHide={this.onHide}
         isRelative={false}

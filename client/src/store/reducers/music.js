@@ -16,7 +16,8 @@ const songs = {
         "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/gallery/music/trap.mp3",
     ],
     yosemite: [
-        "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/yosemite/crackle.mp3"
+        "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/yosemite/crackle.mp3",
+        "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/yosemite/fire.mp3"
     ],
     cloud: [
         "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/waveforms/wind.mp3",
@@ -57,7 +58,7 @@ const initState = {
     currentSongTitle: songs.default[0],
 
     hasAudio: false,
-    isMuted: true,
+    isMuted: false,
     masterVolume: .5,
     sketchVolume: 0,
     volume: 0
@@ -96,7 +97,7 @@ export const musicReducer = (state = initState, action) => {
             music.currentSongTitle = song;
             music.sketchVolume = action.payload.volume;
             music.volume = music.sketchVolume * music.masterVolume;
-            music.isMuted = false;
+            // music.isMuted = false;
             return music;
         case SETNOSKETCHMUSIC:
             return initState;

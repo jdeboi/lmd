@@ -7,6 +7,7 @@ import {
   SHOWFAQ, HIDEFAQ, TOGGLEFAQ,
   SHOWSIGNIN, HIDESIGNIN, TOGGLESIGNIN,
   SHOWVOLUME, HIDEVOLUME, TOGGLEVOLUMEMENU,
+  SHOWLIVESTREAM, HIDELIVESTREAM, TOGGLELIVESTREAM,
   SETGALLERYACTIVE
 } from '../actions/menuItems';
 
@@ -18,7 +19,8 @@ const initState = {
   isVolumeHidden: true,
   isChatHidden: true,
   isUserIconsHidden: true,
-  isGalleryActive: false
+  isLiveStreamHidden: true,
+  isGalleryActive: false,
 }
 
 const getOneMenu = (oldMenu, show) => {
@@ -28,9 +30,9 @@ const getOneMenu = (oldMenu, show) => {
     newMenu.isGalleryActive = true;
     return newMenu;
   }
-    
+
   // otherwise, set mobile and individual state for desktop
-  
+
   newMenu.mobile = show;
   switch (show) {
     case "signIn":
@@ -43,6 +45,9 @@ const getOneMenu = (oldMenu, show) => {
       return newMenu;
     case "volume":
       newMenu.isVolumeHidden = false;
+      return newMenu;
+    case "liveStream":
+      newMenu.isLiveStreamHidden = false;
       return newMenu;
     case "map":
       newMenu.isMapHidden = false;
@@ -68,7 +73,7 @@ export const menuReducer = (state = initState, action) => {
       return { ...initState };
     case SETONEMENU:
       return getOneMenu(menu, action.payload.show);
-  
+
     case SETGALLERYACTIVE:
       menu.isGalleryActive = true;
       return menu;
@@ -117,9 +122,9 @@ export const menuReducer = (state = initState, action) => {
       return menu;
     case TOGGLESIGNIN:
       menu.isSignInHidden = !menu.isSignInHidden;
-      if (menu.isSignInHidden) 
+      if (menu.isSignInHidden)
         menu.mobile = null;
-        else 
+      else
         menu.mobile = "signIn";
       return menu;
 
@@ -133,6 +138,18 @@ export const menuReducer = (state = initState, action) => {
     case TOGGLEVOLUMEMENU:
       menu.isVolumeHidden = !menu.isVolumeHidden;
       return menu;
+
+    // livestream
+    case SHOWLIVESTREAM:
+      menu.isLiveStreamHidden = false;
+      return menu;
+    case HIDELIVESTREAM:
+      menu.isLiveStreamHidden = true;
+      return menu;
+    case TOGGLELIVESTREAM:
+      menu.isLiveStreamHidden = !menu.isLiveStreamHidden;
+      return menu;
+
 
     default:
       return menu;

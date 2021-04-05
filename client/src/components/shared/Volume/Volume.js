@@ -44,7 +44,7 @@ class Volume extends React.Component {
                     <div className="volume-slider">
                         {this.getVolumeButton()}
                         <Slider
-                            value={music.masterVolume}
+                            value={music.isMuted?0:music.masterVolume}
                             onChange={this.sliderChange}
                             orientation="horizontal"
                             style={style}

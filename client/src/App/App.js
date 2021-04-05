@@ -26,7 +26,7 @@ import { addMessage, addMessageNotification } from '../store/actions/messages';
 import SignIn from '../components/shared/SignIn/SignIn';
 import Welcome from '../components/shared/Welcome/Welcome';
 import FAQFrame from '../components/shared/FAQ/FAQFrame';
-import Volume from '../components/shared/Volume/Volume';
+// import Volume from '../components/shared/Volume/Volume';
 import RoomDecal from '../components/shared/RoomDecal/RoomDecal';
 
 // sketches
@@ -280,11 +280,6 @@ class App extends React.Component {
 
   }
 
-  // onLeave = (nextState) => {
-  //   if (nextState.action === 'POP') {
-  //     console.log("LEAVING??")
-  //   }
-  // }
 
   getUserNameById = (id) => {
     const users = this.state.users;
@@ -368,7 +363,7 @@ class App extends React.Component {
   };
 
   startMedia = () => {
-    console.log("starting media");
+    // console.log("starting media");
     if (this.props.music.hasAudio && this.audioPlayer) {
       // if (this.audioPlayer.audioEl) 
       // this.audioPlayer.audioEl.play();
@@ -428,7 +423,7 @@ class App extends React.Component {
         </div>
         {/* {<FPSStats top={window.innerHeight - 255} left={10} />} */}
         <Chat users={this.state.users} usersChange={this.state.usersChange} />
-        <Volume />
+        {/* <Volume /> */}
         <FAQFrame />
         <SignIn hasAvatar={this.state.hasAvatar} showSignIn={this.state.showSignIn} isFrame={true} />
         <RoomDecal startMedia={this.startMedia} hasLoadedRoom={this.state.hasLoadedRoom} users={this.state.users} />
@@ -440,7 +435,7 @@ class App extends React.Component {
           <ReactAudioPlayer
             src={music.currentSongTitle}
             autoPlay={true}
-            volume={music.volume}
+            volume={music.isMuted?0:music.volume}
             controls={false}
             loop={true}
             ref={player => {
