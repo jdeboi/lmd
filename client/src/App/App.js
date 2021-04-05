@@ -55,6 +55,7 @@ import NotFound from '../components/pages/NotFound';
 
 // utilities
 import RegisterDesktop from '../components/utilities/RegisterDesktop/RegisterDesktop';
+import UnregisterDesktop from '../components/utilities/RegisterDesktop/UnregisterDesktop';
 import ViewUsers from '../components/utilities/ViewUsers/ViewUsers';
 import PanGallery from '../components/utilities/PanGallery/PanGallery';
 import ScrollSketches from '../components/utilities/ScrollSketches/ScrollSketches';
@@ -88,8 +89,8 @@ class App extends React.Component {
       roomCount: { "flush": 0, "click-me-baby": 0, "macbook-air": 0, "hard-drives-on-seashores": 0, "wet-streams": 0, "jungle-gyms": 0, "cloud-confessional": 0, "esc-to-mars": 0, "xfinity-depths": 0, "wasted-days": 0, "home-page": 0, "gallery": 0, "blind-eye": 0 }
     };
 
-    this.isClosed = false;
-    this.isMenuOn = true;
+    this.isClosed = true;
+    this.isMenuOn = false;
   }
 
 
@@ -377,9 +378,8 @@ class App extends React.Component {
 
   render() {
 
-    const { ui, music } = this.props;
+    const { ui, music, user } = this.props;
     const appHeaderClass = "App-Header" + (ui.isMobile || ui.hasFooter ? " mobile" : "");
-
     const currentPage = this.getRoomTitle(this.props.location.pathname);
 
     return (
@@ -416,6 +416,7 @@ class App extends React.Component {
             {/* Utilities */}
             <Route exact path="/gallerytest" render={() => (<Gallery users={this.state.users} userNewRoom={this.userNewRoom} roomCount={this.state.roomCount} showDock={this.state.showDock} isClosed={false} />)} />
             <Route exact path="/register" render={() => (<RegisterDesktop />)} />
+            <Route exact path="/unregister" render={() => (<UnregisterDesktop />)} />
             <Route exact path="/viewusers" render={() => <ViewUsers users={this.state.users} />} />
             <Route exact path="/pangallery" render={() => <PanGallery users={this.state.users} roomCount={this.state.roomCount} />} />
             <Route exact path="/scroll" render={() => <ScrollSketches addClass={this.addClass} removeClass={this.removeClass} />} />
@@ -434,8 +435,8 @@ class App extends React.Component {
         <Welcome isClosed={this.isClosed} user={this.props.user} hasAvatar={this.state.hasAvatar} showWelcome={this.state.showWelcome} closeWelcome={this.closeWelcome} />
         <MobileFooter currentPage={currentPage} user={this.props.user} avatarClicked={this.avatarClicked} />
         <YouTube />
-        { (currentPage === "gallery" && !this.state.showWelcome) ||
-          ui.compositionStarted ?
+        { user.comp === null && ((currentPage === "gallery" && !this.state.showWelcome) ||
+          ui.compositionStarted) ?
           <ReactAudioPlayer
             src={music.currentSongTitle}
             autoPlay={true}

@@ -130,9 +130,13 @@ class Gallery extends React.Component {
 
 
   setUserActive = (otherUser) => {
-    this.props.setUserActiveChat(otherUser);
-    this.props.showChat();
-    this.props.setOneMenu("chat");
+    const { ui, setUserActiveChat, showChat, setOneMenu } = this.props;
+    setUserActiveChat(otherUser);
+    // if we use both, setOneMenu will have a toggle effect on Desktop
+    if (ui.isMobile || ui.hasFooter)
+      setOneMenu("chat");
+    else
+      showChat();
   }
 
   moveUser = (x, y) => {

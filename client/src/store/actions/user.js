@@ -5,6 +5,7 @@ export const MOVEUSERROOM = 'MOVEUSERROOM';
 export const REGISTERUSER = 'REGISTERUSER';
 
 export const SETUSERCOMP = 'SETUSERCOMP';
+export const REMOVEUSERCOMP = 'REMOVEUSERCOMP';
 
 export const ADDWINE = 'ADDWINE';
 export const SETWINE = 'SETWINE';
@@ -38,6 +39,12 @@ export const setUserComp = (comp) => {
   return {
     type: SETUSERCOMP,
     payload: {comp}
+  }
+}
+
+export const removeUserComp = () => {
+  return {
+    type: REMOVEUSERCOMP
   }
 }
 

@@ -1,4 +1,4 @@
-import { SETUSERROOM, SETUSERCOMP, SETUSER, MOVEUSER, MOVEUSERROOM, TOGGLEOUTSIDE, SETWINE, RESETWINE, ADDWINE, SETCHEESE, RESETCHEESE, ADDCHEESE, SETCOCKTAIL, RESETCOCKTAIL, ADDCOCKTAIL } from '../actions/user';
+import { SETUSERROOM, REMOVEUSERCOMP, SETUSERCOMP, SETUSER, MOVEUSER, MOVEUSERROOM, TOGGLEOUTSIDE, SETWINE, RESETWINE, ADDWINE, SETCHEESE, RESETCHEESE, ADDCHEESE, SETCOCKTAIL, RESETCOCKTAIL, ADDCOCKTAIL } from '../actions/user';
 import { SETUSERACTIVECHAT, SETUSERHOVERCHAT, USERHOVERCHATLEAVE } from '../actions/userActiveChat';
 
 import Cookies from 'js-cookie';
@@ -37,9 +37,13 @@ export const userReducer = (state = initState, action) => {
       Cookies.set("avatar", user.avatar);
       Cookies.set("userName", user.userName);
       socket.emit("setUser", user);
-      
+
       return user;
 
+    case REMOVEUSERCOMP:
+      user.comp = null;
+      Cookies.remove("comp");
+      return user;
     case SETUSERCOMP:
       user.comp = action.payload.comp;
       Cookies.set("comp", user.comp);
@@ -154,7 +158,7 @@ function userNearBar(user, location) {
 }
 
 
-export const userActiveChatReducer = (state = {userName: "Everyone", avatar: "👥"}, action) => {
+export const userActiveChatReducer = (state = { userName: "Everyone", avatar: "👥" }, action) => {
   switch (action.type) {
     case SETUSERACTIVECHAT:
       const user = { ...action.payload.user };

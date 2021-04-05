@@ -11,10 +11,9 @@ import { DDSLoader } from 'three/examples/jsm/loaders/DDSLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import Frame from '../../shared/Frame/Frame';
-import ReactPlayer from 'react-player';
 
 // store
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { setSketchMusic } from '../../../store/actions/music';
 
 import Pipe from './Pipe';
@@ -29,6 +28,9 @@ class JungleGyms extends React.Component {
     this.state = {
       firstLoad: true
     }
+
+    this.videoSwings = React.createRef();
+    this.videoGym = React.createRef();
   }
 
   componentDidMount() {
@@ -47,6 +49,14 @@ class JungleGyms extends React.Component {
     this.controls.dispose();
     clearInterval(this.interval);
     // this.props.userLeaveRoom("jungle-gyms");
+  }
+
+  componentDidUpdate(prevProps) {
+    const { ui } = this.props;
+    if (ui.compositionStarted && !prevProps.ui.compositionStarted) {
+      this.videoSwings.current.play();
+      this.videoGym.current.play();
+    }
   }
 
   handleWindowResize = () => {
@@ -79,8 +89,8 @@ class JungleGyms extends React.Component {
     this.addLight(-10, 2, 4);
     this.addLight(1, -10, -2);
 
-    this.addScreenCube(this.videoGym, 1920, 1080, .01, [0, 0, -8], [0, 0, 0], 47);
-    this.addScreenCube(this.videoSwings, 1080, 1920, .01, [6, 0, -20], [0, -Math.PI / 2, 0], 20);
+    this.addScreenCube(this.videoGym.current, 1920, 1080, .01, [0, 0, -8], [0, 0, 0], 47);
+    this.addScreenCube(this.videoSwings.current, 1080, 1920, .01, [6, 0, -20], [0, -Math.PI / 2, 0], 20);
 
     this.pipes = [];
     this.vines = [];
@@ -93,11 +103,11 @@ class JungleGyms extends React.Component {
 
   startAnimationLoop = () => {
     // this.renderer.render( this.scene, this.camera );
-    for (var i = 0; i < this.pipes.length; i++) {
+    for (let i = 0; i < this.pipes.length; i++) {
       this.pipes[i].update();
     }
     if (this.pipes.length === 0) {
-      for (var i = 0; i < 1 + (1 + chance(1 / 10)); i++) {
+      for (let i = 0; i < 1 + (1 + chance(1 / 10)); i++) {
         this.pipes.push(new Pipe(this.nodes, this.scene));
       }
     }
@@ -136,7 +146,6 @@ class JungleGyms extends React.Component {
     pW *= fac;
     pH *= fac;
 
-    video.play();
     videoTex.minFilter = THREE.LinearFilter;
     videoTex.magFilter = THREE.LinearFilter;
     videoTex.format = THREE.RGBFormat;
@@ -271,11 +280,25 @@ class JungleGyms extends React.Component {
     return (
       <div className="JungleGyms Sketch">
         <div className="threeCanvas" ref={ref => (this.mount = ref)} />
-        <video playsInline crossOrigin="anonymous" ref={ref => (this.videoGym = ref)} autoPlay muted loop className="gym" >
+        <video
+          playsInline
+          crossOrigin="anonymous"
+          ref={this.videoGym}
+          autoPlay
+          muted
+          loop
+          className="gym" >
           <source src={gymUrl} type="video/mp4" ></source>
           Your browser does not support HTML5 video.
         </video>
-        <video playsInline crossOrigin="anonymous" ref={ref => (this.videoSwings = ref)} autoPlay muted loop className="gym" >
+        <video
+          playsInline
+          crossOrigin="anonymous"
+          ref={this.videoSwings}
+          autoPlay
+          muted
+          loop
+          className="gym" >
           <source src={window.AWS + "/jungleGyms/swings.mp4"} type="video/mp4" ></source>
           Your browser does not support HTML5 video.
         </video>
@@ -313,26 +336,9 @@ function showElementsIf(selector, condition) {
   });
 }
 
-function getFrame(dimW, dimH, dimX, dimY, tit, vid) {
-  return (
-    <Frame title={tit} content={
-      <ReactPlayer
-        className={"react-player gym"}
-        playing
-        muted
-        loop
-        width={Math.floor(dimW) + "px"}
-        height={Math.floor(dimH + 1) + "px"}
-        url={vid}
-      />
-    }
-      width={dimW + 2} height={dimH} x={dimX} y={dimY}
-    />
-  )
-}
-
 const mapStateToProps = (state) => {
   return {
+    ui: state.ui
   }
 }
 

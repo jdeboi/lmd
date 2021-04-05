@@ -11,10 +11,11 @@ export default function Glasses(props) {
         <br />
 
         <img src={glasses} className="center" />
-        <ul>
+        {/* <ul>
           <li><a href="https://forms.gle/xCUeomKay4Jo2H5r8" target="_blank">Request a free pair</a> (limited)</li>
           <li><a href="https://www.amazon.com/Blue-White-Cardboard-Glasses-Pairs/dp/B001P6C7ZY/ref=sr_1_35?dchild=1&keywords=anaglyph+glasses&qid=1609440890&sr=8-35" target="_blank">Purchase</a> a pair online</li>
-        </ul>
+        </ul> */}
+        <h2>Make sure the red lens is over your LEFT eye.</h2>
       </div>
     </div>
   )

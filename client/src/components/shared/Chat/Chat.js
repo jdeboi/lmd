@@ -229,7 +229,7 @@ class Chat extends React.Component {
 
   djRespond = (txt) => {
     const djJustAsked = this.state.djJustAsked;
-    const { userActiveChat } = this.props;
+    const { userActiveChat, user } = this.props;
     let phrase = "";
     if (djJustAsked === 0) {
       const phrase = "hi! would you like pick a song? Y/N.";
@@ -239,7 +239,12 @@ class Chat extends React.Component {
     else if (djJustAsked === 1) {
       const lc = txt.toLowerCase();
       phrase = "";
-      if (lc === "y" || lc.indexOf("yes") > -1) {
+
+      if (user.comp !== null) {
+        phrase = "Sorry, Jenna has disabled audio at The Front!";
+        this.setState({ djJustAsked: 0 });
+      }
+      else if (lc === "y" || lc.indexOf("yes") > -1) {
         phrase = "Type 1 to get funky, 2 for something jazzy, or 3 for a surprise";
         this.setState({ djJustAsked: 2 });
       }
@@ -253,6 +258,7 @@ class Chat extends React.Component {
       if (txt == 1 || txt == 2) {
         phrase = "good pick.";
         this.props.setSong(txt);
+
       }
       else if (txt == 3) {
         phrase = "good pick.";
