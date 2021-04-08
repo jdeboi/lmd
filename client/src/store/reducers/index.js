@@ -37,7 +37,7 @@ const rootReducer = (state, action) => {
     Cookies.remove("hasAvatar");
     Cookies.remove("avatar");
     Cookies.remove("userName");
-
+    // Cookies.remove("clickedLiveStream");
     state = undefined;
   }
 

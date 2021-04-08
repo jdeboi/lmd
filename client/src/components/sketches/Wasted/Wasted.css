@@ -1,4 +1,4 @@
-.Spacetimes {
+.Wasted {
   top: 0;
   left: 0;
   width: 100%;
@@ -11,15 +11,15 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center; }
-  .Spacetimes .bird {
+  .Wasted .bird {
     background-image: url("https://media.giphy.com/media/l3Uchq9s6Hx0aK8F2/giphy.gif");
     background-size: cover;
     /* <------ */
     background-repeat: no-repeat;
     background-position: center center; }
-  .Spacetimes .flipped {
+  .Wasted .flipped {
     transform: scaleX(-1); }
-  .Spacetimes .palindrome {
+  .Wasted .palindrome {
     font-size: 150px;
     font-family: spacetimeFont, Arial, Helvetica, sans-serif;
     text-align: center;
@@ -31,14 +31,13 @@
     pointer-events: none;
     z-index: 500;
     width: 100%;
-    margin: 0;
     position: absolute;
     top: 50%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%); }
-  .Spacetimes .window {
+  .Wasted .window {
     background-color: transparent; }
-  .Spacetimes .content {
+  .Wasted .content {
     margin: auto;
     padding: 2px;
     background-color: transparent; }

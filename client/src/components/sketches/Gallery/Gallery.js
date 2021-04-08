@@ -42,9 +42,6 @@ class Gallery extends React.Component {
 
   componentDidMount() {
     this.loadingInterval = setInterval(this.cycleEllipses, 300);
-
-
-    // window.addEventListener("resize", this.handleResize);
   }
 
   componentWillUnmount() {
@@ -82,10 +79,10 @@ class Gallery extends React.Component {
     this.props.doneLoadingApp();
     clearInterval(this.loadingInterval);
 
-    const { hasFooter, isMobile } = this.props.ui;
-    if (!isMobile && !hasFooter) {
-      this.props.toggleLiveStream();
-    }
+    // const { hasFooter, isMobile } = this.props.ui;
+    // if (!isMobile && !hasFooter) {
+    //   this.props.toggleLiveStream();
+    // }
   }
 
   getHomeComponents = () => {
@@ -98,9 +95,7 @@ class Gallery extends React.Component {
       );
     return (
       <React.Fragment>
-
         <MiniMap users={users} user={user} x={ui.edgeSpacing} y={ui.edgeSpacing} wineLocation={wineLocation} />
-
       </React.Fragment>
     )
   }
@@ -111,9 +106,7 @@ class Gallery extends React.Component {
   }
 
   getVolume = () => {
-    const { user, music } = this.props;
-    // if (music.isMuted || music.masterVolume === 0)
-    //   return 0;
+    const { user } = this.props;
     let dx = djLocation.x - user.x;
     let dy = djLocation.y - user.y;
     let dis = Math.sqrt(dx * dx + dy * dy);
@@ -151,6 +144,7 @@ class Gallery extends React.Component {
 
     return (
       <div className="Gallery Sketch" >
+        <div id="p5_loading" className="loadingclass"></div>
         <Sketch
           className="p5sketch"
           user={user}
@@ -167,16 +161,6 @@ class Gallery extends React.Component {
         />
 
         {this.getHomeComponents()}
-        {/* <ReactAudioPlayer
-          src={this.songs[this.props.music.currentSong]}
-          autoPlay={true}
-          volume={0}//{this.getVolume()}
-          controls={false}
-          loop={true}
-          ref={player => {
-            this.audioPlayer = player;
-          }}
-        /> */}
       </div>
     )
   }

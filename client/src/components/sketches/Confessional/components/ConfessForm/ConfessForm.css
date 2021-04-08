@@ -34,6 +34,23 @@ input.standardInputWhite {
   color: white;
   border-radius: 6px; }
 
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: black white; }
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px; }
+
+*::-webkit-scrollbar-track {
+  background: white; }
+
+*::-webkit-scrollbar-thumb {
+  background-color: black;
+  border-radius: 20px;
+  border: 3px solid white; }
+
 .confessional {
   font-size: 12px;
   padding: 10px;
@@ -105,6 +122,7 @@ input.standardInputWhite {
   .confessional-modal .confessional .lineSp {
     margin-bottom: 10px; }
   .confessional-modal .confessional select,
+  .confessional-modal .confessional option,
   .confessional-modal .confessional input,
   .confessional-modal .confessional textarea {
     color: #111199; }
@@ -114,7 +132,8 @@ input.standardInputWhite {
     color: #111199; }
   .confessional-modal .confessional select {
     height: 46px;
-    padding: 10px; }
+    padding: 10px;
+    width: 100%; }
   .confessional-modal .confessional input {
     width: 100px; }
   .confessional-modal .confessional .txt-box {

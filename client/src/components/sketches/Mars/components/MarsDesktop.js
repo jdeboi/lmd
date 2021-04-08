@@ -3,7 +3,7 @@
 
 
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import BabylonWaterScene from './BabylonWater';
 import SwimLane from './SwimLane';
@@ -54,20 +54,21 @@ class MarsDesktop extends React.Component {
 
         const { ui } = this.props;
         let width = window.innerWidth;
-        let height = window.innerHeight;
-        this.factor = mapVal(width, 1440, 2560, 1, 1.3);
-        this.factor = constrain(this.factor, .6, 1.3);
+        // let height = window.innerHeight;
+        let maxW = 1.6
+        this.factor = mapVal(width, 1440, 2560, 1, maxW);
+        this.factor = constrain(this.factor, .6, maxW);
 
-        const sketchW = 1225 * this.factor + 2* spacing;
+        // have to make sure the height isn't maxed out for really wide screens
+        this.factor = 1;
+
+        const sketchW = 1225 * this.factor + 2 * spacing;
         const sketchH = 640 * this.factor;
 
-        // 1325, 716
-        // console.log("min w/h:", sketchW+spacing*2, sketchH+spacing*2);
-
-        const startX = Math.max((width - sketchW)/2, spacing);
+        const startX = Math.max((width - sketchW) / 2, spacing);
 
         // isn't from start of header bar b/c overflow all
-        const startY = ui.headerH + (ui.contentH - (sketchH + ui.toolbarH))/2;
+        const startY = ui.headerH + (ui.contentH - (sketchH + ui.toolbarH)) / 2;
         //(height-sketchH-ui.toolbarH)/2;//Math.max((height - sketchH + 34) / 2, spacing);
 
 
@@ -117,18 +118,18 @@ class MarsDesktop extends React.Component {
             y: smallCrater.h + smallCrater.y + ui.toolbarH + spacing
         }
 
-        const {poolVid} = this.state;
+        const { poolVid } = this.state;
 
         return (
             <React.Fragment>
                 <div className="Mars-Desktop">
-                <BigCrater w={pool.w} h={pool.h} x={pool.x} y={pool.y} poolVid={poolVid} />
-                <SmallCrater w={smallCrater.w} h={smallCrater.h} x={smallCrater.x} y={smallCrater.y} factor={this.factor} />
-                <PoolButtons w={tank.w} h={tank.h} x={tank.x} y={tank.y} factor={this.factor} buttonClick={this.buttonClick} />
-                <Chairs w={chairs.w} h={chairs.h} x={chairs.x} y={chairs.y} factor={this.factor} />
-                <BabylonWaterScene w={bab.w} h={bab.h} x={bab.x} y={bab.y} />
-                <Board w={board.w} h={board.h} x={board.x} y={board.y} factor={this.factor} />
-                <SwimLane w={swimLaneFrame.w} h={swimLaneFrame.h} x={swimLaneFrame.x} y={swimLaneFrame.y} />
+                    <BigCrater w={pool.w} h={pool.h} x={pool.x} y={pool.y} poolVid={poolVid} />
+                    <SmallCrater w={smallCrater.w} h={smallCrater.h} x={smallCrater.x} y={smallCrater.y} factor={this.factor} />
+                    <PoolButtons w={tank.w} h={tank.h} x={tank.x} y={tank.y} factor={this.factor} buttonClick={this.buttonClick} />
+                    <Chairs w={chairs.w} h={chairs.h} x={chairs.x} y={chairs.y} factor={this.factor} />
+                    <BabylonWaterScene w={bab.w} h={bab.h} x={bab.x} y={bab.y} />
+                    <Board w={board.w} h={board.h} x={board.x} y={board.y} factor={this.factor} />
+                    <SwimLane w={swimLaneFrame.w} h={swimLaneFrame.h} x={swimLaneFrame.x} y={swimLaneFrame.y} />
                 </div>
             </React.Fragment>
         )
@@ -140,17 +141,16 @@ class MarsDesktop extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-      ui: state.ui
+        ui: state.ui
     }
-  }
-  
-  const mapDispatchToProps = () => {
+}
+
+const mapDispatchToProps = () => {
     return {
-  
+
     }
-  }
-  
-  
-  export default connect(mapStateToProps, mapDispatchToProps())(MarsDesktop);
-  
-  
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps())(MarsDesktop);
+

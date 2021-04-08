@@ -49,6 +49,9 @@ const songs = {
     ],
     default: [
         "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/gallery/music/lounge.mp3"
+    ],
+    wasted: [
+        "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/loop/tic2.mp3" 
     ]
 }
 
@@ -64,7 +67,6 @@ const initState = {
     volume: 0
 }
 
-const NUM_SONGS = 3;
 
 export const musicReducer = (state = initState, action) => {
     const music = { ...state };

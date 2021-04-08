@@ -165,16 +165,7 @@ class Chat extends React.Component {
       this.setState({ hostBotJustAsked: true });
     }
     else {
-      // const lc = txt.toLowerCase();
-      // let phrase = "";
-      // if (lc === "y" || lc.indexOf("yes") > -1) {
-      //   phrase = "Stop by the bar to pick up your glass.";
-      //   this.props.addCocktail(wineLocation[2]);
-      // }
-      // else {
-      //   phrase = "Cool, I don't drink either.";
-      // }
-      let phrase = "Make sure that the red lens of your glasses is over your LEFT eye."
+      let phrase = "Have you found the live stream or Zoom? If not, check the top menu bar to toggle the live stream!";
       this.props.addMessage({ to: "me", from: "hostBot", message: phrase, time: new Date(), avatar: userActiveChat.avatar });
       this.setState({ hostBotJustAsked: false });
     }

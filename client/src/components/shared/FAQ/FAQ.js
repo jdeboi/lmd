@@ -10,7 +10,7 @@ export default function FAQ(props) {
 
       {/* MOVING */}
       <div className="instruction">
-        <div className="faqImg"><img src={moveGif} /></div>
+        <div className="faqImg"><img alt="moving instructions" src={moveGif} /></div>
         <div className="instruction-txt">
           <h3>Move</h3>
           <p>Click/tap on tiles or press arrow keys.</p>
@@ -19,7 +19,7 @@ export default function FAQ(props) {
 
       {/* CHATTING */}
       <div className="instruction">
-        <div className="faqImg"><img src={chatGif} /></div>
+        <div className="faqImg"><img alt="chatting instructions" src={chatGif} /></div>
         <div className="instruction-txt">
           <h3>Chat</h3>
           <p>Click a user to begin a chat or select the chat icon 

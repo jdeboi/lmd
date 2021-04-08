@@ -3,6 +3,11 @@
   background-size: cover;
   background-position: center;
   pointer-events: none; }
+  .Gallery .loadingclass {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none; }
   .Gallery .outerFrame {
     pointer-events: none;
     box-shadow: 0px 0px 20px #000000;

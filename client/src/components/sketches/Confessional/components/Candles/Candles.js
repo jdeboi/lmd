@@ -2,11 +2,11 @@ import React from 'react';
 import Candle from './Candle';
 
 class Candles extends React.Component {
-  // https://codepen.io/JohJakob/pen/YPxgwo
-  constructor(props) {
-    super(props);
 
-  }
+  // constructor(props) {
+  //   super(props);
+
+  // }
 
   componentDidMount() {
   }

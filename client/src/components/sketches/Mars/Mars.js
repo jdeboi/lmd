@@ -9,11 +9,9 @@ import { setSketchMusic } from '../../../store/actions/music';
 
 class Mars extends React.Component {
 
-  constructor(props) {
-    super(props);
-
-
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
 
   componentDidMount() {

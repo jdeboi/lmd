@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, withRouter, useLocation } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 
 import './App.css';
 
@@ -85,12 +85,11 @@ class App extends React.Component {
       usersChange: false,
       users: [],
       hasLoadedRoom: false,
-      // userAxctiveChat: null,
       roomCount: { "flush": 0, "click-me-baby": 0, "macbook-air": 0, "hard-drives-on-seashores": 0, "wet-streams": 0, "jungle-gyms": 0, "cloud-confessional": 0, "esc-to-mars": 0, "xfinity-depths": 0, "wasted-days": 0, "home-page": 0, "gallery": 0, "blind-eye": 0 }
     };
 
     this.isClosed = true;
-    this.isMenuOn = false;
+    this.isMenuOn = true;
   }
 
 
@@ -154,7 +153,7 @@ class App extends React.Component {
     // console.log("PAGE CHANGE", newPath)
     this.props.hideMenus();
     const nextRoom = this.getRoom(newPath);
-    if (nextRoom != this.props.user.room) {
+    if (nextRoom !== this.props.user.room) {
       this.props.loadingApp();
       this.setState({ hasLoadedRoom: false });
     }
@@ -211,7 +210,7 @@ class App extends React.Component {
     socket.on("usersUpdate", data => {
       var { sessionID } = this.state;
       var filteredArray = data.filter(function (user) {
-        return user.id != sessionID;
+        return user.id !== sessionID;
       });
       this.setRoomCount();
       // if (DEBUG) console.log("USERS UPDATED", data);
@@ -235,7 +234,7 @@ class App extends React.Component {
     })
 
     socket.on("userJoined", data => {
-      const user = { ...this.props.user };
+      // const user = { ...this.props.user };
       this.setState({ usersChange: true });
       // console.log("SOMEONE JOINED");
     })
@@ -317,8 +316,8 @@ class App extends React.Component {
   getRoom = (path) => {
     var rm = path.substring(1, path.length);
 
-    if (rm == "") rm = "gallery";
-    else if (rm == "confessions") rm = "cloud-confessional";
+    if (rm === "") rm = "gallery";
+    else if (rm === "confessions") rm = "cloud-confessional";
 
     const pages = sketches.map((sketch) => sketch.link);
     pages.push("gallery");

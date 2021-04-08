@@ -7,7 +7,22 @@ import socket from "../../components/shared/Socket/Socket";
 import { globalConfig } from '../../components/sketches/Gallery/constants';
 
 // reducer (check what to do with action)
-const initState = { avatar: "😀", userName: "", room: "gallery", comp: null, roomX: 0, roomY: 0, x: globalConfig.stepS / 2, y: globalConfig.stepS / 2, hasWine: null, needsWine: false, hasCheese: null, needsCheese: false, hasCocktail: null, needsCocktail: false };
+const initState = { 
+  avatar: "😀", 
+  userName: "", 
+  room: "gallery", 
+  comp: null, 
+  roomX: 0, 
+  roomY: 0, 
+  x: globalConfig.stepS / 2, 
+  y: globalConfig.stepS / 2, 
+  hasWine: null, 
+  needsWine: false, 
+  hasCheese: null, 
+  needsCheese: false, 
+  hasCocktail: null, 
+  needsCocktail: false 
+};
 
 export const userReducer = (state = initState, action) => {
   const user = { ...state };
@@ -75,9 +90,8 @@ export const userReducer = (state = initState, action) => {
 
     case ADDWINE:
       user.needsWine = true;
-      var location = action.payload.location;
       // console.log("WINE", location);
-      if (userNearBar(user, location)) {
+      if (userNearBar(user, action.payload.location)) {
         user.needsWine = false;
         user.hasWine = new Date();
       }
@@ -99,8 +113,8 @@ export const userReducer = (state = initState, action) => {
     ////////////////////////
     case ADDCHEESE:
       user.needsCheese = true;
-      var location = action.payload.location;
-      if (userNearBar(user, location)) {
+      let loc = action.payload.location;
+      if (userNearBar(user, loc)) {
         user.needsCheese = false;
         user.hasCheese = new Date();
       }
@@ -123,8 +137,7 @@ export const userReducer = (state = initState, action) => {
     ////////////////////////
     case ADDCOCKTAIL:
       user.needsCocktail = true;
-      var location = action.payload.location;
-      if (userNearBar(user, location)) {
+      if (userNearBar(user, action.payload.location)) {
         user.needsCocktail = false;
         user.hasCocktail = new Date();
       }

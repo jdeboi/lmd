@@ -1,4 +1,4 @@
-import React, { MouseEvent, KeyboardEvent } from 'react';
+import React, { MouseEvent } from 'react';
 import Frame from '../Frame/Frame';
 import './CenterModal.css';
 import { getCenterModalDim } from './Helper';
@@ -34,9 +34,9 @@ export default function CenterModal({ title, classN, ui, z, height, width, isHid
   const classT = (!isHidden ? " GrayedOut" : "");
 
 
-  const handleMouse = (e: MouseEvent) => {
-    e.stopPropagation();
-  }
+  // const handleMouse = (e: MouseEvent) => {
+  //   e.stopPropagation();
+  // }
 
   const handleDoubleClick = (e: MouseEvent) => {
     e.stopPropagation();

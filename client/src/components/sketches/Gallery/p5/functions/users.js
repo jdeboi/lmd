@@ -1,6 +1,6 @@
 
 
-import { globalConfig, mouseToWorld, domCoordsToP5World } from "../../constants";
+import { mouseToWorld, domCoordsToP5World } from "../../constants";
 
 export function checkUserClicked(userEase, users, p5) {
 
@@ -51,7 +51,7 @@ export function seeUserClicked(userEase, users, p5) {
 }
 
 
-export function drawUser(user, p5) {
+export function drawUser(user, p5, imgs) {
     const foodTime = 75*1000;
 
     p5.fill(255);
@@ -63,21 +63,21 @@ export function drawUser(user, p5) {
 
     p5.translate(0, 16);
     if (user.hasCheese && new Date() - user.hasCheese < foodTime) {
-        drawCheese(p5);
+        drawCheese(p5, imgs[0], imgs[1]);
     }
 
     if (user.hasWine && new Date() - user.hasWine < foodTime) {
-        drawWine(p5);
+        drawWine(p5, imgs[2]);
     }
 
     if (user.hasCocktail && new Date() - user.hasCocktail < foodTime) {
-        drawCocktail(p5);
+        drawCocktail(p5, imgs[3]);
     }
 
     p5.pop();
 }
 
-export function drawUsers(userEase, users, dogica, p5) {
+export function drawUsers(userEase, users, dogica, p5, imgs) {
     p5.fill(255);
     p5.noStroke();
     p5.textFont('times', 34);
@@ -104,20 +104,20 @@ export function drawUsers(userEase, users, dogica, p5) {
             p5.textSize(34);
 
             if (p5.dist(otherUser.x, otherUser.y, userEase.x, userEase.y) < 150) {
-                drawChat(p5);
+                drawChat(p5, imgs[4]);
             }
 
 
             if (otherUser.hasCheese) {
-                drawCheese(p5);
+                drawCheese(p5, imgs[0], imgs[1]);
             }
 
             if (otherUser.hasWine) {
-                drawWine(p5);
+                drawWine(p5, imgs[2]);
             }
 
             if (otherUser.hasCocktail) {
-                drawCocktail(p5);
+                drawCocktail(p5, imgs[3]);
             }
 
             p5.pop()
@@ -136,19 +136,24 @@ function drawLabel(p5, name, dogica) {
     p5.text(name, 3, 10);
 }
 
-function drawChat(p5) {
-    p5.text("💬", 22, -14);
+function drawChat(p5, chat) {
+    // p5.text("💬", 22, -14);
+    p5.image(chat, 22, -54, 34, 34);
 }
 
-function drawCocktail(p5) {
-    p5.text("🍸", 20, 20);
+function drawCocktail(p5, wine) {
+    // p5.text("🍸", 20, 20);
+    p5.image(wine, 20, 0, 34, 34);
 }
 
-function drawCheese(p5) {
-    p5.text("🧀", -10, 24);
-    p5.text("🥖", 10, 24);
+function drawCheese(p5, cheese, bread) {
+    // p5.text("🧀", -10, 24);
+    // p5.text("🥖", 10, 24);
+    p5.image(cheese, -10, 0, 34, 34);
+    p5.image(bread, 10, 0, 34, 34);
 }
 
-function drawWine(p5) {
-    p5.text("🍷", -20, 20);
+function drawWine(p5, wine) {
+    // p5.text("🍷", -20, 20);
+    p5.image(wine, -20, 0, 34, 34);
 }

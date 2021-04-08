@@ -3,9 +3,9 @@ import {Link} from 'react-router-dom';
 
 class ListItem extends React.PureComponent {
 
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   render() {
     const {title, link, ui, callback, classN} = this.props;
@@ -16,7 +16,7 @@ class ListItem extends React.PureComponent {
 
     if (title === "thesis") {
       return (
-        <li className={classn}><a href={"/thesis.pdf"} target="_blank">thesis</a></li>
+        <li className={classn}><a href={"https://lmd-bucket.s3.us-east-2.amazonaws.com/thesis.pdf"} target="_blank" rel="noopener noreferrer">thesis</a></li>
       )
     }
     else if (link && link !== '') {

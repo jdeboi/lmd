@@ -5,7 +5,7 @@ import './Wasted.css';
 
 // store
 import { connect } from 'react-redux';
-import {setNoSketchMusic} from '../../../store/actions/music';
+import { setSketchMusic } from '../../../store/actions/music';
 // import { doneLoadingApp } from '../../../store/actions/';
 
 class Wasted extends React.Component {
@@ -33,7 +33,7 @@ class Wasted extends React.Component {
 
 
   componentDidMount() {
-    this.props.setNoSketchMusic();
+    this.props.setSketchMusic("wasted", 0, .5);
     this.startTime = new Date();
     this.intervalFrames = setInterval(this.setFrame, 200);
   }
@@ -83,19 +83,30 @@ class Wasted extends React.Component {
     // const bkImg = window.AWS + "/three/3D/alps.jpg";
     const bkStyle = {};
     // bkStyle.backgroundImage = 'url(' + bkImg + ')';
+    let marginTop = 0;
+    if (ui.hasFooter && ui.orientation === "portrait")
+      marginTop -= 30;
+    const palindromeStyle = { visibility: "visible", fontSize: fs, marginTop: marginTop };
 
     return (
-      <div className="Spacetimes Sketch" style={bkStyle}>
-        { <div className="palindrome" style={{ visibility: "visible", fontSize: fs }}>{this.state.currentText}</div>}
+      <div className="Wasted Sketch" style={bkStyle}>
+        { <div className="palindrome" style={palindromeStyle}>
+          {this.state.currentText}
+        </div>}
 
 
         {grids.map((i) => {
-          let factor = ui.width / 1000;
-          if (factor > 1.5) factor = 1.5;
-          if (factor < .8) factor = .5;
+          let factor = ui.contentH / 800;
+          if (ui.orientation === "portrait") {
+            factor = ui.contentW / 1400;
+          }
+          // if (factor > 1.5)
+          //   factor = 1.5;
+          if (factor < .5)
+            factor = .5;
           const val = (980 - 100 * i) * factor;
-          const x = ui.width / 2 - val / 2;
-          const y = (ui.height - this.heightBuffer) / 2 - val / 2;
+          const x = (ui.contentW - val) / 2;
+          const y = (ui.contentH - val - ui.toolbarH) / 2;
           let title = this.words[(7 - i) % (this.words.length - 1)];
 
           // console.log(windowHeight, y, val);
@@ -109,7 +120,7 @@ class Wasted extends React.Component {
             dimH={val}
             key={i}
             // src={bkImg}
-            src={ window.AWS+"/spacetimes/parrot.png"}
+            src={window.AWS + "/spacetimes/parrot.png"}
             dimX={x}
             dimY={y}
           />);
@@ -153,7 +164,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = () => {
   return {
     // doneLoadingApp
-    setNoSketchMusic
+    // setNoSketchMusic
+    setSketchMusic
   }
 }
 

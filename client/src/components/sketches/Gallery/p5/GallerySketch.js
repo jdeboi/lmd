@@ -11,7 +11,7 @@ import { displayDancers, updateDucks } from './functions/emojis';
 import { reachedDestination, getNextStep, showMouseLoc, showUserEllipses, showDestination, mouseDidMove } from './functions/destination';
 import { drawUser, drawUsers, checkUserClicked } from './functions/users';
 import { drawPlantRow, drawGrassPatch } from './functions/garden';
-import { addTableDivs, displayTableDivs, addSwingDivs, displaySwingDivs, displayOakDivs, displayTreeDivs, displayBarDivs, displayTrashDivs, checkTrashDivsDouble, addTrashDivs, displayRoomLabelDivs, addDoorDivs, addLightDivs, addColumnDivs, addTreeDivs, addBarDivs, addOakDivs, addFolderDivs, displayDoorDivs, displayLightDivs, displayColumnDivs, displayDivs, endDivDrag, updateDivs, checkDivPress, displayFolderDivs, checkFolderDivsDouble, addRoomLabelDivs } from './functions/divs';
+import { addTableDivs, displayTableDivs, addSwingDivs, displaySwingDivs, displayOakDivs, displayTreeDivs, displayBarDivs, displayTrashDivs, checkTrashDivsDouble, addTrashDivs, displayRoomLabelDivs, addDoorDivs, addLightDivs, addColumnDivs, addTreeDivs, addBarDivs, addOakDivs, addFolderDivs, displayDoorDivs, displayLightDivs, displayColumnDivs, endDivDrag, updateDivs, checkDivPress, displayFolderDivs, checkFolderDivsDouble, addRoomLabelDivs } from './functions/divs';
 import TreeSlider from './components/TreeSlider';
 
 //////////////
@@ -59,6 +59,7 @@ var duckImg;
 var dancers = [];
 var dancerImgs = [];
 var baby;
+var barEmojis = [];
 
 //////////////
 // FONT
@@ -112,6 +113,11 @@ export default (props) => {
     dancerImgs[1] = p5.loadImage(url + "dancers/dancer1.png");
     dancerImgs[2] = p5.loadImage(url + "dancers/dancer2.png");
     baby = p5.loadImage(url + "swing/baby.png");
+    barEmojis[0] = p5.loadImage(url + "emojis/bread.png");
+    barEmojis[1] = p5.loadImage(url + "emojis/cheese.png");
+    barEmojis[2] = p5.loadImage(url + "emojis/wine.png");
+    barEmojis[3] = p5.loadImage(url + "emojis/cocktail.png");
+    barEmojis[4] = p5.loadImage(url + "emojis/chat.png");
 
     //////////////
     // plants
@@ -271,7 +277,7 @@ export default (props) => {
     //////////////
     // drawing
     drawOverTarget(p5);
-    drawUser(user, p5);
+    drawUser(user, p5, barEmojis);
     drawOverUser(p5);
 
     //////////////
@@ -291,7 +297,7 @@ export default (props) => {
     p5.translate(globalConfig.x * globalConfig.scaler, globalConfig.y * globalConfig.scaler)
 
     if (users)
-      drawUsers(userEase, users, dogica, p5);
+      drawUsers(userEase, users, dogica, p5, barEmojis);
 
     p5.pop();
   }

@@ -8,10 +8,10 @@ import { setOneMenu, hideMap, toggleMap } from '../../../../store/actions/menuIt
 
 class MiniMap extends React.Component {
 
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
 
-  }
+  // }
 
   componentDidMount() {
     const {hasFooter, isMobile} = this.props.ui;

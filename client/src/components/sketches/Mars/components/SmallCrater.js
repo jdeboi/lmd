@@ -13,7 +13,7 @@ export default function(props) {
     <Frame title="" content={
         <div className="smallCrater" style={{backgroundSize: `${Math.floor(w)}px ${Math.floor(w)}px`}}>
           <div className="bubbles" style={{top: Math.floor(75*factor), left: Math.floor(74*factor)}}>
-            <img src={window.AWS + "/mars/bubbles3.gif"} width={w} height={h} />
+            <img alt="bubbles for small Mars crater" src={window.AWS + "/mars/bubbles3.gif"} width={w} height={h} />
           </div>
         </div>
       }

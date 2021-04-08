@@ -46,9 +46,22 @@ class Header extends React.Component {
     this.state = {
       currentTimeString: 0,
       showSideBar: true,
-      volumeMuted: false
+      volumeMuted: false,
+      liveStreamOn: false
     }
 
+  }
+
+  componentDidMount() {
+    this.liveStreamInterval = setInterval(this.liveStreamToggle, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.liveStreamInterval);
+  }
+
+  liveStreamToggle = () => {
+    this.setState({liveStreamOn: !this.state.liveStreamOn});
   }
 
   // shouldComponentUpdate(nextProps) {
@@ -107,7 +120,7 @@ class Header extends React.Component {
     const hamburgerMenuItems = [
       { title: "about", link: "about", shortcut: "" },
       { title: "statement", link: "statement", shortcut: "" },
-      // { title: "thesis", link: "thesis", shortcut: "" },
+      { title: "thesis", link: "thesis", shortcut: "" },
 
       // {title: "cookies", link:"/words", shortcut: "🍪"},
       // { title: "credits", link: "credits", shortcut: "" }
@@ -222,7 +235,9 @@ class Header extends React.Component {
 
 
   getLiveStreamLi = () => {
-    const classVol = "expandable icon" + (this.props.menu.isLiveStreamHidden ? " closed" : " opened");
+    const {menu} = this.props;
+    let classVol = "expandable icon" + (menu.isLiveStreamHidden ? " closed" : " opened");
+    classVol += ((this.state.liveStreamOn && !menu.hasClickedLiveStream)?" liveStreamOn":"");
     return (
       <li className={classVol} onClick={this.props.toggleLiveStream}>
         {/* <Volume isMuted={this.props.music.isMuted} /> */}

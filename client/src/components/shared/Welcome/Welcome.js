@@ -80,11 +80,11 @@ class Welcome extends React.Component {
   getWelcomeStepClosed = (step) => {
     if (step === 0)
       return <MFADeets width={this.props.ui.width} />
-    else if (step == 1)
+    else if (step === 1)
       return <Closed  />
     else if (step === 2)
       return <SignIn {...this.props} setClick={click => this.clickSubmit = click} nextStep={this.nextStep} prevStep={this.prevStep} isFrame={false} />;
-    else if (step == 3)
+    else if (step === 3)
       return <Glasses />
     return null;
   }
@@ -111,7 +111,7 @@ class Welcome extends React.Component {
           <button className="standardButton primary" onClick={this.nextStep}>next</button>
         </div>
       );
-    else if (step == 3)
+    else if (step === 3)
       return (
         <div className="center-buttons">
           <button className="standardButton secondary" onClick={this.prevStep}>back</button>
@@ -128,7 +128,7 @@ class Welcome extends React.Component {
       return <SignIn {...this.props} setClick={click => this.clickSubmit = click} nextStep={this.nextStep} prevStep={this.prevStep} isFrame={false} />;
     else if (step === 2)
       return <FAQ />
-    else if (step == 3)
+    else if (step === 3)
       return <Glasses />
     return null;
   }

@@ -3,10 +3,9 @@ import { mouseToWorld } from '../../constants';
 
 export default class TrashFolder extends ShadowDraggable {
 
-    constructor(id, x, y, w, h, p5, content, shadow) {
-        super(id, x, y, w, h, p5, content, shadow);
-
-    }
+    // constructor(id, x, y, w, h, p5, content, shadow) {
+    //     super(id, x, y, w, h, p5, content, shadow);
+    // }
 
     displayContent(userX, userY) {
         this.displayShadow();

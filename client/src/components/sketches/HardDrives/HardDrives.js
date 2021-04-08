@@ -1,7 +1,7 @@
 import React from 'react';
 import "./HardDrives.css";
 
-import { AnaglyphUniversalCamera, HemisphericLight, Axis, Effect, PostProcess, Space, MeshBuilder, Vector3, Vector2, AssetContainer, SceneLoader, StandardMaterial, CubeTexture, Color3, Mesh, Texture } from 'babylonjs';
+import { AnaglyphUniversalCamera, HemisphericLight, Vector3, Vector2, AssetContainer, SceneLoader, StandardMaterial, CubeTexture, Color3, Mesh, Texture } from 'babylonjs';
 import BabylonScene from '../../shared/Babylon.jsx'; // import the component above linking to file we just created.
 import { WaterMaterial } from 'babylonjs-materials';
 import 'babylonjs-loaders';
@@ -10,12 +10,10 @@ import 'babylonjs-loaders';
 import { connect } from 'react-redux';
 import { setSketchMusic } from '../../../store/actions/music';
 
+// components
 import Frame from '../../shared/Frame/Frame';
-// import Glasses from '../../shared/Glasses/Glasses';
-
 import Birds from './Birds';
 
-import socket from '../../shared/Socket/Socket';
 
 // palm https://poly.google.com/view/ficLBIjGliK
 

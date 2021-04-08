@@ -117,7 +117,7 @@ export const addFolderDivs = (divs, instaImg, txtFile, p5) => {
     for (let i = 0; i < 3; i++) {
         const { x, y, label, link } = labels[i];
 
-        const folder = new Folder(p5, i, x, y, label, link, (i == 2 ? instaImg : txtFile));
+        const folder = new Folder(p5, i, x, y, label, link, (i === 2 ? instaImg : txtFile));
         // folders.push(folder)
         divs.folders.push(folder);
     }
@@ -182,14 +182,12 @@ export const addTreeDivs = (divs, tree, p5) => {
     }
 
     // let x = sc * -8;
-    let y = 30 * sc;
-    let sp = 60;
+    // let y = 30 * sc;
+    // let sp = 60;
     // divs.trees.push(new Draggable(numTrees + 1, -8.5 * sc, 32 * sc, w, h, p5, tree));
     // divs.trees.push(new Draggable(numTrees, -9.5 * sc, 33 * sc, w, h, p5, tree));
 
-
-    
-    let x = sc * -5;
+    // let x = sc * -5;
     // divs.trees.push(new Draggable(numTrees + 2, sc * -.5, 35.5 * sc, w, h, p5, tree));
     // divs.trees.push(new Draggable(numTrees + 3, sc * -1.5, 36.5 * sc, w, h, p5, tree));
 }

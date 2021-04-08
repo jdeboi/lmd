@@ -13,10 +13,10 @@ function TweetContent(props) {
     }
 
 
-    const {text, username, url, likes, rts, replies, time, tweetID} = props.tweet;
-    const tweetUri = `twitter.com/${username}/status/${tweetID}`;
+    const {text, username, url, likes, rts, replies, time} = props.tweet;
+    // const tweetUri = `twitter.com/${username}/status/${tweetID}`;
     const profileUrl = "https://twitter.com/" + username;
-    const tweetUriA = <a href={"https://"+tweetUri} target="_blank">{tweetUri.substring(0, 15) + "..."}</a>;
+    // const tweetUriA = <a href={"https://"+tweetUri} target="_blank" rel="noopener noreferrer">{tweetUri.substring(0, 15) + "..."}</a>;
       var name = props.tweet.name;
       if (name.length > 24) name = name.substring(0, 24) + "...";
       return (
@@ -24,8 +24,8 @@ function TweetContent(props) {
           <div className="tweet-top">
             <div className="tweeter-icon" style={{backgroundImage: `url(${url})`}}><div className="inner"></div></div>
             <div className="tweeter">
-              <div className="person"><a href={profileUrl} target="_blank">{name}</a></div>
-              <div className="tweet-handle"><a href={profileUrl} target="_blank">@{username}</a></div>
+              <div className="person"><a href={profileUrl} target="_blank" rel="noopener noreferrer">{name}</a></div>
+              <div className="tweet-handle"><a href={profileUrl} target="_blank" rel="noopener noreferrer">@{username}</a></div>
             </div>
             <div className="tweet-time">• {time}</div>
           </div>

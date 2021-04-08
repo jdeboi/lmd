@@ -9,7 +9,7 @@ export default class Light extends Draggable {
 
         this.scaler = globalConfig.scaler / 100;
 
-        if (this.scaler < .84) 
+        if (this.scaler < .84)
             this.scaler = .84;
         this.w *= this.scaler;
         this.h *= this.scaler;
@@ -25,7 +25,7 @@ export default class Light extends Draggable {
         this.isOn = true;
 
         let wb = 15;
-        this.button = new ButtonSq((this.w - wb) / 2, this.h - 15*this.scaler, wb, p5);
+        this.button = new ButtonSq((this.w - wb) / 2, this.h - 15 * this.scaler, wb, p5);
     }
 
     checkButtons(userX, userY) {
@@ -61,23 +61,23 @@ export default class Light extends Draggable {
     displayContent(userX, userY) {
         this.p5.push();
 
-
+        var img, imgBack, backW, backH, backY;
         if (this.isOn) {
-            var img = this.imgs[0];
-            var imgBack = this.imgs[1];
+            img = this.imgs[0];
+            imgBack = this.imgs[1];
 
-            var backW = imgBack.width * .8;
-            var backH = imgBack.height * 1.3;
-            var backY = 0;
+            backW = imgBack.width * .8;
+            backH = imgBack.height * 1.3;
+            backY = 0;
         }
 
         else {
-            var img = this.imgs[2];
-            var imgBack = this.imgs[3];
+            img = this.imgs[2];
+            imgBack = this.imgs[3];
 
-            var backW = imgBack.width * .8;
-            var backH = imgBack.height * 1.5;
-            var backY = -30;
+            backW = imgBack.width * .8;
+            backH = imgBack.height * 1.5;
+            backY = -30;
         }
 
         backW *= this.scaler;

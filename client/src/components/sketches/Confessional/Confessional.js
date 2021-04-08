@@ -17,62 +17,23 @@ import Candles from './components/Candles/Candles';
 
 import { mapVal, constrain } from '../../shared/Helpers/Helpers';
 
-// import DesktopIcon from '../../shared/DesktopIcon/DesktopIcon';
-// import FrameSimple from '../../shared/Frame/FrameSimple';
-
-
-import ReactPlayer from 'react-player'
-// import Moment from 'react-moment';
-
-// import shellSound from "./assets/shell_sound.wav";
-// import Glasses from '../../shared/Glasses/Glasses';
-
 
 
 const processString = require('react-process-string');
 
 
 class Confessional extends React.Component {
-  // https://codepen.io/JohJakob/pen/YPxgwo
+
   constructor(props) {
     super(props);
 
     const { ui } = this.props;
 
-    this.factor = mapVal(window.innerWidth, 1440, 2560, 1, 1.5);
-    this.factor = constrain(this.factor, 1, 1.5);
-
-    this.dimW = 1584 * this.factor * .3;
-    this.dimH = 1588 * this.factor * .3;
-
-    this.minVol = .01;
-
-
-
-
-
-    const bottomBar = 60;
-    const spacing = 120;
-    this.tweetW = 400;
-    this.winX = Math.max((window.innerWidth - this.dimW - this.tweetW - spacing) / 2, 50)
-    this.winY = (window.innerHeight - this.dimH - 26 - 30 - bottomBar) / 2 + 30;
-
-    // const webY = winY -50;
-    // const webX = tX;
-    // const webH = 200;
-
-
+    // this.factor = mapVal(window.innerWidth, 1440, 2560, 1, 1.5);
+    // this.factor = constrain(this.factor, 1, 1.5);
 
 
     this.state = {
-      windowX: this.winX,//(window.innerWidth - this.dimW)/2,
-      windowY: this.winY,//(window.innerHeight - this.dimH-80)/2,
-      tweetX: this.winX + this.dimW + 100,
-      tweetY: this.winY + 20,
-      webX: this.winX + this.dimW + 100,
-      webY: this.winY - 50,
-      earCursor: this.props.cursor,
-      volume: this.minVol,
       confessFormHidden: true,
       audioOn: true,
       videoOn: true,
@@ -80,7 +41,7 @@ class Confessional extends React.Component {
     };
 
 
-    this.memberRef0 = React.createRef();
+    // this.memberRef0 = React.createRef();
 
   }
 
@@ -95,13 +56,6 @@ class Confessional extends React.Component {
   }
 
 
-
-  // resetPlayer = () => {
-  //   if (this.videoBack && this.videoMain) {
-  //     this.videoBack.currentTime = 0;
-  //     this.videoMain.currentTime = .50;
-  //   }
-  // }
 
   addCandle = () => {
     // console.log("ADD EMOJI", id);
@@ -153,7 +107,47 @@ class Confessional extends React.Component {
     return buttonSty;
   }
 
-  getPearlyGatesDim = (ui) => {
+  getAllDim = (ui) => {
+
+    let factor = mapVal(ui.contentW, 1440, 2560, 1, 1.5);
+    factor = constrain(factor, 1, 1.5);
+
+    const bottomBarH = 60;
+    // const spacing = 120;
+    const sideFrameSpaceY = 50;
+    const sideFrameSpaceX = 100;
+
+    const confessDim = {
+      w: 400,
+      h: 310
+    }
+    const zoomDim = {
+      w: Math.floor(230 * 1.4),
+      h: Math.floor(130 * 1.4)
+    }
+    const pearlyDim = {
+      w: 1584 * factor * .3,
+      h: 1588 * factor * .3
+    }
+    const totalFramesW = pearlyDim.w + confessDim.w + sideFrameSpaceX;
+    const totalFramesH = pearlyDim.h + ui.toolbarH;
+    pearlyDim.x = Math.max((ui.contentW - totalFramesW) / 2, 50);
+    pearlyDim.y = (ui.contentH - totalFramesH - bottomBarH) / 2;
+
+  
+    const totalSideFrameH = zoomDim.h + confessDim.h + 2 * ui.toolbarH + sideFrameSpaceY;
+
+    zoomDim.y = (ui.contentH - totalSideFrameH - bottomBarH/2) / 2;
+    zoomDim.x = pearlyDim.x + pearlyDim.w + sideFrameSpaceX;
+
+
+    confessDim.x = zoomDim.x;
+    confessDim.y = zoomDim.y + zoomDim.h + sideFrameSpaceY;
+
+    return { confessDim, pearlyDim, zoomDim, factor };
+  }
+
+  getPearlyGatesDimMobile = (ui) => {
     const pearly = { x: this.winX, y: this.winY, dim: 475 };
     let sp = 10;
     let buttonH = 36;
@@ -177,7 +171,7 @@ class Confessional extends React.Component {
     const { confessFormHidden } = this.state;
     const { ui } = this.props;
 
-    const gates = this.getPearlyGatesDim(ui);
+    const gates = this.getPearlyGatesDimMobile(ui);
     const buttonSty = this.getButtonSty(gates, ui);
 
     return (
@@ -206,18 +200,46 @@ class Confessional extends React.Component {
   }
 
   getDesktop = () => {
-    const { tweetX, tweetY, webX, webY, windowX, windowY, audioOn, videoOn, candles } = this.state;
+    const { audioOn, videoOn, candles } = this.state;
+
+    const { ui } = this.props;
+    const dimensions = this.getAllDim(ui);
+    const { pearlyDim, confessDim, zoomDim } = dimensions;
 
     return (
       <div className="Confessional Sketch">
         <div className="confessions-form">
-          <PearlyGates w={this.dimW} h={this.dimH} x={windowX} y={windowY} />
-          <div className="member" ref={this.memberRef0}>
-            <WebZoom videoOn={videoOn} audioOn={audioOn} x={webX} y={webY} factor={this.factor} />
-          </div>
-          <ConfessFormFrame w={this.tweetW} h={310} x={tweetX} y={tweetY - 20} onSubmit={this.onSubmit} />
+          <PearlyGates
+            w={pearlyDim.w}
+            h={pearlyDim.h}
+            x={pearlyDim.x} //windowX
+            y={pearlyDim.y} // winidowY
+          />
+          {/* <div className="member" ref={this.memberRef0}> */}
+          <WebZoom
+            videoOn={videoOn}
+            audioOn={audioOn}
+            x={zoomDim.x}
+            y={zoomDim.y}
+            w={zoomDim.w}
+            h={zoomDim.h}
+          />
+          {/* </div> */}
+          <ConfessFormFrame
+            w={confessDim.w}
+            h={confessDim.h}
+            x={confessDim.x}
+            y={confessDim.y}
+            onSubmit={this.onSubmit}
+          />
           <Candles candles={candles} />
-          <BottomBar audioOn={audioOn} videoOn={videoOn} toggleAudio={this.toggleAudio} toggleVideo={this.toggleVideo} addCandle={this.addCandle} />
+          <BottomBar
+            audioOn={audioOn}
+            videoOn={videoOn}
+            toggleAudio={this.toggleAudio}
+            toggleVideo={this.toggleVideo}
+            addCandle={this.addCandle}
+          />
         </div>
       </div>
     )

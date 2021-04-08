@@ -13,3 +13,6 @@
 
 .Emoji-Monitor .light {
   opacity: .2; }
+
+.Emoji-Monitor .emoji-bar {
+  background-size: contain; }

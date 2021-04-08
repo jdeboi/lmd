@@ -2,10 +2,7 @@ import React from 'react';
 
 
 class Emojis extends React.Component {
-  // https://codepen.io/JohJakob/pen/YPxgwo
-  constructor(props) {
-    super(props);
-  }
+ 
 
   render() {
     const {emojis} = this.props;

@@ -11,6 +11,8 @@ import {
   SETGALLERYACTIVE
 } from '../actions/menuItems';
 
+// import Cookies from 'js-cookie';
+
 const initState = {
   mobile: null,
   isMapHidden: true,
@@ -20,6 +22,7 @@ const initState = {
   isChatHidden: true,
   isUserIconsHidden: true,
   isLiveStreamHidden: true,
+  hasClickedLiveStream: false,
   isGalleryActive: false,
 }
 
@@ -48,6 +51,8 @@ const getOneMenu = (oldMenu, show) => {
       return newMenu;
     case "liveStream":
       newMenu.isLiveStreamHidden = false;
+      // Cookies.set("clickedLiveStream", true);
+      newMenu.hasClickedLiveStream = true;
       return newMenu;
     case "map":
       newMenu.isMapHidden = false;
@@ -70,7 +75,9 @@ export const menuReducer = (state = initState, action) => {
 
     // all
     case HIDEMENUS:
-      return { ...initState };
+      let s = { ...initState };
+      s.hasClickedLiveStream = menu.hasClickedLiveStream
+      return s;
     case SETONEMENU:
       return getOneMenu(menu, action.payload.show);
 
@@ -142,11 +149,14 @@ export const menuReducer = (state = initState, action) => {
     // livestream
     case SHOWLIVESTREAM:
       menu.isLiveStreamHidden = false;
+      // Cookies.set("clickedLiveStream", true);
+      menu.hasClickedLiveStream = true;
       return menu;
     case HIDELIVESTREAM:
       menu.isLiveStreamHidden = true;
       return menu;
     case TOGGLELIVESTREAM:
+      menu.hasClickedLiveStream = true;
       menu.isLiveStreamHidden = !menu.isLiveStreamHidden;
       return menu;
 

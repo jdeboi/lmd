@@ -1,4 +1,4 @@
-import p5 from "p5";
+// import p5 from "p5";
 
 const sc = 70;
 export const globalConfig = {

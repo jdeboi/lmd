@@ -46,7 +46,7 @@ class YouTube extends React.Component {
 
                         </iframe>
                         <div className="join-zoom">
-                            <a href="https://tulane.zoom.us/j/96008889892" target="_blank" ><button className="standardButton secondary">join zoom!</button></a>
+                            <a href="https://tulane.zoom.us/j/96008889892" target="_blank" rel="noopener noreferrer"><button className="standardButton secondary">join zoom!</button></a>
                         </div>
                     </React.Fragment>
 

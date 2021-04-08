@@ -3,10 +3,10 @@ import { globalConfig } from '../constants';
 
 class AvatarMiniMap extends React.Component {
 
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
 
-  }
+  // }
 
   render() {
     const {user, isUser, dim} = this.props;

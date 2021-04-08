@@ -127,7 +127,7 @@ class ComboBox extends React.Component {
     const users = this.getUsersInRoom();
 
     const {inputValue} = this.state;
-    const {userActiveChat, userHoverChat} = this.props;
+    const {userActiveChat} = this.props;
 
     let sty = {};
     if (this.props.w) {

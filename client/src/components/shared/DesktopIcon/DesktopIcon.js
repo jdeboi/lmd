@@ -75,9 +75,9 @@ class DesktopIcon extends React.Component {
   }
 
   getDesktopDesktop = () => {
-    const { controlledPosition, isHidden } = this.state;
-    const parser = new DOMParser();
-    var title = this.props.title;
+    const { controlledPosition } = this.state;
+    // const parser = new DOMParser();
+    // var title = this.props.title;
 
     var classn = "DesktopIcon";
     if (this.props.className) classn += " " + this.props.className;
@@ -86,7 +86,7 @@ class DesktopIcon extends React.Component {
 
     // position = {...} makes it have a specific location. when you want direct control.
     // let pos = this.state.controlledPosition;
-    let frameH = this.toolBarH + (this.state.isMinimized ? 0 : this.props.height);
+    // let frameH = this.toolBarH + (this.state.isMinimized ? 0 : this.props.height);
     // so if we make pos null, it stays where it is dragged to
     // however, it doesn't update when the page width / height changes
     // if we let pos be equal to props.px/ props.py, it changes location
@@ -121,11 +121,11 @@ class DesktopIcon extends React.Component {
 
   getMobileDesktop = () => {
 
-    const parser = new DOMParser();
-    var title = this.props.title;
+    // const parser = new DOMParser();
+    // var title = this.props.title;
 
-    var classn = "DesktopIcon DesktopIconMobile";
-    if (this.props.className) classn += " " + this.props.className;
+    // var classn = "DesktopIcon DesktopIconMobile";
+    // if (this.props.className) classn += " " + this.props.className;
 
     return (
       <div className="DesktopDivMobile"

@@ -10,7 +10,7 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader.js';
 // import { BufferGeometryUtils } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 
-import { MapControls, OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { MapControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import { Line2 } from 'three/examples/jsm/lines/Line2.js';
 import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js';
@@ -370,7 +370,7 @@ class Oogle extends Component {
     // console.log("len", roomLines.length)
     for (const room of roomLines) {
       const roomPoints = room.map((x, i) => {
-        if ((i - 1) % 3 == 0)
+        if ((i - 1) % 3 === 0)
           return -200;
         return x * this.scaler;
       });

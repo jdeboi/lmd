@@ -100,15 +100,15 @@ class Yosemite extends React.Component {
   getPopUps = () => {
     const { ui } = this.props;
     let numPops = constrain(ui.width / 30, 20, 60);
-    let maxS = mapVal(ui.width, 300, 5120, 130, 800);
-    maxS = constrain(maxS, 130, 500);
-    let minS = mapVal(ui.width, 300, 5120, 80, 130);
-    minS = constrain(minS, 80, 130);
+    // let maxS = mapVal(ui.width, 300, 5120, 130, 800);
+    // maxS = constrain(maxS, 130, 500);
+    // let minS = mapVal(ui.width, 300, 5120, 80, 130);
+    // minS = constrain(minS, 80, 130);
+
     let popups = [];
     for (let i = 0; i < numPops; i++) {
 
       // let z = randomInRange(0, numPops);
-
       // let w = mapVal(z, 0, numPops, minS, maxS);
       // w = Math.floor(w);
       let w = 80;//Math.floor(maxS);
@@ -131,7 +131,7 @@ class Yosemite extends React.Component {
   render() {
 
     // console.log(this.state.numPops)
-    let i = 0;
+    // let i = 0;
     var box = { x: 100, y: 100, w: 300, h: 200 };
 
     return (
@@ -174,7 +174,7 @@ class Yosemite extends React.Component {
             box={box}
             title={"home"}
             content={
-              <img src={window.AWS + "/shared/homeicon.png"} width={80} height={80} />
+              <img alt="fire window" src={window.AWS + "/shared/homeicon.png"} width={80} height={80} />
             }
             frameContent={
               <div className="test">home</div>
@@ -247,13 +247,15 @@ class Yosemite extends React.Component {
           let direction = Math.floor(frame / framesW);
 
           let x = 0;
-          if (direction % 2 == 0) x = startX + frame % framesW * 20;
-          else x = startX + framesW * 20 - frame % framesW * 20;
+          if (direction % 2 === 0)
+            x = startX + frame % framesW * 20;
+          else
+            x = startX + framesW * 20 - frame % framesW * 20;
 
           // let t0 = docNames[i % docNames.length];
           // let t1 = docNames[(i + 1) % docNames.length]
 
-          let src = window.AWS + '/loop/folder.png';
+          // let src = window.AWS + '/loop/folder.png';
           // if (new Date() - this.start > i * 4000)
           //   src = window.AWS + '/yosemite/fireemoji.png';
 

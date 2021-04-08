@@ -3,24 +3,15 @@ import Frame from '../../../shared/Frame/Frame';
 
 class Shower extends React.Component {
 
-  constructor(props) {
-    super(props);
-
-    // this.state = {
-    //   deltaPosition: {x: 0, y: 0}
-    // }
-  }
-
-
-
   render() {
-    const {isPlaying, dim, x, y, z, w, h, id, newFrameToTop, handleDrag, onMaximized, onMinimized, onClosed} = this.props;
+    const {x, y, w, h, id, handleDrag, onMaximized, onMinimized, onClosed} = this.props;
 
     let imgs = [7, 1, 3, 4, 8, 10];
     let img = imgs[id];
     let imgSrc = window.AWS+"/wetStreams/showerHeads/" + img + ".png";
-    let title = "";
-    if (id === 1 && dim > 300) title = "wet streams";
+    // let title = "";
+    // if (id === 1 && dim > 300) 
+    //   title = "wet streams";
     let classn = id===5?"showerhead flippedX":"showerhead";
 
     return (

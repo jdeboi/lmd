@@ -1,41 +1,39 @@
 import React from 'react';
 import Frame from '../../shared/Frame/Frame';
-import DesktopIcon from '../../shared/DesktopIcon/DesktopIcon';
-import { connect } from 'react-redux';
-import {setSketchMusic} from '../../../store/actions/music';
-// import FrameSimple from '../../shared/Frame/FrameSimple';
 import './Xfinity.css';
-import { mapVal } from '../../shared/Helpers/Helpers';
 
-// import Carousel from '../../shared/Carousel/Carousel';
-// import ReactScrollWheelHandler from "react-scroll-wheel-handler";
-// import Balloon from './assets/balloonsprite.png';
-// import cloudsVid from  "../MacbookAir/assets/clouds3d.mp4";
-// import folder from  "./assets/folder.png";
+// store
+import { connect } from 'react-redux';
+import { setSketchMusic } from '../../../store/actions/music';
+
+// helpers
+import { mapVal, constrain } from '../../shared/Helpers/Helpers';
 
 // Babylon
 import { AnaglyphUniversalCamera, HemisphericLight, Vector3, Vector2, StandardMaterial, Color4, Mesh, Texture } from 'babylonjs';
 import BabylonScene from '../../shared/Babylon.jsx';
 import { WaterMaterial } from 'babylonjs-materials';
 
-
 var camera, water, waterMesh;
 
-
-
 class Xfinity extends React.Component {
-  // https://codepen.io/JohJakob/pen/YPxgwo
+
   constructor(props) {
     super(props);
 
-    // this.imgW = 350;
     this.numFrames = 15;
-    this.imgW = 450;
-    this.imgH = 254;
+    this.numImages = 51;
+
+    let maxF = 1.4;
+    let factor = mapVal(window.innerWidth, 1400, 2500, 1, maxF);
+    factor = constrain(factor, 1, maxF);
+    this.imgW = Math.floor(450 * factor);
+    this.imgH = Math.floor(254 * factor);
+
     this.state = {
       deltaX: 0,
       deltaY: 0,
-      startX: (window.innerWidth - this.numFrames * 15 - this.imgW * 1 - 50) / 2 -80,
+      startX: (window.innerWidth - this.numFrames * 15 - this.imgW * 1 - 50) / 2 - 80,
       startY: (window.innerHeight - this.numFrames * 15 + 50) / 2,
       imageIndex: 0,
       touchS: 0,
@@ -46,10 +44,6 @@ class Xfinity extends React.Component {
     this.divRef = React.createRef();
     this.preventDefault = e => e.preventDefault()
 
-    this.numImages = 51;
-
-    // this.wheel = this.wheel.bind(this);
-    // this.setImages = this.setImages.bind(this);
   }
 
 
@@ -62,7 +56,6 @@ class Xfinity extends React.Component {
 
   componentWillUnmount() {
     this.divRef.current.removeEventListener('wheel', this.preventDefault);
-    // this.props.userLeaveRoom("xfinity-depths");
   }
 
 
@@ -88,9 +81,7 @@ class Xfinity extends React.Component {
     }
 
     this.setState({ deltaY, imageIndex, mapDivs });
-    // this.setImages();
 
-    // console.log(imageIndex);
     return false;
   }
 
@@ -125,20 +116,6 @@ class Xfinity extends React.Component {
     water.colorBlendFactor = 0;
     waterMesh.material = water;
 
-    // Skybox
-    // var skyW = 1000;
-    // var skybox = Mesh.CreateBox("skyBox", skyW, scene);
-    // var skyboxMaterial = new StandardMaterial("skyBox", scene);
-    // skyboxMaterial.backFaceCulling = false;
-    // skyboxMaterial.reflectionTexture = new CubeTexture(window.AWS+"/shared/sky/moon/moon", scene);
-    // skyboxMaterial.reflectionTexture.coordinatesMode = Texture.SKYBOX_MODE;
-    // skyboxMaterial.diffuseColor = new Color3(0, 0, 0);
-    // skyboxMaterial.specularColor = new Color3(0, 0, 0);
-    // skyboxMaterial.disableLighting = true;
-    // skybox.material = skyboxMaterial;
-    // water.addToRenderList(skybox);
-
-
     // Ground
     var groundTexture = new Texture(window.AWS + "/shared/sand2.jpg", scene);
     groundTexture.vScale = groundTexture.uScale = 10;
@@ -149,21 +126,12 @@ class Xfinity extends React.Component {
     ground.material = groundMaterial;
     water.addToRenderList(ground);
 
-    // SceneLoader.ImportMesh("", "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/loop/", "fish.glb", scene, function (meshes) {          
-    //     // scene.createDefaultCameraOrLight(true, true, true);
-    //     // scene.createDefaultEnvironment();
-    //     meshes.forEach((m) => {
-    //       m.position.x = 14;
-    //       m.position.z = 20;
-    //     })
-    // });
-
   }
 
 
   onRender(scene) {
-    let divFps = document.getElementById("fps");
-    if (divFps) divFps.innerHTML = scene.getEngine().getFps().toFixed() + " fps";
+    // let divFps = document.getElementById("fps");
+    // if (divFps) divFps.innerHTML = scene.getEngine().getFps().toFixed() + " fps";
   }
 
   getMouseWheel = (mouseX, mouseY, mouseW = 80) => {
@@ -197,7 +165,12 @@ class Xfinity extends React.Component {
           <Frame
             windowStyle={{ opacity: opac }}
             content={
-              <div className="balloon" style={{ backgroundPosition: `${val}px 0px`, width: this.imgW, height: this.imgH }}></div>
+              <div className="balloon" style={{
+                backgroundPosition: `${val}px 0px`,
+                width: this.imgW,
+                height: this.imgH,
+                backgroundSize: `${this.imgW * this.numImages}px ${this.imgH}px`
+              }} />
             }
             key={i}
             width={this.imgW}
@@ -231,7 +204,7 @@ class Xfinity extends React.Component {
     const { ui } = this.props;
     let spacing = 15;
     let mouseW = 80;
-   
+
     if (ui.orientation === "portrait") {
 
       var w = Math.min(this.props.ui.contentW - spacing * 2, this.imgW);
@@ -241,21 +214,21 @@ class Xfinity extends React.Component {
       var mouseY = y + h + ui.toolbarH + 50;
       var mouseX = (ui.contentW - mouseW) / 2;
     } else {
-      
-      let availW = ui.contentW - spacing*3 - mouseW;
-      let availH = ui.contentH - spacing*2 - ui.toolbarH;
-      let asp = availW/availH;
-      let imgAsp = this.imgW/this.imgH;
+
+      let availW = ui.contentW - spacing * 3 - mouseW;
+      let availH = ui.contentH - spacing * 2 - ui.toolbarH;
+      let asp = availW / availH;
+      let imgAsp = this.imgW / this.imgH;
       if (imgAsp > asp) {
         var w = Math.min(availW, this.imgW);
-        var h = w/this.imgW * this.imgH;
+        var h = w / this.imgW * this.imgH;
       }
       else {
         var h = Math.min(availH, this.imgH);
-        var w = h/this.imgH * this.imgW;
+        var w = h / this.imgH * this.imgW;
       }
-      var x = (ui.contentW - mouseW - w) /3;
-      var y = (ui.contentH - ui.toolbarH - h)/2;
+      var x = (ui.contentW - mouseW - w) / 3;
+      var y = (ui.contentH - ui.toolbarH - h) / 2;
       var mouseX = w + x + spacing;
       var mouseY = (ui.contentH - ui.toolbarH - mouseW) / 2;
     }

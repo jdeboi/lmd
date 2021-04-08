@@ -1,4 +1,4 @@
-import { Scene, MeshBuilder, StandardMaterial, CubeTexture, Color3,Color4,Vector3, Mesh, Texture } from 'babylonjs';
+import { StandardMaterial, Vector3, Mesh, Texture } from 'babylonjs';
 
 export default class Emoji {
 

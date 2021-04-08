@@ -10,6 +10,8 @@ import { AnaglyphUniversalCamera, HemisphericLight, Vector3, StandardMaterial, V
 import BabylonScene from '../../shared/Babylon.jsx';
 import Emoji from './Emoji';
 
+// helpers
+import { mapVal, constrain } from '../../shared/Helpers/Helpers';
 
 class Flush extends React.Component {
   // https://codepen.io/JohJakob/pen/YPxgwo
@@ -85,7 +87,7 @@ class Flush extends React.Component {
       emoji.update(this.state.isStopping);
       // else emoji.hide();
     }
-    if (this.props.music.volume != this.lastVolume) {
+    if (this.props.music.volume !== this.lastVolume) {
       this.vidTex.video.volume = 0; //this.props.music.volume * .2;
       this.lastVolume = 0; //this.props.music.volume;
     }
@@ -134,6 +136,10 @@ class Flush extends React.Component {
   render() {
 
     const deg = this.state.handleDown ? "rotate(-20deg)" : "rotate(0deg)";
+    let factor = mapVal(this.props.ui.contentW, 1400, 2500, 150, 300);
+    factor = constrain(factor, 1, 2);
+    const w = Math.floor(150 * factor);
+    const h = Math.floor(60 * factor);
     return (
       <div className="Flush Sketch" ref={this.divRef} >
 
@@ -141,12 +147,18 @@ class Flush extends React.Component {
         <Frame title=""
           x={100}
           y={100}
-          width={150}
-          height={60}
+          width={w}
+          height={h}
           windowStyle={{ background: "transparent" }}
           content={
             <div className="flush">
-              <button onClick={this.flushToilet} style={{ transform: deg }}><img src={window.AWS + "/vorTech/flush2.png"} /></button>
+              <button onClick={this.flushToilet}
+                style={{ transform: deg }}>
+                <img
+                  alt="toilet flush handle"
+                  src={window.AWS + "/vorTech/flush2.png"}
+                />
+              </button>
             </div>
           }
         />

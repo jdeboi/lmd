@@ -72,9 +72,9 @@ class SwimLane extends React.Component {
   getSwimmerLanes = () => {
     const swimmerPos = [...this.state.swimmerPos];
     const y0 = swimmerPos[0].y;
-    const dir0 = swimmerPos[0].dir;
+    // const dir0 = swimmerPos[0].dir;
     const y1 = swimmerPos[1].y;
-    const dir1 = swimmerPos[1].dir;
+    // const dir1 = swimmerPos[1].dir;
     const lanes = [];
     for (let i = 0; i < this.numSwimmers; i++) {
       lanes[i] = i;
@@ -86,13 +86,13 @@ class SwimLane extends React.Component {
         let lane1 = "";
         let lane0Class ="water";
         let lane1Class="water";
-        if (i == y0) {
-          lane0=<img height={40} width={40} src={window.AWS+"/mars/womanswim.png"} />;
+        if (i === y0) {
+          lane0=<img alt="woman swimming emoji" height={40} width={40} src={window.AWS+"/mars/womanswim.png"} />;
           // if (dir0 === 1) lane0Class="rot";
           // else lane0Class="rotNeg90";
         }
-        if (i == y1) {
-          lane1=<img height={40} width={40} src={window.AWS+"/mars/manswim.png"} />;
+        if (i === y1) {
+          lane1=<img alt="man swimming emoji" height={40} width={40} src={window.AWS+"/mars/manswim.png"} />;
           // if (dir1 === 1) lane1Class="rot90";
           // else lane1Class="rotNeg90";
         }

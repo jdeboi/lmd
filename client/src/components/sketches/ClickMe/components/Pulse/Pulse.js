@@ -18,7 +18,7 @@ export default class Pulse extends React.Component {
         const h = 90;
         const x = 200;
         const y = 200;
-        const { heartRate, ui } = this.props;
+        const { heartRate} = this.props;
 
         let hr = Math.floor(heartRate);
         if (hr > 40)
@@ -31,7 +31,7 @@ export default class Pulse extends React.Component {
                     <div className="heartRate">{hr}</div>
                     <div className="bpm">
                         <div>BPM</div>
-                        <div>❤️</div>
+                        <div><span role="img" aria-label="emoji heart beat">❤️</span></div>
                     </div>
                 </div>
             }

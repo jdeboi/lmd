@@ -6,9 +6,9 @@ import ConfessFormContent from './ConfessFormContent';
 
 export default class ConfessMobileForm extends React.Component {
     
-    constructor(props) {
-        super(props);
-    }
+    // constructor(props) {
+    //     super(props);
+    // }
 
 
     render() {

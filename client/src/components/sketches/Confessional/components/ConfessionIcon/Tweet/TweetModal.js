@@ -6,9 +6,9 @@ import './TweetModal.css';
 
 export default class TweetModal extends React.Component {
     
-    constructor(props) {
-        super(props);
-    }
+    // constructor(props) {
+    //     super(props);
+    // }
 
 
     render() {

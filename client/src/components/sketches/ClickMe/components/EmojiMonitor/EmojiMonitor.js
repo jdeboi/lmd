@@ -46,7 +46,8 @@ class EmojiMonitor extends React.Component {
                                 if (i < numHearts) {
                                     classN = "full"
                                 }
-                                return <div key={i} className={classN}>{emojis[i]}</div>
+                                classN += " emoji-bar";
+                                return <div key={i} className={classN} style={{width: fontS, height: fontS, backgroundImage: `url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/emojiBar/${ emojis[i]}.png)`}}></div>
                             })}
                         </div>
                     </div>
@@ -64,7 +65,10 @@ class EmojiMonitor extends React.Component {
 
     getEmojis = (repeats) => {
         //,"🤪",
-        let emojiList = ["❤️", "💋", "🔥", "💥", "🥵"];
+        // let emojiList = [
+        //     "❤️", "💋", "🔥", "💥", "🥵"
+        // ];
+        let emojiList=["heart", "kiss", "fire","explosion","hot"]
         let emojis = [];
         for (const emoji of emojiList) {
             for (let i = 0; i < repeats; i++) {

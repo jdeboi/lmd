@@ -1,5 +1,5 @@
-import { roomConfig, globalConfig } from '../../constants';
-import { doorCrossing, boundaryCrossing, doorLineCrossing, boundaryLineCrossing } from './Boundaries';
+import { globalConfig } from '../../constants';
+import { doorLineCrossing, boundaryLineCrossing } from './Boundaries';
 
 import { rooms }  from '../../../Sketches';
 
@@ -93,15 +93,15 @@ export default class Room {
     var count = 0;
     if (rc) count = rc;
     if (eyeIcon) {
-      const w = (this.p5.textWidth(count) + 50);
-      const h = 30;
+      // const w = (this.p5.textWidth(count) + 50);
+      // const h = 30;
       this.p5.push();
       // this.p5.translate(-w / 2, -h / 2);
       this.p5.fill(255, 100);
       this.p5.stroke(255);
       this.p5.strokeWeight(2);
       // this.p5.rect(0, 0, w, h, 10, 10);
-      let rw = 200;
+      // let rw = 200;
       // this.p5.rect(-rw/2, 0, rw, 50, 10, 10);
 
       this.p5.image(eyeIcon, 10, 5, 20, 20);
@@ -185,7 +185,7 @@ export default class Room {
 
   roomDoorCrossing(prevStep, userStep, id = 0) {
     var x0, x1, y0, y1;
-    let sc = globalConfig.scaler;
+    // let sc = globalConfig.scaler;
     if (this.dir === "bottom") {
       x0 = this.x + 1;
       x1 = this.x + 1;
@@ -214,8 +214,8 @@ export default class Room {
   // step from door entrance
   roomDoorBoundary(prevStep, userStep) {
     var x0, x1, y0, y1;
-    let st = globalConfig.stepS;
-    let sc = globalConfig.scaler;
+    // let st = globalConfig.stepS;
+    // let sc = globalConfig.scaler;
     if (this.dir === "bottom") {
       x0 = this.x + this.w * this.start;
       x1 = this.x + this.w * this.end;
@@ -241,7 +241,7 @@ export default class Room {
 
   drawRoomDoorBoundary(p5 = this.p5) {
     var x0, x1, y0, y1;
-    let st = globalConfig.stepS;
+    // let st = globalConfig.stepS;
     let sc = globalConfig.scaler;
     if (this.dir === "bottom") {
       x0 = this.x + this.w * this.start;

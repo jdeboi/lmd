@@ -10,7 +10,7 @@ function Confession(props) {
   const { i, ui, time, confession, tweet, onDblClick, zIcon, zFrame, newFrameToTop, newIconToTop, setTweetModal } = props;
   const x = getRandomNum(i + 30) * (window.innerWidth - 100);
   const y = 15 * Math.sin(time / 400 + x / 100) + getRandomNum(i + 3) * (window.innerHeight - 200);
-  const box = { x: 100 + i * 20, y: 100 + i * 20, w: 400 };
+  const box = { x: 100 + i * 20, y: 100 + i * 20, w: 400,h: undefined };
   box.y = 15 * Math.sin(time / 400 + box.x / 100) + box.y;
 
   if (ui.isMobile) {

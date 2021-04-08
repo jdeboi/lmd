@@ -1,44 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Frame from '../../shared/Frame/Frame';
-
-// import FrameSimple from '../../shared/Frame/FrameSimple';
 import './Confessional.css';
-import ReactPlayer from 'react-player'
 
-// import ReactAudioPlayer from 'src/components/sketches/Gallery/node_modules/react-audio-player';
-
-import { getRandomNum, getNewZIndices } from '../../shared/Helpers/Helpers';
-import { getTweetContent, initConfessions, initZIndicesIcons, initZIndicesFrames } from './components/Helpers';
+// components
 import Confession from './components/ConfessionIcon/Confession';
-
 import TweetModal from './components/ConfessionIcon/Tweet/TweetModal';
 
-// import mainVid from  "./assets/waves2_lines.mp4";
-// import dove from  "./assets/dove_t.gif";
-// import shellSound from "./assets/shell_sound.wav";
-
-// import Glasses from '../../shared/Glasses/Glasses';
-
-
-
-// import txt from './assets/Canned/txt.png';
-
-import { faEye, faRetweet, faVideo, faMicrophoneAlt, faMicrophoneAltSlash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+// helpers
+import { getNewZIndices } from '../../shared/Helpers/Helpers';
+import { getNumConfessions, getTweetContent, initConfessions, initZIndicesIcons, initZIndicesFrames } from './components/Helpers';
 
 class Confessions extends React.Component {
-  // https://codepen.io/JohJakob/pen/YPxgwo
+
   constructor(props) {
     super(props);
 
+    const numConfessions = getNumConfessions();
+    
     this.state = {
-      confessions: initConfessions(),
+      confessions: initConfessions(numConfessions),
       tweets: [],
       time: 0,
-      zIndicesIcons: initZIndicesIcons(),
-      zIndicesFrames: initZIndicesFrames(),
+      zIndicesIcons: initZIndicesIcons(numConfessions),
+      zIndicesFrames: initZIndicesFrames(numConfessions),
       modalTweetHidden: true,
       modalTweet: null,
       modalTweetConfession: null
@@ -141,7 +125,7 @@ class Confessions extends React.Component {
 
 
   setTweetModal = (tweet, confession) => {
-    this.setState({ modalTweetHidden: false,  modalTweet: tweet, modalTweetConfession: confession })
+    this.setState({ modalTweetHidden: false, modalTweet: tweet, modalTweetConfession: confession })
   }
 
   hideTweetModal = () => {
@@ -167,10 +151,10 @@ class Confessions extends React.Component {
               newFrameToTop: this.newFrameToTop,
               newIconToTop: this.newIconToTop
             }
-            if (this.props.ui.width > 500)
+            // if (this.props.ui.width > 500)
               return (<Confession key={i} i={i}  {...props} />)
-            else if (i < 5)
-              return (<Confession key={i} i={i}  {...props} />)
+            // else if (i < 5)
+            //   return (<Confession key={i} i={i}  {...props} />)
             return null;
           })
         }

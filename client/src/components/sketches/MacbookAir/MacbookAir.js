@@ -1,25 +1,26 @@
 import React from 'react';
-import Frame from '../../shared/Frame/Frame';
+
 import './MacbookAir.css';
 
-// import Grid from '@material-ui/core/Grid';
+// components
+import Frame from '../../shared/Frame/Frame';
 import Slider from '@material-ui/core/Slider';
-// import indigo from '@material-ui/core/colors/indigo';
-import { setSketchMusic, setNoSketchMusic, setSketchVolume } from '../../../store/actions/music';
-import ReactPlayer from 'react-player'
 
 // store
 import { connect } from 'react-redux';
 import { doneLoadingApp } from '../../../store/actions/';
+import { setSketchMusic, setNoSketchMusic, setSketchVolume } from '../../../store/actions/music';
+
+// helpers
+import { constrain, mapVal } from '../../shared/Helpers/Helpers';
 
 class MacbookAir extends React.Component {
-  // https://codepen.io/JohJakob/pen/YPxgwo
+
   constructor(props) {
     super(props);
 
     this.state = {
       videoSpeed: 1.0,
-
 
     }
 
@@ -46,7 +47,7 @@ class MacbookAir extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {ui} = this.props;
+    const { ui } = this.props;
     if (ui.compositionStarted && !prevProps.ui.compositionStarted) {
       this.fanRef.current.play();
       this.cloudsRef.current.play();
@@ -55,9 +56,9 @@ class MacbookAir extends React.Component {
 
   setSpeed(speed) {
     this.cloudsRef.current.playbackRate = speed;
-    // this.setState({ videoSpeed: speed });
     this.props.setSketchVolume(speed);
     this.fanRef.current.playbackRate = speed;
+    // this.setState({ videoSpeed: speed });
   }
 
   getDimensions() {
@@ -66,11 +67,14 @@ class MacbookAir extends React.Component {
     var windowWidth = ui.contentW;
     var windowHeight = ui.contentH;
     var aspectRatio = ui.contentW / ui.contentH;
-    // var {} = this.props.dimensions;
     var minSpacing = 20;
-    // windowHeight -= headerH;
 
     const originalDim = { w: 840, h: 540 };
+    let maxF = 1.3;
+    let factor = mapVal(ui.contentW, 1400, 2500, 1, maxF);
+    factor = constrain(1, maxF);
+    originalDim.w = Math.floor(originalDim.w * factor);
+    originalDim.h = Math.floor(originalDim.h * factor);
 
     if (ui.hasFooter && ui.orientation === "landscape")
       return getLandscapeDimensions();
@@ -101,15 +105,12 @@ class MacbookAir extends React.Component {
       }
       let spacingFinal = (windowHeight - windowDim.h) / 2;
       windowDim.x = (windowWidth - windowDim.w - sliderDim.w - minSpacingMiddle) / 2;
-      windowDim.y = spacingFinal; //(windowHeight - windowDim.h - 21 - 30)/2-5;
+      windowDim.y = spacingFinal;
 
       // slider
       sliderDim.h = windowDim.h;
-      let remainingSpace = windowWidth - windowDim.w - windowDim.x;
-      // let buffer = (remainingSpace - sliderDim.w) / 2;
       sliderDim.x = windowDim.w + windowDim.x + minSpacingMiddle;
-      sliderDim.y = windowDim.y;//(windowHeight-30- sliderDim.h-21)/2;
-
+      sliderDim.y = windowDim.y;
       return [windowDim, sliderDim];
     }
 
@@ -174,17 +175,6 @@ class MacbookAir extends React.Component {
             autoPlay>
             <source src={window.AWS + "/macbookAir/noframe.mp4"} type="video/mp4"></source>
           </video>
-          // <ReactPlayer
-          //   className={"react-player mainContent"}
-          //   playing
-          //   muted
-          //   loop
-          //   width={windowDim.w}
-          //   height={windowDim.h}
-          //   playsInline
-          //   url={window.AWS + "/macbookAir/noframe.mp4"}
-          //   playbackRate={this.state.videoSpeed}
-          // />
         }
           width={windowDim.w + 2} height={windowDim.h} x={windowDim.x} y={windowDim.y} px={windowDim.x} py={windowDim.y}
         />

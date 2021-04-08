@@ -188,7 +188,7 @@ export default class Draggable {
   checkDragging() {
     if (this.closed)
       return false;
-    let mouse = { x: this.p5.mouseX, y: this.p5.mouseY };
+    // let mouse = { x: this.p5.mouseX, y: this.p5.mouseY };
     // console.log(mx, my, userX, userY, this.x, this.y);
     let overTool = this.overToolBar(this.p5.mouseX, this.p5.mouseY);
     if (overTool) {
