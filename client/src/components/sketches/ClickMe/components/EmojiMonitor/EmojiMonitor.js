@@ -32,8 +32,8 @@ class EmojiMonitor extends React.Component {
         let hr = Math.floor(heartRate);
         if (hr > 40)
             hr = Math.floor(heartRate / 5) * 5;
-        let hearts = new Array(20).fill(0);
-        const numHearts = Math.floor(mapVal(heartRate, 30, maxHeart, 0, hearts.length));
+        // let hearts = new Array(20).fill(0);
+        const numHearts = Math.floor(mapVal(heartRate, 30, maxHeart, 0, emojis.length));
 
 
         return (
@@ -41,13 +41,15 @@ class EmojiMonitor extends React.Component {
                 <Frame title="" content={
                     <div className="Emoji-Monitor">
                         <div style={{ fontSize: fontS }} className={"pulse-emojis" + (isVert ? " vert" : "")}>
-                            {hearts.map((h, i) => {
+                            {emojis.map((emoji, i) => {
                                 let classN = "light";
                                 if (i < numHearts) {
                                     classN = "full"
                                 }
                                 classN += " emoji-bar";
-                                return <div key={i} className={classN} style={{width: fontS, height: fontS, backgroundImage: `url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/emojiBar/${ emojis[i]}.png)`}}></div>
+                                // if (!emojis[i])
+                                //     return <div key={i} className={classN} style={{width: fontS, height: fontS}} />
+                                return <div key={i} className={classN} style={{width: fontS, height: fontS, backgroundImage: `url(https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches/clickMe/emojiBar/${ emoji}.png)`}}></div>
                             })}
                         </div>
                     </div>
@@ -69,13 +71,13 @@ class EmojiMonitor extends React.Component {
         //     "❤️", "💋", "🔥", "💥", "🥵"
         // ];
         let emojiList=["heart", "kiss", "fire","explosion","hot"]
-        let emojis = [];
+        let ems = [];
         for (const emoji of emojiList) {
             for (let i = 0; i < repeats; i++) {
-                emojis.push(emoji);
+                ems.push(emoji);
             }
         }
-        return emojis;
+        return ems;
     }
 }
 

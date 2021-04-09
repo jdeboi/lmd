@@ -4,7 +4,7 @@ import React from 'react';
 import "./JungleGyms.css";
 
 import * as THREE from "three";
-import { AnaglyphEffect } from 'three/examples/jsm/effects/AnaglyphEffect.js';
+// import { AnaglyphEffect } from 'three/examples/jsm/effects/AnaglyphEffect.js';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
 import { DDSLoader } from 'three/examples/jsm/loaders/DDSLoader.js';
@@ -18,6 +18,7 @@ import { setSketchMusic } from '../../../store/actions/music';
 
 import Pipe from './Pipe';
 
+var AnaglyphEffect = require('../../shared/3D/AnaglyphEffect')(THREE, true);
 
 
 class JungleGyms extends React.Component {

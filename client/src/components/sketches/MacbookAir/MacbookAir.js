@@ -72,7 +72,7 @@ class MacbookAir extends React.Component {
     const originalDim = { w: 840, h: 540 };
     let maxF = 1.3;
     let factor = mapVal(ui.contentW, 1400, 2500, 1, maxF);
-    factor = constrain(1, maxF);
+    factor = constrain(factor, 1, maxF);
     originalDim.w = Math.floor(originalDim.w * factor);
     originalDim.h = Math.floor(originalDim.h * factor);
 

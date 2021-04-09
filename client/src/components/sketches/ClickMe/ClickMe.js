@@ -28,7 +28,7 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass.js';
 
 
-var AnaglyphEffect = require('../../shared/3D/AnaglyphEffect')(THREE);
+var AnaglyphEffect = require('../../shared/3D/AnaglyphEffect')(THREE, false);
 var mouse;
 var heartRate = 60;
 var heartVelocity = 0;

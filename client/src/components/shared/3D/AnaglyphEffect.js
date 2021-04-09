@@ -1,5 +1,5 @@
 
-module.exports = function (THREE) {
+module.exports = function (THREE, useOGMatrices) {
 	/**
 	* @author mrdoob / http://mrdoob.com/
 	* @author marklundin / http://mark-lundin.com/
@@ -16,7 +16,7 @@ module.exports = function (THREE) {
 		// replaced with the one from https://github.com/tschw/angler.js/blob/gh-pages/app/classes/AnaglyphShadertoyPlayer.js
 		// seems to get better results with new matrix values
 
-		let useOGMatrices = false;
+		// let useOGMatrices = false;
 
 		if (useOGMatrices) {
 			this.colorMatrixLeft = new THREE.Matrix3().fromArray([

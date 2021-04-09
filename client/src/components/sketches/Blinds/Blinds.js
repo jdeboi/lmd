@@ -18,7 +18,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 // import { Wireframe } from 'three/examples/jsm/lines/Wireframe.js';
 // import { WireframeGeometry2 } from 'three/examples/jsm/lines/WireframeGeometry2.js';
 
-var AnaglyphEffect = require('../../shared/3D/AnaglyphEffect')(THREE);
+var AnaglyphEffect = require('../../shared/3D/AnaglyphEffect')(THREE, false);
 
 
 class Blinds extends React.Component {

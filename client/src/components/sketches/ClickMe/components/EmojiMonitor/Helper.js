@@ -82,9 +82,9 @@ function getDimDesktop(ui) {
     else {
         availLen = ui.contentW - 2 * buffer;
     }
-    let fontS = mapVal(availLen, 0, 800, 18, maxFontS);
+    let fontS = mapVal(ui.contentW, 1400, 2500, 30, maxFontS);
+    fontS = Math.floor(constrain(fontS, 30, maxFontS));
 
-    fontS = Math.floor(constrain(fontS, 18, maxFontS));
     let maxLen = fontS * 20 + 10;
     let h = Math.min(availLen, maxLen);
 
