@@ -201,13 +201,17 @@
     /*  made 0, was -200, because clouds were behind app-frame-box thing */
     z-index: 0;
     // fixed so that it doesn't push other divs down
-    // position: fixed;
+    z-index: 0;
+    position: fixed;
+    min-width: 100%;
+    min-height: 100%;
     
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    height: 100vh;
-    width: 100vw;
+    // position: absolute;
+    // top: 0px;
+    // left: 0px;
+    // height: 100vh;
+    // width: 100vw;
+
   }
 
   .flippedX {

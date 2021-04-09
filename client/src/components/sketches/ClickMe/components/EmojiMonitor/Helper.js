@@ -10,6 +10,8 @@ export function getDim(ui) {
     return getDimDesktop(ui);
 }
 
+const maxFontS = 60;
+
 function getMobileDimHoriz(ui) {
     let isVert = false;
     let w;
@@ -80,9 +82,9 @@ function getDimDesktop(ui) {
     else {
         availLen = ui.contentW - 2 * buffer;
     }
-    let fontS = mapVal(availLen, 0, 800, 18, 32);
+    let fontS = mapVal(availLen, 0, 800, 18, maxFontS);
 
-    fontS = Math.floor(constrain(fontS, 18, 32));
+    fontS = Math.floor(constrain(fontS, 18, maxFontS));
     let maxLen = fontS * 20 + 10;
     let h = Math.min(availLen, maxLen);
 

@@ -8,10 +8,10 @@ class SwimLane extends React.Component {
     super(props);
 
     this.state = {
-      swimmerPos: [{y:3, dir:1}, {y:2, dir:-1}]
+      swimmerPos: [{ y: 3, dir: 1 }, { y: 2, dir: -1 }]
     }
 
-    this.numSwimmers = Math.ceil(this.props.h/36.9);
+    this.numSwimmers = Math.ceil(this.props.h / 36.9);
 
 
     this.getSwimmerLanes = this.getSwimmerLanes.bind(this);
@@ -29,16 +29,16 @@ class SwimLane extends React.Component {
   }
 
   render() {
-    const {w, h, x, y} = this.props;
+    const { w, h, x, y } = this.props;
 
     return (
       <Frame title="" content={
-        <div className="umbrellas">
-        {this.getSwimmerLanes()}
-        <div className="waterCover"></div>
+        <div className="umbrellas" style={{width: w, height: h}}>
+          {this.getSwimmerLanes()}
+          <div className="waterCover" style={{width: w, height: h}}></div>
         </div>
       }
-      width={w} height={h} windowStyle={{background: "black"}} x={x} y={y}
+        width={w} height={h} windowStyle={{ background: "black" }} x={x} y={y}
       />
     )
   }
@@ -47,11 +47,11 @@ class SwimLane extends React.Component {
 
     const swimmerPos = [...this.state.swimmerPos];
     for (let i = 0; i < swimmerPos.length; i++) {
-      const swimmer = {...swimmerPos[i]};
+      const swimmer = { ...swimmerPos[i] };
       if (swimmer.dir === 1) {
         swimmer.y++;
         if (swimmer.y >= this.numSwimmers) {
-          swimmer.y = this.numSwimmers-1;
+          swimmer.y = this.numSwimmers - 1;
           swimmer.dir = -1;
         }
       }
@@ -66,7 +66,7 @@ class SwimLane extends React.Component {
       swimmerPos[i] = swimmer;
     }
 
-    this.setState({swimmerPos});
+    this.setState({ swimmerPos });
   }
 
   getSwimmerLanes = () => {
@@ -81,25 +81,25 @@ class SwimLane extends React.Component {
     }
     return (
       <div className="lanes">
-      {lanes.map((i) => {
-        let lane0 = "";
-        let lane1 = "";
-        let lane0Class ="water";
-        let lane1Class="water";
-        if (i === y0) {
-          lane0=<img alt="woman swimming emoji" height={40} width={40} src={window.AWS+"/mars/womanswim.png"} />;
-          // if (dir0 === 1) lane0Class="rot";
-          // else lane0Class="rotNeg90";
-        }
-        if (i === y1) {
-          lane1=<img alt="man swimming emoji" height={40} width={40} src={window.AWS+"/mars/manswim.png"} />;
-          // if (dir1 === 1) lane1Class="rot90";
-          // else lane1Class="rotNeg90";
-        }
-        return (
-          <div key={i} className="swimRow"><span className={lane0Class} >{lane0}</span><span className={lane1Class} >{lane1}</span></div>
-        )
-      })}
+        {lanes.map((i) => {
+          let lane0 = "";
+          let lane1 = "";
+          let lane0Class = "water";
+          let lane1Class = "water";
+          if (i === y0) {
+            lane0 = <img alt="woman swimming emoji" height={40} width={40} src={window.AWS + "/mars/womanswim.png"} />;
+            // if (dir0 === 1) lane0Class="rot";
+            // else lane0Class="rotNeg90";
+          }
+          if (i === y1) {
+            lane1 = <img alt="man swimming emoji" height={40} width={40} src={window.AWS + "/mars/manswim.png"} />;
+            // if (dir1 === 1) lane1Class="rot90";
+            // else lane1Class="rotNeg90";
+          }
+          return (
+            <div key={i} className="swimRow"><span className={lane0Class} >{lane0}</span><span className={lane1Class} >{lane1}</span></div>
+          )
+        })}
       </div>
     )
   }

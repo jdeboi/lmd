@@ -61,7 +61,7 @@ class Header extends React.Component {
   }
 
   liveStreamToggle = () => {
-    this.setState({liveStreamOn: !this.state.liveStreamOn});
+    this.setState({ liveStreamOn: !this.state.liveStreamOn });
   }
 
   // shouldComponentUpdate(nextProps) {
@@ -168,7 +168,7 @@ class Header extends React.Component {
           <li></li>
           <li><Clock /></li>
           {/* <li></li> */}
-          {this.props.user.comp === null? this.getVolumeLi(): null}
+          {this.props.user.comp === null ? this.getVolumeLi() : null}
           {/* <li></li> */}
           {this.getAvatarLi()}
           {/* <li className="expandable hamburger" onClick={this.props.toggleSideBar}><i className="fas fa-bars"></i></li>*/}
@@ -223,7 +223,7 @@ class Header extends React.Component {
     this.props.toggleChat();
   }
 
- 
+
 
   getMobileRightMenus() {
     return (
@@ -235,9 +235,12 @@ class Header extends React.Component {
 
 
   getLiveStreamLi = () => {
-    const {menu} = this.props;
+    const { menu, user } = this.props;
     let classVol = "expandable icon" + (menu.isLiveStreamHidden ? " closed" : " opened");
-    classVol += ((this.state.liveStreamOn && !menu.hasClickedLiveStream)?" liveStreamOn":"");
+    classVol += ((this.state.liveStreamOn && !menu.hasClickedLiveStream) ? " liveStreamOn" : "");
+
+    if (user.comp !== null)
+      return null;
     return (
       <li className={classVol} onClick={this.props.toggleLiveStream}>
         {/* <Volume isMuted={this.props.music.isMuted} /> */}
@@ -342,7 +345,8 @@ const mapStateToProps = (state) => {
     menu: state.menu,
     chatNotifications: state.chatNotifications,
     music: state.music,
-    ui: state.ui
+    ui: state.ui,
+    user: state.user
   }
 }
 

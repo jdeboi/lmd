@@ -68,9 +68,7 @@
     .Mars .umbrellas .waterCover {
       position: absolute;
       top: -10;
-      opacity: 0.2;
-      height: 100%;
-      width: 100%; }
+      opacity: 0.2; }
     .Mars .umbrellas div {
       width: 100%;
       margin-top: 10px;

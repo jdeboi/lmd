@@ -136,8 +136,9 @@ class Flush extends React.Component {
   render() {
 
     const deg = this.state.handleDown ? "rotate(-20deg)" : "rotate(0deg)";
-    let factor = mapVal(this.props.ui.contentW, 1400, 2500, 150, 300);
-    factor = constrain(factor, 1, 2);
+    let maxF = 1.3;
+    let factor = mapVal(this.props.ui.contentW, 1400, 2500, 1, maxF);
+    factor = constrain(factor, 1, maxF);
     const w = Math.floor(150 * factor);
     const h = Math.floor(60 * factor);
     return (
@@ -153,7 +154,7 @@ class Flush extends React.Component {
           content={
             <div className="flush">
               <button onClick={this.flushToilet}
-                style={{ transform: deg }}>
+                style={{ transform: deg, width: w, height: h }}>
                 <img
                   alt="toilet flush handle"
                   src={window.AWS + "/vorTech/flush2.png"}

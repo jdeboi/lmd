@@ -1,13 +1,13 @@
 import React from 'react';
 import "./ClickMe.css";
 
-import Pulse from './components/Pulse/Pulse';
+// import Pulse from './components/Pulse/Pulse';
 import EmojiMonitor from './components/EmojiMonitor/EmojiMonitor';
-import Rose from './components/Rose/Rose';
-import { getDim } from './components/EmojiMonitor/Helper';
+import Roses from './components/Roses/Roses';
+// import { getDim } from './components/EmojiMonitor/Helper';
 
 // import Chat from './old/Chat';
-import Frame from '../../shared/Frame/Frame';
+// import Frame from '../../shared/Frame/Frame';
 import { constrain, mapVal } from '../../shared/Helpers/Helpers';
 
 // store
@@ -22,7 +22,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import { GUI } from 'three/examples/jsm/libs/dat.gui.module.js';
 import { LightningStrike } from 'three/examples/jsm/geometries/LightningStrike.js';
-import { LightningStorm } from 'three/examples/jsm/objects/LightningStorm.js';
+// import { LightningStorm } from 'three/examples/jsm/objects/LightningStorm.js';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass.js';
@@ -704,36 +704,13 @@ class ClickMe extends React.Component {
         const { ui } = this.props;
         const { hR, hT } = this.state;
 
-        const dim = getDim(ui);
-        const { x, y, w, h } = dim;
-
-        const roseDim = 80;
-        const roseBuffer = 20;
-
-        const roseBL = { x: x - roseDim - roseBuffer, y: y - (ui.toolbarH + roseDim) / 2 };
-        const roseBR = { x: x + w + roseBuffer, y: roseBL.y };
-
-        const roseTL = { x: x, y: ui.contentH - y - ui.toolbarH - h };
-        const roseTR = { x: x + w - roseDim, y: roseTL.y };
-
-        const bigRoseTL = { x: roseTL.x - roseBuffer - roseDim * 2, y: roseTL.y + roseDim };
-        const bigRoseTR = { x: roseTR.x + roseBuffer + roseDim, y: bigRoseTL.y };
+       
         return (
             <div className={"ClickMe Sketch " + "point" + this.state.cursor} onClick={() => this.heartClicked(1)} onMouseMove={this.onPointerMove} >
                 <div className="Three" ref={ref => (this.mount = ref)} />
                 {(ui.isMobile || ui.hasFooter) ?
                     null :
-                    <React.Fragment>
-                        {/* <Pulse heartRate={this.state.hR} maxHeart={maxHeart} /> */}
-                        <Rose w={roseDim * 2} x={bigRoseTL.x} y={bigRoseTL.y} heartRate={hR} heartTotal={hT} />
-                        <Rose w={roseDim * 2} x={bigRoseTR.x} y={bigRoseTR.y} heartRate={hR} heartTotal={hT} />
-
-                        <Rose w={roseDim} x={roseBL.x} y={roseBL.y} heartRate={hR} heartTotal={hT} />
-                        <Rose w={roseDim} x={roseBR.x} y={roseBR.y} heartRate={hR} heartTotal={hT} />
-                        <Rose w={roseDim} x={roseTL.x} y={roseTL.y} heartRate={hR} heartTotal={hT} />
-                        <Rose w={roseDim} x={roseTR.x} y={roseTR.y} heartRate={hR} heartTotal={hT} />
-                        {/* <Rose w={roseDim} x={500} y={100} heartRate={hR} heartTotal={hT} /> */}
-                    </React.Fragment>
+                    <Roses ui={ui} hR={hR} hT={hT} />
                 }
                 <EmojiMonitor heartTotal={hT} heartRate={hR} maxHeart={maxHeart} heartClicked={this.heartClicked} />
             </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import './EmojiMonitor.css';
 import LikeButton from '../LikeButton/LikeButton';
 import Frame from '../../../../shared/Frame/Frame';
-import { mapVal, constrain } from '../../../../shared/Helpers/Helpers';
+import { mapVal } from '../../../../shared/Helpers/Helpers';
 import { getDim } from './Helper';
 
 import { connect } from 'react-redux';

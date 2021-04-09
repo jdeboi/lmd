@@ -55,12 +55,13 @@ class MarsDesktop extends React.Component {
         const { ui } = this.props;
         let width = window.innerWidth;
         // let height = window.innerHeight;
-        let maxW = 1.6
+        let maxW = 1.4
         this.factor = mapVal(width, 1440, 2560, 1, maxW);
         this.factor = constrain(this.factor, .6, maxW);
 
         // have to make sure the height isn't maxed out for really wide screens
-        this.factor = 1;
+        // this.factor = 1;
+
 
         const sketchW = 1225 * this.factor + 2 * spacing;
         const sketchH = 640 * this.factor;
