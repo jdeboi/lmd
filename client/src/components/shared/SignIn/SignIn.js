@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from "react-router-dom";
 import { getEmojis } from '../Welcome/components/Helpers';
 import CenterModal from '../CenterModal/CenterModal';
-import { setOneMenu, hideSignIn} from '../../../store/actions/menuItems';
+import { setOneMenu, hideSignIn } from '../../../store/actions/menuItems';
 
 import './SignIn.css';
 
@@ -29,7 +29,8 @@ class SignIn extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.setClick) this.props.setClick(this.handleSubmit);
+    if (this.props.setClick)
+      this.props.setClick(this.handleSubmit);
   }
 
   // basically, don't re-render this component unless that signin window
@@ -89,6 +90,7 @@ class SignIn extends React.Component {
       alert("username already exists. Please enter a new username.");
     }
     else {
+      // socket.emit("newUser", user);
       this.submitSuccess(user.userName, user.avatar);
     }
   }

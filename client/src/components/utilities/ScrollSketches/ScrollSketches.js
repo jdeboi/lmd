@@ -1,11 +1,9 @@
 import React from 'react';
-import { Route, Switch, withRouter } from "react-router-dom";
-
-// import './ScrollSketches.css';
+import { withRouter } from "react-router-dom";
 
 // store
 import { connect } from 'react-redux';
-import { loadingApp, resizeApp, startComposition } from '../../../store/actions';
+import { loadingApp } from '../../../store/actions';
 
 // sketches
 import MacbookAir from '../../sketches/MacbookAir/MacbookAir';
@@ -31,7 +29,7 @@ class ScrollSketches extends React.Component {
     }
 
     componentWillUnmount() {
-
+        clearInterval(this.interval);
     }
 
     changeSketch = () => {

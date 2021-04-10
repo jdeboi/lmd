@@ -126,6 +126,7 @@ export const addFolderDivs = (divs, instaImg, txtFile, p5) => {
 export const addOakDivs = (divs, oakImg, p5) => {
     let sc = globalConfig.scaler;
     divs.oaks = [];
+    
     for (let i = 0; i < 1; i++) {
         let oak = new Draggable(i, sc * -7.5, sc * 34, 500, 400, p5, oakImg);
         divs.oaks.push(oak);

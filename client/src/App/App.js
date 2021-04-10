@@ -34,7 +34,7 @@ import { sketches, getUrl } from '../components/sketches/Sketches';
 import Gallery from '../components/sketches/Gallery/Gallery';
 import MacbookAir from '../components/sketches/MacbookAir/MacbookAir';
 import JungleGyms from '../components/sketches/JungleGyms/JungleGyms';
-import HardDrives from '../components/sketches/HardDrives/HardDrives';
+import HardDrives from '../components/sketches/HardDrives/HardDrivesOG';
 import Wasted from '../components/sketches/Wasted/Wasted';
 import Mars from '../components/sketches/Mars/Mars';
 import WetStreams from '../components/sketches/WetStreams/WetStreams';
@@ -59,6 +59,7 @@ import UnregisterDesktop from '../components/utilities/RegisterDesktop/Unregiste
 import ViewUsers from '../components/utilities/ViewUsers/ViewUsers';
 import PanGallery from '../components/utilities/PanGallery/PanGallery';
 import ScrollSketches from '../components/utilities/ScrollSketches/ScrollSketches';
+import Projection from '../components/utilities/Projection/Projection';
 
 // users
 import { djLocation, wineLocation, hostBotLocation } from '../components/sketches/Gallery/constants';
@@ -89,7 +90,7 @@ class App extends React.Component {
     };
 
     this.isClosed = true;
-    this.isMenuOn = true;
+    this.isMenuOn = false;
   }
 
 
@@ -236,7 +237,7 @@ class App extends React.Component {
     socket.on("userJoined", data => {
       // const user = { ...this.props.user };
       this.setState({ usersChange: true });
-      // console.log("SOMEONE JOINED");
+      // console.log(data)
     })
 
     socket.on("userDisconnected", data => {
@@ -414,6 +415,7 @@ class App extends React.Component {
             <Route exact path="/viewusers" render={() => <ViewUsers users={this.state.users} />} />
             <Route exact path="/pangallery" render={() => <PanGallery users={this.state.users} roomCount={this.state.roomCount} />} />
             <Route exact path="/scroll" render={() => <ScrollSketches addClass={this.addClass} removeClass={this.removeClass} />} />
+            <Route exact path="/projection" render={() => <Projection addClass={this.addClass} removeClass={this.removeClass} users={this.state.users} roomCount={this.state.roomCount} />} />
 
             {/* catch all */}
             <Route path="*" component={NotFound} />
