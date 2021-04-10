@@ -17,7 +17,7 @@ import WetStreams from '../../sketches/WetStreams/WetStreams';
 import Confessional from '../../sketches/Confessional/Confessional';
 
 class Projection extends React.Component {
-
+    // testing with new HD
     constructor(props) {
         super(props);
         this.state = {
@@ -72,19 +72,19 @@ class Projection extends React.Component {
 
         // if (isGallery)
         //     return this.renderGallery();
-        // if (currentSketch === 0)
-        //     return < MacbookAir />
-        // else if (currentSketch === 1)
-        //     return < JungleGyms />
-        // else if (currentSketch === 2)
-        //     return < HardDrives />
-        // else if (currentSketch === 3)
-        //     return <Mars addClass={addClass} removeClass={removeClass} />
-        // else if (currentSketch === 4)
-        //     return < WetStreams />
-        // else if (currentSkethc === 5)
-        //     return < Confessional />
-return < MacbookAir />
+        if (currentSketch === 0)
+            return < MacbookAir />
+        else if (currentSketch === 1)
+            return < JungleGyms />
+        else if (currentSketch === 2)
+            return < HardDrives />
+        else if (currentSketch === 3)
+            return <Mars addClass={addClass} removeClass={removeClass} />
+        else if (currentSketch === 4)
+            return < WetStreams />
+        else if (currentSketch === 5)
+            return < Confessional />
+        // return < MacbookAir />
     }
 }
 

@@ -34,7 +34,7 @@ import { sketches, getUrl } from '../components/sketches/Sketches';
 import Gallery from '../components/sketches/Gallery/Gallery';
 import MacbookAir from '../components/sketches/MacbookAir/MacbookAir';
 import JungleGyms from '../components/sketches/JungleGyms/JungleGyms';
-import HardDrives from '../components/sketches/HardDrives/HardDrivesOG';
+import HardDrives from '../components/sketches/HardDrives/HardDrives';
 import Wasted from '../components/sketches/Wasted/Wasted';
 import Mars from '../components/sketches/Mars/Mars';
 import WetStreams from '../components/sketches/WetStreams/WetStreams';
@@ -70,7 +70,7 @@ window.AWS = "https://lmd-bucket.s3.us-east-2.amazonaws.com/sketches";
 
 
 class App extends React.Component {
-
+  // testing with new HD
   constructor(props) {
     super(props);
     this.state = {
@@ -430,13 +430,13 @@ class App extends React.Component {
         <RoomDecal startMedia={this.startMedia} hasLoadedRoom={this.state.hasLoadedRoom} users={this.state.users} />
         <Welcome isClosed={this.isClosed} user={this.props.user} hasAvatar={this.state.hasAvatar} showWelcome={this.state.showWelcome} closeWelcome={this.closeWelcome} />
         <MobileFooter currentPage={currentPage} user={this.props.user} avatarClicked={this.avatarClicked} />
-        {this.isClosed?null:<YouTube />}
+        {this.isClosed ? null : <YouTube />}
         { user.comp === null && ((currentPage === "gallery" && !this.state.showWelcome) ||
           ui.compositionStarted) ?
           <ReactAudioPlayer
             src={music.currentSongTitle}
             autoPlay={true}
-            volume={music.isMuted?0:music.volume}
+            volume={music.isMuted ? 0 : music.volume}
             controls={false}
             loop={true}
             ref={player => {
