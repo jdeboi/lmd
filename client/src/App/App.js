@@ -430,7 +430,7 @@ class App extends React.Component {
         <RoomDecal startMedia={this.startMedia} hasLoadedRoom={this.state.hasLoadedRoom} users={this.state.users} />
         <Welcome isClosed={this.isClosed} user={this.props.user} hasAvatar={this.state.hasAvatar} showWelcome={this.state.showWelcome} closeWelcome={this.closeWelcome} />
         <MobileFooter currentPage={currentPage} user={this.props.user} avatarClicked={this.avatarClicked} />
-        <YouTube />
+        {this.isClosed?null:<YouTube />}
         { user.comp === null && ((currentPage === "gallery" && !this.state.showWelcome) ||
           ui.compositionStarted) ?
           <ReactAudioPlayer

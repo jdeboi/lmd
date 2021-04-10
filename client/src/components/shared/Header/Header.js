@@ -235,11 +235,13 @@ class Header extends React.Component {
 
 
   getLiveStreamLi = () => {
-    const { menu, user } = this.props;
+    const { menu, user, isClosed } = this.props;
     let classVol = "expandable icon" + (menu.isLiveStreamHidden ? " closed" : " opened");
     classVol += ((this.state.liveStreamOn && !menu.hasClickedLiveStream) ? " liveStreamOn" : "");
 
-    if (user.comp !== null)
+    if (isClosed)
+      return null;
+    else if (user.comp !== null)
       return null;
     return (
       <li className={classVol} onClick={this.props.toggleLiveStream}>

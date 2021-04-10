@@ -144,7 +144,7 @@ class Blinds extends React.Component {
 
     });
 
-    objLoader.load(window.AWS + "/blinds/models/hercules/hercules.obj", (root) => {
+    objLoader.load(window.AWS + "/blinds/models/hercules/hercules_small.obj", (root) => {
       var hercules = root;
       var mat = new THREE.MeshLambertMaterial({ color: 0xdddddd });
       hercules.material = mat;
